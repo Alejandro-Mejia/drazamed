@@ -1,7 +1,7 @@
 <?php
     namespace App;
     use Illuminate\Database\Eloquent\Model;
-
+    use Cache;
     /**
      * Class PaymentStatus
      * Model Table Referencing payment_status

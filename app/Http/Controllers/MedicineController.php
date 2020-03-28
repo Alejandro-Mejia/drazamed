@@ -2,9 +2,26 @@
 
 namespace app\Http\Controllers;
 use Illuminate\Routing\Controller as BaseController;
+use Intervention\Image\ImageManagerStatic as Image;
+use Illuminate\Support\Facades\Auth;
+// use Illuminate\Mail\Mailer;
+use Session;
+use Redirect;
 use Request;
 use Response;
+use View;
+use Mail;
+use DB;
+use App\PrescriptionStatus;
+use App\ShippingStatus;
+use App\InvoiceStatus;
+use App\Prescription;
+use App\SessionsData;
+use App\Setting;
+use App\PayStatus;
+use App\UserType;
 use App\Medicine;
+use App\Invoice;
 use App\Cache;
 
 define ('CACHE_PARAM_MEDICINE' , 'medicines');
@@ -26,10 +43,7 @@ class MedicineController extends BaseController
 	{
 
 		if ($isWeb) {
-			if (!$this->isCsrfAccepted ()) {
-				Session::flash ('flash_message' , 'Invalid File Request ');
-				Session::flash ('flash_type' , 'alert-danger');
-			}
+			// dd(auth()->user());
 			if (Auth::check ()) {
 				$email = Session::get ('user_id');
 				$user_type = Auth::user ()->user_type_id;
@@ -80,16 +94,17 @@ class MedicineController extends BaseController
 				$prescription->created_at = date ('Y-m-d H:i:s');
 				$prescription->user_id = $user_id;
 				$prescription->created_by = $user_id;
+				$prescription->updated_by = $user_id;
 				$prescription->save ();
 
-				$pres_id = $prescription->id;
-				$invoice = new Invoice;
-				$invoice->pres_id = $pres_id;
-				$invoice->user_id = $user_id;
-				$invoice->created_at = date ('Y-m-d h:i:s');
-				$invoice->created_by = $user_id;
-				$invoice->save ();
-				$invoice_id = $invoice->id;
+				// $pres_id = $prescription->id;
+				// $invoice = new Invoice;
+				// $invoice->pres_id = $pres_id;
+				// $invoice->user_id = $user_id;
+				// $invoice->created_at = date ('Y-m-d h:i:s');
+				// $invoice->created_by = $user_id;
+				// $invoice->save ();
+				// $invoice_id = $invoice->id;
 
 				$current_medicines = SessionsData::select ('medicine_id' , 'medicine_count')->where ('user_id' , '=' , $email)->get ();
 				if (count ($current_medicines) > 0) {
@@ -253,12 +268,12 @@ class MedicineController extends BaseController
 		if (!Auth::check ())
 			return Redirect::to ('/');
 		$email = Session::get ('user_id');
-		$path = URL . '/public/images/prescription/' . $email . '/';
+		$path = 'URL' . '/public/images/prescription/' . $email . '/';
 		$user_id = Auth::user ()->id;
 		$invoices = Invoice::where ('user_id' , '=' , $user_id)->where ('shipping_status' , '=' , ShippingStatus::SHIPPED ())->get ();
 
 
-		return View::make ('/users/my_order' , array('invoices' => $invoices , 'email' => $email , 'default_img' => url () . "/assets/images/no_pres_square.png"));
+		return View::make ('/users/my_order' , array('invoices' => $invoices , 'email' => $email , 'default_img' => url ('/') . "/assets/images/no_pres_square.png"));
 
 		// return View::make('/users/my_order');
 	}
@@ -310,7 +325,7 @@ class MedicineController extends BaseController
 		if (!Auth::check ())
 			return Redirect::to ('/');
 		$email = Session::get ('user_id');
-		$path = URL . '/public/images/prescription/' . $email . '/';
+		$path = 'URL' . '/public/images/prescription/' . $email . '/';
 		$user_id = Auth::user ()->id;
 		$invoices = Invoice::where ('user_id' , '=' , $user_id)->get ();
 		$prescriptions = Prescription::select ('i.*' , 'prescription.status' , 'prescription.path' , 'prescription.id as pres_id' , 'prescription.created_at as date_added')->where ('prescription.user_id' , '=' , $user_id)->where ('is_delete' , '=' , 0)
@@ -369,7 +384,7 @@ class MedicineController extends BaseController
 		$payment_mode = Setting::select ('value')->where ('group' , '=' , 'payment')->where ('key' , '=' , 'mode')->first ();
 
 
-		return View::make ('/users/my_prescription' , array('prescriptions' => $responses , 'email' => $email , 'cat' => $is_category , 'payment_mode' => $payment_mode->value , 'default_img' => url () . "/assets/images/no_pres_square.png"));
+		return View::make ('/users/my_prescription' , array('prescriptions' => $responses , 'email' => $email , 'cat' => $is_category , 'payment_mode' => $payment_mode->value , 'default_img' => url('/') . "/assets/images/no_pres_square.png"));
 	}
 
 	/**
@@ -383,11 +398,11 @@ class MedicineController extends BaseController
 			return Redirect::to ('/');
 		// Prescriptions
 		$email = Session::get ('user_id');
-		$path = URL . '/public/images/prescription/' . $email . '/';
+		$path = 'URL' . '/public/images/prescription/' . $email . '/';
 		$user_id = Auth::user ()->id;
 		$invoices = Invoice::where ('user_id' , '=' , $user_id)->where ('status_id' , '=' , InvoiceStatus::PAID ())->whereIn ('shipping_status' , array(0 , ShippingStatus::NOTSHIPPED ()))->get ();
 
-		return View::make ('/users/paid_prescription' , array('invoices' => $invoices , 'email' => $email , 'cat' => 0 , 'default_img' => url () . "/assets/images/no_pres_square.png"));
+		return View::make ('/users/paid_prescription' , array('invoices' => $invoices , 'email' => $email , 'cat' => 0 , 'default_img' => url ('/') . "/assets/images/no_pres_square.png"));
 	}
 
 	/**

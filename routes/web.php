@@ -2,10 +2,15 @@
 
 namespace App;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Requests;
 use App\Setting;
-
+use Redirect;
+use Mail;
 use View;
+use App\Mail\TestAmazonSes;
+use App\Mail\AulalExample;
+use App\Mail\NewMail;
 use Elasticquent\ElasticquentTrait;
 use Illuminate\Database\Eloquent\Model;
 
@@ -21,10 +26,10 @@ use Illuminate\Database\Eloquent\Model;
 */
 
 // Home Page
-    Route::get('/test', function () {
-        $admin = Admin::find(1);
-        var_dump($admin->user_details()->first());
-    });
+    // Route::get('/test', function () {
+    //     $admin = Admin::find(1);
+    //     var_dump($admin->user_details()->first());
+    // });
 
     Route::get('/', function () {
         Setting::settings();
@@ -44,7 +49,6 @@ use Illuminate\Database\Eloquent\Model;
     // Logout
     Route::any('logout', function () {
         Auth::logout();
-
         return Redirect::to('/');
     });
     // About US Page
@@ -78,11 +82,14 @@ use Illuminate\Database\Eloquent\Model;
     Route::get('/user/check-session', 'UserController@getCheckSession');
     Route::any('/user/create-user/{is_web}', 'UserController@anyCreateUser');
     Route::any('/user/check-user-name', 'UserController@anyCheckUserName');
+    Route::any('/user/user-login/{is_web}', 'UserController@anyUserLogin');
+    Route::any('/user/activate-account', 'UserController@anyActivateAccount');
+    Route::any('/user/web-activate-account/{code}', 'UserController@anyWebActivateAccount');
     // Route::controller('medicine', 'MedicineController');
     // Route::resource('/medicine', 'MedicineController');
     Route::post('/medicine/add-new-medicine', 'MedicineController@postAddNewMedicine');
     Route::any('/medicine/load-medicine-web', 'MedicineController@anyLoadMedicineWeb');
-    Route::any('/medicine/store-prescription', 'MedicineController@anyStorePrescription');
+    Route::any('/medicine/store-prescription/{is_web}', 'MedicineController@anyStorePrescription');
 
     // Route::controller('admin', 'AdminController');
     // Route::get('/admin', 'AdminController@index');
@@ -221,7 +228,35 @@ use Illuminate\Database\Eloquent\Model;
 
 // Auth::routes();
 
+Route::get('testEmail', function () {
+
+    $user = [
+        'name' => 'Mahedi Hasan',
+        'info' => 'Laravel Developer'
+    ];
+
+    \Mail::to('alejandro@aulalibre.org')->send(new \App\Mail\NewMail($user));
+
+    dd("success");
+
+});
+
+/**
+ * Clear cache from server
+ */
+Route::get('/clear-cache', function() {
+    Artisan::call('cache:clear');
+    return "Cache is cleared";
+});
+
+
 Route::get('/home', 'HomeController@index')->name('home');
+
+
+
+
+
+
 
 // Route::any('captcha-test', function() {
 //         if (request()->getMethod() == 'POST') {

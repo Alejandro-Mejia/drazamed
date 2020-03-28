@@ -71,7 +71,7 @@
                     <ul class="nav nav-pills pull-right register-menu">
                          @if (Auth::check() && Auth::user()->user_type_id != UserType::ADMIN())
                          <div class="dropdown">
-                             <button class="btn btn-default dropdown-toggle" type="button" id="menu1" data-toggle="dropdown"><?php if(Auth::user()->user_type_id==UserType::CUSTOMER()) {  echo Auth::user()->customer->first_name; } else { echo Auth::user()->professional->prof_first_name;}?>
+                             <button class="btn btn-default dropdown-toggle" type="button" id="menu1" data-toggle="dropdown"><?php if(Auth::user()->user_type_id==UserType::CUSTOMER()) {  echo Auth::user()->customer->first_name} else { echo Auth::user()->professional->prof_first_name;}?>
                              <span class="caret"></span></button>
                              <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
                                 <li role="presentation"><a role="menuitem" tabindex="-1" href="{{ URL::to('my-cart') }}">My cart</a></li>

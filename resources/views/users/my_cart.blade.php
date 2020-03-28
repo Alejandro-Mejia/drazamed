@@ -71,7 +71,7 @@
                                                             <p>{{$discount = number_format($medicine['discount'],2)}}</p>
                                                         </td>
                                                         <?php  $total= ($mrp * $cart_item->medicine_count)- ($discount * $cart_item->medicine_count); ?>
-                                                        <td class="text-right col-lg-2 col-md-2 col-sm-2 col-xs-2">{{ Setting::currencyFormat($total); }}</td>
+                                                        <td class="text-right col-lg-2 col-md-2 col-sm-2 col-xs-2">{{ Setting::currencyFormat($total)}}</td>
 
                                                         <?php $subtotal += $total;  ?>
                                                     </tr>
@@ -165,7 +165,7 @@
                                     </tr>
                                     <tr><td colspan="2" id="med_comp">
                                     @for($x=0;$x<count($combo);$x++)
-                                    <h5>{{ $combo[$x]; }}</h5>
+                                    <h5>{{ $combo[$x]}}</h5>
                                     @endfor
                                     </td></tr>
                                     <tr>

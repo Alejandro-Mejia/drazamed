@@ -95,14 +95,14 @@
                             <div class="form-group form-group-sm">
                                 <label class="col-sm-3 control-label" for="Address">Name</label>
                                 <div class="col-sm-9">
-                                    <input class="form-control" type="text" id="first_name" value="@if(Auth::user()->user_type_id==UserType::MEDICAL_PROFESSIONAL()){{$user_data->prof_first_name;}}@else{{$user_data->first_name;}}@endif">
+                                    <input class="form-control" type="text" id="first_name" value="@if(Auth::user()->user_type_id==UserType::MEDICAL_PROFESSIONAL()){{$user_data->prof_first_name}}@else{{$user_data->first_name}}@endif">
                                 </div>
                             </div>
 
                             <div class="form-group form-group-sm">
                                 <label class="col-sm-3 control-label" for="District">Last Name</label>
                                 <div class="col-sm-9">
-                                    <input class="form-control" id="last_name" type="text"  value="@if(Auth::user()->user_type_id==UserType::MEDICAL_PROFESSIONAL()){{$user_data->prof_last_name;}}@else{{$user_data->last_name;}}@endif">
+                                    <input class="form-control" id="last_name" type="text"  value="@if(Auth::user()->user_type_id==UserType::MEDICAL_PROFESSIONAL()){{$user_data->prof_last_name}}@else{{$user_data->last_name}}@endif">
                                 </div>
                             </div>
 
@@ -120,7 +120,7 @@
                             <div class="form-group form-group-sm">
                                 <label class="col-sm-3 control-label" for="District">phone</label>
                                 <div class="col-sm-9">
-                                    <input class="form-control" id="phone" type="text" placeholder="" value="@if(Auth::user()->user_type_id==UserType::MEDICAL_PROFESSIONAL()){{$user_data->prof_phone;}}@else{{$user_data->phone;}} @endif">
+                                    <input class="form-control" id="phone" type="text" placeholder="" value="@if(Auth::user()->user_type_id==UserType::MEDICAL_PROFESSIONAL()){{$user_data->prof_phone}}@else{{$user_data->phone}} @endif">
                                 </div>
                             </div>
                           <!--  <div class="form-group form-group-sm">
@@ -132,7 +132,7 @@
                             <div class="form-group form-group-sm">
                                 <label class="col-sm-3 control-label" for="Pincode">Pincode</label>
                                 <div class="col-sm-9 pcode">
-                                <input class="form-control" type="text" id="pincode" placeholder="" value="@if(Auth::user()->user_type_id==UserType::MEDICAL_PROFESSIONAL()){{$user_data->prof_pincode;}}@else{{$user_data->pincode;}}@endif">
+                                <input class="form-control" type="text" id="pincode" placeholder="" value="@if(Auth::user()->user_type_id==UserType::MEDICAL_PROFESSIONAL()){{$user_data->prof_pincode}}@else{{$user_data->pincode}}@endif">
                                    <!-- <input class="col-sm-2" type="text" placeholder="">
                                     <input class="col-sm-2" type="text" placeholder="">
                                     <input class="col-sm-2" type="text" placeholder="">

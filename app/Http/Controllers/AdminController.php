@@ -102,7 +102,7 @@ class AdminController extends BaseController
 	 */
 	public function getLogout ()
 	{
-		Auth::logout ();
+		Auth::logout();
 
 		return Redirect::to ('admin');
 	}

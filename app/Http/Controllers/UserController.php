@@ -8,12 +8,18 @@ use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\Facades\Auth;
 use App\User;
 use App\UserType;
+use App\UserStatus;
 use App\Customer;
 use App\MedicalProfessional;
 use DB;
+use File;
+use Session;
 use Request;
 use Response;
+use Redirect;
+use View;
 use Hash;
+use Mail;
 
 use Exception;
 use Illuminate\Auth\AuthenticationException;
@@ -63,6 +69,9 @@ class UserController extends BaseController
 //		}
 		try {
 			$email = Request::get ('email' , '');
+			$last_name = Request::get ('last_name' , '');
+			$first_name = Request::get ('first_name' , '');
+			$name = $first_name . ' ' . $last_name;
 			$phone = Request::get ('phone' , '');
 			$address = Request::geT ('address' , '');
 			$password = Request::get ('password' , '');
@@ -101,12 +110,13 @@ class UserController extends BaseController
 					break;
 				case (UserType::CUSTOMER ())://cust
 					if ($is_Web) {
-						$name = Request::get ('user_name' , '');
+						$name = Request::get ('last_name' , '');
 						$customer = new Customer;
 						$customer->mail = $email;
 						$customer->phone = $phone;
 						$customer->address = $address;
-						$customer->first_name = $name;
+						$customer->first_name = $first_name;
+						$customer->last_name = $last_name;
 						$customer->created_at = date ('Y-m-d H:i:s');
 						$customer->save ();
 						$userId = $customer->id;
@@ -122,6 +132,7 @@ class UserController extends BaseController
 					break;
 			}//switch
 			$user = new User;
+			$user->name = $name;
 			$user->email = $email;
 			$user->password = Hash::make ($password);
 			$user->phone = $phone;
@@ -247,10 +258,6 @@ class UserController extends BaseController
 			$email = Request::get ('email' , '');
 			$password = Request::get ('password' , '');
 			if ($isWeb) {
-				if (!$this->isCsrfAccepted ()) {
-					$result = array(array('result' => array('status' => 'failure')));
-					return Response::json ($result);
-				}
 
 				//$status='active';
 				$status = DB::table ('users')->select ('user_status as status')->where ('email' , '=' , $email)->first ();
@@ -295,7 +302,7 @@ class UserController extends BaseController
 		}
 		catch (Exception $e) {
 			// $message = $this->catchException ($e);
-			return Response::make (['status' => 'FAILURE' , 'msg' => $e->getMessage()] ,$e->getCode());
+			return Response::make (['status' => 'FAILURE' , 'msg' => $e->getMessage()] ,401);
 		}
 
 
@@ -346,7 +353,8 @@ class UserController extends BaseController
 	public function anyWebActivateAccount ($code)
 	{
 		$user = User::where ('security_code' , '=' , $code)->first ();
-		if (count ($user)) {
+		// dd($user);
+		if (count ((array)$user)) {
 			$updatedValues = array('user_status' => UserStatus::ACTIVE ());
 			User::where ('security_code' , '=' , $code)->update ($updatedValues);
 
@@ -500,10 +508,11 @@ class UserController extends BaseController
 		$user_type = Auth::user ()->user_type_id;
 		switch ($user_type) {
 			case (UserType::MEDICAL_PROFESSIONAL ()):  //for medical professionals
-				return View::make ('users.account_page' , array('user_data' => Auth::user ()->professional));
+				return View::make ('users.account_page' , array('user_data' => Auth::user()->professional));
 				break;
 			case (UserType::CUSTOMER ()):  //for customers
-				return View::make ('users.account_page' , array('user_data' => Auth::user ()->customer));
+				// dd(Auth::user());
+				return View::make ('users.account_page' , array('user_data' => Auth::user()->customer));
 				break;
 		}
 	}
@@ -549,8 +558,7 @@ class UserController extends BaseController
 	 */
 	public function anyStoreProfilePic ()
 	{
-		if (!$this->isCsrfAccepted ())
-			return 0;
+
 		$email = Auth::user ()->email;
 		$path = base_path () . '/public/images/prescription/' . $email . '/';
 		$fname = Request::file ('file')->getClientOriginalName ();

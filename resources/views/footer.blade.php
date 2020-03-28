@@ -11,7 +11,8 @@
                 </ul>
             </div>
             <div class="col-md-3 footer-logo">
-                <img height="30" width="129" src="{{ 'SYSTEM_IMAGE_URL'.Setting::param('site','logo')['value'] }}" alt="{{ Setting::param('site','app_name')['value']  }}">
+                <!-- {{ config('SYSTEM_IMAGE_URL')  }} -->
+                <img height="30" width="129" src="{{  config('constants.SYSTEM_IMAGE_URL') . Setting::param('site','logo')['value'] }}" alt="{{ Setting::param('site','app_name')['value']  }}">
             </div>
             <div class="col-md-4 copyright">
                 <p>Derechos reservados@ {{strtolower(Setting::param('site','app_name')['value']) }} <?php echo date('Y') ?>.</p>
@@ -91,9 +92,16 @@
                         <form class="form-horizontal addPersonal form-group-sm form-control" role="form" id="user_reg">
                             <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
                             <div class="login-fields">
-                                <label class="control-label" for="Address">Your Name</label>
+                                <label class="control-label" for="Address">{{__('First Name')}}</label>
                                 <div class="">
-                                    <input class="form-control" type="text" placeholder="Enter your Name" name="user_name" id="user_name">
+                                    <input class="form-control" type="text" placeholder="{{ __('Enter your Name') }}" name="first_name" id="user_name">
+                                </div>
+                                <p style="display: none;" id="user_name_error"></p>
+                            </div>
+                            <div class="login-fields">
+                                <label class="control-label" for="Address">{{__('Last Name')}}</label>
+                                <div class="">
+                                    <input class="form-control" type="text" placeholder="Enter your Last Name" name="last_name" id="user_name">
                                 </div>
                                 <p style="display: none;" id="user_name_error"></p>
                             </div>
@@ -349,18 +357,29 @@
 
     function user_register()
     {
-        var user_type=$("#sel1").val();
+        var last_type=$("#sel1").val();
+        var first_type=$("#sel1").val();
         var pass=$('.paswd').val();
         var email=$('#email').val();
-        var user_name=$('#user_name').val();
+        var first_name=$('#first_name').val();
+        var last_name=$('#last_name').val();
+        var user_type=$('#user_type').val();
         var address = $('#reg_address').val();
 
-         if(user_name=="")
+         if(last_name=="")
           {
-           $("#user_name_error").css({"display":"block", "color":"red"});
-           $("#user_name_error").html('Please enter your name');
+           $("#last_name_error").css({"display":"block", "color":"red"});
+           $("#last_name_error").html('Please enter your last name');
            return false;
           }
+
+        if(first_name=="")
+          {
+           $("#first_name_error").css({"display":"block", "color":"red"});
+           $("#first_name_error").html('Please enter your first name');
+           return false;
+          }
+
         if(email=="")
           {
           $("#user_name_error").hide();
@@ -368,11 +387,10 @@
            $("#user_mail_error").html('Please enter your email');
            return false;
           }
-
-
         if(user_type==0)
           {
-          $("#user_name_error").hide();
+          $("#first_name_error").hide();
+          $("#last_name_error").hide();
           $("#user_mail_error").hide();
            $("#user_type_error").css({"display":"block", "color":"red"});
            $("#user_type_error").html('Please choose a type');
@@ -380,7 +398,8 @@
           }
         if(pass.length<=0)
           {
-          $("#user_name_error").hide();
+          $("#first_name_error").hide();
+          $("#last_name_error").hide();
           $("#user_mail_error").hide();
           $("#user_type_error").hide();
            $("#user_pass_error").css({"display":"block", "color":"red"});
@@ -388,13 +407,15 @@
            return false;
           }
           if($("#agree").is(':checked')){
-            $("#user_name_error").hide();
+            $("#first_name_error").hide();
+            $("#last_name_error").hide();
             $("#user_mail_error").hide();
             $("#user_type_error").hide();
             $("#user_pass_error").hide();
             $("#user_agree_error").hide();
            }else{
-              $("#user_name_error").hide();
+              $("#first_name_error").hide();
+              $("#last_name_error").hide();
               $("#user_mail_error").hide();
               $("#user_type_error").hide();
               $("#user_pass_error").hide();

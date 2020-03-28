@@ -130,7 +130,7 @@ if(count($med_info)>0)
 <script type="text/javascript">
 //$(document).on({
 //   ajaxStart: function() { $('.search_medicine').addClass('search_medicine_my_cart my_cart_search' );    },
-//   ajaxStop: function() { $('.search_medicine').removeClass('search_medicine_my_cart my_cart_search' ); }
+//   ajaxStop: function() { $('.search_medicine').removeClass('search_medicine_my_cart my_cart_search' ) }
 //});
 var current_item_code;
 $(".search_medicine").autocomplete({

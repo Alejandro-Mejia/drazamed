@@ -107,7 +107,7 @@
                         </li>
                     </ul>
                     <ul class="nav nav-pills pull-left">
-                        <li><a href="{{ URL::to('/')}}"><img height="40" width="183" src="{{ 'SYSTEM_IMAGE_URL'.Setting::param('site','logo')['value'] }}" alt="{{ Setting::param('site','app_name')['value'] }}"></a></li>
+                        <li><a href="{{ URL::to('/')}}"><img height="40" width="183" src="{{ config('constants.SYSTEM_IMAGE_URL') . Setting::param('site','logo')['value'] }}" alt="{{ Setting::param('site','app_name')['value'] }}"></a></li>
                     </ul>
                     <ul class="nav nav-pills pull-left about-menu">
 

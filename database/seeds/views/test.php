@@ -102,7 +102,7 @@
                                 }
 
                                 ?>
-                                <h3 class="{{ $collapse; }}">
+                                <h3 class="{{ $collapse }}">
                                     <table class="tab-presc2">
                                         <tbody>
                                         <tr class="prescription-content">

@@ -26,7 +26,7 @@
                   <img width='20%' style='float:left' src="{{'SYSTEM_IMAGE_URL'.Setting::param('site','logo')['value'] }}" /></br></br></br>
 
                   <h4>{{ Setting::param('site','app_name')['value'] }} Inc.</h4>
-                  <p><a href="{{ Setting::param('site','website')['value'] }}">{{ str_replace('http://','',Setting::param('site','website')['value']); }}</a></p>
+                  <p><a href="{{ Setting::param('site','website')['value'] }}">{{ str_replace('http://','',Setting::param('site','website')['value']) }}</a></p>
                   <p> <?php $text = Setting::param('site','address')['value'];
                             $text_array = explode(" ", $text);
                             $chunks = array_chunk($text_array, 3);
