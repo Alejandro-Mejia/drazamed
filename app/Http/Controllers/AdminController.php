@@ -71,8 +71,6 @@ class AdminController extends BaseController
 			$password = Request::get ('password' , '');
 			// Check if credientials work
 
-			// dd(UserType::ADMIN ());
-
 			if (Auth::attempt (array('email' => $email , 'password' => $password , 'user_type_id' => UserType::ADMIN () , 'user_status' => UserStatus::ACTIVE ()) , true)) {          // SUCCESS
 				return Redirect::to ('/admin/dashboard');
 			} else {                                                                                                                    // FAILURE
@@ -537,7 +535,7 @@ class AdminController extends BaseController
 		//$total += $shipping;
 		$discount = 0;
 		foreach ($items as $itemList) {
-//                dd($itemList);
+
 			$medicine = Medicine::medicines ($itemList->medicine);
 			$tbody .= "<tr>
 				    <td>" . $i++ . "</td>

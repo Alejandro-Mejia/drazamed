@@ -168,9 +168,6 @@
         public function postUser()
         {
 
-
-            // dd($password);
-
             try {
                 // if (!$this->isCsrfAccepted())
                 //     throw new Exception('Invalid request parameters', 401);
@@ -181,7 +178,6 @@
                 $password = Request::get('password', '');
                 $admin = Admin::where('email', '=', $email)->first();
                 $user = null;
-                // dd($password);
 
                 if (is_null($admin)) {
                     $admin = new Admin;
@@ -195,7 +191,6 @@
                 }
                 $status = $admin->save();
 
-                // dd($status);
 
                 if ($status && is_null($user)) {
                     $user = new User();

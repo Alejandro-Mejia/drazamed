@@ -34,7 +34,7 @@
           <i class="fa fa-bars"></i>
         </a>
         <a href="{{ url('/') }}" class="navbar-brand">
-          <img style="margin-top:15px" src="{{'SYSTEM_IMAGE_URL'.Setting::param('site','logo')['value'] }}" class="m-r-sm" alt="scale">
+          <img style="margin-top:15px" src="{{config('constants.SYSTEM_IMAGE_URL') . Setting::param('site','logo')['value'] }}" class="m-r-sm" alt="scale">
         </a>
         <a class="btn btn-link visible-xs" data-toggle="dropdown" data-target=".user">
           <i class="fa fa-cog"></i>

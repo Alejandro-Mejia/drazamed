@@ -84,6 +84,7 @@ use Illuminate\Database\Eloquent\Model;
     Route::any('/user/check-user-name', 'UserController@anyCheckUserName');
     Route::any('/user/user-login/{is_web}', 'UserController@anyUserLogin');
     Route::any('/user/activate-account', 'UserController@anyActivateAccount');
+    Route::any('/user/contact-us', 'UserController@anyContactUs');
     Route::any('/user/web-activate-account/{code}', 'UserController@anyWebActivateAccount');
     // Route::controller('medicine', 'MedicineController');
     // Route::resource('/medicine', 'MedicineController');
@@ -243,19 +244,6 @@ use Illuminate\Database\Eloquent\Model;
 
 // Auth::routes();
 
-Route::get('testEmail', function () {
-
-    $user = [
-        'name' => 'Mahedi Hasan',
-        'info' => 'Laravel Developer'
-    ];
-
-    \Mail::to('alejandro@aulalibre.org')->send(new \App\Mail\NewMail($user));
-
-    dd("success");
-
-});
-
 /**
  * Clear cache from server
  */
@@ -265,30 +253,27 @@ Route::get('/clear-cache', function() {
 });
 
 
-Route::get('/home', 'HomeController@index')->name('home');
+// Route::get('/home', 'HomeController@index')->name('home');
+/**
+ * Captcha Test
+ */
+Route::any('captcha-test', function() {
+    if (request()->getMethod() == 'POST') {
+        $rules = ['captcha' => 'required|captcha'];
+        $validator = validator()->make(request()->all(), $rules);
+        if ($validator->fails()) {
+            echo '<p style="color: #ff0000;">Incorrect!</p>';
+        } else {
+            echo '<p style="color: #00ff30;">Matched :)</p>';
+        }
+    }
 
+    $form = '<form method="post" action="captcha-test">';
+    $form .= '<input type="hidden" name="_token" value="' . csrf_token() . '">';
+    $form .= '<p>' . captcha_img() . '</p>';
+    $form .= '<p><input type="text" name="captcha"></p>';
+    $form .= '<p><button type="submit" name="check">Check</button></p>';
+    $form .= '</form>';
+    return $form;
+});
 
-
-
-
-
-
-// Route::any('captcha-test', function() {
-//         if (request()->getMethod() == 'POST') {
-//             $rules = ['captcha' => 'required|captcha'];
-//             $validator = validator()->make(request()->all(), $rules);
-//             if ($validator->fails()) {
-//                 echo '<p style="color: #ff0000;">Incorrect!</p>';
-//             } else {
-//                 echo '<p style="color: #00ff30;">Matched :)</p>';
-//             }
-//         }
-
-//         $form = '<form method="post" action="captcha-test">';
-//         $form .= '<input type="hidden" name="_token" value="' . csrf_token() . '">';
-//         $form .= '<p>' . captcha_img() . '</p>';
-//         $form .= '<p><input type="text" name="captcha"></p>';
-//         $form .= '<p><button type="submit" name="check">Check</button></p>';
-//         $form .= '</form>';
-//         return $form;
-//     });

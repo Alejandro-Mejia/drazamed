@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use App\User;
 use App\UserType;
 use App\UserStatus;
+use App\Setting;
 use App\Customer;
 use App\MedicalProfessional;
 use DB;
@@ -353,7 +354,7 @@ class UserController extends BaseController
 	public function anyWebActivateAccount ($code)
 	{
 		$user = User::where ('security_code' , '=' , $code)->first ();
-		// dd($user);
+
 		if (count ((array)$user)) {
 			$updatedValues = array('user_status' => UserStatus::ACTIVE ());
 			User::where ('security_code' , '=' , $code)->update ($updatedValues);
@@ -511,7 +512,7 @@ class UserController extends BaseController
 				return View::make ('users.account_page' , array('user_data' => Auth::user()->professional));
 				break;
 			case (UserType::CUSTOMER ()):  //for customers
-				// dd(Auth::user());
+
 				return View::make ('users.account_page' , array('user_data' => Auth::user()->customer));
 				break;
 		}
@@ -584,8 +585,6 @@ class UserController extends BaseController
 	 */
 	public function anyContactUs ()
 	{
-		if (!$this->isCsrfAccepted ())
-			return 0;
 		$client_name = Request::get ('name');
 		$client_mail = Request::get ('email');
 		$client_msg = Request::get ('msg');

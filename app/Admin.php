@@ -17,7 +17,6 @@ class Admin extends Model
 	 */
 	public function user_details ()
 	{
-		dd(UserType::ADMIN ());
 		return $this->hasOne ('User' , 'user_id' , 'id')->where ('user_type_id' , '=' , UserType::ADMIN ())->first ();
 	}
 }

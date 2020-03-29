@@ -44,7 +44,7 @@ class MedicineController extends BaseController
 	{
 
 		if ($isWeb) {
-			// dd(auth()->user());
+
 			if (Auth::check ()) {
 				$email = Session::get ('user_id');
 				$user_type = Auth::user ()->user_type_id;
@@ -1338,13 +1338,12 @@ class MedicineController extends BaseController
 				// Getting all results
     			$results = $reader->get();
 
-    			dd($results);
 			});
 
 			Excel::selectSheetsByIndex(0)->load ($file , function ($reader) {
 				// Getting all results
 				$content = $reader->get ();
-				dd($content);
+
 				$results = [];
 				$aAllMedcines = Medicine::select ('item_name')->get ()->toArray ();
 				$available_medicines = array_column ($aAllMedcines , 'item_name');
