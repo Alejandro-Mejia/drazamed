@@ -32,7 +32,7 @@ $(function()
   {{ $medicines->links() }}
 <div class="col-lg-3 col-md-3 pull-right" style="text-align: center;padding: 10px;"><input class="form-control input-md" type="text" name="medine_search" id="medicine_search" placeholder="Search medicine by name" onkeyup="filter_medine(this.value,'ASC')"></div>
   <section class="panel panel-default">
-   
+
    <table class="table table-striped m-b-none dataTable" id="myTable">
 	<thead>
 	  <tr>
@@ -50,14 +50,14 @@ $(function()
 	  </tr>
 	</thead>
 	<tbody id="medicine_content">
-	<?php 
+	<?php
 	if(count($medicines)>0)
 	{
-	$pageNumber= Input::get('page');	
+	$pageNumber= Request::get('page');
 	for($i=0;$i<count($medicines);$i++)
 	{?>
 	   <tr>
-	   <td><?php echo(isset($pageNumber)?$i+1+((Input::get('page')-1)*30):$i+1)?></td>
+	   <td><?php echo(isset($pageNumber)?$i+1+((Request::get('page')-1)*30):$i+1)?></td>
 	   <td><?php echo $medicines[$i]['name']?></td>
 	   <td><?php echo $medicines[$i]['item_code']?></td>
 	   <td><?php echo $medicines[$i]['exp']?></td>
@@ -82,12 +82,12 @@ $(function()
 	   <?php } } else {?>
 	   <tr><td colspan="7">No Medicines Found.</td></tr>
 	   <?php }?>
-	
-	
+
+
 	</tbody>
-	
+
    </table>
-   
+
  </section>
 </section>
 </section>

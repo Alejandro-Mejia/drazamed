@@ -99,6 +99,8 @@ use Illuminate\Database\Eloquent\Model;
 
     Route::get('/admin/dashboard', 'AdminController@getDashboard');
     Route::get('/admin/today-pres-dash', 'AdminController@getTodayPresDash');
+    Route::post('/admin/pres-delete/{pres_id}/{status}', 'AdminController@anyPresDelete');
+    Route::get('/admin/pres-edit/{pres_id}/{status}', 'AdminController@getPresEdit');
     Route::get('/admin/dash-ord', 'AdminController@getDashOrd');
     Route::get('/admin/dash-detail', 'AdminController@getDashDetail');
     Route::get('/admin/load-customers', 'AdminController@getLoadCustomers');

@@ -1,7 +1,7 @@
 <?php
-$client_name=Input::get('name');
-$client_mail=Input::get('email');
-$client_msg=Input::get('msg');
+$client_name=Request::get('name');
+$client_mail=Request::get('email');
+$client_msg=Request::get('msg');
 
 
 echo "Name : ".$client_name;

@@ -27,17 +27,17 @@ $(function()
 	  </tr>
 	</thead>
 	<tbody>
-	<?php 
+	<?php
 	if(count($mprof)>0)
 	{
-	$pageNumber= Input::get('page');
+	$pageNumber= Request::get('page');
 		$i=0;
 	foreach($mprof as $prof)
 	{
 
 	?>
 	   <tr>
-	   <td><?php echo(isset($pageNumber)?$i+1+((Input::get('page')-1)*30):$i+1)?></td>
+	   <td><?php echo(isset($pageNumber)?$i+1+((Request::get('page')-1)*30):$i+1)?></td>
 	   <td><?php echo $prof->prof_mail; ?></td>
 	   <td><?php echo $prof->prof_phone; ?></td>
 	   <td><?php echo $prof->prof_first_name; ?></td>

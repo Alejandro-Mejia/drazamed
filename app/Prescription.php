@@ -15,7 +15,7 @@ class Prescription extends Model
 	 */
 	public function getInvoice ()
 	{
-		return $this->hasOne ('Invoice' , 'pres_id' , 'id');
+		return $this->hasOne ('App\Invoice' , 'pres_id' , 'id');
 	}
 
 	/**
@@ -25,7 +25,7 @@ class Prescription extends Model
 	 */
 	public function getUser ()
 	{
-		return $this->hasOne ('User' , 'id' , 'user_id');
+		return $this->hasOne ('App\User' , 'id' , 'user_id');
 	}
 
 	/**
@@ -33,7 +33,7 @@ class Prescription extends Model
 	 */
 	public function getCart ()
 	{
-		return $this->hasManyThrough ('ItemList' , 'Invoice' , 'pres_id' , 'invoice_id');
+		return $this->hasManyThrough ('App\ItemList' , 'App\Invoice' , 'pres_id' , 'invoice_id');
 
 	}
 

@@ -198,7 +198,7 @@
                 font-family: inherit;
             }
 
-            input::-webkit-input-placeholder {
+            Request::-webkit-input-placeholder {
                 color: inherit;
                 opacity: .5;
             }
@@ -208,12 +208,12 @@
                 opacity: .5;
             }
 
-            input::-ms-input-placeholder {
+            Request::-ms-input-placeholder {
                 color: inherit;
                 opacity: .5;
             }
 
-            input::placeholder {
+            Request::placeholder {
                 color: inherit;
                 opacity: .5;
             }
