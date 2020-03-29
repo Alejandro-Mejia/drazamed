@@ -51,12 +51,12 @@ $(function()
 	   <td>{{date('d-M-Y',strtotime($pres[$i]->created_date))}}</td>
 	   <td>
 	    @if($pres[$i]->shipping_status != ShippingStatus::SHIPPED())
-	        <a class='btn btn-s-md btn-info btn-rounded' href='{{url()}}/admin/ship-order/{{$pres[$i]->pres_id}}'  onclick="return confirm('Do you really want to make this order as shipped?');">Ship Order</a>
+	        <a class='btn btn-s-md btn-info btn-rounded' href='{{url('/')}}/admin/ship-order/{{$pres[$i]->pres_id}}'  onclick="return confirm('Do you really want to make this order as shipped?');">Ship Order</a>
         @else
             Shipped
         @endif
-	   {{--&nbsp;&nbsp;&nbsp;<a class='btn btn-s-md btn-danger btn-rounded' href='{{url()}}/admin/pres-delete/{{$pres[$i]->pres_id}}/paid'  onclick="return confirm('Are you sure you want to delete this item?');">Delete</a></td>--}}
-	   <td><a class='text-info' href='{{url()}}/admin/load-invoice/{{$pres[$i]->id}}'>{{ $pres[$i]->invoice }}</a></td>
+	   {{--&nbsp;&nbsp;&nbsp;<a class='btn btn-s-md btn-danger btn-rounded' href='{{url('/')}}/admin/pres-delete/{{$pres[$i]->pres_id}}/paid'  onclick="return confirm('Are you sure you want to delete this item?');">Delete</a></td>--}}
+	   <td><a class='text-info' href='{{url('/')}}/admin/load-invoice/{{$pres[$i]->id}}'>{{ $pres[$i]->invoice }}</a></td>
 	   </tr>
 	   <?php } } else {?>
 	   <tr><td colspan="7">No Prescriptions Found.</td></tr>
@@ -87,10 +87,10 @@ $(function()
                       $.each(data, function ($key, $med) {
                            table_con+="<tr><td>"+i+"</td><td>"+$med.email+"</td><td>"+$med.created_date+"</td>";
                            if($med.shipping_status != $('#shipping_status').val())
-                            table_con+="<td><a class='btn btn-s-md btn-info btn-rounded' href='{{url()}}/admin/ship-order/"+$med.pres_id+"'  onclick='return confirm(\"Do you really want to make this order as shipped?\");'>Ship Order</a></td>";
+                            table_con+="<td><a class='btn btn-s-md btn-info btn-rounded' href='{{url('/')}}/admin/ship-order/"+$med.pres_id+"'  onclick='return confirm(\"Do you really want to make this order as shipped?\");'>Ship Order</a></td>";
                             else
                             table_con+="<td>Shipped</td>";
-                              table_con+="<td><a class='text-info' href='{{url()}}/admin/load-invoice/"+$med.pres_id+"'>"+$med.invoice+"</a></td></tr>";
+                              table_con+="<td><a class='text-info' href='{{url('/')}}/admin/load-invoice/"+$med.pres_id+"'>"+$med.invoice+"</a></td></tr>";
                            i++;
                       });
                   }else{

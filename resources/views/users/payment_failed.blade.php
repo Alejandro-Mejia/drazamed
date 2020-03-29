@@ -10,12 +10,12 @@
     {{--<script src="assets/js/jquery.form.js"></script>--}}
 
 
-    <script type="text/javascript" src="{{url()}}/javascripts/jquery.validate.min.js"></script>
+    <script type="text/javascript" src="{{url('/')}}/javascripts/jquery.validate.min.js"></script>
     <div class="contact-container">
         <div class="prescription-inner container alert-danger" style="min-height: 680px;text-align:center;line-height:60px;">
              <h2><strong>Failure !</strong> Your payment was not processed.</h2>
              <p> Due to some technical issues, your payment was not processed, please contact us incase of any queries.</p>
-             <a href="{{url()}}" class="btn btn-warning" style="background-color: #6d7289">Back To Home</a>
+             <a href="{{url('/')}}" class="btn btn-warning" style="background-color: #6d7289">Back To Home</a>
         </div>
         <!-- prescription-cont -->
     </div>

@@ -8,22 +8,22 @@
     <title>{{ Setting::param('site','app_name')['value'] }}</title>
 
 
-    <link href="{{url()}}/assets/sass/styles.css?{{ date('Y-m-d h:i:s') }}" rel="stylesheet">
-    <link href="{{url()}}/assets/stylesheets/smk-accordion.css?{{ date('Y-m-d h:i:s') }}" rel="stylesheet">
-    <link rel="shortcut icon" href="{{url()}}/favicon.ico" type="image/x-icon">
-    <link rel="icon" href="{{url()}}/favicon.ico" type="image/x-icon">
+    <link href="{{url('/')}}/assets/sass/styles.css?{{ date('Y-m-d h:i:s') }}" rel="stylesheet">
+    <link href="{{url('/')}}/assets/stylesheets/smk-accordion.css?{{ date('Y-m-d h:i:s') }}" rel="stylesheet">
+    <link rel="shortcut icon" href="{{url('/')}}/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="{{url('/')}}/favicon.ico" type="image/x-icon">
 
     {{--<link href="{{ URL::asset('sass/style2.css') }}" rel="stylesheet">--}}
-    <script src="{{url()}}/assets/javascripts/jquery.min.js"></script>
+    <script src="{{url('/')}}/assets/javascripts/jquery.min.js"></script>
 
-    <link rel="stylesheet" href="{{url()}}/assets/javascripts/jquery-ui.css">
-    <script src="{{url()}}/assets/javascripts/jquery-1.10.2.js"></script>
-    <script src="{{url()}}/assets/javascripts/jquery-ui.js"></script>
-    <script src="{{url()}}/assets/javascripts/smk-accordion.js"></script>
+    <link rel="stylesheet" href="{{url('/')}}/assets/javascripts/jquery-ui.css">
+    <script src="{{url('/')}}/assets/javascripts/jquery-1.10.2.js"></script>
+    <script src="{{url('/')}}/assets/javascripts/jquery-ui.js"></script>
+    <script src="{{url('/')}}/assets/javascripts/smk-accordion.js"></script>
     {{--<script src="assets/js/jquery.form.js"></script>--}}
 
 
-    <script type="text/javascript" src="{{url()}}/assets/javascripts/jquery.validate.min.js"></script>
+    <script type="text/javascript" src="{{url('/')}}/assets/javascripts/jquery.validate.min.js"></script>
 </head>
 <body>
 <div id="wrapper">

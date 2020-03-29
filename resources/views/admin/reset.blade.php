@@ -3,24 +3,24 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>Reset</title>
-  <link rel="stylesheet" href="{{url()}}/assets/adminFiles/css/bootstrap.css" type="text/css" />
-  <link rel="stylesheet" href="{{url()}}/assets/adminFiles/css/animate.css" type="text/css" />
-  <link rel="stylesheet" href="{{url()}}/assets/adminFiles/css/font-awesome.min.css" type="text/css" />
-  <link rel="stylesheet" href="{{url()}}/assets/adminFiles/css/icon.css" type="text/css" />
-  <link rel="stylesheet" href="{{url()}}/assets/adminFiles/css/font.css" type="text/css" />
-  <link rel="stylesheet" href="{{url()}}/assets/adminFiles/css/app.css" type="text/css" />
+  <link rel="stylesheet" href="{{url('/')}}/assets/adminFiles/css/bootstrap.css" type="text/css" />
+  <link rel="stylesheet" href="{{url('/')}}/assets/adminFiles/css/animate.css" type="text/css" />
+  <link rel="stylesheet" href="{{url('/')}}/assets/adminFiles/css/font-awesome.min.css" type="text/css" />
+  <link rel="stylesheet" href="{{url('/')}}/assets/adminFiles/css/icon.css" type="text/css" />
+  <link rel="stylesheet" href="{{url('/')}}/assets/adminFiles/css/font.css" type="text/css" />
+  <link rel="stylesheet" href="{{url('/')}}/assets/adminFiles/css/app.css" type="text/css" />
 </head>
 
 
 <body class="">
 
-  <div id="content" class="m-t-lg wrapper-md animated fadeInUp" style="height:700px">    
+  <div id="content" class="m-t-lg wrapper-md animated fadeInUp" style="height:700px">
     <div class="container aside-xl" style="background-color:#E6E6E6;border-radius: 5px;">
       <section class="m-b-lg">
         <header class="wrapper text-center">
           <strong>Reset Admin password</strong>
         </header>
-        <?php 
+        <?php
 	 if(Session::has('message')){?>
 	<div style="color: red"><h4> <?php echo Session::get('message');?> </h4></div>
 	<?php }?>
@@ -47,11 +47,11 @@
     </div>
   </footer>
   <!-- / footer -->
-  <script src="{{url()}}/assets/adminFiles/js/jquery.min.js"></script>
+  <script src="{{url('/')}}/assets/adminFiles/js/jquery.min.js"></script>
   <!-- Bootstrap -->
-  <script src="{{url()}}/assets/adminFiles/js/bootstrap.js"></script>
+  <script src="{{url('/')}}/assets/adminFiles/js/bootstrap.js"></script>
   <!-- App -->
-  <script src="{{url()}}/assets/adminFiles/js/app.js"></script>
-  <script src="{{url()}}/assets/adminFiles/js/slimscroll/jquery.slimscroll.min.js"></script>
-    <script src="{{url()}}/assets/adminFiles/js/app.plugin.js"></script>
+  <script src="{{url('/')}}/assets/adminFiles/js/app.js"></script>
+  <script src="{{url('/')}}/assets/adminFiles/js/slimscroll/jquery.slimscroll.min.js"></script>
+    <script src="{{url('/')}}/assets/adminFiles/js/app.plugin.js"></script>
 </body>

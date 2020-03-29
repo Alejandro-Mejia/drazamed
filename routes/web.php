@@ -88,6 +88,7 @@ use Illuminate\Database\Eloquent\Model;
     // Route::controller('medicine', 'MedicineController');
     // Route::resource('/medicine', 'MedicineController');
     Route::post('/medicine/add-new-medicine', 'MedicineController@postAddNewMedicine');
+    Route::post('/medicine/upload', 'MedicineController@postUpload');
     Route::any('/medicine/load-medicine-web', 'MedicineController@anyLoadMedicineWeb');
     Route::any('/medicine/store-prescription/{is_web}', 'MedicineController@anyStorePrescription');
 
@@ -95,6 +96,7 @@ use Illuminate\Database\Eloquent\Model;
     // Route::get('/admin', 'AdminController@index');
     // Route::resource('/admin', 'AdminController');
     Route::any('/admin/login', 'AdminController@anyLogin');
+
     Route::get('/admin/dashboard', 'AdminController@getDashboard');
     Route::get('/admin/today-pres-dash', 'AdminController@getTodayPresDash');
     Route::get('/admin/dash-ord', 'AdminController@getDashOrd');
@@ -109,6 +111,7 @@ use Illuminate\Database\Eloquent\Model;
     Route::any('/admin/load-shipped-prescription', 'AdminController@anyLoadShippedPrescription');
     Route::any('/admin/load-deleted-prescription', 'AdminController@anyLoadDeletedPrescription');
     Route::any('/admin/load-all-prescription', 'AdminController@anyLoadAllPrescription');
+    Route::get('/admin/add-med', 'AdminController@getAddMed');
 
     // Route::controller('setting', 'SettingController');
     // Route::get('/setting', 'SettingController@index');
@@ -124,6 +127,16 @@ use Illuminate\Database\Eloquent\Model;
     // Implicit Controllers
     // php artisan clear-compiled
     //
+
+    /**
+     * Test related routes
+     */
+    Route::get('import-test', 'TestController@importExport');
+    Route::post('import', 'TestController@import');
+    Route::get('export', 'TestController@export');
+
+
+
     /*
     |--------------------------------------------------------------------------
     | Admin Related Pages

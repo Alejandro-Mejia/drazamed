@@ -8,20 +8,20 @@
     <title>{{ Setting::param('site','app_name')['value'] }}</title>
 
 
-    <link href="{{url()}}/assets/sass/styles.css?{{ date('Y-m-d h:i:s') }}" rel="stylesheet">
-    <link rel="shortcut icon" href="{{url()}}/favicon.ico" type="image/x-icon">
-    <link rel="icon" href="{{url()}}/favicon.ico" type="image/x-icon">
+    <link href="{{url('/')}}/assets/sass/styles.css?{{ date('Y-m-d h:i:s') }}" rel="stylesheet">
+    <link rel="shortcut icon" href="{{url('/')}}/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="{{url('/')}}/favicon.ico" type="image/x-icon">
 
     {{--<link href="{{ URL::asset('sass/style2.css') }}" rel="stylesheet">--}}
-    <script src="{{url()}}/assets/javascripts/jquery.min.js"></script>
+    <script src="{{url('/')}}/assets/javascripts/jquery.min.js"></script>
 
-    <link rel="stylesheet" href="{{url()}}/assets/javascripts/jquery-ui.css">
-    <script src="{{url()}}/assets/javascripts/jquery-1.10.2.js"></script>
-    <script src="{{url()}}/assets/javascripts/jquery-ui.js"></script>
+    <link rel="stylesheet" href="{{url('/')}}/assets/javascripts/jquery-ui.css">
+    <script src="{{url('/')}}/assets/javascripts/jquery-1.10.2.js"></script>
+    <script src="{{url('/')}}/assets/javascripts/jquery-ui.js"></script>
     {{--<script src="assets/js/jquery.form.js"></script>--}}
 
 
-    <script type="text/javascript" src="{{url()}}/assets/javascripts/jquery.validate.min.js"></script>
+    <script type="text/javascript" src="{{url('/')}}/assets/javascripts/jquery.validate.min.js"></script>
 </head>
 <body>
 <div id="wrapper">
@@ -125,7 +125,7 @@ if(empty($posted['hash']) && sizeof($posted) > 0) {
             <?php if($hash) { ?>
              <div class="payment_loader" style=" position: absolute;width: 100%;height: 100%;background: rgba(0, 0, 0, 0.5);">
                              <div class="payment_overlay" style="position: absolute;left: 50%;top: 50%;transform: translate(-50%,-50%);">
-                            <img src="{{url()}}/assets/images/loader2.gif">
+                            <img src="{{url('/')}}/assets/images/loader2.gif">
                 </div>
             </div>
             <?php } ?>
@@ -163,8 +163,8 @@ if(empty($posted['hash']) && sizeof($posted) > 0) {
                       <td colspan="2"><textarea readonly="readonly" name="productinfo1" class="form-control"><?php echo (empty($posted['productinfo'])) ? '' : $posted['productinfo'] ?></textarea>
                       <textarea style="display: none" name="productinfo" class="form-control"><?php echo (empty($posted['productinfo'])) ? '' : $posted['productinfo'] ?></textarea>
                       </td>
-                      <input name="surl" value="{{ url() }}/medicine/pay-success/<?php echo $posted['id']?>"  type="hidden"/>
-                      <input name="furl" value="{{ url() }}/medicine/pay-fail/<?php echo $posted['id']?>"  type="hidden"/>
+                      <input name="surl" value="{{ url('/') }}/medicine/pay-success/<?php echo $posted['id']?>"  type="hidden"/>
+                      <input name="furl" value="{{ url('/') }}/medicine/pay-fail/<?php echo $posted['id']?>"  type="hidden"/>
                       <input type="hidden" name="service_provider" value="payu_paisa"  />
                     </tr>
 

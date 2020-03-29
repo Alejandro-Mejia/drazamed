@@ -6,12 +6,12 @@
   <meta name="description" content="app, web app, responsive, admin dashboard, admin, flat, flat ui, ui kit, off screen nav" />
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 
-  <link rel="stylesheet" href="{{url()}}/assets/adminFiles/css/bootstrap.css" type="text/css" />
-  <link rel="stylesheet" href="{{url()}}/assets/adminFiles/css/animate.css" type="text/css" />
-  <link rel="stylesheet" href="{{url()}}/assets/adminFiles/css/font-awesome.min.css" type="text/css" />
-  <link rel="stylesheet" href="{{url()}}/assets/adminFiles/css/icon.css" type="text/css" />
-  <link rel="stylesheet" href="{{url()}}/assets/adminFiles/css/font.css" type="text/css" />
-  <link rel="stylesheet" href="{{url()}}/assets/adminFiles/css/app.css" type="text/css" />
+  <link rel="stylesheet" href="{{url('/')}}/assets/adminFiles/css/bootstrap.css" type="text/css" />
+  <link rel="stylesheet" href="{{url('/')}}/assets/adminFiles/css/animate.css" type="text/css" />
+  <link rel="stylesheet" href="{{url('/')}}/assets/adminFiles/css/font-awesome.min.css" type="text/css" />
+  <link rel="stylesheet" href="{{url('/')}}/assets/adminFiles/css/icon.css" type="text/css" />
+  <link rel="stylesheet" href="{{url('/')}}/assets/adminFiles/css/font.css" type="text/css" />
+  <link rel="stylesheet" href="{{url('/')}}/assets/adminFiles/css/app.css" type="text/css" />
   <link rel="stylesheet" href="//cdn.datatables.net/1.10.7/css/jquery.dataTables.min.css" type="text/css" />
    <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.2.js"></script>
   <!--[if lt IE 9]>
@@ -31,7 +31,7 @@
         <a class="btn btn-link visible-xs" data-toggle="class:nav-off-screen" data-target="#nav">
           <i class="fa fa-bars"></i>
         </a>
-        <a href="{{ url() }}" class="navbar-brand">
+        <a href="{{ url('/') }}" class="navbar-brand">
           <img style="margin-top:15px" src="{{'SYSTEM_IMAGE_URL'.Setting::param('site','logo')['value'] }}" class="m-r-sm" alt="scale">
         </a>
         <a class="btn btn-link visible-xs" data-toggle="dropdown" data-target=".user">
@@ -91,13 +91,13 @@
           </a>
           <ul class="dropdown-menu animated fadeInRight">
             <li>
-              <a href="{{url()}}/logout"  >Logout</a>
+              <a href="{{url('/')}}/logout"  >Logout</a>
             </li>
             <li>
-              <a href="{{url()}}/system-setup"  >Settings</a>
+              <a href="{{url('/')}}/system-setup"  >Settings</a>
             </li>
             <li>
-              <a href="{{url()}}/cache"  >Clear System Cache</a>
+              <a href="{{url('/')}}/cache"  >Clear System Cache</a>
             </li>
           </ul>
         </li>
@@ -122,7 +122,7 @@
                     </a>
                     <ul class="dropdown-menu animated fadeInRight m-t-xs">
                       <li>
-                        <a href="{{url()}}/logout">Logout</a>
+                        <a href="{{url('/')}}/logout">Logout</a>
                       </li>
                     </ul>
                   </div>
@@ -134,7 +134,7 @@
                   <div class="text-muted text-sm hidden-nav-xs padder m-t-sm m-b-sm"></div>
                   <ul class="nav nav-main" data-ride="collapse">
                     <li id="dash"  class="active">
-                      <a href="{{url()}}/admin/dashboard" class="auto">
+                      <a href="{{url('/')}}/admin/dashboard" class="auto">
                         <i class="fa fa-fw fa-dashboard">
                         </i>
                         <span class="font-bold">Dashboard</span>
@@ -150,14 +150,14 @@
                       </a>
                       <ul class="nav dk">
                         <li >
-                          <a href="{{url()}}/admin/load-customers" class="auto">
+                          <a href="{{url('/')}}/admin/load-customers" class="auto">
                              <i class="fa fa-user"></i>
 
                             <span>Customers</span>
                           </a>
                         </li>
                         <li >
-                          <a href="{{url()}}/admin/load-medicalprof" class="auto">
+                          <a href="{{url('/')}}/admin/load-medicalprof" class="auto">
                             <i class="fa fa-user-md"></i>
 
                             <span>Medical Professionals</span>
@@ -167,14 +167,14 @@
                       </ul>
                     </li>
                     <li id="medicine">
-                      <a href="{{url()}}/admin/load-medicines" class="auto">
+                      <a href="{{url('/')}}/admin/load-medicines" class="auto">
                         <i class="fa fa-fw fa-hospital-o">
                         </i>
                         <span class="font-bold">Medicine List</span>
                       </a>
                     </li>
                     <li id="requested">
-                      <a href="{{url()}}/admin/load-new-medicines" class="auto">
+                      <a href="{{url('/')}}/admin/load-new-medicines" class="auto">
                         <i class="fa fa-fw  fa-user-md"></i>
                         <span class="font-bold">Requested Medicines List</span>
                       </a>
@@ -190,38 +190,38 @@
                       <ul class="nav dk">
 
                         <li >
-                          <a href="{{url()}}/admin/load-pending-prescription" class="auto">
+                          <a href="{{url('/')}}/admin/load-pending-prescription" class="auto">
                             <i class="fa fa-user-md"></i>
                             <span>Unverified Prescriptions</span>
                           </a>
                         </li>
                         <li >
-                          <a href="{{url()}}/admin/load-active-prescription" class="auto">
+                          <a href="{{url('/')}}/admin/load-active-prescription" class="auto">
                             <i class="fa fa-credit-card"></i>
 
                             <span>Verified Prescriptions</span>
                           </a>
                         </li>
                         <li >
-                          <a href="{{url()}}/admin/load-paid-prescription" class="auto">
+                          <a href="{{url('/')}}/admin/load-paid-prescription" class="auto">
                             <i class="fa fa-paperclip"></i>
                             <span>Paid Prescriptions</span>
                           </a>
                         </li>
                         <li >
-                          <a href="{{url()}}/admin/load-shipped-prescription" class="auto">
+                          <a href="{{url('/')}}/admin/load-shipped-prescription" class="auto">
                             <i class="fa fa-truck"></i>
                             <span>Shipped Prescriptions</span>
                           </a>
                         </li>
                         <li >
-                          <a href="{{url()}}/admin/load-deleted-prescription" class="auto">
+                          <a href="{{url('/')}}/admin/load-deleted-prescription" class="auto">
                              <i class="fa fa-th-list"></i>
                             <span>Deleted Prescriptions</span>
                           </a>
                         </li>
                         <li >
-                          <a href="{{url()}}/admin/load-all-prescription" class="auto">
+                          <a href="{{url('/')}}/admin/load-all-prescription" class="auto">
                              <i class="fa fa-th-list"></i>
                             <span>All Prescriptions</span>
                           </a>
@@ -238,7 +238,7 @@
             </section>
 
             <footer class="footer hidden-xs no-padder text-center-nav-xs">
-              <a href="{{url()}}/logout"  class="btn btn-icon icon-muted btn-inactive pull-right m-l-xs m-r-xs hidden-nav-xs">
+              <a href="{{url('/')}}/logout"  class="btn btn-icon icon-muted btn-inactive pull-right m-l-xs m-r-xs hidden-nav-xs">
                 <i class="i i-logout"></i>
               </a>
               <a href="#nav" data-toggle="class:nav-xs" class="btn btn-icon icon-muted btn-inactive m-l-xs m-r-xs">

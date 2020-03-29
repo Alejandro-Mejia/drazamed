@@ -8,7 +8,7 @@
         border-color: #ddd;
     }
 </style>
-<link rel="stylesheet" href="{{url()}}/assets/adminFiles/css/bootstrap-spinner.css" type="text/css"/>
+<link rel="stylesheet" href="{{url('/')}}/assets/adminFiles/css/bootstrap-spinner.css" type="text/css"/>
 <section id="content">
 <section class="vbox">
 <section class="scrollable padder">
@@ -23,13 +23,13 @@
                style="float:right;border-radius:26px; display: none"></i>
         </header>
         <div style="padding:15px">
-            <img id='presImgId' src="{{url()}}/public/images/prescription/<?php echo $email . '/' . $path; ?>"
+            <img id='presImgId' src="{{url('/')}}/public/images/prescription/<?php echo $email . '/' . $path; ?>"
                  style="display: block;width: 70%; height:50%;margin-left:100px"/>
         </div>
     </section>
 </div>
 <div class="col-sm-6 portlet ui-sortable">
-    <form action="{{url()}}/admin/update-invoice" method="POST">
+    <form action="{{url('/')}}/admin/update-invoice" method="POST">
         <section class="panel panel-default portlet-item" style="height:700px;width:600px">
             <header class="panel-heading" style="height:55px">
                 <?php if ($status == 1) {
@@ -191,7 +191,7 @@
                     $(document).on('focus', '.auto-input', function (e) {
                         var id = this.id.match(/\d+/)[0];
                         $(this).autocomplete({
-                            serviceUrl: '{{url()}}/admin/load-medicine-web',
+                            serviceUrl: '{{url('/')}}/admin/load-medicine-web',
                             onSelect: function (suggestion) {
                                 console.log(suggestion);
                                 $("#price" + id).val(suggestion.mrp);
@@ -229,6 +229,6 @@
 </section>
 </section>
 </section>
-<script src="{{url()}}/assets/adminFiles/js/jquery.autocomplete.js"></script>
-<script src="{{url()}}/assets/adminFiles/js/jquery.spinner.js"></script>
+<script src="{{url('/')}}/assets/adminFiles/js/jquery.autocomplete.js"></script>
+<script src="{{url('/')}}/assets/adminFiles/js/jquery.spinner.js"></script>
 @include('admin/footer')

@@ -12,6 +12,7 @@ use Response;
 use View;
 use Mail;
 use DB;
+use Excel;
 use App\PrescriptionStatus;
 use App\ShippingStatus;
 use App\InvoiceStatus;
@@ -422,7 +423,7 @@ class MedicineController extends BaseController
 			if (is_null ($email))
 				throw new Exception('Email is not available' , 400);
 
-			$path = url () . '/public/images/prescription/' . $email . '/';
+			$path = url('/') . '/public/images/prescription/' . $email . '/';
 
 			$user_id = User::where ('email' , '=' , $email)->first ()->id;
 
@@ -436,7 +437,7 @@ class MedicineController extends BaseController
 
 			$responses = [];
 			$medicines = Medicine::medicines ();
-			$default_img = url () . "/assets/images/no_pres_square.png";
+			$default_img = url('/') . "/assets/images/no_pres_square.png";
 			foreach ($prescriptions as $prescription) {
 				//$prescriptionLink[$i++]=array('link'=>$presLink->path.'_thumb','status_pres'=>$presLink->status);
 				$filename = $prescription->path;
@@ -769,7 +770,7 @@ class MedicineController extends BaseController
 	{
 		$pres_id = Request::get ('pres_id');
 		$u = User::join ('prescription' , 'prescription.user_id' , '=' , 'users.id')->where ('id' , '=' , $pres_id)->first ();
-		$path = url () . '/public/images/prescription/' . $u->email . '/' . $u->path;
+		$path = url('/') . '/public/images/prescription/' . $u->email . '/' . $u->path;
 		$result = array(array('result' => array('status' => 'success' , 'link' => $path)));
 
 		return Response::json ($result);
@@ -1321,11 +1322,10 @@ class MedicineController extends BaseController
 	 */
 
 	public
-	function postUpload ()
+	function postUpload()
 	{
 		try {
-			if (!$this->isCsrfAccepted ())
-				throw new Exception('FORBIDDEN' , 403);
+
 			if (!Request::hasFile ('file'))
 				throw new Exception('BAD REQUEST' , 400);
 			$file = Request::file ('file');
@@ -1333,9 +1333,18 @@ class MedicineController extends BaseController
 			if (!in_array ($extension , ['xls' , 'xlsx'])) {
 				throw new Exception('Invalid File Uploaded ! Please upload either xls or xlsx file' , 400);
 			}
-			Excel::selectSheetsByIndex (0)->load ($file , function ($reader) {
+			Excel::load($file, function($reader){
+
+				// Getting all results
+    			$results = $reader->get();
+
+    			dd($results);
+			});
+
+			Excel::selectSheetsByIndex(0)->load ($file , function ($reader) {
 				// Getting all results
 				$content = $reader->get ();
+				dd($content);
 				$results = [];
 				$aAllMedcines = Medicine::select ('item_name')->get ()->toArray ();
 				$available_medicines = array_column ($aAllMedcines , 'item_name');

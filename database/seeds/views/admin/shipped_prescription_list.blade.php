@@ -51,9 +51,9 @@ $(function()
 	   <td>{{date('d-M-Y',strtotime($pres[$i]->date_created))}}</td>
 	   <td style="text-align: center">{{$paid}}</td>
 	   <td>{{ PrescriptionStatus::statusName($pres[$i]->status)}}</td>
-	   <td><a class='btn btn-s-md btn-info btn-rounded' href='{{url()}}/admin/pres-edit/{{$pres[$i]->pres_id}}/0' >Details</a>&nbsp;&nbsp;&nbsp;
-	   {{--<a class='btn btn-s-md btn-danger btn-rounded' href='{{url()}}/admin/pres-delete/{{$pres[$i]->pres_id}}/shipped' onclick="return confirm('Do you really want to delete this order?');">Delete</a></td>--}}
-	   <td><a class='text-info' href='{{url()}}/admin/load-invoice/{{$pres[$i]->id}}'>{{ $pres[$i]->invoice;}}</a></td>
+	   <td><a class='btn btn-s-md btn-info btn-rounded' href='{{url('/')}}/admin/pres-edit/{{$pres[$i]->pres_id}}/0' >Details</a>&nbsp;&nbsp;&nbsp;
+	   {{--<a class='btn btn-s-md btn-danger btn-rounded' href='{{url('/')}}/admin/pres-delete/{{$pres[$i]->pres_id}}/shipped' onclick="return confirm('Do you really want to delete this order?');">Delete</a></td>--}}
+	   <td><a class='text-info' href='{{url('/')}}/admin/load-invoice/{{$pres[$i]->id}}'>{{ $pres[$i]->invoice;}}</a></td>
 	   </tr>
 	   <?php } } else {?>
 	   <tr><td colspan="7">No Prescriptions Found.</td></tr>
@@ -83,8 +83,8 @@ $(function()
                    {
                        $.each(data, function ($key, $med) {
                             table_con+="<tr><td>"+i+"</td><td>"+$med.email+"</td><td>"+$med.created_date+"</td><td style='text-align: center'><i class='fa fa-check'  style='color:#01DF01'></i></td><td>Shipped</td>" +
-                             "<td><a class='btn btn-s-md btn-info btn-rounded' href='{{url()}}/admin/pres-edit/"+$med.pres_id+"/0' >Details</a></td>" +
-                               "<td><a class='text-info' href='{{url()}}/admin/load-invoice/"+$med.pres_id+"'>EZ" +(1000000+$med.pres_id)+"</a></td></tr>";
+                             "<td><a class='btn btn-s-md btn-info btn-rounded' href='{{url('/')}}/admin/pres-edit/"+$med.pres_id+"/0' >Details</a></td>" +
+                               "<td><a class='text-info' href='{{url('/')}}/admin/load-invoice/"+$med.pres_id+"'>EZ" +(1000000+$med.pres_id)+"</a></td></tr>";
                             i++;
                        });
                    }else{

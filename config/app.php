@@ -168,6 +168,7 @@ return [
         Mews\Captcha\CaptchaServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
         Barryvdh\Debugbar\ServiceProvider::class,
+        Maatwebsite\Excel\ExcelServiceProvider::class,
         // Aws\Laravel\AwsServiceProvider::class,
         /*
          * Application Service Providers...
@@ -237,6 +238,7 @@ return [
         'Html' => 'Collective\Html\HtmlFacade',
         'Setting' => App\Setting::class,
         'UserType' => App\UserType::class,
+        'UserStatus' => App\UserStatus::class,
         'ShippingStatus' => App\ShippingStatus::class,
         'InvoiceStatus' => App\InvoiceStatus::class,
         'PrescriptionStatus' => App\PrescriptionStatus::class,
@@ -245,6 +247,7 @@ return [
         'Captcha' => Mews\Captcha\Facades\Captcha::class,
         'Image' => Intervention\Image\Facades\Image::class,
         'Debugbar' => Barryvdh\Debugbar\Facade::class,
+        'Excel' => Maatwebsite\Excel\Facades\Excel::class,
         // 'AWS' => Aws\Laravel\AwsFacade::class,
     ],
 

@@ -259,7 +259,7 @@ class AdminController extends BaseController
                               <li class='' ><a href='' onclick='updatePaidStatus(" . $press->pres_id . ")'" . "><input  type='checkbox' name='d-s-c-2'>Yes</a></li>
                           </ul>
                         </div></td><td>" . $press->status . "</td>
-		    	<td><a class='btn btn-s-md btn-info btn-rounded' href='" . URL . "/admin/pres-edit/" . $press->pres_id . "' >Edit</a>&nbsp;&nbsp;&nbsp;<a class='btn btn-s-md btn-danger btn-rounded' href='admin/pres-delete/" . $press->pres_id . "'>Delete</a></td><td><a class='text-info' href='" . url () . "/admin/load-invoice/" . $inv['id'] . "'>" . $inv_no . "</a></td> </tr>";
+		    	<td><a class='btn btn-s-md btn-info btn-rounded' href='" . URL . "/admin/pres-edit/" . $press->pres_id . "' >Edit</a>&nbsp;&nbsp;&nbsp;<a class='btn btn-s-md btn-danger btn-rounded' href='admin/pres-delete/" . $press->pres_id . "'>Delete</a></td><td><a class='text-info' href='" . url('/') . "/admin/load-invoice/" . $inv['id'] . "'>" . $inv_no . "</a></td> </tr>";
 			}
 
 		}
@@ -320,7 +320,7 @@ class AdminController extends BaseController
                               <li class='' ><a href='' onclick='updatePaidStatus(" . $press->pres_id . ")'" . "><input  type='checkbox' name='d-s-c-2'>Yes</a></li>
                           </ul>
                         </div></td><td>" . $press->status . "</td>
-		    	<td><a class='btn btn-s-md btn-info btn-rounded' href='" . URL . "/admin/pres-edit/" . $press->pres_id . "' >Edit</a>&nbsp;&nbsp;&nbsp;<a class='btn btn-s-md btn-danger btn-rounded' href='admin/pres-delete/" . $press->pres_id . "'>Delete</a></td><td><a class='text-info' href='" . url () . "/admin/load-invoice/" . $inv['id'] . "'>" . $inv_no . "</a></td> </tr>";
+		    	<td><a class='btn btn-s-md btn-info btn-rounded' href='" . URL . "/admin/pres-edit/" . $press->pres_id . "' >Edit</a>&nbsp;&nbsp;&nbsp;<a class='btn btn-s-md btn-danger btn-rounded' href='admin/pres-delete/" . $press->pres_id . "'>Delete</a></td><td><a class='text-info' href='" . url('/') . "/admin/load-invoice/" . $inv['id'] . "'>" . $inv_no . "</a></td> </tr>";
 
 		}
 
@@ -711,8 +711,6 @@ class AdminController extends BaseController
 	 */
 	public function postUpdateInvoice ()
 	{
-		if (!$this->isCsrfAccepted ())
-			return Redirect::back ()->withErrors (['Invalid Request']);
 
 		$got = Request::all ();
 		$sub_total = $discount = $total_price = $overall_discount = $shipping = 0;
@@ -916,7 +914,7 @@ class AdminController extends BaseController
 				else
 					$status = 'label bg-danger';
 			$notif .= "
-			  <a href='" . url () . "/admin/pres-edit/$press->pres_id/$url_status'>
+			  <a href='" . url('/') . "/admin/pres-edit/$press->pres_id/$url_status'>
 			  <div class='panel-heading b-b'>
 				 <span class='media-body block m-b-none' >" .
 				$press->email . "</br>"
@@ -1020,7 +1018,7 @@ class AdminController extends BaseController
 			$affectedRows = Medicine::where ('id' , '=' , $input['id'])->update ($edit);
 		}
 		// Clear Cache for the medicine...
-		Cache::forget (CACHE_PARAM_MEDICINE);
+		Cache::forget ('CACHE_PARAM_MEDICINE');
 
 		return Redirect::to ('admin/load-medicines');
 

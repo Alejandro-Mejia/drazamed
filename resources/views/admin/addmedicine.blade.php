@@ -11,7 +11,7 @@
     <div class="m-b-md">
                 <h3 class="m-b-none">Add/Edit Medicine</h3>
   </div>
-  
+
         <section class="panel panel-default">
         <?php $message = Session::get('message',null); ?>
         @if(!is_null($message))
@@ -19,7 +19,7 @@
         @endif
  		<header class="panel-heading font-bold">Update Medicine Database</header>
 		<strong id="div-notify" style="color: red"></strong>
-		<form method="POST" class="panel-body" action="{{url()}}/admin/new-med" accept-charset="UTF-8">
+		<form method="POST" class="panel-body" action="{{url('/')}}/admin/new-med" accept-charset="UTF-8">
 
 		{{Form::token()}}
 

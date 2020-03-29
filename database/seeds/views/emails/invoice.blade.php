@@ -13,7 +13,7 @@
 }
 </style>
 
-<link rel="stylesheet" href="<?php echo url(); ?>/assets/adminFiles/css/bootstrap-spinner.css" type="text/css" />
+<link rel="stylesheet" href="<?php echo url('/'); ?>/assets/adminFiles/css/bootstrap-spinner.css" type="text/css" />
 
 <section id="content">
           <section class="vbox bg-white">

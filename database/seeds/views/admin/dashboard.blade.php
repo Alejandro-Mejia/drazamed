@@ -11,7 +11,7 @@
                                 <i class="fa fa-user text-white"></i>
                               </span>
                               <span class="clear">
-                                <a href="{{url()}}/admin/load-customers" class="auto">
+                                <a href="{{url('/')}}/admin/load-customers" class="auto">
                                 <span id="cust" class="h3 block m-t-xs text-danger"></span>
                                 <small class="text-muted text-u-c">Customers</small>
                               </span>
@@ -24,7 +24,7 @@
                                 <i class="fa fa-user-md text-white"></i>
                               </span>
                               <span class="clear">
-                                <a href="{{url()}}/admin/load-medicalprof" class="auto">
+                                <a href="{{url('/')}}/admin/load-medicalprof" class="auto">
                                 <span id='prof' class="h3 block m-t-xs text-success"></span>
                                 <small  class="text-muted text-u-c">Total Medical Professionals</small>
                               </span>
@@ -37,7 +37,7 @@
                                 <i class="fa fa-truck text-white"></i>
                               </span>
                               <span class="clear">
-                                <a href="{{url()}}/admin/load-paid-prescription" class="auto">
+                                <a href="{{url('/')}}/admin/load-paid-prescription" class="auto">
                                 <span id='tobe' class="h3 block m-t-xs text-info">25 <span class="text-sm">m</span></span>
                                 <small class="text-muted text-u-c">To be shipped</small>
                               </span>
@@ -50,32 +50,32 @@
                                 <i class="fa fa-truck text-white"></i>
                               </span>
                               <span class="clear">
-                                <a href="{{url()}}/admin/load-shipped-prescription" class="auto">
+                                <a href="{{url('/')}}/admin/load-shipped-prescription" class="auto">
                                 <span id='shipped'class="h3 block m-t-xs text-primary">9:30</span>
                                 <small class="text-muted text-u-c">Shipped</small>
                               </span>
                             </a>
                           </div>
-                          
+
                         </div>
-                        
+
                       </div>
-                      
+
                     </div>
-                    
+
                          <div class="col-sm-6">
-	                
+
 	                 <div class="panel b-a scrollable padder"  style='max-height:270px;'>
 	                  <div class="row m-n">
           	           <div id="todaysP">
-          	           
-       			   </div>         	
+
+       			   </div>
         	     	  </div>
         	     	</div>
-        	     	
+
                   </div>
-                  
-                  
+
+
              </div>
              <section class="panel panel-default">
                 <header class="panel-heading font-bold">Sale statistics</header>
@@ -100,7 +100,7 @@
                   </div>
                 </footer>
               </section>
-              
+
               <section class="panel panel-default" style="width:50%">
                 <header class="panel-heading font-bold">This Month's statistics</header>
                 <footer class="panel-footer bg-white">
@@ -116,8 +116,8 @@
                   </div>
                 </footer>
               </section>
-              
-              
+
+
              <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.2.js"></script>
                        	<script>
                         	var not = '<?php echo URL::to('admin/today-pres-dash'); ?>';
@@ -146,13 +146,13 @@
 					});
 				var detail = '<?php echo URL::to('admin/dash-detail'); ?>';
 				$.ajax({
-				
-				
+
+
 							   type: "GET",
 							   url : detail,
 							   dataType: 'json',
 							   success: function (data) {
-							   	
+
 									$('#med').html(data.med);
 									$('#user').html(data.user);
 									$('#pres').html(data.pres);
@@ -164,4 +164,4 @@
 				});
 	     		</script>
 @include('admin/footer')
-    
+

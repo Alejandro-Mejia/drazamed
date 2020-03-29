@@ -69,11 +69,11 @@ $(function()
 	   <td><strong>{{ PrescriptionStatus::statusName($pres[$i]->status)}}</strong></td>
 	   <td ><strong>{{ InvoiceStatus::statusName($pres[$i]->in_status)}}</strong></td>
 	   <td><strong>{{ ShippingStatus::statusName($pres[$i]->shipping_status)}}</strong></td>
-	   <td><a class='text-info' href='{{url()}}/admin/load-invoice/{{$pres[$i]->id}}'>{{ $pres[$i]->invoice;}}</a></td>
+	   <td><a class='text-info' href='{{url('/')}}/admin/load-invoice/{{$pres[$i]->id}}'>{{ $pres[$i]->invoice;}}</a></td>
 
-	   <td><a class='btn btn-s-md btn-info btn-rounded' href='{{url()}}/admin/pres-edit/{{$pres[$i]->pres_id}}/{{$edit}}' >Details</a>&nbsp;&nbsp;&nbsp;
-	   <?php if($pres[$i]->status==PrescriptionStatus::UNVERIFIED()){?><a class='btn btn-s-md btn-danger btn-rounded' data-href='{{url()}}/admin/pres-delete/{{$pres[$i]->pres_id}}/all' onclick="confirm_deletion(this);">Delete</a>&nbsp;&nbsp;&nbsp;<?php }?>
-	   @if($pres[$i]->status=='paid')<a class='btn btn-s-md btn-info btn-rounded' href='{{url()}}/admin/ship-order/{{$pres[$i]->pres_id}}'  onclick="return confirm('Do you really want to make this order as shipped?');">Ship Order</a>@endif
+	   <td><a class='btn btn-s-md btn-info btn-rounded' href='{{url('/')}}/admin/pres-edit/{{$pres[$i]->pres_id}}/{{$edit}}' >Details</a>&nbsp;&nbsp;&nbsp;
+	   <?php if($pres[$i]->status==PrescriptionStatus::UNVERIFIED()){?><a class='btn btn-s-md btn-danger btn-rounded' data-href='{{url('/')}}/admin/pres-delete/{{$pres[$i]->pres_id}}/all' onclick="confirm_deletion(this);">Delete</a>&nbsp;&nbsp;&nbsp;<?php }?>
+	   @if($pres[$i]->status=='paid')<a class='btn btn-s-md btn-info btn-rounded' href='{{url('/')}}/admin/ship-order/{{$pres[$i]->pres_id}}'  onclick="return confirm('Do you really want to make this order as shipped?');">Ship Order</a>@endif
 	   </td>
 	   </tr>
 	   <?php } } else {?>
@@ -118,13 +118,13 @@ $(function()
                             $pstat= "Pending Verification";
                             $edit=1;
                             $ship = "";
-                            $delete="<a class='btn btn-s-md btn-danger btn-rounded' href='{{url()}}/admin/pres-delete/"+$med.pres_id+"/all' onclick=\"return confirm('Do you really want to delete this order?');\">Delete</a>&nbsp;&nbsp;&nbsp;"
+                            $delete="<a class='btn btn-s-md btn-danger btn-rounded' href='{{url('/')}}/admin/pres-delete/"+$med.pres_id+"/all' onclick=\"return confirm('Do you really want to delete this order?');\">Delete</a>&nbsp;&nbsp;&nbsp;"
                         }
                         else if($med.pstatus == $('#prescription_status').val() && $med.status_id !=$('#invoice_status').val() ) { // If Prescription is saved And Payment is not made
                             $pstat= "Verified";
                             $edit=0;
                             $delete="";
-                            $inv="<a class='text-info' href='{{url()}}/admin/load-invoice/"+$med.pres_id+"'>" +($med.invoice)+"</a>";
+                            $inv="<a class='text-info' href='{{url('/')}}/admin/load-invoice/"+$med.pres_id+"'>" +($med.invoice)+"</a>";
                             $ship = "";
                         }
                         else if($med.pstatus == $('#prescription_status').val() && $med.status_id ==$('#invoice_status').val()) {
@@ -132,15 +132,15 @@ $(function()
                             $edit=0;
                             $delete="";
                             $ship = "";
-                            $inv="<a class='text-info' href='{{url()}}/admin/load-invoice/"+$med.pres_id+"'>" +($med.invoice)+"</a>";
+                            $inv="<a class='text-info' href='{{url('/')}}/admin/load-invoice/"+$med.pres_id+"'>" +($med.invoice)+"</a>";
                             if($med.status_id==$('#invoice_status').val() && $med.s_status != $('#shipping_status').val()){
-                            $ship="<a class='btn btn-s-md btn-info btn-rounded' href='{{url()}}/admin/ship-order/"+$med.pres_id+"'  onclick=\"return confirm('Do you really want to make this order as shipped?');\">Ship Order</a>";
+                            $ship="<a class='btn btn-s-md btn-info btn-rounded' href='{{url('/')}}/admin/ship-order/"+$med.pres_id+"'  onclick=\"return confirm('Do you really want to make this order as shipped?');\">Ship Order</a>";
                             }
                         }
                          table_con+="<tr><td>"+i+"</td><td>"+$med.email+"</td><td>"+$med.created_date+"</td><td>"+$med.pres_status+"</i></td>" +
                           "<td>"+$med.invoice_status+"</td>"+
                           "<td>"+$med.ship_status+"</td>"+
-                          "<td>"+$inv+"</td><td><a class='btn btn-s-md btn-info btn-rounded' href='{{url()}}/admin/pres-edit/"+$med.pres_id+"/"+$edit+"' >Details</a>&nbsp;&nbsp;&nbsp;" +$delete+$ship+
+                          "<td>"+$inv+"</td><td><a class='btn btn-s-md btn-info btn-rounded' href='{{url('/')}}/admin/pres-edit/"+$med.pres_id+"/"+$edit+"' >Details</a>&nbsp;&nbsp;&nbsp;" +$delete+$ship+
                           "</tr>";
                          i++;
                         });

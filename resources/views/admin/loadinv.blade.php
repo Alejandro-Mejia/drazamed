@@ -11,7 +11,7 @@
 }
 </style>
 
-<link rel="stylesheet" href="{{url()}}/assets/adminFiles/css/bootstrap-spinner.css" type="text/css" />
+<link rel="stylesheet" href="{{url('/')}}/assets/adminFiles/css/bootstrap-spinner.css" type="text/css" />
 
 <section id="content">
           <section class="vbox bg-white">
@@ -91,7 +91,7 @@
     <script>
         $(document).ready(function(e){
                 document.getElementById('searchTop').style.display = 'none';
-                itemList='{{url()}}/admin/load-invoice-items/'+<?php echo $invID?>;
+                itemList='{{url('/')}}/admin/load-invoice-items/'+<?php echo $invID?>;
                 // <?php echo $invID ?>
                 console.log(itemList);
                 $.ajax({

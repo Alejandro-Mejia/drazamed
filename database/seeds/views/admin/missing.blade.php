@@ -1,16 +1,16 @@
 <!DOCTYPE html>
 <html lang="en" class="bg-dark">
-<head>  
+<head>
   <meta charset="utf-8" />
   <title>{{ Setting::param('site','app_name')['value'] }}</title>
   <meta name="description" content="app, web app, responsive, admin dashboard, admin, flat, flat ui, ui kit, off screen nav" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" /> 
-  <link rel="stylesheet" href="{{url()}}/assets/adminFiles/css/bootstrap.css" type="text/css" />
-  <link rel="stylesheet" href="{{url()}}/assets/adminFiles/css/animate.css" type="text/css" />
-  <link rel="stylesheet" href="{{url()}}/assets/adminFiles/css/font-awesome.min.css" type="text/css" />
-  <link rel="stylesheet" href="{{url()}}/assets/adminFiles/css/icon.css" type="text/css" />
-  <link rel="stylesheet" href="{{url()}}/assets/adminFiles/css/font.css" type="text/css" />
-  <link rel="stylesheet" href="{{url()}}/assets/adminFiles/css/app.css" type="text/css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <link rel="stylesheet" href="{{url('/')}}/assets/adminFiles/css/bootstrap.css" type="text/css" />
+  <link rel="stylesheet" href="{{url('/')}}/assets/adminFiles/css/animate.css" type="text/css" />
+  <link rel="stylesheet" href="{{url('/')}}/assets/adminFiles/css/font-awesome.min.css" type="text/css" />
+  <link rel="stylesheet" href="{{url('/')}}/assets/adminFiles/css/icon.css" type="text/css" />
+  <link rel="stylesheet" href="{{url('/')}}/assets/adminFiles/css/font.css" type="text/css" />
+  <link rel="stylesheet" href="{{url('/')}}/assets/adminFiles/css/app.css" type="text/css" />
     <!--[if lt IE 9]>
     <script src="js/ie/html5shiv.js"></script>
     <script src="js/ie/respond.min.js"></script>
@@ -51,12 +51,12 @@
     </div>
   </footer>
   <!-- / footer -->
-  <script src="{{url()}}/assets/adminFiles/js/jquery.min.js"></script>
+  <script src="{{url('/')}}/assets/adminFiles/js/jquery.min.js"></script>
   <!-- Bootstrap -->
-  <script src="{{url()}}/assets/adminFiles/js/bootstrap.js"></script>
+  <script src="{{url('/')}}/assets/adminFiles/js/bootstrap.js"></script>
   <!-- App -->
-  <script src="{{url()}}/assets/adminFiles/js/app.js"></script>
-  <script src="{{url()}}/assets/adminFiles/js/slimscroll/jquery.slimscroll.min.js"></script>
-    <script src="{{url()}}/assets/adminFiles/js/app.plugin.js"></script>
+  <script src="{{url('/')}}/assets/adminFiles/js/app.js"></script>
+  <script src="{{url('/')}}/assets/adminFiles/js/slimscroll/jquery.slimscroll.min.js"></script>
+    <script src="{{url('/')}}/assets/adminFiles/js/app.plugin.js"></script>
 </body>
 </html>

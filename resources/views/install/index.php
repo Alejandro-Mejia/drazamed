@@ -171,7 +171,7 @@ body {
 }
 
 #loading_class_gif {
-	background: url('{{ url() }}/assets/images/loader.gif') center no-repeat;
+	background: url('{{ url('/') }}/assets/images/loader.gif') center no-repeat;
 	width: 100%;
 	height: 20px;
 }
@@ -259,7 +259,7 @@ li:first-child .wizard-content {
 
 .wizard-heading span {
 	float: right;
-	background-image: url({{ url() }}/assets/images/wizard-icons.png);
+	background-image: url({{ url('/') }}/assets/images/wizard-icons.png);
 	background-repeat: no-repeat;
 }
 

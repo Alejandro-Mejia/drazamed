@@ -114,8 +114,8 @@ if(empty($posted['hash']) && sizeof($posted) > 0) {
                       <td colspan="3"><textarea readonly="readonly" name="productinfo1" class="form-control"><?php echo (empty($posted['productinfo'])) ? '' : $posted['productinfo'] ?></textarea>
                       <textarea style="display: none" name="productinfo" class="form-control"><?php echo (empty($posted['productinfo'])) ? '' : $posted['productinfo'] ?></textarea>
                       </td>
-                      <input name="surl" value="{{ url() }}/medicine/pay-success/<?php echo $posted['id']?>"  type="hidden"/>
-                      <input name="furl" value="{{ url() }}/medicine/pay-fail/<?php echo $posted['id']?>"  type="hidden"/>
+                      <input name="surl" value="{{ url('/') }}/medicine/pay-success/<?php echo $posted['id']?>"  type="hidden"/>
+                      <input name="furl" value="{{ url('/') }}/medicine/pay-fail/<?php echo $posted['id']?>"  type="hidden"/>
                       <input type="hidden" name="service_provider" value="payu_paisa"  />
                       </td>
                     </tr>

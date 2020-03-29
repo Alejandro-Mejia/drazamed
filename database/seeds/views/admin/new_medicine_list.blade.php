@@ -42,7 +42,7 @@ $(function()
 	   <td>{{date('d-M-Y',strtotime($pres[$i]->created_at))}}</td>
 	   <td>
 	   <a class="btn btn-s-md btn-info btn-rounded"  data-toggle="modal" data-target="#myModal" onclick="show_email({{$pres[$i]->id}})">View Requested Emails</a> &nbsp;&nbsp;&nbsp;&nbsp;
-	   <a class="btn btn-s-md btn-danger btn-rounded" href="{{url()}}/admin/delete-new-medicine/{{$pres[$i]->id}}" onclick="return confirm('Do you really want to delete this requested medicine?');">Delete</a>
+	   <a class="btn btn-s-md btn-danger btn-rounded" href="{{url('/')}}/admin/delete-new-medicine/{{$pres[$i]->id}}" onclick="return confirm('Do you really want to delete this requested medicine?');">Delete</a>
 	   </td>
 	   </tr>
 	   <?php } } else {?>

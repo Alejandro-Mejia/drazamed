@@ -1,8 +1,8 @@
 <html>
 <head>
 <title>Basic Configuration</title>
-<script src="<?php echo url (); ?>/assets/javascripts/jquery-1.10.2.js"></script>
-<script src="<?php echo url (); ?>/assets/javascripts/jquery-ui.js"></script>
+<script src="<?php echo url('/'); ?>/assets/javascripts/jquery-1.10.2.js"></script>
+<script src="<?php echo url('/'); ?>/assets/javascripts/jquery-ui.js"></script>
 <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
 <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 <style>
@@ -259,7 +259,7 @@ li:first-child .wizard-content {
 
 .wizard-heading span {
 	float: right;
-	background-image: url(<?php echo url(); ?>/assets/images/wizard-icons.png);
+	background-image: url(<?php echo url('/'); ?>/assets/images/wizard-icons.png);
 	background-repeat: no-repeat;
 }
 
@@ -680,7 +680,7 @@ li:first-child .wizard-content {
 											   value="<?php echo $gateway->id ?>"
 											   data-id="payment<?php echo $gateway->id; ?>"
 											<?php if ($payment_mode['value'] == $gateway->id) { ?> checked <?php } ?>><img
-											src="<?php echo url (); ?>/assets/images/<?php echo $gateway->image ?>"
+											src="<?php echo url('/'); ?>/assets/images/<?php echo $gateway->image ?>"
 											alt="<?php echo ucfirst ($gateway->name); ?>"/>
 									</div>
 

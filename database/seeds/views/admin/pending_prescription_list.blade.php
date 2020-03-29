@@ -51,8 +51,8 @@ $(function()
 	   <td>{{$pres[$i]->email}}</td>
 	   <td>{{date('d-M-Y',strtotime($pres[$i]->created_date))}}</td>
 	   <td><?php echo "Pending Verification";?></td>
-	   <td><a class='btn btn-s-md btn-info btn-rounded' href='{{url()}}/admin/pres-edit/{{$pres[$i]->pres_id}}/1' >Details</a>&nbsp;&nbsp;&nbsp;
-	   <a class='btn btn-s-md btn-danger btn-rounded' data-href='{{url()}}/admin/pres-delete/{{$pres[$i]->pres_id}}/{{ PrescriptionStatus::UNVERIFIED() }}' onclick="confirm_deletion(this);">Delete</a></td>
+	   <td><a class='btn btn-s-md btn-info btn-rounded' href='{{url('/')}}/admin/pres-edit/{{$pres[$i]->pres_id}}/1' >Details</a>&nbsp;&nbsp;&nbsp;
+	   <a class='btn btn-s-md btn-danger btn-rounded' data-href='{{url('/')}}/admin/pres-delete/{{$pres[$i]->pres_id}}/{{ PrescriptionStatus::UNVERIFIED() }}' onclick="confirm_deletion(this);">Delete</a></td>
 	   </tr>
 	   <?php } } else {?>
 	   <tr><td colspan="7">No Prescriptions Found.</td></tr>
@@ -82,8 +82,8 @@ $(function()
                  {
                      $.each(data, function ($key, $med) {
                           table_con+="<tr><td>"+i+"</td><td>"+$med.email+"</td><td>"+$med.created_date+"</td><td>Pending Verification</td>" +
-                           "<td><a class='btn btn-s-md btn-info btn-rounded' href='{{url()}}/admin/pres-edit/"+$med.pres_id+"/1' >Details</a>&nbsp;&nbsp;&nbsp;" +
-                            "<a class='btn btn-s-md btn-danger btn-rounded'  data-href='{{url()}}/admin/pres-delete/"+$med.pres_id+"/pending' onclick='confirm_deletion(this)'>Delete</a></td>" +
+                           "<td><a class='btn btn-s-md btn-info btn-rounded' href='{{url('/')}}/admin/pres-edit/"+$med.pres_id+"/1' >Details</a>&nbsp;&nbsp;&nbsp;" +
+                            "<a class='btn btn-s-md btn-danger btn-rounded'  data-href='{{url('/')}}/admin/pres-delete/"+$med.pres_id+"/pending' onclick='confirm_deletion(this)'>Delete</a></td>" +
                              "</tr>";
                           i++;
                      });
