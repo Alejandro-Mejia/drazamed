@@ -30,7 +30,7 @@ class MedicinesImport implements ToModel, WithHeadingRow, WithChunkReading
             'quantity'      => $row['quantity'],
             'cost_price'    => $row['cost_price'],
             'purchase_price'=> $row['purchase_price'],
-            'rack_number'   => $row['rack'],
+            // 'rack_number'   => $row['rack'],
             'composition'   => $row['composition'],
             'manufacturer'  => $row['manufactured_by'],
             'marketed_by'   => $row['marketed_by'],
