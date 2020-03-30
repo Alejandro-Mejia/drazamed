@@ -44,33 +44,33 @@
               <div class="well m-t">
                 <div class="row">
                   <div class="col-xs-6">
-                    <strong>TO:</strong>
+                    <strong>{{ __('TO')}}:</strong>
                     <h4><?php echo $details['fname']." ".$details['lname']?></h4>
                     <p>
                       <?php echo $details['addr']?><br>
                       <?php echo $details['pin']?><br>
-                      Phone: <?php echo $details['ph']?><br>
-                      Email: <?php echo $details['mail']?><br>
+                      {{ __('Phone')}}: <?php echo $details['ph']?><br>
+                      {{ __('Email')}}: <?php echo $details['mail']?><br>
                     </p>
                   </div>
                 </div>
               </div>
-              <p class="m-t m-b">Order date: <strong><?php echo date('Y-m-d',strtotime($orderDate)) ?></strong><br>
-                  Order status: <span class="label bg-success"><?php echo $status; ?></span><br>
-                  Order ID: <strong>#<?php echo $id?></strong>
+              <p class="m-t m-b">{{ __('Order date')}}: <strong><?php echo date('Y-m-d',strtotime($orderDate)) ?></strong><br>
+                  {{ __('Order status')}}: <span class="label bg-success"><?php echo $status; ?></span><br>
+                  {{ __('Order ID')}}: <strong>#<?php echo $id?></strong>
               </p>
               <div class="line"></div>
               <table class="table">
                 <thead>
                   <tr>
                     <th width="60">SL</th>
-                    <th>DESCRIPTION</th>
-                    <th class='text-right' width="60">QTY</th>
-                    <th class='text-right' width="140">UNIT PRICE</th>
-                    <th class='text-right' width="140">SUB TOTAL</th>
-                    <th class='text-right' width="140">UNIT DISCOUNT</th>
-                    <th class='text-right'width="140">DISCOUNT</th>
-                    <th class='text-right' width="90">TOTAL</th>
+                    <th>{{ __('DESCRIPTION')}}</th>
+                    <th class='text-right' width="60">{{ __('QTY')}}</th>
+                    <th class='text-right' width="140">{{ __('UNIT PRICE')}}</th>
+                    <th class='text-right' width="140">{{ __('SUB TOTAL')}}</th>
+                    <th class='text-right' width="140">{{ __('UNIT DISCOUNT')}}</th>
+                    <th class='text-right'width="140">{{ __('DISCOUNT')}}</th>
+                    <th class='text-right' width="90">{{ __('TOTAL')}}</th>
                   </tr>
                 </thead>
                 <tbody>

@@ -32,7 +32,7 @@
                 <div class="modal-content">
                     <div class="modal-header">
 <!--                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>-->
-                        <h4 class="modal-title" id="myModalLabel">Hey, please login!</h4>
+                        <h4 class="modal-title" id="myModalLabel">{{ __('Hey, please login!')}}</h4>
                     </div>
                      <div class="alert alert-danger login_msg" style="display: none; text-align: center"></div>
                     <div class="modal-body user_activate ">
@@ -40,7 +40,7 @@
 
                         {{ Form::open(array('url' => '','class'=>'form-horizontal addPersonal form-group-sm form-control','role'=>'form' ,'id' =>'login_form' )) }}
                             <div class="login-fields">
-                                <label class="control-label" for="Address">Email Id</label>
+                                <label class="control-label" for="Address">{{ __('Email Id')}}</label>
                                 <div class="">
                                    {{ Form::text('email', Request::old('email'), array('placeholder' => 'awesome@awesome.com','class'=>'form-control login_mail')) }}
                                 </div>
@@ -48,7 +48,7 @@
                             </div>
 
                             <div class="login-fields">
-                                <label class="control-label" for="Address">Password</label>
+                                <label class="control-label" for="Address">{{ __('Password')}}</label>
                                 <div class="">
                                    {{ Form::password('password',array('placeholder' => '*******','class'=>'form-control login_pass')) }}
                                 </div>
@@ -57,9 +57,9 @@
 
                             <div class="clear"></div>
                                 <div class="login-btn text-center">
-                                    {{ Form::button('Login',['class'=>'btn btn-primary save-btn ripple','style'=>'float:none','onclick'=>'login()']) }}
+                                    {{ Form::button(__('Login'),['class'=>'btn btn-primary save-btn ripple','style'=>'float:none','onclick'=>'login()']) }}
                                     {{--{{ Form::submit('Login',array('class'=>'btn btn-primary save-btn ripple','data-color'=>'#82DCDF') )  }}--}}
-                                    <div class="forgotPwd"><a href="#" id="changePwd">Forgot Password?</a></div>
+                                    <div class="forgotPwd"><a href="#" id="changePwd">{{ __('Forgot Password?')}}</a></div>
                                     <div class="clear"></div>
                                 </div>
                             <div class="clear"></div>
@@ -71,7 +71,7 @@
                     <div class="modal-footer">
 <!--                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
 <!--                        <button type="button" class="btn btn-primary">Save changes</button>-->
-                        <p class="login-footer">Don’t have an account? <a href="#" id="regModal">Sign up here</a></p>
+                        <p class="login-footer">{{ __('Don’t have an account?')}} <a href="#" id="regModal">{{ __('Sign up here')}}</a></p>
                     </div>
                 </div>
             </div>
@@ -83,7 +83,7 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <!--                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>-->
-                        <h4 class="modal-title" id="myModalLabel">Welcome to {{ Setting::param('site','app_name')['value'] }}</h4>
+                        <h4 class="modal-title" id="myModalLabel">{{ __('Welcome to')}} {{ Setting::param('site','app_name')['value'] }}</h4>
                     </div>
                     <div class="modal-body">
                     <div class="alert alert-success success_msg" style="display: none;"></div>
@@ -101,28 +101,28 @@
                             <div class="login-fields">
                                 <label class="control-label" for="Address">{{__('Last Name')}}</label>
                                 <div class="">
-                                    <input class="form-control" type="text" placeholder="Enter your Last Name" name="last_name" id="user_name">
+                                    <input class="form-control" type="text" placeholder="{{ __('Enter your Last Name')}}" name="last_name" id="user_name">
                                 </div>
                                 <p style="display: none;" id="user_name_error"></p>
                             </div>
                             <div class="login-fields">
-                                <label class="control-label" for="Address">Email Id</label>
+                                <label class="control-label" for="Address">{{ __('Email Id')}}</label>
                                 <div class="">
                                     <input class="form-control" type="text" placeholder="yourname@email.com" name="email" id="email" onblur="CheckUsername(this.value);">
                                 </div>
                                 <p style="display: none;" id="user_mail_error"></p>
                             </div>
                             <div class="login-fields">
-                                <label class="control-label" for="mobile">Mobile No:</label>
+                                <label class="control-label" for="mobile">{{ __('Mobile No')}}:</label>
                                 <div class="">
-                                    <input class="form-control" type="text" placeholder="+91" name="phone">
+                                    <input class="form-control" type="text" placeholder="+57" name="phone">
                                 </div>
                             </div>
 
                              <div class="login-fields">
-                               <label for="sel1">Select type:</label>
+                               <label for="sel1">{{__('Select type')}}:</label>
                                <select class="form-control" id="sel1" name="user_type">
-                                 <option value="0">Select</option>
+                                 <option value="0">{{_('Select')}}</option>
                                  <?php
                                     $user_type = UserType::users();
                                     foreach($user_type as $key => $type){
@@ -138,7 +138,7 @@
 
 
                             <div class="login-fields">
-                                <label class="control-label" for="password">Password</label>
+                                <label class="control-label" for="password">{{ __('Password')}}</label>
                                 <div class="">
                                     <input class="form-control paswd" type="password" placeholder="*******" name="password">
                                 </div>
@@ -146,19 +146,19 @@
                             </div>
 
                             <div class="login-fields">
-                                <label class="control-label" for="address">Address</label>
+                                <label class="control-label" for="address">{{ __('Address')}}</label>
                                 <div class="">
                                     <textarea class="form-control" name="address" id="reg_address" style="resize: none;"></textarea>
                                 </div>
                                 <p style="display: none;" id="user_address_error"></p>
                             </div>
                             <div class="login-fields">
-                                <input type="checkbox" class="checkbox accept_terms" id="agree" checked="true" /> <label>I am above 18 years of age and I accept all terms and conditions</label>
+                                <input type="checkbox" class="checkbox accept_terms" id="agree" checked="true" /> <label>{{ __('I am above 18 years of age and I accept all terms and conditions')}}</label>
                             </div>
                             <p style="display: none;" id="user_agree_error"></p>
                             <div class="clear"></div>
                             <div class="signup-btn">
-                                <button type="button" class="btn btn-primary save-btn ripple" id="register"  data-color="#82DCDF" onclick="user_register();">SIGN UP</button>
+                                <button type="button" class="btn btn-primary save-btn ripple" id="register"  data-color="#82DCDF" onclick="user_register();">{{ __('SIGN UP')}}</button>
                                 <div class="clear"></div>
                             </div>
                             <div class="clear"></div>
@@ -177,7 +177,7 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <!--                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>-->
-                        <h4 class="modal-title" id="myModalLabel">Welcome to {{ Setting::param('site','app_name')['value'] }}</h4>
+                        <h4 class="modal-title" id="myModalLabel">{{ __('Welcome to')}} {{ Setting::param('site','app_name')['value'] }}</h4>
                     </div>
                     <div class="modal-body">
                     <div class="alert alert-success change_pass_msg" style="display: none;"></div>
@@ -185,7 +185,7 @@
                         <form class="form-horizontal addPersonal form-group-sm form-control" role="form" id="forgot_password">
 
                             <div class="login-fields">
-                                <label class="control-label" for="Address">Email</label>
+                                <label class="control-label" for="Address">{{ __('Email')}}</label>
                                 <div class="">
                                     <input class="form-control" type="email" placeholder="Email Id" name="email" id="forgot_email" onblur="">
                                 </div>
@@ -194,12 +194,12 @@
 
                             <div class="clear"></div>
                             <div class="signup-btn">
-                                <button type="button" class="btn btn-primary ripple" id="forgot_pass"  data-color="#82DCDF" style="background-color: #05D7A8" onclick="forgot_password();">Save changes</button>
+                                <button type="button" class="btn btn-primary ripple" id="forgot_pass"  data-color="#82DCDF" style="background-color: #05D7A8" onclick="forgot_password();">{{ __('Save changes')}}</button>
                                 <div class="clear"></div>
                             </div>
 
                             <div class="cancel-btn">
-                                <button type="button" class="btn ripple" id="forgot_pass1"  data-color="#82DCDF" onclick="$('#myModal_forgot_password').hide();">Cancel</button>
+                                <button type="button" class="btn ripple" id="forgot_pass1"  data-color="#82DCDF" onclick="$('#myModal_forgot_password').hide();">{{ __('Cancel')}}</button>
                                 <div class="clear"></div>
                             </div>
 
@@ -219,31 +219,31 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <!--                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>-->
-                        <h4 class="modal-title" id="myModalLabel">Welcome to {{ Setting::param('site','app_name')['value'] }}</h4>
+                        <h4 class="modal-title" id="myModalLabel">{{ __('Welcome to')}} {{ Setting::param('site','app_name')['value'] }}</h4>
                     </div>
                     <div class="modal-body">
                     <div class="alert alert-success change_pass_msg" style="display: none;"></div>
                     <div class="alert alert-success success_msg" style="display: none;"></div>
                     <div class="alert alert-danger failure_msg" style="display: none;"></div>
-                    <h4 style="text-align: center">Reset Password</h4>
+                    <h4 style="text-align: center">{{ __('Reset Password')}}</h4>
                         <form class="form-horizontal addPersonal form-group-sm form-control" role="form" id="change_password">
 
                             <div class="login-fields">
-                                <label class="control-label" for="Address">Email </label>
+                                <label class="control-label" for="Address">{{ __('Email')}} </label>
                                 <div class="">
                                     <input class="form-control" type="text" placeholder="Email ID " name="email" id="change_email" onblur="" />
                                     <input class="form-control" type="hidden" placeholder="token" name="security_token" id="security_token" value="<?php echo isset($_GET['reset_code']) ? $_GET['reset_code'] : ''; ?>" />
                                 </div>
                             </div>
                             <div class="login-fields">
-                                <label class="control-label" for="mobile">New password</label>
+                                <label class="control-label" for="mobile">{{ __('New password')}}</label>
                                 <div class="">
                                     <input class="form-control" type="password" placeholder="New password" name="new_password" id="new_password">
                                 </div>
                             </div>
 
                             <div class="login-fields">
-                                <label class="control-label" for="password">Re-enter Password</label>
+                                <label class="control-label" for="password">{{ __('Re-enter Password')}}</label>
                                 <div class="">
                                     <input class="form-control paswd" type="password" placeholder="Re-enter password" name="re_password" id="re_password">
                                 </div>
@@ -252,12 +252,12 @@
 
                             <div class="clear"></div>
                             <div class="signup-btn">
-                                <button type="button" class="btn btn-primary ripple" id="change_pass"  data-color="#82DCDF" style="background-color: #05D7A8" onclick="change_password();">Save changes</button>
+                                <button type="button" class="btn btn-primary ripple" id="change_pass"  data-color="#82DCDF" style="background-color: #05D7A8" onclick="change_password();">{{ __('Save changes')}}</button>
                                 <div class="clear"></div>
                             </div>
 
                             <div class="cancel-btn">
-                                <button type="button" class="btn ripple" id="change_pass"  data-color="#82DCDF" onclick="$('#myModal_change_password').hide();">Cancel</button>
+                                <button type="button" class="btn ripple" id="change_pass"  data-color="#82DCDF" onclick="$('#myModal_change_password').hide();">{{ __('Cancel')}}</button>
                                 <div class="clear"></div>
                             </div>
 

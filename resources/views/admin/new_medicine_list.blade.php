@@ -11,7 +11,7 @@ $(function()
 <section class="vbox">
   <section class="scrollable padder">
   <div class="m-b-md">
-                <h3 class="m-b-none">Requested Medicines List</h3>
+                <h3 class="m-b-none">{{ __('Requested Medicines List')}}</h3>
   </div>
   <?php
   echo ($pres->links());
@@ -20,11 +20,11 @@ $(function()
    <table class="table table-striped m-b-none dataTable">
 	<thead>
 	  <tr>
-	    <th>No.</th>
-	    <th>Medicine Name</th>
-	    <th>Requested Count</th>
-	    <th>Date</th>
-	    <th width="390px">Actions</th>
+	    <th>{{ __('No.')}}</th>
+	    <th>{{ __('Medicine Name')}}</th>
+	    <th>{{ __('Requested Count')}}</th>
+	    <th>{{ __('Date')}}</th>
+	    <th width="390px">{{ __('Actions')}}</th>
 	  </tr>
 	</thead>
 	<tbody>
@@ -41,12 +41,12 @@ $(function()
 	   <td>{{$pres[$i]->count}}</td>
 	   <td>{{date('d-M-Y',strtotime($pres[$i]->created_at))}}</td>
 	   <td>
-	   <a class="btn btn-s-md btn-info btn-rounded"  data-toggle="modal" data-target="#myModal" onclick="show_email({{$pres[$i]->id}})">View Requested Emails</a> &nbsp;&nbsp;&nbsp;&nbsp;
-	   <a class="btn btn-s-md btn-danger btn-rounded" href="{{url('/')}}/admin/delete-new-medicine/{{$pres[$i]->id}}" onclick="return confirm('Do you really want to delete this requested medicine?');">Delete</a>
+	   <a class="btn btn-s-md btn-info btn-rounded"  data-toggle="modal" data-target="#myModal" onclick="show_email({{$pres[$i]->id}})">{{ __('View Requested Emails')}}</a> &nbsp;&nbsp;&nbsp;&nbsp;
+	   <a class="btn btn-s-md btn-danger btn-rounded" href="{{url('/')}}/admin/delete-new-medicine/{{$pres[$i]->id}}" onclick="return confirm('Do you really want to delete this requested medicine?');">{{ __('Delete')}}</a>
 	   </td>
 	   </tr>
 	   <?php } } else {?>
-	   <tr><td colspan="7">No Medicines Found.</td></tr>
+	   <tr><td colspan="7">{{ __('No Medicines Found.')}}</td></tr>
 	   <?php }?>
 	</tbody>
 	</tbody>
@@ -63,12 +63,12 @@ $(function()
      <div class="modal-content">
        <div class="modal-header">
          <button type="button" class="close" data-dismiss="modal">&times;</button>
-         <h4 class="modal-title">Requested Emails</h4>
+         <h4 class="modal-title">{{ __('Requested Emails')}}</h4>
        </div>
        <div class="modal-body" id="emails">
        </div>
        <div class="modal-footer">
-         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+         <button type="button" class="btn btn-default" data-dismiss="modal">{{ __('Close')}}</button>
        </div>
      </div>
 

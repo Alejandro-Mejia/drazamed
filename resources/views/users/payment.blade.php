@@ -87,30 +87,30 @@ if(empty($posted['hash']) && sizeof($posted) > 0) {
   </script>
     <div class="contact-container" style="min-height: 760px">
         <div class="prescription-inner container">
-             <h2>Payment Details</h2>
+             <h2>{{ __('Payment Details')}}</h2>
                 <form action="<?php echo $action; ?>" method="post" name="payuForm">
                   <input type="hidden" name="key" value="<?php echo $MERCHANT_KEY ?>" />
                   <input type="hidden" name="hash" value="<?php echo $hash ?>"/>
                   <input type="hidden" name="txnid" value="<?php echo $txnid ?>" />
                   <table class="table">
                     <tr>
-                      <td>Amount: </td>
+                      <td>{{ __('Amount')}}: </td>
                       <td><input type="text" name="amount1" value="<?php echo (empty($posted['amount'])) ? '' : Setting::currencyFormat($posted['amount']) ?>" class="form-control" readonly />
                      <input type="hidden" name="amount" value="<?php echo (empty($posted['amount'])) ? '' : $posted['amount'] ?>" class="form-control"/></td>
-                      <td>First Name: </td>
+                      <td>{{ __('First Name')}}: </td>
                       <td><input type="text" name="firstname" id="firstname" value="<?php echo (empty($posted['firstname'])) ? '' : $posted['firstname']; ?>" class="form-control"/></td>
                     </tr>
                     <tr>
-                      <td>Email: </td>
+                      <td>{{ __('Email')}}: </td>
                       <td><input type="text" name="email" id="email" value="<?php echo (empty($posted['email'])) ? '' : $posted['email']; ?>" class="form-control"/></td>
-                      <td>Phone: </td>
+                      <td>{{ __('Phone')}}: </td>
                       <td><input type="text" name="phone" value="<?php echo (empty($posted['phone'])) ? '' : $posted['phone']; ?>" class="form-control"/>
                       <input type="hidden" name="invoice" value="<?php echo $posted['invoice']?>">
                       <input type="hidden" name="id" value="<?php echo $posted['id']?>">
                       </td>
                     </tr>
                     <tr>
-                      <td>Product Info: </td>
+                      <td>{{ __('Product Info')}}: </td>
                       <td colspan="3"><textarea readonly="readonly" name="productinfo1" class="form-control"><?php echo (empty($posted['productinfo'])) ? '' : $posted['productinfo'] ?></textarea>
                       <textarea style="display: none" name="productinfo" class="form-control"><?php echo (empty($posted['productinfo'])) ? '' : $posted['productinfo'] ?></textarea>
                       </td>

@@ -90,14 +90,16 @@ use Illuminate\Database\Eloquent\Model;
     // Route::resource('/medicine', 'MedicineController');
     Route::post('/medicine/add-new-medicine', 'MedicineController@postAddNewMedicine');
     Route::post('/medicine/upload', 'MedicineController@postUpload');
-    Route::any('/medicine/load-medicine-web', 'MedicineController@anyLoadMedicineWeb');
+    Route::any('/medicine/load-medicine-web/{is_web}', 'MedicineController@anyLoadMedicineWeb');
+    Route::any('/medicine/add-cart/{is_web}', 'MedicineController@anyAddCart');
+    Route::any('/medicine/remove-from-cart/{item_id}', 'MedicineController@anyRemoveFromCart');
+    Route::any('/medicine/load-sub-medicine', 'MedicineController@anyLoadSubMedicine');
     Route::any('/medicine/store-prescription/{is_web}', 'MedicineController@anyStorePrescription');
 
     // Route::controller('admin', 'AdminController');
     // Route::get('/admin', 'AdminController@index');
     // Route::resource('/admin', 'AdminController');
     Route::any('/admin/login', 'AdminController@anyLogin');
-
     Route::get('/admin/dashboard', 'AdminController@getDashboard');
     Route::get('/admin/today-pres-dash', 'AdminController@getTodayPresDash');
     Route::post('/admin/pres-delete/{pres_id}/{status}', 'AdminController@anyPresDelete');
@@ -107,6 +109,7 @@ use Illuminate\Database\Eloquent\Model;
     Route::get('/admin/load-customers', 'AdminController@getLoadCustomers');
     Route::get('/admin/load-medicalprof', 'AdminController@getLoadMedicalprof');
     Route::get('/admin/load-medicines', 'AdminController@getLoadMedicines');
+    Route::any('/admin/load-medicine-web', 'AdminController@anyLoadMedicineWeb');
     Route::get('/admin/load-new-medicines', 'AdminController@getLoadNewMedicines');
     Route::any('/admin/load-pending-prescription', 'AdminController@anyLoadPendingPrescription');
     Route::any('/admin/load-active-prescription', 'AdminController@anyLoadActivePrescription');
@@ -252,28 +255,4 @@ Route::get('/clear-cache', function() {
     return "Cache is cleared";
 });
 
-
-// Route::get('/home', 'HomeController@index')->name('home');
-/**
- * Captcha Test
- */
-Route::any('captcha-test', function() {
-    if (request()->getMethod() == 'POST') {
-        $rules = ['captcha' => 'required|captcha'];
-        $validator = validator()->make(request()->all(), $rules);
-        if ($validator->fails()) {
-            echo '<p style="color: #ff0000;">Incorrect!</p>';
-        } else {
-            echo '<p style="color: #00ff30;">Matched :)</p>';
-        }
-    }
-
-    $form = '<form method="post" action="captcha-test">';
-    $form .= '<input type="hidden" name="_token" value="' . csrf_token() . '">';
-    $form .= '<p>' . captcha_img() . '</p>';
-    $form .= '<p><input type="text" name="captcha"></p>';
-    $form .= '<p><button type="submit" name="check">Check</button></p>';
-    $form .= '</form>';
-    return $form;
-});
 

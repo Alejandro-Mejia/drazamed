@@ -13,7 +13,7 @@
                               <span class="clear">
                                 <a href="{{url('/')}}/admin/load-customers" class="auto">
                                 <span id="cust" class="h3 block m-t-xs text-danger"></span>
-                                <small class="text-muted text-u-c">Customers</small>
+                                <small class="text-muted text-u-c">{{ __('Customers')}}</small>
                               </span>
                             </a>
                           </div>
@@ -26,7 +26,7 @@
                               <span class="clear">
                                 <a href="{{url('/')}}/admin/load-medicalprof" class="auto">
                                 <span id='prof' class="h3 block m-t-xs text-success"></span>
-                                <small  class="text-muted text-u-c">Total Medical Professionals</small>
+                                <small  class="text-muted text-u-c">{{ __('Total Medical Professionals')}}</small>
                               </span>
                             </a>
                           </div>
@@ -39,7 +39,7 @@
                               <span class="clear">
                                 <a href="{{url('/')}}/admin/load-paid-prescription" class="auto">
                                 <span id='tobe' class="h3 block m-t-xs text-info">25 <span class="text-sm">m</span></span>
-                                <small class="text-muted text-u-c">To be shipped</small>
+                                <small class="text-muted text-u-c">{{ __('To be shipped')}}</small>
                               </span>
                             </a>
                           </div>
@@ -52,7 +52,7 @@
                               <span class="clear">
                                 <a href="{{url('/')}}/admin/load-shipped-prescription" class="auto">
                                 <span id='shipped'class="h3 block m-t-xs text-primary">9:30</span>
-                                <small class="text-muted text-u-c">Shipped</small>
+                                <small class="text-muted text-u-c">{{ __('Shipped')}}</small>
                               </span>
                             </a>
                           </div>
@@ -78,40 +78,40 @@
 
              </div>
              <section class="panel panel-default">
-                <header class="panel-heading font-bold">Sale statistics</header>
+                <header class="panel-heading font-bold">{{ __('Sale statistics')}}</header>
                 <footer class="panel-footer bg-white">
                   <div class="row text-center no-gutter">
                     <div class="col-xs-3 b-r b-light">
                       <p  class="h3 font-bold m-t"><span id='pres'></span></p>
-                      <p class="text-muted">Verified Prescriptions</p>
+                      <p class="text-muted">{{ __('Verified Prescriptions')}}</p>
                     </div>
                     <div class="col-xs-3 b-r b-light">
                       <p class="h3 font-bold m-t"><span id='rev'></span></p>
-                      <p class="text-muted">Total Revenue</p>
+                      <p class="text-muted">{{ __('Total Revenue')}}</p>
                     </div>
                     <div class="col-xs-3 b-r b-light">
                       <p  class="h3 font-bold m-t"><span id='med'></span></p>
-                      <p class="text-muted">Items/Medicines</p>
+                      <p class="text-muted">{{ __('Items/Medicines')}}</p>
                     </div>
                     <div class="col-xs-3">
                       <p  class="h3 font-bold m-t"><span id='user'></span></p>
-                      <p class="text-muted">Users(Including Admin)</p>
+                      <p class="text-muted">{{ __('Users(Including Admin)')}}</p>
                     </div>
                   </div>
                 </footer>
               </section>
 
               <section class="panel panel-default" style="width:50%">
-                <header class="panel-heading font-bold">This Month's statistics</header>
+                <header class="panel-heading font-bold">{{ __("This Month's statistics")}}</header>
                 <footer class="panel-footer bg-white">
                   <div class="row text-center no-gutter">
                     <div class="col-xs-3 b-r b-light" style="width:50%">
                       <p  class="h3 font-bold m-t"><span id='monthpres'></span></p>
-                      <p class="text-muted">Verified Prescriptions</p>
+                      <p class="text-muted">{{ __('Verified Prescriptions')}}</p>
                     </div>
                     <div class="col-xs-3  b-light" style="width:50%">
                       <p class="h3 font-bold m-t"><span id='monthrev'></span></p>
-                      <p class="text-muted">Revenue</p>
+                      <p class="text-muted">{{ __('Revenue')}}</p>
                     </div>
                   </div>
                 </footer>

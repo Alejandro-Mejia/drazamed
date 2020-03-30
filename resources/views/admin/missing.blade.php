@@ -27,16 +27,16 @@
         <div class="list-group bg-info auto m-b-sm m-b-lg">
           <a href="admin/dashboard" class="list-group-item">
             <i class="fa fa-chevron-right icon-muted"></i>
-            <i class="fa fa-fw fa-home icon-muted"></i> Goto Dashboard
+            <i class="fa fa-fw fa-home icon-muted"></i> {{ __('Goto Dashboard')}}
           </a>
           <a href="" class="list-group-item">
             <i class="fa fa-chevron-right icon-muted"></i>
-            <i class="fa fa-fw fa-question icon-muted"></i> Send us a tip
+            <i class="fa fa-fw fa-question icon-muted"></i> {{ __('Send us a tip')}}
           </a>
           <a href="" class="list-group-item">
             <i class="fa fa-chevron-right icon-muted"></i>
             <span class="badge bg-info lt">021-215-584</span>
-            <i class="fa fa-fw fa-phone icon-muted"></i> Call us
+            <i class="fa fa-fw fa-phone icon-muted"></i> {{ __('Call us')}}
           </a>
         </div>
       </div>

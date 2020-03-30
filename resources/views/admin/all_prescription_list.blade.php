@@ -12,7 +12,7 @@ $(function()
   <section class="scrollable padder">
 
   <div class="row">
-    <div class="col-lg-9">  <h3 class="m-b-none">All Prescriptions</h3>
+    <div class="col-lg-9">  <h3 class="m-b-none">{{ __('All Prescriptions')}}</h3>
 </div>
     <div class="col-lg-3" style="padding-top: 7px">  <input type="text" class="form-control" name="pres_search" id="pres_search" placeholder="Search prescription by email" onkeyup="filter_pres(this.value,'all')" >
 </div>
@@ -30,13 +30,13 @@ $(function()
    <table class="table table-striped m-b-none dataTable">
 	<thead>
 	  <tr>
-	    <th>No.</th>
-	    <th>From</th>
-	    <th>Date</th>
-	    <th>Prescription Status</th>
-        <th>Payment Status</th>
-	    <th>Shipping Status</th>
-	    	    <th>Invoice</th>
+	    <th>{{ __('No.')}}</th>
+	    <th>{{ __('From')}}</th>
+	    <th>{{ __(Date)}}</th>
+	    <th>{{ __('Prescription Status')}}</th>
+      <th>{{ __('Payment Status')}}/th>
+	    <th>{{ __('Shipping Status')}}</th>
+	    <th>{{ __('Invoice')}}</th>
 
 	    <th width="390px">Actions</th>
 	  </tr>

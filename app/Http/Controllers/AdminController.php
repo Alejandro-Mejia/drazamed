@@ -56,14 +56,14 @@ class AdminController extends BaseController
 	public function anyLogin ()
 	{
 		// Validation Rules
-		// $rules = ['captcha' => 'required|captcha'];
-		// $validator = Validator::make (Request::all () , $rules);
-		// if ($validator->fails ()) {                  // Failure
-		// 	Session::flash ('flash_message' , '<b>Sorry !</b> Captcha Mismatch');
-		// 	Session::flash ('flash_type' , 'alert-danger');
+		$rules = ['captcha' => 'required|captcha'];
+		$validator = Validator::make (Request::all () , $rules);
+		if ($validator->fails ()) {                  // Failure
+			Session::flash ('flash_message' , '<b>Sorry !</b> Captcha Mismatch');
+			Session::flash ('flash_type' , 'alert-danger');
 
-		// 	return Redirect::to ('/admin-login');
-		// } else {
+			return Redirect::to ('/admin-login');
+		} else {
 			// if (!$this->isCsrfAccepted ())
 			// 	return Redirect::back ()->withErrors (['Invalid Request']);
 			// Success
@@ -79,7 +79,7 @@ class AdminController extends BaseController
 
 				return Redirect::to ('/admin-login');
 			}
-		// }
+		}
 
 	}
 

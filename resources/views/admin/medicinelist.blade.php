@@ -19,13 +19,13 @@ $(function()
 <section class="vbox">
   <section class="scrollable padder">
   <div class="m-b-md">
-                <h3 class="m-b-none" style="margin-bottom: 10px;">Medicine</h3>
+                <h3 class="m-b-none" style="margin-bottom: 10px;">{{ __('Medicine')}}</h3>
                 <div class="row" style="
                     text-align: right;
                     padding-right: 20px;
                 ">
-                  <a class="btn btn-s-md btn-success btn-rounded" href="add-med"><i class="fa fa-fw fa-plus"></i> Add Medicine</a>
-                  <a class="btn btn-s-md btn-info btn-rounded" href="#" id="upload-med"><i class="fa fa-fw fa-plus"></i> Upload Medicine</a>
+                  <a class="btn btn-s-md btn-success btn-rounded" href="add-med"><i class="fa fa-fw fa-plus"></i> {{ __('Add Medicine')}}</a>
+                  <a class="btn btn-s-md btn-info btn-rounded" href="#" id="upload-med"><i class="fa fa-fw fa-plus"></i> {{ __('Upload Medicine')}}</a>
                 </div>
 
   </div>
@@ -36,17 +36,17 @@ $(function()
    <table class="table table-striped m-b-none dataTable" id="myTable">
 	<thead>
 	  <tr>
-	    <th>No.</th>
-	    <th>Item Name</th>
-	    <th>Item Code</th>
-	    <th>Expiry Date</th>
-	    <th>Batch No.</th>
-	    <th>MFG</th>
-	    <th>Nature</th>
-	    <th>MRP</th>
-	    <th id="sort" style="width:250px">Composition</th>
-	    <th id="sort">Is Prescription Required</th>
-	    <th>Actions</th>
+	    <th>{{ __('No.')}}</th>
+	    <th>{{ __('Item Name')}}</th>
+	    <th>{{ __('Item Code')}}</th>
+	    <th>{{ __('Expiry Date')}}</th>
+	    <th>{{ __('Batch No.')}}</th>
+	    <th>{{ __('MFG')}}</th>
+	    <th>{{ __('Nature')}}</th>
+	    <th>{{ __('MRP')}}</th>
+	    <th id="sort" style="width:250px">{{ __('Composition')}}</th>
+	    <th id="sort">{{ __('Is Prescription Required')}}</th>
+	    <th>{{ __('Actions')}}</th>
 	  </tr>
 	</thead>
 	<tbody id="medicine_content">
@@ -73,14 +73,14 @@ $(function()
            <ul class="dropdown-menu" role="menu">
              <li><a target="_blank" href="medicine-edit/<?php echo $medicines[$i]['id']; ?>" >Edit</a></li>
              <li><a href="medicine-delete/<?php echo $medicines[$i]['id']; ?>">Delete</a></li>
-             <li><a href="medicine-prescription/<?php echo $medicines[$i]['id']; ?>">Toggle Prescription Status</a></li>
+             <li><a href="medicine-prescription/<?php echo $medicines[$i]['id']; ?>">{{ __('Toggle Prescription Status')}}</a></li>
            </ul>
 
 	    </div>
 	    </td>
 	   </tr>
 	   <?php } } else {?>
-	   <tr><td colspan="7">No Medicines Found.</td></tr>
+	   <tr><td colspan="7">{{ __('No Medicines Found.')}}</td></tr>
 	   <?php }?>
 
 
@@ -99,11 +99,11 @@ $(function()
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Upload Medicine List</h4>
+        <h4 class="modal-title">{{ __('Upload Medicine List')}}</h4>
       </div>
       <div class="modal-body">
           <div class="alert alert-success hide">
-            <strong>Success!</strong> Medicine successfully updated.
+            <strong>{{ __('Success')}}!</strong> {{ __('Medicine successfully updated.')}}
           </div>
           <div class="alert alert-danger hide">
 
@@ -111,16 +111,19 @@ $(function()
         <form class="" enctype="multipart/form-data" id="frmUpload">
                 <div class="form-group">
                 {{ Form::token() }}
-                <p>Upload .xls .xlsx file with following headers to update the medicine list. <b>(item_code ,item_name ,batch_no ,quantity ,cost_price ,purchase_price ,rack ,composition ,manufactured_by ,marketed_by ,group ,tax ,expiry ,MRP ,discount)</b></b></p>
-                <p><span class="js-mand">*</span>Please enter date by this format mm/dd/yyyy</p>
+                <p>{{ __('Upload .xls .xlsx file with following headers to update the medicine list.')}} <b>{{ __('(item_code ,item_name ,batch_no ,quantity ,cost_price ,purchase_price ,rack ,composition ,manufactured_by ,marketed_by ,group ,tax ,expiry ,MRP ,discount)')}}</b></b></p>
+                <p><span class="js-mand">*</span>{{ __('Please enter date by this format mm/dd/yyyy')}}</p>
                         <input class="form-control" type="file" name="file" id="file" />
+                </div>
+                <div class="progress-bar" role="progressbar" aria-valuenow="" aria-valuemin="0" aria-valuemax="100" width=0%>
+                  0%
                 </div>
 
         </form>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-info" id="file_upload">Submit</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">{{ __('Close')}}</button>
+        <button type="button" class="btn btn-info" id="file_upload">{{ __('Submit')}}</button>
       </div>
     </div>
 

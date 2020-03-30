@@ -13,7 +13,7 @@ $(function()
   <div class="m-b-md">
   </div>
   <div class="row">
-  <div class="col-lg-9">  <h3 class="m-b-none">Deleted Prescriptions</h3>
+  <div class="col-lg-9">  <h3 class="m-b-none">{{ __('Deleted Prescriptions')}}</h3>
 </div>
   <div class="col-lg-3" style="padding-top: 7px">  <input type="text" class="form-control" name="pres_search" id="pres_search" placeholder="Search prescription by email" onkeyup="filter_pres(this.value,'deleted')" >
 </div>
@@ -51,7 +51,7 @@ $(function()
 	   <td>Deleted</td>
 	   </tr>
 	   <?php } } else {?>
-	   <tr><td colspan="7">No Prescriptions Found.</td></tr>
+	   <tr><td colspan="7">{{ __('No Prescriptions Found.')}}</td></tr>
 	   <?php }?>
 
 

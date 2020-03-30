@@ -10,7 +10,7 @@ $(function()
 <section class="vbox">
   <section class="scrollable padder">
   <div class="m-b-md">
-                <h3 class="m-b-none">Unverified Prescriptions</h3>
+                <h3 class="m-b-none">{{ __('Unverified Prescriptions')}}</h3>
   </div>
   <section class="panel panel-default">
    <table class="table table-striped m-b-none dataTable">
@@ -21,13 +21,13 @@ $(function()
 	    <th>Date</th>
 	    <th>Paid</th>
 	    <th>Shipped</th>
-	    <th id="sortByStatus" class="th-sortable" data-toggle="class">Status <span class="th-sort">
+	    <th id="sortByStatus" class="th-sortable" data-toggle="class">{{ __('Status')}} <span class="th-sort">
                             <i class="fa fa-sort-down text"></i>
                             <i class="fa fa-sort-up text-active"></i>
                             <i class="fa fa-sort"></i>
                           </span></th>
 	    <th></th>
-	    <th>Invoice</th>
+	    <th>{{ __('Invoice')}}</th>
 	  </tr>
 	</thead>
 	<tbody>
@@ -66,7 +66,7 @@ $(function()
 	$("#sortByStatus").click(function(){
 	    status=='ASC'?status='DESC':status='ASC';
 	    loadData(1,status);
-	    
+
 	});
 	function loadData($type,$value)
 	{

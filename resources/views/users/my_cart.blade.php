@@ -2,16 +2,16 @@
     <div class="contact-container">
         <div class="prescription-inner container">
                   @if($errors->any())
-                  <div class="alert alert-success med_detailes_alert"  role="alert"> Item has been removed. </div>
+                  <div class="alert alert-success med_detailes_alert"  role="alert"> {{ __('Item has been removed')}}. </div>
                   @endif
-                  <div class="alert alert-danger quantity-alert hide"  role="alert"> Please enter a valid quanity. </div>
+                  <div class="alert alert-danger quantity-alert hide"  role="alert"> {{ __('Please enter a valid quanity')}}. </div>
             <div class="col-sm-8">
-                <h1 class="prescription-h1">My Cart</h1>
+                <h1 class="prescription-h1">{{ __('My Cart')}}</h1>
             </div>
             <div class="col-sm-4">
                <div class="right-inner-addon">
-                 <button type="button"  class="btn btn-primary logout-btn ripple " data-color="#4BE7EC" onclick="goto_detail_page();">SEARCH</button>
-                 <input type="text" id="tags" class="form-control search_medicine  "  placeholder="Search medicines here..." />
+                 <button type="button"  class="btn btn-primary logout-btn ripple " data-color="#4BE7EC" onclick="goto_detail_page();">{{ __('SEARCH')}}</button>
+                 <input type="text" id="tags" class="form-control search_medicine  "  placeholder="{{ __('Search medicines here...')}}" />
                </div>
             </div>
             <div class="clear"></div>
@@ -25,11 +25,11 @@
                                     <td>
                                         <table class="tab-cart">
                                             <thead>
-                                            <th class="col-lg-4 col-md-4 col-sm-4 col-xs-4">Item(s)</th>
-                                            <th class="col-lg-2 col-md-2 col-sm-2 col-xs-2">Quantity</th>
-                                            <th class="col-lg-2 col-md-2 col-sm-2 col-xs-2">Price Per Unit</th>
-                                            <th class="col-lg-2 col-md-2 col-sm-2 col-xs-2">Discount Per Unit </th>
-                                            <th class="col-lg-2 col-md-2 col-sm-2 col-xs-2">Sub Total</th>
+                                            <th class="col-lg-4 col-md-4 col-sm-4 col-xs-4">{{ __('Item(s)')}}</th>
+                                            <th class="col-lg-2 col-md-2 col-sm-2 col-xs-2">{{ __('Quantity')}}</th>
+                                            <th class="col-lg-2 col-md-2 col-sm-2 col-xs-2">{{ __('Price Per Unit')}}</th>
+                                            <th class="col-lg-2 col-md-2 col-sm-2 col-xs-2">{{ __('Discount Per Unit')}} </th>
+                                            <th class="col-lg-2 col-md-2 col-sm-2 col-xs-2">{{ __('Sub Total')}}</th>
                                             </thead>
                                         </table>
                                     </td>
@@ -49,7 +49,7 @@
                                                 @foreach($current_orders as $cart_item)
                                                     <?php
 
-                                                         $medicine = Medicine::medicines($cart_item->medicine_id);
+                                                         $medicine = App\Medicine::medicines($cart_item->medicine_id);
                                                          if($cart_item->is_pres_required == 1)
                                                             $pres_required = 1;
                                                      ?>
@@ -70,7 +70,7 @@
                                                         <td class="text-right col-lg-2 col-md-2 col-sm-2 col-xs-2">
                                                             <p>{{$discount = number_format($medicine['discount'],2)}}</p>
                                                         </td>
-                                                        <?php  $total= ($mrp * $cart_item->medicine_count)- ($discount * $cart_item->medicine_count); ?>
+                                                        <?php  $total= ((int)$mrp * (int)$cart_item->medicine_count) - ($discount * (int)$cart_item->medicine_count); ?>
                                                         <td class="text-right col-lg-2 col-md-2 col-sm-2 col-xs-2">{{ Setting::currencyFormat($total)}}</td>
 
                                                         <?php $subtotal += $total;  ?>
@@ -78,12 +78,12 @@
                                                 @endforeach
 
 
-                                                <tr><td class="text-right" style="text-align:right" colspan="5"><h4 style="padding-right: 40px;">Total <span style="font-size: 12px">(this is an approximate total, price may change)</span> : {{Setting::currencyFormat($subtotal)}}</h4></td></tr>
-                                                <tr><td colspan="5"><p class="text-center">If you are done with adding medicines to cart, please browse and upload the prescription from the link below. <br>
-                                                                                                                       Alternatively, you may even upload a prescription without adding any medicine to cart. We will identify the medicines and process the order further.</p></td></tr>
+                                                <tr><td class="text-right" style="text-align:right" colspan="5"><h4 style="padding-right: 40px;">Total <span style="font-size: 12px">({{ __('this is an approximate total, price may change')}})</span> : {{Setting::currencyFormat($subtotal)}}</h4></td></tr>
+                                                <tr><td colspan="5"><p class="text-center">{{ __('If you are done with adding medicines to cart')}}, {{ __('please browse and upload the prescription from the link below')}}. <br>
+                                                {{ __('Alternatively, you may even upload a prescription without adding any medicine to cart')}}. {{ __('We will identify the medicines and process the order further')}}.</p></td></tr>
                                                 @else
                                                   <?php $pres_required = 1; ?>
-                                                  <h4 style="color: red;" align="center">Cart is empty</h4>
+                                                  <h4 style="color: red;" align="center">{{ __('Cart is empty')}}</h4>
                                                 @endif
 
                                             </tbody>
@@ -105,7 +105,7 @@
                                             <h2>Upload Prescription</h2>
 
                                           <div class=" text-center">
-                                              <p style="white-space: normal">You can use either JPG or PNG images. We will identify the medicines and process your order at the earliest.</p>
+                                              <p style="white-space: normal">{{ __('You can use either JPG or PNG images')}}. {{ __('We will identify the medicines and process your order at the earliest')}}.</p>
 
                                                    @if ( Session::has('flash_message') )
                                                      <div class="alert {{ Session::get('flash_type') }}">
@@ -115,7 +115,7 @@
                                               <div class="col-sm-12 file-upload ">
 
                                                   <i class="icon-browse-upload"></i>
-                                                  <p>Upload your prescription here</p>
+                                                  <p>{{ __('Upload your prescription here')}}</p>
                                                   {{ Form::open(array('url'=>'medicine/store-prescription/1','files'=>true,'id'=>'upload_form')) }}
                                                   <input id="input-20" type="file" name="file"
                                                   @if($pres_required == 1)
@@ -126,9 +126,9 @@
                                                   <input id="input-20" type="hidden" name="is_pres_required" value="<?= $pres_required; ?>"  />
 
                                               </div>
-                                              <button type="submit" class="btn btn-primary save-btn ripple upload_for_cart" data-color="#40E0BC" id="upload">Place Order</button>
+                                              <button type="submit" class="btn btn-primary save-btn ripple upload_for_cart" data-color="#40E0BC" id="upload">{{ __('Place Order')}}</button>
                                               @if($pres_required == 1)
-                                              <p style="padding: 10px;font-size: 14px;color: red;">You are mandated to upload prescription to place the order.</p>
+                                              <p style="padding: 10px;font-size: 14px;color: red;">{{ __('You are mandated to upload prescription to place the order')}}.</p>
                                                   @endif
                                               {{ Form::close() }}
 
@@ -148,11 +148,11 @@
                 <div class="col-sm-3">
                     <div class="prescription-right">
                         <div class="col-sm-12">
-                            <h2>MEDICINE DETAILS</h2>
+                            <h2>{{ __('MEDICINE DETAILS')}}</h2>
                             <div class="upload-pres">
                                 <table class="tbl-saved-order">
                                 @if(!empty($first_medicine))
-                                    <?php $medicine = Medicine::medicines($first_medicine) ?>
+                                    <?php $medicine = App\Medicine::medicines($first_medicine) ?>
                                     <tbody>
                                     <tr>
                                         <td>Name</td>
@@ -160,7 +160,7 @@
                                     <tr>
                                         <td class="instock" id="med_name">{{ $medicine['item_name'] }}</td>                                    </tr>
                                     <tr>
-                                        <td colspan="2">Compositions:</td>
+                                        <td colspan="2">{{ __('Compositions')}}:</td>
                                         <?php $combo=explode(',',$medicine['composition']) ?>
                                     </tr>
                                     <tr><td colspan="2" id="med_comp">
@@ -169,17 +169,17 @@
                                     @endfor
                                     </td></tr>
                                     <tr>
-                                        <td>Manufacturer</td>
+                                        <td>{{ __('Manufacturer') }}</td>
                                         <td class="instock" id="mfg">{{ $medicine['manufacturer'] }}</td>
                                     </tr>
 
                                     <tr>
-                                        <td>Drug Type</td>
+                                        <td>{{ __('Drug Type')}}</td>
                                         <td class="outstock" id="group"><span title="{{ $medicine['group'] }}">{{ $medicine['group'] }}</span> </td>
                                     </tr>
                                     </tbody>
                                     @else
-                                     {{ 'Sorry no more details' }}
+                                     {{ __('Sorry no more details') }}
                                      @endif
                                 </table>
                                <!-- <button type="button" class="btn btn-primary btn-order-now ripple" data-color="#40E0BC" >ORDER NOW</button>-->
@@ -256,7 +256,7 @@ $(".search_medicine").autocomplete({
                 }
                 else
                 {
-                alert("Could't complete your request");
+                alert("{{ __('Could\'t complete your request')}}");
                 }
             }
         });

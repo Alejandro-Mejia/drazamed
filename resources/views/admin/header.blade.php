@@ -93,13 +93,13 @@
           </a>
           <ul class="dropdown-menu animated fadeInRight">
             <li>
-              <a href="{{url('/')}}/logout"  >Logout</a>
+              <a href="{{url('/')}}/logout"  >{{ __('Logout')}}</a>
             </li>
             <li>
-              <a href="{{url('/')}}/system-setup"  >Settings</a>
+              <a href="{{url('/')}}/system-setup"  >{{ __('Settings')}}</a>
             </li>
             <li>
-              <a href="{{url('/')}}/cache"  >Clear System Cache</a>
+              <a href="{{url('/')}}/cache"  >{{ __('Clear System Cache')}}</a>
             </li>
           </ul>
         </li>
@@ -124,7 +124,7 @@
                     </a>
                     <ul class="dropdown-menu animated fadeInRight m-t-xs">
                       <li>
-                        <a href="{{url('/')}}/logout">Logout</a>
+                        <a href="{{url('/')}}/logout">{{ __('Logout')}}</a>
                       </li>
                     </ul>
                   </div>
@@ -139,7 +139,7 @@
                       <a href="{{url('/')}}/admin/dashboard" class="auto">
                         <i class="fa fa-fw fa-dashboard">
                         </i>
-                        <span class="font-bold">Dashboard</span>
+                        <span class="font-bold">{{ __('Dashboard')}}</span>
                       </a>
                     </li>
                     <li id="users" >
@@ -148,21 +148,21 @@
                           <i class="fa fa-arrow-down"></i>
                         </span>
                         <i class="fa fa-users"></i>
-                        <span class="font-bold">Users</span>
+                        <span class="font-bold">{{ __('Users')}}</span>
                       </a>
                       <ul class="nav dk">
                         <li >
                           <a href="{{url('/')}}/admin/load-customers" class="auto">
                              <i class="fa fa-user"></i>
 
-                            <span>Customers</span>
+                            <span>{{ __('Customers')}}</span>
                           </a>
                         </li>
                         <li >
                           <a href="{{url('/')}}/admin/load-medicalprof" class="auto">
                             <i class="fa fa-user-md"></i>
 
-                            <span>Medical Professionals</span>
+                            <span>{{ __('Medical Professionals')}}</span>
                           </a>
                         </li>
 
@@ -172,13 +172,13 @@
                       <a href="{{url('/')}}/admin/load-medicines" class="auto">
                         <i class="fa fa-fw fa-hospital-o">
                         </i>
-                        <span class="font-bold">Medicine List</span>
+                        <span class="font-bold">{{ __('Medicine List')}}</span>
                       </a>
                     </li>
                     <li id="requested">
                       <a href="{{url('/')}}/admin/load-new-medicines" class="auto">
                         <i class="fa fa-fw  fa-user-md"></i>
-                        <span class="font-bold">Requested Medicines List</span>
+                        <span class="font-bold">{{ __('Requested Medicines List')}}</span>
                       </a>
                     </li>
                     <li id="presc">
@@ -187,45 +187,45 @@
                           <i class="fa fa-arrow-down"></i>
                         </span>
                         <i class="fa fa-bars"></i>
-                        <span class="font-bold">Prescriptions</span>
+                        <span class="font-bold">{{ __('Prescriptions')}}</span>
                       </a>
                       <ul class="nav dk">
 
                         <li >
                           <a href="{{url('/')}}/admin/load-pending-prescription" class="auto">
                             <i class="fa fa-user-md"></i>
-                            <span>Unverified Prescriptions</span>
+                            <span>{{ __('Unverified Prescriptions')}}</span>
                           </a>
                         </li>
                         <li >
                           <a href="{{url('/')}}/admin/load-active-prescription" class="auto">
                             <i class="fa fa-credit-card"></i>
 
-                            <span>Verified Prescriptions</span>
+                            <span>{{ __('Verified Prescriptions')}}</span>
                           </a>
                         </li>
                         <li >
                           <a href="{{url('/')}}/admin/load-paid-prescription" class="auto">
                             <i class="fa fa-paperclip"></i>
-                            <span>Paid Prescriptions</span>
+                            <span>{{ __('Paid Prescriptions')}}</span>
                           </a>
                         </li>
                         <li >
                           <a href="{{url('/')}}/admin/load-shipped-prescription" class="auto">
                             <i class="fa fa-truck"></i>
-                            <span>Shipped Prescriptions</span>
+                            <span>{{ __('Shipped Prescriptions')}}</span>
                           </a>
                         </li>
                         <li >
                           <a href="{{url('/')}}/admin/load-deleted-prescription" class="auto">
                              <i class="fa fa-th-list"></i>
-                            <span>Deleted Prescriptions</span>
+                            <span>{{ __('Deleted Prescriptions')}}</span>
                           </a>
                         </li>
                         <li >
                           <a href="{{url('/')}}/admin/load-all-prescription" class="auto">
                              <i class="fa fa-th-list"></i>
-                            <span>All Prescriptions</span>
+                            <span>{{ __('All Prescriptions')}}</span>
                           </a>
                         </li>
                       </ul>

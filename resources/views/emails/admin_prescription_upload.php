@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta http-equiv="Content-Type" content="text/html;  charset=utf-8"/>
-    <title>Mail</title>
+    <title>{{ __('Mail')}}</title>
     <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
 </head>
 <body style=" margin:0; ">
@@ -32,7 +32,7 @@
                     <?php echo Setting::param('site', 'app_name')['value']; ?></h2>
 
                 <h2 style="font-family: 'Open Sans', sans-serif; color:#fff;font-weight: 100;margin: 0;font-size: 18px;text-align: center;">
-                    Buy Medicines Online. Its easy as it's Name</h2>
+                    {{ __('Buy Medicines Online. Its easy as it's Name')}}</h2>
             </div>
         </div>
         <!--banner-mail ends here-->
@@ -42,14 +42,14 @@
                 Hi <span style="color:#404040; font-weight: bold; ">Admin</span></h2>
 
             <p style="font-family: 'Open Sans', sans-serif;  color:#272727; font-weight: 100; margin: 0;  font-size:14px; line-height: 1.6; margin-bottom: 25px; ">
-                New prescription has been uploaded by <?php echo $name; ?> to <?php echo Setting::param('site', 'app_name')['value']; ?>.
+                {{ __('New prescription has been uploaded by')}} <?php echo $name; ?> to <?php echo Setting::param('site', 'app_name')['value']; ?>.
 
 			</p>
 
 		</div>
         <!--mail-content-->
         <p style=" float:left; color:#8b8b8b; font-family: 'Open Sans', sans-serif; font-weight: 100; margin: 0px; font-size:11px; line-height: 1.6; margin-top: 20px; ">
-            All rights reserved.&copy; 2011-2015 <a style="text-decoration:none"
+            {{ __('All rights reserved')}}.&copy; 2020 <a style="text-decoration:none"
                                                     href="<?php echo URL::to('/'); ?>"><?php echo Setting::param('site', 'website')['value']; ?></a>
         </p>
 

@@ -26,7 +26,7 @@ exit;
     <div class="container aside-xl" >
       <section class="m-b-lg">
         <header class="wrapper text-center">
-          <strong>Admin Login</strong>
+          <strong>{{('Admin Login')}}</strong>
         </header>
 
 	<div style="">
@@ -45,16 +45,21 @@ exit;
             </div>
             <div class="list-group-item">
                <input type="password" placeholder="Password" class="form-control no-border" name="password" required="required">
+
             </div>
-            <div class="list-group-item">
-              {{captcha_img()}}
+
+
+
+
+            <div class="list-group-item" style="text-align:center">
+              {!! captcha_img('mini') !!}
             </div>
             <div class="list-group-item">
             <input type="text" placeholder="Captcha" class="form-control no-border" name="captcha" required="required">
             </div>
           </div>
           <button type="submit" class="btn btn-lg btn-primary btn-block" style="color:#7C829D">Sign in</button>
-          <div class="text-center m-t m-b"><a href="admin/reset"><small>Forgot password?</small></a></div>
+          <div class="text-center m-t m-b"><a href="admin/reset"><small>{{ __('Forgot password')}}?</small></a></div>
           <div class="line line-dashed"></div>
         </form>
        </div>
@@ -65,7 +70,7 @@ exit;
   <footer id="footer">
     <div class="text-center padder">
       <p>
-        <small>{{ Setting::param('site','app_name')['value'] }}, An Online Medical Store<br>&copy; <?php echo date("Y"); ?></small>
+        <small>{{ Setting::param('site','app_name')['value'] }}, {{ __('An Online Medical Store')}}<br>&copy; <?php echo date("Y"); ?></small>
       </p>
     </div>
   </footer>

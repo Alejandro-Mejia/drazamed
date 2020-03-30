@@ -32,49 +32,45 @@
                     <?php echo Setting::param('site', 'app_name')['value']; ?></h2>
 
                 <h2 style="font-family: 'Open Sans', sans-serif; color:#fff;font-weight: 100;margin: 0;font-size: 18px;text-align: center;">
-                    Buy Medicines Online. Its easy as it's Name</h2>
+                    {{ __('Buy Medicines Online. Its easy as it's Name')}}</h2>
             </div>
         </div>
         <!--banner-mail ends here-->
         <div style="background:#fff; padding-left: 30px; padding-right: 30px; padding-top: 50px; padding-bottom: 75px; "
              class="mail-content">
             <h2 style="font-family: 'Open Sans', sans-serif;  color:#272727; font-weight: 100; margin: 0;  font-size:14px; margin-bottom: 28px; ">
-                Hi <span style="color:#404040; font-weight: bold; "><?php echo $name; ?></span></h2>
+                {{ __('Hi')}} <span style="color:#404040; font-weight: bold; "><?php echo $name; ?></span></h2>
 
             <p style="font-family: 'Open Sans', sans-serif;  color:#272727; font-weight: 100; margin: 0;  font-size:14px; line-height: 1.6; margin-bottom: 25px; ">
-                Thank you for joining <a href="<?php echo Setting::param('site', 'app_name')['value']; ?>"> <?php echo Setting::param('site', 'app_name')['value']; ?></a>
-                . We are excited to help you save time and money on your medicine
-                purchases.</p>
+                {{ __('Thank you for joining')}} <a href="<?php echo Setting::param('site', 'app_name')['value']; ?>"> <?php echo Setting::param('site', 'app_name')['value']; ?></a>
+                . {{ __('We are excited to help you save time and money on your medicine purchases')}}.</p>
 
-            <p> Your  <?php echo Setting::param('site', 'app_name')['value']; ?> credentials are given below.</p>
+            <p> {{ __('Your')}}  <?php echo Setting::param('site', 'app_name')['value']; ?> {{ __('credentials are given below')}}.</p>
 
-            <p> Email ID: <?php echo $user_name; ?></p>
+            <p> {{ __('Email ID')}}: <?php echo $user_name; ?></p>
 
-            <p> Password: <?php echo $pwd; ?></p>
-
-            <p style="font-family: 'Open Sans', sans-serif;  color:#272727; font-weight: 100; margin: 0;  font-size:14px; line-height: 1.6; margin-bottom: 25px; ">
-                You may activate your account by </p>
+            <p> {{ __('Password')}}: <?php echo $pwd; ?></p>
 
             <p style="font-family: 'Open Sans', sans-serif;  color:#272727; font-weight: 100; margin: 0;  font-size:14px; line-height: 1.6; margin-bottom: 25px; ">
-                <a href="<?php echo URL::to('/'); ?>/user/web-activate-account/<?php echo $code; ?>">clicking the link
-                    here</a>, if you are using  <?php echo Setting::param('site', 'app_name')['value']; ?> web
-                application from a desktop, or by</p>
+                {{ __('You may activate your account by')}} </p>
 
             <p style="font-family: 'Open Sans', sans-serif;  color:#272727; font-weight: 100; margin: 0;  font-size:14px; line-height: 1.6; margin-bottom: 25px; ">
-                entering your security code (security code - <?php echo $code; ?>) during your first login, if you are
-                using  <?php echo Setting::param('site', 'app_name')['value']; ?> mobile app.</p>
+                <a href="<?php echo URL::to('/'); ?>/user/web-activate-account/<?php echo $code; ?>">{{ __('clicking the link here')}}</a>, {{ __('if you are using')}}  <?php echo Setting::param('site', 'app_name')['value']; ?> {{ __('web application from a desktop, or by')}}</p>
+
+            <p style="font-family: 'Open Sans', sans-serif;  color:#272727; font-weight: 100; margin: 0;  font-size:14px; line-height: 1.6; margin-bottom: 25px; ">
+                {{ __('entering your security code')}} ({{ __('security code')}} - <?php echo $code; ?>) {{ __('during your first login')}}, {{ __('if you are using')}}  <?php echo Setting::param('site', 'app_name')['value']; ?> {{ __('mobile app')}}.</p>
 
             <p style="font-family: 'Open Sans', sans-serif;  color:#272727; font-weight: 100; margin: 0;  font-size:14px; line-height: 1.6; margin-bottom:0px; ">
-                Questions? Send an email to  <?php echo Setting::param('site', 'mail')['value']; ?>.</p>
+                {{ __('Questions? Send an email to')}}  <?php echo Setting::param('site', 'mail')['value']; ?>.</p>
 
             <p style="font-family: 'Open Sans', sans-serif;  color:#272727; font-weight: 100; margin: 0;  font-size:14px; line-height: 1.6; margin-bottom:0px; ">
-                Thanks again for signing up!</p>
+                {{ _('Thanks again for signing up')}}!</p>
 
             <p style="font-family: 'Open Sans', sans-serif;  color:#d1d1d1; font-weight: 100; margin: 0;  font-size:14px; line-height: 1.6; margin-bottom:0px; border-bottom: 1px solid #f0f0f0; padding-bottom: 40px; ">
-                The  <?php echo Setting::param('site', 'app_name')['value']; ?> team</p>
+                Equipo  <?php echo Setting::param('site', 'app_name')['value']; ?></p>
 
             <p style="font-family: 'Open Sans', sans-serif;  color:#47a1b8; font-weight: 100; margin-bottom: 40px; font-size:16px; line-height: 1.6; text-align: center; margin-top: 38px; ">
-                Get our Mobile app from</p>
+                {{ __('Get our Mobile app from')}}</p>
 
             <div style="width:380px;  margin:0 auto; ">
                 <div style="width: 170px; float: left; margin-right: 40px; " class="app-store-img-mail">
@@ -94,7 +90,7 @@
         </div>
         <!--mail-content-->
         <p style=" float:left; color:#8b8b8b; font-family: 'Open Sans', sans-serif; font-weight: 100; margin: 0px; font-size:11px; line-height: 1.6; margin-top: 20px; ">
-            All rights reserved.&copy; 2011-2015 <a style="text-decoration:none"
+            {{ __('All rights reserved')}}.&copy; 2011-2015 <a style="text-decoration:none"
                                                     href="<?php echo URL::to('/'); ?>"><?php echo Setting::param('site', 'website')['value']; ?></a>
         </p>
 

@@ -23,15 +23,15 @@ if(count($med_info)>0)
                             <h4 class="buynow-title">{{{ $med_info[0]->item_name }}} </h4>
                         </div>
                         <div class="col-sm-5 nopadding txt-align-right">
-                            <span class="buy-now-txt-blue">Price/Tablet : {{ Setting::currencyFormat($med_info[0]->selling_price) }}</span>
+                            <span class="buy-now-txt-blue">{{ __('Price/Tablet')}} : {{ Setting::currencyFormat($med_info[0]->selling_price) }}</span>
                         </div>
                         <div class="clear"></div>
                     </div>
                 </div>
                 <div class="col-sm-4">
                     <div class="right-inner-addon">
-                        <button type="button"  class="btn btn-primary logout-btn ripple" data-color="#4BE7EC" onclick="goto_detail_page();">SEARCH</button>
-                        <input type="text" id="tags" class="form-control search_medicine"  placeholder="Search another medicine" />
+                        <button type="button"  class="btn btn-primary logout-btn ripple" data-color="#4BE7EC" onclick="goto_detail_page();">{{ __('SEARCH')}}</button>
+                        <input type="text" id="tags" class="form-control search_medicine"  placeholder="{{ __('Search another medicine')}}" />
 
                     </div>
                 </div>
@@ -41,11 +41,11 @@ if(count($med_info)>0)
                 <div class="col-sm-9">
                     <div class="detail-left">
                         <div class="border-btm2">
-                            <div class="col-sm-6 nopadding"><h2 class="title-buy-details">Information</h2></div>
+                            <div class="col-sm-6 nopadding"><h2 class="title-buy-details">{{ __('Information')}}</h2></div>
 
                             <div class="col-sm-6 nopadding txt-align-right btn-save-order">
-                              Quantity: <input type="number" value="1" min="1" id="med_quantity" placeholder="Enter Quantity">
-                                <button type="button" class="btn btn-primary save-btn ripple add_to_cart" data-color="#40E0BC">Add to cart</button>
+                              {{ __('Quantity')}}: <input type="number" value="1" min="1" id="med_quantity" placeholder="Enter Quantity">
+                                <button type="button" class="btn btn-primary save-btn ripple add_to_cart" data-color="#40E0BC">{{ __('Add to cart')}}</button>
                             </div>
                             <div class="clear"></div>
                         </div>
@@ -53,16 +53,16 @@ if(count($med_info)>0)
                         <div class="col-sm-11 nopadding">
                         <?php if($med_info[0]->marketed_by!="Not available" || $med_info[0]->manufacturer!="Not available"){?>
                             <div class="info-content">
-                                <h2>Marketed By</h2>
+                                <h2>{{ __('Marketed By')}}</h2>
                                 <p id="mfg"><?php  if($med_info[0]->marketed_by!="Not available") echo $med_info[0]->marketed_by; elseif($med_info[0]->manufacturer!="Not available") echo $med_info[0]->manufacturer; ?></p>
                             </div>
                             <?php }?>
                             <div class="info-content">
-                                <h2>Prescription</h2>
+                                <h2>{{__('Prescription')}}</h2>
                                 <p><?php echo ($med_info[0]->is_pres_required == 1) ? "Mandatory" : "Optional" ;?> </p>
                             </div>
                             <div class="info-content">
-                                <h2>Composition</h2>
+                                <h2>{{ __('Composition')}}</h2>
                                 <table>
                                 <?php
                                 $composition=(explode(",",$med_info[0]->composition))
@@ -86,7 +86,7 @@ if(count($med_info)>0)
                                 </table>
                             </div>
                             <div class="info-content">
-                                <h2>Drug Type</h2>
+                                <h2>{{ __('Drug Type')}}</h2>
                                 <p id="drug">{{$med_info[0]->group}}</p>
                             </div>
                         </div>
@@ -101,7 +101,7 @@ if(count($med_info)>0)
                 <div class="col-sm-3">
                     <div class="prescription-right">
                         <div class="col-sm-12">
-                            <h2>Alternatives</h2>
+                            <h2>{{ __('Alternatives')}}</h2>
                             <div class="alter-list">
 
                              <span class="med_search_loader"><img src=" {{URL::to('assets/images/loader1.gif')}}" /></span>

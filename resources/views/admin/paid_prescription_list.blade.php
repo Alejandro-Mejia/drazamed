@@ -12,7 +12,7 @@ $(function()
   <section class="scrollable padder">
 
   <div class="row">
-  <div class="col-lg-9"> <h3 class="m-b-none">Paid Prescriptions</h3></div>
+  <div class="col-lg-9"> <h3 class="m-b-none">{{ __('Paid Prescriptions')}}</h3></div>
   <!-- TODO Search filter not working for nay -->
   <div class="col-lg-3" style="padding-top: 7px">  <input class="form-control" type="text" name="pres_search" id="pres_search" placeholder="Search prescription by email" onkeyup="filter_pres(this.value,'paid')" >
 </div>
@@ -25,11 +25,11 @@ $(function()
    <table class="table table-striped m-b-none dataTable">
 	<thead>
 	  <tr>
-	    <th>No.</th>
-	    <th>From</th>
-	    <th>Date</th>
-	    <th>Actions</th>
-	    <th>Invoice</th>
+	    <th>{{ __('No.')}}</th>
+	    <th>{{ __('From')}}</th>
+	    <th>{{ __('Date')}}</th>
+	    <th>{{ __('Actions')}}</th>
+	    <th>{{ __('Invoice')}}</th>
 	  </tr>
 	</thead>
 	<tbody id="pres_content">
@@ -51,15 +51,15 @@ $(function()
 	   <td>{{date('d-M-Y',strtotime($pres[$i]->created_date))}}</td>
 	   <td>
 	    @if($pres[$i]->shipping_status != ShippingStatus::SHIPPED())
-	        <a class='btn btn-s-md btn-info btn-rounded' href='{{url("/")}}/admin/ship-order/{{$pres[$i]->pres_id}}'  onclick="return confirm('Do you really want to make this order as shipped?');">Ship Order</a>
+	        <a class='btn btn-s-md btn-info btn-rounded' href='{{url("/")}}/admin/ship-order/{{$pres[$i]->pres_id}}'  onclick="return confirm('Do you really want to make this order as shipped?');">{{ __('Ship Order')}}</a>
         @else
-            Shipped
+            {{ __('Shipped')}}
         @endif
-	   {{--&nbsp;&nbsp;&nbsp;<a class='btn btn-s-md btn-danger btn-rounded' href='{{url("/")}}/admin/pres-delete/{{$pres[$i]->pres_id}}/paid'  onclick="return confirm('Are you sure you want to delete this item?');">Delete</a></td>--}}
+	   {{--&nbsp;&nbsp;&nbsp;<a class='btn btn-s-md btn-danger btn-rounded' href='{{url("/")}}/admin/pres-delete/{{$pres[$i]->pres_id}}/paid'  onclick="return confirm('Are you sure you want to delete this item?');">{{ __('Delete')}}</a></td>--}}
 	   <td><a class='text-info' href='{{url("/")}}/admin/load-invoice/{{$pres[$i]->id}}'>{{ $pres[$i]->invoice }}</a></td>
 	   </tr>
 	   <?php } } else {?>
-	   <tr><td colspan="7">No Prescriptions Found.</td></tr>
+	   <tr><td colspan="7">{{ __('No Prescriptions Found.')}}</td></tr>
 	   <?php }?>
 
 

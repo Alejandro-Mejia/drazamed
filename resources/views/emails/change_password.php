@@ -41,24 +41,22 @@
             <h2 style="font-family: 'Open Sans', sans-serif;  color:#272727; font-weight: 100; margin: 0;  font-size:14px; margin-bottom: 28px; ">
                 Hi <span style="color:#404040; font-weight: bold; "><?php echo $name; ?></span></h2>
 
-            <p>We would like to inform you that your  <?php echo Setting::param('site', 'app_name')['value']; ?>
-                password has been changed. Please make sure to use the new
-                password while logging in to  <?php echo Setting::param('site', 'app_name')['value']; ?>.</p>
+            <p>{{ __('We would like to inform you that your')}}  <?php echo Setting::param('site', 'app_name')['value']; ?>
+                {{ __('password has been changed')}}. {{__('Please make sure to use the new password while logging in to')}}  <?php echo Setting::param('site', 'app_name')['value']; ?>.</p>
 
-            <p>If you feel that your account password was changed by somebody else, please let us know about it
-                immediately.</p>
+            <p>{{ __('If you feel that your account password was changed by somebody else, please let us know about it immediately.')}}</p>
 
-            <p>If you have any questions, please send an email to <?php echo Setting::param('site', 'mail')['value']; ?>
+            <p>{{ __('If you have any questions, please send an email to')}} <?php echo Setting::param('site', 'mail')['value']; ?>
                 .</p>
 
             <p style="font-family: 'Open Sans', sans-serif;  color:#272727; font-weight: 100; margin: 0;  font-size:14px; line-height: 1.6; margin-bottom:0px; ">
-                Thank you.</p>
+                {{ __('Thank you')}}.</p>
 
             <p style="font-family: 'Open Sans', sans-serif;  color:#d1d1d1; font-weight: 100; margin: 0;  font-size:14px; line-height: 1.6; margin-bottom:0px; border-bottom: 1px solid #f0f0f0; padding-bottom: 40px; ">
-                The  <?php echo Setting::param('site', 'app_name')['value']; ?> team</p>
+                Equipo:  <?php echo Setting::param('site', 'app_name')['value']; ?> </p>
 
             <p style="font-family: 'Open Sans', sans-serif;  color:#47a1b8; font-weight: 100; margin-bottom: 40px; font-size:16px; line-height: 1.6; text-align: center; margin-top: 38px; ">
-                Get our Mobile app from</p>
+                {{ __('Get our Mobile app from')}}</p>
 
             <div style="width:380px;  margin:0 auto; ">
                 <div style="width: 170px; float: left; margin-right: 40px; " class="app-store-img-mail">
@@ -78,7 +76,7 @@
         </div>
         <!--mail-content-->
         <p style=" float:left; color:#8b8b8b; font-family: 'Open Sans', sans-serif; font-weight: 100; margin: 0px; font-size:11px; line-height: 1.6; margin-top: 20px; ">
-            All rights reserved.&copy; 2011-2015 <a style="text-decoration:none"
+            {{ __('All rights reserved')}}.&copy; 2011-2015 <a style="text-decoration:none"
                                                     href="<?php echo URL::to('/'); ?>"><?php echo Setting::param('site', 'website')['value']; ?></a>
         </p>
 

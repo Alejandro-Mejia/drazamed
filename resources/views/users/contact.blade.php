@@ -54,29 +54,29 @@
 
             <div class="col-sm-3">
 
-                <h1 class="contact-h1">Contact Us</h1>
+                <h1 class="contact-h1">{{ __('Contact Us')}}</h1>
             </div>
 
             <div class="col-sm-9 contact-right-section">
                 <div class="contact-right-upper">
-                <div class="alert alert-success mail_alert" style="display: none;" role="alert"> Your enquiry has been submitted successfully. We will get back to you shortly</div>
-                    <h2 class="contact-h2">Get in touch with us</h2>
-                    <p>Please feel free to reach out to us. We will be more than happy to help.</p>
+                <div class="alert alert-success mail_alert" style="display: none;" role="alert"> {{ __('Your enquiry has been submitted successfully')}}. {{ __('We will get back to you shortly')}}</div>
+                    <h2 class="contact-h2">{{ __('Get in touch with us')}}</h2>
+                    <p>{{ __('Please feel free to reach out to us')}}. {{ __('We will be more than happy to help')}}.</p>
                    <!--<div class="form-result3" style="position: absolute;top: 45px;left: 795px;color: #4F8A10;font-size: 14px;"></div>-->
                     <form class="form-horizontal contact-form" role="form" action="<?php echo 'URL'; ?>/user/contact-us" method="POST" >
                          <input type="hidden" name="_token" id="_token" value="<?php echo csrf_token(); ?>">
                         <div class="col-sm-8">
 
                             <div class="col-sm-6">
-                                <input class="form-control" type="text" name="name" id="name" placeholder="Your Name" required />
+                                <input class="form-control" type="text" name="name" id="name" placeholder="{{ __('Your Name')}}" required />
                             </div>
                             <div class="col-sm-6">
-                                <input class="form-control" type="email" name="email" id="email" placeholder="Email ID" required>
+                                <input class="form-control" type="email" name="email" id="email" placeholder="{{ __('Email ID')}}" required>
                             </div>
                             <div class="col-sm-12">
-                                <textarea class="form-control" type="text" name="msg" id="msg" placeholder="Enter your message here..."></textarea>
+                                <textarea class="form-control" type="text" name="msg" id="msg" placeholder="{{ __('Enter your message here...')}}"></textarea>
                             </div>
-                            <button type="submit" class="btn btn-primary save-btn ripple mail_btn" data-color="#40E0BC">&nbsp;Send&nbsp;</button> <img class="mail_loader" style="display: none;" src="<?php echo 'URL'; ?>/assets/images/loader1.gif">
+                            <button type="submit" class="btn btn-primary save-btn ripple mail_btn" data-color="#40E0BC">&nbsp;{{ __('Send')}}&nbsp;</button> <img class="mail_loader" style="display: none;" src="<?php echo 'URL'; ?>/assets/images/loader1.gif">
                         </div>
                         <div class="col-sm-4">
 
@@ -87,7 +87,7 @@
                 <div class="connect-with">
 
                     <div class="col-sm-12">
-                        <h2 class="contact-h2">Connect with us</h2>
+                        <h2 class="contact-h2">{{ __('Connect with us')}}</h2>
                         <div class="col-sm-3 " style="text-align:center"">
                             <div class="contact-icon-bg" style="margin: 10px auto"><i class="icon-phone"></i></div>
                             <p>{{ Setting::param('site','phone')['value'] }}</p>

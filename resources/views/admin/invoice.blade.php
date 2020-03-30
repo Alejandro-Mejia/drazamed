@@ -45,7 +45,7 @@
               <div class="well m-t">
                 <div class="row">
                   <div class="col-xs-6" >
-                    <strong >TO:</strong>
+                    <strong >{{ __('TO')}}:</strong>
                     <h4><?php echo $details['fname']." ".$details['lname']?></h4>
                     <p>
                       <?php echo $details['addr']?><br>
@@ -56,19 +56,19 @@
                   </div>
                 </div>
               </div>
-              <p class="m-t m-b">Order date: <strong><?php echo date('Y-m-d',$orderDate) ?></strong><br>
-                  Order status: <span class="label bg-success">Shipped</span><br>
-                  Order ID: <strong>#<?php echo $id?></strong>
+              <p class="m-t m-b">{{ __('Order date')}}: <strong><?php echo date('Y-m-d',$orderDate) ?></strong><br>
+                  {{ __('Order status')}}: <span class="label bg-success">{{ __('Shipped')}}</span><br>
+                  {{ __('Order ID')}}: <strong>#<?php echo $id?></strong>
               </p>
               <div class=""></div>
               <table class="table">
                 <thead>
                   <tr>
-                    <th >SL</th>
-                    <th>DESCRIPTION</th>
-                    <th >QTY</th>
-                    <th >UNIT PRICE</th>
-                    <th >TOTAL</th>
+                    <th >{{ __(SL)}}</th>
+                    <th >{{ __('DESCRIPTION')}}</th>
+                    <th >{{ __('QTY')}}</th>
+                    <th >{{ __('UNIT PRICE')}}</th>
+                    <th >{{ __('TOTAL')}}</th>
                   </tr>
                 </thead>
                 <tbody>

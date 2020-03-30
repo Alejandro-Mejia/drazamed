@@ -10,19 +10,19 @@ $(function()
 <section class="vbox">
   <section class="scrollable padder">
   <div class="m-b-md">
-                <h3 class="m-b-none">Medical Professionals</h3>
+                <h3 class="m-b-none">{{ __('Medical Professionals')}}</h3>
   </div>
   <section class="panel panel-default">
    <table class="table table-striped m-b-none dataTable">
 	<thead>
 	  <tr>
-	    <th>No.</th>
-	    <th>Email</th>
-	    <th>Phone</th>
-	    <th>First Name</th>
-	    <th>Last Name</th>
-	    <th>Address</th>
-	    <th>Pincode</th>
+	    <th>{{ __('No.')}}</th>
+	    <th>{{ __('Email')}}</th>
+	    <th>{{ __('Phone')}}</th>
+	    <th>{{ __('First Name')}}</th>
+	    <th>{{ __('Last Name')}}</th>
+	    <th>{{ __('Address')}}</th>
+	    <th>{{ __('Pincode')}}</th>
 	    <th></th>
 	  </tr>
 	</thead>
@@ -54,7 +54,7 @@ $(function()
 
 	   $i++;
 	   } } else {?>
-	   <tr><td colspan="7">No Medical Professionals Found.</td></tr>
+	   <tr><td colspan="7">{{ __('No Medical Professionals Found.')}}</td></tr>
 	   <?php }?>
 
 	{{ $mprof->links() }}

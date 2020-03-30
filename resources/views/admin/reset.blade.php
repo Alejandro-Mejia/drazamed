@@ -18,7 +18,7 @@
     <div class="container aside-xl" style="background-color:#E6E6E6;border-radius: 5px;">
       <section class="m-b-lg">
         <header class="wrapper text-center">
-          <strong>Reset Admin password</strong>
+          <strong>{{ __('Reset Admin password')}}</strong>
         </header>
         <?php
 	 if(Session::has('message')){?>
@@ -31,7 +31,7 @@
               <input type="email" placeholder="Email" class="form-control no-border" name="email">
             </div>
           </div>
-          <button type="submit" class="btn btn-lg btn-primary btn-block">Submit</button>
+          <button type="submit" class="btn btn-lg btn-primary btn-block">{{ __('Submit')}}</button>
           <div class="line line-dashed"></div>
         </form>
        </div>
@@ -42,7 +42,7 @@
   <footer id="footer">
     <div class="text-center padder">
       <p>
-        <small>{{ Setting::param('site','app_name')['value'] }}, An Online Medical Store<br>&copy; <?php echo date('y')?></small>
+        <small>{{ Setting::param('site','app_name')['value'] }}, {{ __('An Online Medical Store')}}<br>&copy; <?php echo date('y')?></small>
       </p>
     </div>
   </footer>

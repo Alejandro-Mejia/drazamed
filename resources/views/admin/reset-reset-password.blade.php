@@ -13,8 +13,8 @@
 <div class="container">
 
 
- <h1>Reset Password</h1>
-<?php 
+ <h1>{{ __('Reset Password')}}</h1>
+<?php
  if(Session::has('passwordError')){?>
 <div style="color: green"><h3><?php echo Session::get('passwordError');?> </h3></div>
 <?php }?>
@@ -24,35 +24,35 @@
 {{Form::token()}}
 
 <div class="form-group">
-<label for="email">Email:</label>
+<label for="email">{{ __('Email')}}:</label>
 <input type="hidden" name="mdofemail" value="<?php echo $md ?>" />
 <input class="form-control" name="email" type="email" required>
 </div>
 <div class="form-group">
-<label for="email">New Password:</label>
+<label for="email">{{ __('New Password')}}:</label>
 <input class="form-control" name="password" id="password" type="password" required>
 </div>
 
 <div class="form-group">
-<label for="email">Confirm Password:</label>
+<label for="email">{{ __('Confirm Password')}}:</label>
 <input class="form-control" name="cpassword" id="cpassword" type="password" required>
 </div>
 
-<button class="btn btn-primary" name="submit" value="Login" type="submit">Submit</button>
+<button class="btn btn-primary" name="submit" value="Login" type="submit">{{ __('Submit')}}</button>
 
 </form>
 
 <script>
 $("#formCheckPassword").validate({
            rules: {
-               password: { 
+               password: {
                  required: true,
                     minlength: 4,
                     maxlength: 10
 
-               } , 
+               } ,
 
-                   cpassword: { 
+                   cpassword: {
                     equalTo: "#password",
                      minlength: 4,
                      maxlength: 10
@@ -61,8 +61,8 @@ $("#formCheckPassword").validate({
 
            },
      messages:{
-         password: { 
-                 required:"the password is required"
+         password: {
+                 required:"{{ __('the password is required')}}"
 
                }
      }

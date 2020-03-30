@@ -3,7 +3,7 @@
         <div class="row acc-cont">
             <div class="col-md-4 prof-left">
                 <div class="profile-top">
-                    <h1>My Profile</h1>
+                    <h1>{{ __('My Profile')}}</h1>
                 </div>
                 <div class="col-md-12 prof-pic">
                     <div class="placeholder ">
@@ -24,7 +24,6 @@
                         <input id="input-20" type="file" name="file"  class="prescription-upload update"  >
                         <span style="display: none;">   <input type="submit" id="upload">  </span>
                        {{ Form::close() }}
-
 
                         </div>
                     </div>
@@ -51,7 +50,7 @@
                         <div class="border-prof"><span></span></div>
                         <p class="ph-no">{{ $phone }}</p>
                         <p class="email">{{Auth::user()->email}}</p>
-                       <a href="{{ URL::to('logout') }}"> <button type="button" class="btn btn-primary btn-lg logout-btn ripple" data-color="#4BE7EC">LOGOUT</button></a>
+                       <a href="{{ URL::to('logout') }}"> <button type="button" class="btn btn-primary btn-lg logout-btn ripple" data-color="#4BE7EC">{{ __('LOGOUT')}}</button></a>
                     </div>
                 </div>
             </div>
@@ -62,7 +61,7 @@
                             <i class="fa fa-order"></i>
                         </span>
                         <div class="box-info">
-                            <p class="size-h2">My Cart</p>
+                            <p class="size-h2">{{ __('My Cart')}}</p>
                         </div>
                     </a>
                     <a href="{{URL::to('my-prescription')}}" class="btn btn-default ripple" data-color="#F9FBFC" role="button">
@@ -70,7 +69,7 @@
                             <i class="fa fa-prescription"></i>
                         </span>
                         <div class="box-info">
-                            <p class="size-h2">My Prescriptions</p>
+                            <p class="size-h2">{{ __('My Prescriptions')}}</p>
                         </div>
                     </a>
                     <a href="{{ URL::to('my-order') }}" class="btn btn-default ripple" data-color="#F9FBFC" role="button">
@@ -78,13 +77,13 @@
                             <i class="fa fa-medicine"></i>
                         </span>
                         <div class="box-info">
-                            <p class="size-h2">My Orders</p>
+                            <p class="size-h2">{{ __('My Orders')}}</p>
                         </div>
                     </a>
                 </div>
                 <div class="col-md-12 addPersonal">
                 <h3 id="result_text" style="background-color: #DFF0D8; padding: 10px; text-align: center; border-radius: 5px; display: none"></h3>
-               <h2>Add Personal Details <span> <a href="#myModal_change_password"  data-toggle="modal">Click Here </a> To Change Password</span></h2>
+               <h2>{{ __('Add Personal Details')}} <span> <a href="#myModal_change_password"  data-toggle="modal">{{ __('Click Here')}} </a> {{ __('To Change Password')}}</span></h2>
 
 
                     <div class="clear"></div>
@@ -93,21 +92,21 @@
                         <div class="col-md-6">
                             <input type="hidden" id="_token" name="_token" value="<?php echo csrf_token(); ?>">
                             <div class="form-group form-group-sm">
-                                <label class="col-sm-3 control-label" for="Address">Name</label>
+                                <label class="col-sm-3 control-label" for="Address">{{ __('Name')}}</label>
                                 <div class="col-sm-9">
                                     <input class="form-control" type="text" id="first_name" value="@if(Auth::user()->user_type_id==UserType::MEDICAL_PROFESSIONAL()){{$user_data->prof_first_name}}@else{{$user_data->first_name}}@endif">
                                 </div>
                             </div>
 
                             <div class="form-group form-group-sm">
-                                <label class="col-sm-3 control-label" for="District">Last Name</label>
+                                <label class="col-sm-3 control-label" for="District">{{ __('Last Name')}}</label>
                                 <div class="col-sm-9">
                                     <input class="form-control" id="last_name" type="text"  value="@if(Auth::user()->user_type_id==UserType::MEDICAL_PROFESSIONAL()){{$user_data->prof_last_name}}@else{{$user_data->last_name}}@endif">
                                 </div>
                             </div>
 
                             <div class="form-group form-group-sm">
-                                <label class="col-sm-3 control-label" for="Address">Address</label>
+                                <label class="col-sm-3 control-label" for="Address">{{ __('Address')}}</label>
                                 <div class="col-sm-9">
                                 <textarea class="form-control address_area" id="address" style="padding: 10px 20px;">@if(Auth::user()->user_type_id==UserType::MEDICAL_PROFESSIONAL()){{$user_data->prof_address}}@else{{$user_data->address}}@endif</textarea>
                                 </div>
@@ -118,7 +117,7 @@
 
 
                             <div class="form-group form-group-sm">
-                                <label class="col-sm-3 control-label" for="District">phone</label>
+                                <label class="col-sm-3 control-label" for="District">{{ __('phone')}}</label>
                                 <div class="col-sm-9">
                                     <input class="form-control" id="phone" type="text" placeholder="" value="@if(Auth::user()->user_type_id==UserType::MEDICAL_PROFESSIONAL()){{$user_data->prof_phone}}@else{{$user_data->phone}} @endif">
                                 </div>
@@ -130,7 +129,7 @@
                                 </div>
                             </div>-->
                             <div class="form-group form-group-sm">
-                                <label class="col-sm-3 control-label" for="Pincode">Pincode</label>
+                                <label class="col-sm-3 control-label" for="Pincode">{{ __('Pincode')}}</label>
                                 <div class="col-sm-9 pcode">
                                 <input class="form-control" type="text" id="pincode" placeholder="" value="@if(Auth::user()->user_type_id==UserType::MEDICAL_PROFESSIONAL()){{$user_data->prof_pincode}}@else{{$user_data->pincode}}@endif">
                                    <!-- <input class="col-sm-2" type="text" placeholder="">
@@ -144,8 +143,8 @@
                         </div>
                         <div class="clear"></div>
                         <div class="col-sm-12">
-                            <button type="button" class="btn btn-primary save-btn ripple" data-color="#40E0BC">SAVE CHANGES</button>
-                            <div class="changePwd"><a href="#">Click here</a> to Change Password</div>
+                            <button type="button" class="btn btn-primary save-btn ripple" data-color="#40E0BC">{{ __('SAVE CHANGES')}}</button>
+                            <div class="changePwd"><a href="#">{{ __('Click here')}}</a> {{ __('to Change Password')}}</div>
                             <div class="clear"></div>
                         </div>
 

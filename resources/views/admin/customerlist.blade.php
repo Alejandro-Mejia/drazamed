@@ -16,13 +16,13 @@ $(function()
    <table class="table table-striped m-b-none dataTable">
 	<thead>
 	  <tr>
-	    <th>No.</th>
-	    <th>Email</th>
-	    <th>Phone</th>
-	    <th>First Name</th>
-	    <th>Last Name</th>
-	    <th>Address</th>
-	    <th>Pincode</th>
+	    <th>{{ __('No.')}}</th>
+	    <th>{{ __('Email')}}</th>
+	    <th>{{ __('Phone')}}</th>
+	    <th>{{ __('First Name')}}</th>
+	    <th>{{ __('Last Name')}}</th>
+	    <th>{{ __('Address')}}</th>
+	    <th>{{ __('Pincode')}}</th>
 
 	    <th></th>
 	  </tr>
@@ -54,7 +54,7 @@ $(function()
 
 	   $i++;
 	   } } else {?>
-	   <tr><td colspan="7">No Customers Found.</td></tr>
+	   <tr><td colspan="7">{{ __('No Customers Found.')}}</td></tr>
 	   <?php }?>
 
 	{{ $customers->links() }}

@@ -11,7 +11,7 @@ $(function()
 <section class="vbox">
   <section class="scrollable padder">
   <div class="row">
-  <div class="col-lg-9"><h3 class="m-b-none">Unverified Prescriptions</h3></div>
+  <div class="col-lg-9"><h3 class="m-b-none">{{ __('Unverified Prescriptions')}}</h3></div>
   <div class="col-lg-3" style="padding-top: 7px;"><input class="form-control" type="text" name="pres_search" id="pres_search" placeholder="Search prescription by email" onkeyup="filter_pres(this.value,'unverified')" ></div>
 
   </div>
@@ -25,13 +25,13 @@ $(function()
   <section class="panel panel-default">
    <table class="table table-striped m-b-none dataTable">
 	<thead>
-	  <tr>
-	    <th>No.</th>
-	    <th>From</th>
-	    <th>Date</th>
-	    <th>Prescription Status</th>
-	    <th>Actions</th>
-	  </tr>
+    <tr>
+      <th>{{ __('No.')}}</th>
+      <th>{{ __('From')}}</th>
+      <th>{{ __('Date')}}</th>
+      <th>{{ __('Prescription Status')}}</th>
+      <th>{{ __('Actions')}}</th>
+    </tr>
 	</thead>
 	<tbody id="pres_content">
 <?php
@@ -51,11 +51,11 @@ $(function()
 	   <td>{{$pres[$i]->email}}</td>
 	   <td>{{date('d-M-Y',strtotime($pres[$i]->created_date))}}</td>
 	   <td><?php echo "Pending Verification";?></td>
-	   <td><a class='btn btn-s-md btn-info btn-rounded' href='{{url("/")}}/admin/pres-edit/{{$pres[$i]->pres_id}}/1' >Details</a>&nbsp;&nbsp;&nbsp;
-	   <a class='btn btn-s-md btn-danger btn-rounded' data-href='{{url("/")}}/admin/pres-delete/{{$pres[$i]->pres_id}}/{{ PrescriptionStatus::UNVERIFIED() }}' onclick="confirm_deletion(this);">Delete</a></td>
+	   <td><a class='btn btn-s-md btn-info btn-rounded' href='{{url("/")}}/admin/pres-edit/{{$pres[$i]->pres_id}}/1' >{{ __('Details')}}</a>&nbsp;&nbsp;&nbsp;
+	   <a class='btn btn-s-md btn-danger btn-rounded' data-href='{{url("/")}}/admin/pres-delete/{{$pres[$i]->pres_id}}/{{ PrescriptionStatus::UNVERIFIED() }}' onclick="confirm_deletion(this);">{{ __('Delete')}}</a></td>
 	   </tr>
 	   <?php } } else {?>
-	   <tr><td colspan="7">No Prescriptions Found.</td></tr>
+	   <tr><td colspan="7">{{ __('No Prescriptions Found.')}}</td></tr>
 	   <?php }?>
 
 

@@ -10,14 +10,14 @@
 <div class="contact-container">
 <div class="prescription-inner container">
 <div class="col-sm-8">
-    <h1 class="prescription-h1">My Prescriptions</h1>
+    <h1 class="prescription-h1">{{ __('My Prescriptions')}}</h1>
 </div>
 <div class="col-sm-4">
     <div class="right-inner-addon">
         <button type="button" class="btn btn-primary logout-btn ripple" data-color="#4BE7EC"
-                onclick="goto_detail_page();">SEARCH
+                onclick="goto_detail_page();">{{ __('SEARCH')}}
         </button>
-        <input type="text" id="tags" class="form-control search_medicine" placeholder="Search medicines here"/>
+        <input type="text" id="tags" class="form-control search_medicine" placeholder="{{ __('Search medicines here ...')}}"/>
     </div>
 </div>
 <div class="clear"></div>
@@ -27,12 +27,12 @@
 <div class="col-sm-5 recent-list">
     <!--<h2>Recent List <i class="icon-calender"></i></h2>-->
     <div class="form-group">
-        <label for="sel1">Recent list:</label>
+        <label for="sel1">{{ __('Recent list')}}:</label>
         <select class="form-control category" id="sel1" onchange="change_list();">
-            <option value="0" <?php if ($cat == 0) { ?> selected <?php } ?>>All</option>
-            <option value="1" <?php if ($cat == 1) { ?> selected <?php } ?>>Unverified</option>
-            <option value="2" <?php if ($cat == 2) { ?> selected <?php } ?>>Verified</option>
-            <option value="3" <?php if ($cat == 3) { ?> selected <?php } ?>>Shipped</option>
+            <option value="0" <?php if ($cat == 0) { ?> selected <?php } ?>>{{ __('All')}}</option>
+            <option value="1" <?php if ($cat == 1) { ?> selected <?php } ?>>{{ __('Unverified')}}</option>
+            <option value="2" <?php if ($cat == 2) { ?> selected <?php } ?>>{{ __('Verified')}}</option>
+            <option value="3" <?php if ($cat == 3) { ?> selected <?php } ?>>{{ __('Shipped')}}</option>
         </select>
     </div>
 </div>
@@ -57,10 +57,10 @@
             <td>
                 <table class="tab-pres-head">
                     <thead>
-                    <th>Date Added</th>
-                    <th>Medicines</th>
-                    <th>Units</th>
-                    <th>Price</th>
+                    <th>{{ __('Date Added')}}</th>
+                    <th>{{ __('Medicines')}}</th>
+                    <th>{{ __('Units')}}</th>
+                    <th>{{ __('Price')}}</th>
                     </thead>
                 </table>
             </td>

@@ -18,7 +18,7 @@
                 </li>
                 <li style="list-style:none;  float:right;  margin-right: 8px; ">
                     <a style="text-decoration:none;  font-family: 'Open Sans', sans-serif;  color:#498ea0; "
-                       href="<?php echo URL::to('/'); ?>"><p>Login
+                       href="<?php echo URL::to('/'); ?>"><p>{{ __('Login')}}
                             to <?php echo Setting::param('site', 'app_name')['value']; ?></p></a>
                 </li>
             </ul>
@@ -32,7 +32,7 @@
                     <?php echo Setting::param('site', 'app_name')['value']; ?></h2>
 
                 <h2 style="font-family: 'Open Sans', sans-serif; color:#fff;font-weight: 100;margin: 0;font-size: 18px;text-align: center;">
-                    Buy Medicines Online. Its easy as it's Name</h2>
+                    {{ __('Buy Medicines Online. Its easy as it's Name')}}</h2>
             </div>
         </div>
         <!--banner-mail ends here-->
@@ -41,23 +41,20 @@
             <h2 style="font-family: 'Open Sans', sans-serif;  color:#272727; font-weight: 100; margin: 0;  font-size:14px; margin-bottom: 28px; ">
                 Hi <span style="color:#404040; font-weight: bold; "><?php echo $name; ?></span></h2>
 
-            <p>We would like to inform you that we have received the amount paid towards your order at  <?php echo Setting::param('site', 'app_name')['value']; ?>. We will
-                process the order further and make shipment at the earliest. Once shipment is done, we will make sure
-                that you are notified.</p>
+            <p>{{ __('We would like to inform you that we have received the amount paid towards your order at')}}  <?php echo Setting::param('site', 'app_name')['value']; ?>. {{ __('We will process the order further and make shipment at the earliest. Once shipment is done, we will make sure that you are notified.')}}</p>
 
-            <p>Orders for which payment has been done and are awaiting shipment can be tracked under ‘Awaiting Shipping’
-                tab. Once the item is shipped, you may track it under ‘Shipped Orders’.</p>
+            <p>{{ __('Orders for which payment has been done and are awaiting shipment can be tracked under ‘Awaiting Shipping’ tab. Once the item is shipped, you may track it under ‘Shipped Orders’.')}}</p>
 
-            <p>Questions? Send an email to  <?php echo Setting::param('site', 'mail')['value']; ?>.</p>
+            <p>{{ __('Questions? Send an email to')}}  <?php echo Setting::param('site', 'mail')['value']; ?>.</p>
 
             <p style="font-family: 'Open Sans', sans-serif;  color:#272727; font-weight: 100; margin: 0;  font-size:14px; line-height: 1.6; margin-bottom:0px; ">
-                Thank you.</p>
+                {{ __('Thank you')}}.</p>
 
             <p style="font-family: 'Open Sans', sans-serif;  color:#d1d1d1; font-weight: 100; margin: 0;  font-size:14px; line-height: 1.6; margin-bottom:0px; border-bottom: 1px solid #f0f0f0; padding-bottom: 40px; ">
-                The  <?php echo Setting::param('site', 'app_name')['value']; ?> team</p>
+                Equipo  <?php echo Setting::param('site', 'app_name')['value']; ?></p>
 
             <p style="font-family: 'Open Sans', sans-serif;  color:#47a1b8; font-weight: 100; margin-bottom: 40px; font-size:16px; line-height: 1.6; text-align: center; margin-top: 38px; ">
-                Get our Mobile app from</p>
+                {{ __('Get our Mobile app from')}}</p>
 
             <div style="width:380px;  margin:0 auto; ">
                 <div style="width: 170px; float: left; margin-right: 40px; " class="app-store-img-mail">
@@ -77,7 +74,7 @@
         </div>
         <!--mail-content-->
         <p style=" float:left; color:#8b8b8b; font-family: 'Open Sans', sans-serif; font-weight: 100; margin: 0px; font-size:11px; line-height: 1.6; margin-top: 20px; ">
-            All rights reserved.&copy; 2011-2015 <a style="text-decoration:none"
+            {{ __('All rights reserved')}}.&copy; 2011-2015 <a style="text-decoration:none"
                                                     href="<?php echo URL::to('/'); ?>"><?php echo Setting::param('site', 'website')['value']; ?></a>
         </p>
 

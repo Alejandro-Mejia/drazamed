@@ -32,7 +32,7 @@
 					<?php echo Setting::param ('site' , 'app_name')['value']; ?></h2>
 
 				<h2 style="font-family: 'Open Sans', sans-serif; color:#fff;font-weight: 100;margin: 0;font-size: 18px;text-align: center;">
-					Buy Medicines Online. Its easy as it's Name</h2>
+					{{ __('Buy Medicines Online. Its easy as it's Name')}}</h2>
 			</div>
 		</div>
 		<!--banner-mail ends here-->
@@ -50,29 +50,27 @@
 				<!--                password while logging in to  -->
 				<?php //echo Setting::param('site', 'app_name')['value']; ?><!--.</p>-->
 
-				<p>Based on your request, if you wish to reset your password, Please click the following
+				<p>{{ __('Based on your request')}}, {{ __('if you wish to reset your password')}}, {{ __('Please click the following')}}
 					<a href="<?php echo URL::to ('/') . '?reset_code=' . $code; ?>">reset link </a>
 				</p>
 
 				<p style="text-align: center">or</p>
 
-				<p> Enter the security code in your mobile app : <strong><?= $code; ?></strong></p>
+				<p> {{ __('Enter the security code in your mobile app')}} : <strong><?= $code; ?></strong></p>
 
-				<p>If you feel that your account password was reset by somebody else, please let us know about it
-					immediately.</p>
+				<p>{{ __('If you feel that your account password was reset by somebody else, please let us know about it immediately')}}.</p>
 
-				<p>If you have any questions, please send an email
-					to <?php echo Setting::param ('site' , 'mail')['value']; ?>
+				<p>{{ __('If you have any questions, please send an email to')}} <?php echo Setting::param ('site' , 'mail')['value']; ?>
 					.</p>
 
 				<p style="font-family: 'Open Sans', sans-serif;  color:#272727; font-weight: 100; margin: 0;  font-size:14px; line-height: 1.6; margin-bottom:0px; ">
-					Thank you.</p>
+					{{ __('Thank you')}}.</p>
 
 				<p style="font-family: 'Open Sans', sans-serif;  color:#d1d1d1; font-weight: 100; margin: 0;  font-size:14px; line-height: 1.6; margin-bottom:0px; border-bottom: 1px solid #f0f0f0; padding-bottom: 40px; ">
-					The  <?php echo Setting::param ('site' , 'app_name')['value']; ?> team</p>
+					Equipo  <?php echo Setting::param ('site' , 'app_name')['value']; ?> </p>
 
 				<p style="font-family: 'Open Sans', sans-serif;  color:#47a1b8; font-weight: 100; margin-bottom: 40px; font-size:16px; line-height: 1.6; text-align: center; margin-top: 38px; ">
-					Get our Mobile app from</p>
+					{{ __('Get our Mobile app from')}}</p>
 
 				<div style="width:380px;  margin:0 auto; ">
 					<div style="width: 170px; float: left; margin-right: 40px; " class="app-store-img-mail">
@@ -92,7 +90,7 @@
 		</div>
 		<!--mail-content-->
 		<p style=" float:left; color:#8b8b8b; font-family: 'Open Sans', sans-serif; font-weight: 100; margin: 0px; font-size:11px; line-height: 1.6; margin-top: 20px; ">
-			All rights reserved.&copy; 2011-2015 <a style="text-decoration:none"
+			{{ __('All rights reserved')}}.&copy; 2011-2015 <a style="text-decoration:none"
 													href="<?php echo URL::to ('/'); ?>"><?php echo Setting::param ('site' , 'website')['value']; ?></a>
 		</p>
 

@@ -8,14 +8,14 @@
 <div class="contact-container">
 <div class="prescription-inner container">
 <div class="col-sm-8">
-    <h1 class="prescription-h1">My Prescriptions</h1>
+    <h1 class="prescription-h1">{{ __('My Prescriptions')}}</h1>
 </div>
 <div class="col-sm-4">
     <div class="right-inner-addon">
         <button type="button" class="btn btn-primary logout-btn ripple" data-color="#4BE7EC"
                 onclick="goto_detail_page();">SEARCH
         </button>
-        <input type="text" id="tags" class="form-control search_medicine" placeholder="Search medicines here"/>
+        <input type="text" id="tags" class="form-control search_medicine" placeholder="{{ __('Search medicines here')}}"/>
     </div>
 </div>
 <div class="clear"></div>
@@ -23,18 +23,17 @@
 <div class="col-sm-9">
 
 <div class="prescription-left" style="text-align:center">
-<p style="padding:15px">Please wait until we verify your ‘unverified’ prescriptions. Once verified, we will change the status to ‘Verified’.<br>
-       For ‘verified’ prescriptions, you may please proceed to make payment by clicking BUY NOW button.</p>
+<p style="padding:15px">{{ __('Please wait until we verify your ‘unverified’ prescriptions')}}. {{ __('Once verified, we will change the status to ‘Verified’')}}.<br> {{ __('For ‘verified’ prescriptions, you may please proceed to make payment by clicking')}} {{ __('BUY NOW button')}}.</p>
 <div class="col-sm-5 recent-list">
 
     <!--<h2>Recent List <i class="icon-calender"></i></h2>-->
     <div class="form-group">
 
-        <label for="sel1">Recent list:</label>
+        <label for="sel1">{{ __('Recent list')}}:</label>
         <select class="form-control category" id="sel1" onchange="change_list();">
-            <option value="0" <?php if ($cat == 0) { ?> selected <?php } ?>>All</option>
-            <option value="1" <?php if ($cat == 1) { ?> selected <?php } ?>>Unverified</option>
-            <option value="2" <?php if ($cat == 2) { ?> selected <?php } ?>>Verified</option>
+            <option value="0" <?php if ($cat == 0) { ?> selected <?php } ?>>{{ __('All')}}</option>
+            <option value="1" <?php if ($cat == 1) { ?> selected <?php } ?>>{{ __('Unverified')}}</option>
+            <option value="2" <?php if ($cat == 2) { ?> selected <?php } ?>>{{ __('Verified')}}</option>
 
         </select>
     </div>
@@ -46,9 +45,9 @@
             <table class="table prescriptions-table">
 
                     <thead>
-                        <th  class="col-lg-4 text-center" style="text-align:center">Prescription</th>
-                        <th class="col-lg-4 text-center" style="text-align:center">Date</th>
-                        <th class="col-lg-4 text-center" style="text-align:center">Status</th>
+                        <th  class="col-lg-4 text-center" style="text-align:center">{{ __('Prescription')}}</th>
+                        <th class="col-lg-4 text-center" style="text-align:center">{{ __('Date')}}</th>
+                        <th class="col-lg-4 text-center" style="text-align:center">{{ __('Status')}}</th>
                         </thead>
             </table>
         </div>
@@ -86,13 +85,13 @@
                          <table>
                              <thead>
                              <tr>
-                                 <th class="text-center text-align-responsive">Medicine</th>
-                                 <th class="text-right text-align-responsive">Unit Price</th>
-                                 <th class="text-right text-align-responsive">Quantity</th>
-                                 <th class="text-right text-align-responsive">Sub Total</th>
-                                 <th class="text-right text-align-responsive">Unit Disc</th>
-                                 <th class="text-right text-align-responsive">Discount</th>
-                                 <th class="text-right text-align-responsive">Total Price</th>
+                                 <th class="text-center text-align-responsive">{{ __('Medicine')}}</th>
+                                 <th class="text-right text-align-responsive">{{ __('Unit Price')}}</th>
+                                 <th class="text-right text-align-responsive">{{ __('Quantity')}}</th>
+                                 <th class="text-right text-align-responsive">{{ __('Sub Total')}}</th>
+                                 <th class="text-right text-align-responsive">{{ __('Unit Disc')}}</th>
+                                 <th class="text-right text-align-responsive">{{ __('Discount')}}</th>
+                                 <th class="text-right text-align-responsive">{{ __('Total Price')}}</th>
                              </tr>
                              </thead>
                              <tbody>
@@ -175,7 +174,7 @@
 </div>
 @else
 <div class="no-items">
-<span>No Prescription Availables Presently.</span>
+<span>{{ __('No Prescription Availables Presently')}}.</span>
 </div>
 @endif
 
@@ -185,10 +184,10 @@
 <div class="col-sm-3">
     <div class="prescription-right">
         <div class="col-sm-12">
-            <h2 style="text-align: center">Upload Prescription</h2>
+            <h2 style="text-align: center">{{ __('Upload Prescription')}}</h2>
 
             <div class="upload-pres ">
-                <p>You can use either JPG or PNG images. We will identify the medicines and process your order at the earliest.</p>
+                <p>{{ __('You can use either JPG or PNG images')}}. {{ __('We will identify the medicines and process your order at the earliest')}}.</p>
                 @if ( Session::has('flash_message') )
                 <div class="alert {{ Session::get('flash_type') }}">
                     <h5 style="text-align: center">{{ Session::get('flash_message') }}</h5>
@@ -198,13 +197,13 @@
 
                     <i class="icon-browse-upload"></i>
 
-                    <p>Upload your prescription here</p>
+                    <p>{{__('Upload your prescription here')}}</p>
                     {{ Form::open(array('url'=>'medicine/store-prescription/1','files'=>true,'id'=>'upload_form')) }}
                     <input id="input-20" type="file" name="file"
                            class="prescription-upload custom-file-input cart_file_input" required="required">
 
                 </div>
-                <button type="submit" class="btn btn-primary save-btn ripple" data-color="#40E0BC" id="upload">UPLOAD
+                <button type="submit" class="btn btn-primary save-btn ripple" data-color="#40E0BC" id="upload">{{ __('UPLOAD')}}
                 </button>
                 {{ Form::close() }}
 

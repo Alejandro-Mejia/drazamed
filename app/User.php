@@ -45,7 +45,8 @@ class User extends Authenticatable
      */
     public function customer()
     {
-        return $this->hasOne('App\Customer', 'id', 'user_id');
+        return $this->hasOne('App\Customer',  'mail', 'email');
+
     }
 
 

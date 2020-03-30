@@ -52,25 +52,25 @@
                     <p>
                       <?php echo $details['addr']?><br>
                       <?php echo $details['pin']?><br>
-                      Phone: <?php echo $details['ph']?><br>
-                      Email: <?php echo $details['mail']?><br>
+                      {{ __('Phone')}}: <?php echo $details['ph']?><br>
+                      {{ __('Email')}}: <?php echo $details['mail']?><br>
                     </p>
                   </div>
                 </div>
               </div>
-              <p class="m-t m-b">Order date: <strong><?php echo date('Y-m-d',$orderDate) ?></strong><br>
-                  Order status: <span class="label bg-success">Shipped</span><br>
-                  Order ID: <strong>#<?php echo $id?></strong>
+              <p class="m-t m-b">{{ __('Order date')}}: <strong><?php echo date('Y-m-d',$orderDate) ?></strong><br>
+                  {{ __('Order status')}}: <span class="label bg-success">Shipped</span><br>
+                  {{ __('Order ID')}}: <strong>#<?php echo $id?></strong>
               </p>
               <div class=""></div>
               <table class="table">
                 <thead>
                   <tr>
-                    <th >SL</th>
-                    <th>DESCRIPTION</th>
-                    <th >QTY</th>
-                    <th >UNIT PRICE</th>
-                    <th >TOTAL</th>
+                    <th >{{ __('SL')}}</th>
+                    <th >{{ __('DESCRIPTION')}}</th>
+                    <th >{{ __('QTY')}}</th>
+                    <th >{{ __('UNIT PRICE')}}</th>
+                    <th >{{ __('TOTAL')}}</th>
                   </tr>
                 </thead>
                 <tbody>

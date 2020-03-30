@@ -3,6 +3,6 @@
 </head>
 <body>
 
-   Security code : {{$code}}
+   {{ __('Security code')}} : {{$code}}
 </body>
 </html>

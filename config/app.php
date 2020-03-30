@@ -237,6 +237,7 @@ return [
         'Form' => 'Collective\Html\FormFacade',
         'Html' => 'Collective\Html\HtmlFacade',
         'Setting' => App\Setting::class,
+        'Medicine' => App\Medicine::class,
         'UserType' => App\UserType::class,
         'UserStatus' => App\UserStatus::class,
         'ShippingStatus' => App\ShippingStatus::class,

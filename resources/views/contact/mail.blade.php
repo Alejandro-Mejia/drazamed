@@ -1,12 +1,12 @@
 <html>
 <head>
-	
+
 </head>
 <body>
-  From : {{$email}}
+  {{ __('From')}} : {{$email}}
   <br>
-  Device : {{$device}}
+  {{ __('Device')}} : {{$device}}
   <br>
-  Logs : {{$content}}
+  {{ __('Logs')}} : {{$content}}
 </body>
 </html>

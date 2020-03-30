@@ -12,18 +12,22 @@ use Response;
 use View;
 use Mail;
 use DB;
-use Excel;
+
 use App\PrescriptionStatus;
 use App\ShippingStatus;
 use App\InvoiceStatus;
 use App\Prescription;
 use App\SessionsData;
 use App\Setting;
+use App\ItemList;
 use App\PayStatus;
 use App\UserType;
 use App\Medicine;
 use App\Invoice;
 use App\Cache;
+
+use Maatwebsite\Excel\Facades\Excel;
+use App\Imports\MedicinesImport;
 
 define ('CACHE_PARAM_MEDICINE' , 'medicines');
 define ('CURRENCY_BEFORE' , 'BEFORE');
@@ -48,6 +52,10 @@ class MedicineController extends BaseController
 			if (Auth::check ()) {
 				$email = Session::get ('user_id');
 				$user_type = Auth::user ()->user_type_id;
+				$customer = Auth::user()->with('customer')->first();
+
+				// dd($customer);
+				$address = $customer->address;
 
 				$is_pres_required = Request::get ('is_pres_required' , 1);
 				$path = base_path () . '/public/images/prescription/' . $email . '/';
@@ -98,16 +106,21 @@ class MedicineController extends BaseController
 				$prescription->updated_by = $user_id;
 				$prescription->save ();
 
-				// $pres_id = $prescription->id;
-				// $invoice = new Invoice;
-				// $invoice->pres_id = $pres_id;
-				// $invoice->user_id = $user_id;
-				// $invoice->created_at = date ('Y-m-d h:i:s');
-				// $invoice->created_by = $user_id;
-				// $invoice->save ();
-				// $invoice_id = $invoice->id;
+				$pres_id = $prescription->id;
+				$invoice = new Invoice;
+				$invoice->pres_id = $pres_id;
+				$invoice->user_id = $user_id;
+				$invoice->created_at = date ('Y-m-d h:i:s');
+				$invoice->created_by = $user_id;
+				$invoice->updated_by = $user_id;
+				$invoice->shipping_address = $address;
+				$invoice->shipping_mode = 1;
+				$invoice->save ();
+				$invoice_id = $invoice->id;
 
 				$current_medicines = SessionsData::select ('medicine_id' , 'medicine_count')->where ('user_id' , '=' , $email)->get ();
+
+				// dd($current_medicines);
 				if (count ($current_medicines) > 0) {
 
 					foreach ($current_medicines as $medicine) {
@@ -124,6 +137,7 @@ class MedicineController extends BaseController
 						$itemList->total_price = $total_price;
 						$itemList->created_at = date ('Y-m-d H:i:s');
 						$itemList->created_by = $user_id;
+						$itemList->updated_by = $user_id;
 						$itemList->save ();
 					}
 
@@ -1330,57 +1344,57 @@ class MedicineController extends BaseController
 				throw new Exception('BAD REQUEST' , 400);
 			$file = Request::file ('file');
 			$extension = strtolower ($file->getClientOriginalExtension ());
-			if (!in_array ($extension , ['xls' , 'xlsx'])) {
+			if (!in_array ($extension , ['xls' , 'xlsx', 'csv'])) {
 				throw new Exception('Invalid File Uploaded ! Please upload either xls or xlsx file' , 400);
 			}
-			Excel::load($file, function($reader){
 
-				// Getting all results
-    			$results = $reader->get();
+			// $medicines = Excel::import(new MedicinesImport, $file);
+			// dd($medicines);
 
-			});
+			(new MedicinesImport)->import($file);
 
-			Excel::selectSheetsByIndex(0)->load ($file , function ($reader) {
-				// Getting all results
-				$content = $reader->get ();
+			// \Excel::selectSheets(0)->load ($file , function ($reader) {
+			// 	// Getting all results
+			// 	$content = $reader->get ();
 
-				$results = [];
-				$aAllMedcines = Medicine::select ('item_name')->get ()->toArray ();
-				$available_medicines = array_column ($aAllMedcines , 'item_name');
-				$availableMed = array_map ('trim' , $available_medicines);
+			// 	$results = [];
+			// 	$aAllMedcines = Medicine::select ('item_name')->get ()->toArray ();
+			// 	$available_medicines = array_column ($aAllMedcines , 'item_name');
+			// 	$availableMed = array_map ('trim' , $available_medicines);
 
-				$iLoggedUserId = Auth::user ()->id;
-				$curDate = date ('Y-m-d H:i:s');
-				$i=0;
-				foreach ($content as $result) {
-					$itemName = ((isset($result->item_name) && !empty($result->item_name)) ? trim ($result->item_name) : '');
-					if (!$itemName || in_array (trim ($result->item_name) , $availableMed))
-						continue;
+			// 	$iLoggedUserId = Auth::user ()->id;
+			// 	$curDate = date ('Y-m-d H:i:s');
+			// 	$i=0;
+			//
+			// foreach ($medicines as $result) {
+			// 	$itemName = ((isset($result->item_name) && !empty($result->item_name)) ? trim ($result->item_name) : '');
+			// 	if (!$itemName || in_array (trim ($result->item_name) , $availableMed))
+			// 		continue;
 
-					$results = ['item_code' => ((isset($result->item_code) && !empty($result->item_code)) ? $result->item_code : '') ,
-						'item_name' => $itemName ,
-						'batch_no' => ((isset($result->batch_no) && !empty($result->batch_no)) ? $result->batch_no : '') ,
-						'quantity' => ((isset($result->quantity) && !empty($result->quantity)) ? $result->quantity : 0) ,
-						'cost_price' => ((isset($result->cost_price) && !empty($result->cost_price)) ? $result->cost_price : 0.00) ,
-						'purchase_price' => ((isset($result->purchase_price) && !empty($result->purchase_price)) ? $result->purchase_price : 0.00) ,
-						'rack_number' => ((isset($result->rack) && !empty($result->rack)) ? $result->rack : '') ,
-						'selling_price' => ((isset($result->mrp) && !empty($result->mrp)) ? $result->mrp : 0.00) ,
-						'expiry' => ((isset($result->expiry) && !empty($result->expiry)) ? $result->expiry : '') ,
-						'tax' => ((isset($result->tax) && !empty($result->tax)) ? $result->tax : 0.00) ,
-						'composition' => ((isset($result->composition) && !empty($result->composition)) ? $result->composition : '') ,
-						'discount' => ((isset($result->discount) && !empty($result->discount)) ? $result->discount : 0.00) ,
-						'manufacturer' => ((isset($result->manufactured_by) && !empty($result->manufactured_by)) ? $result->manufactured_by : '') ,
-						'marketed_by' => ((isset($result->marketed_by) && !empty($result->marketed_by)) ? $result->marketed_by : '') ,
-						'group' => ((isset($result->group) && !empty($result->group)) ? $result->group : '') ,
-						'created_at' => $curDate ,
-						'created_by' => $iLoggedUserId ,
-					];
+			// 	$results = ['item_code' => ((isset($result->item_code) && !empty($result->item_code)) ? $result->item_code : '') ,
+			// 		'item_name' => $itemName ,
+			// 		'batch_no' => ((isset($result->batch_no) && !empty($result->batch_no)) ? $result->batch_no : '') ,
+			// 		'quantity' => ((isset($result->quantity) && !empty($result->quantity)) ? $result->quantity : 0) ,
+			// 		'cost_price' => ((isset($result->cost_price) && !empty($result->cost_price)) ? $result->cost_price : 0.00) ,
+			// 		'purchase_price' => ((isset($result->purchase_price) && !empty($result->purchase_price)) ? $result->purchase_price : 0.00) ,
+			// 		'rack_number' => ((isset($result->rack) && !empty($result->rack)) ? $result->rack : '') ,
+			// 		'selling_price' => ((isset($result->mrp) && !empty($result->mrp)) ? $result->mrp : 0.00) ,
+			// 		'expiry' => ((isset($result->expiry) && !empty($result->expiry)) ? $result->expiry : '') ,
+			// 		'tax' => ((isset($result->tax) && !empty($result->tax)) ? $result->tax : 0.00) ,
+			// 		'composition' => ((isset($result->composition) && !empty($result->composition)) ? $result->composition : '') ,
+			// 		'discount' => ((isset($result->discount) && !empty($result->discount)) ? $result->discount : 0.00) ,
+			// 		'manufacturer' => ((isset($result->manufactured_by) && !empty($result->manufactured_by)) ? $result->manufactured_by : '') ,
+			// 		'marketed_by' => ((isset($result->marketed_by) && !empty($result->marketed_by)) ? $result->marketed_by : '') ,
+			// 		'group' => ((isset($result->group) && !empty($result->group)) ? $result->group : '') ,
+			// 		'created_at' => $curDate ,
+			// 		'created_by' => $iLoggedUserId ,
+			// 	];
 
-					Medicine::insert ($results);
-					$availableMed[] = $itemName;
-				}
+			// 	Medicine::insert ($results);
+			// 	$availableMed[] = $itemName;
+			// }
 
-			});
+
 
 			return Response::json ('success' , 200);
 

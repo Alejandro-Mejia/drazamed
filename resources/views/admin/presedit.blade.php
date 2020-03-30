@@ -21,7 +21,7 @@
 <section class="vbox">
 <section class="scrollable padder">
 <div class="m-b-md">
-<h3 class="m-b-none">Update Prescription</h3></br>
+<h3 class="m-b-none">{{('Update Prescription')}}</h3></br>
 
 @if($errors->any())
     <div class="alert alert-danger">
@@ -32,12 +32,12 @@
 <div class="col-sm-4 portlet ui-sortable">
     <section class="panel panel-default portlet-item">
         <header class="panel-heading">
-            Prescription
+            {{ __('Prescription')}}
             <i id='rotatePres' class="fa fa-refresh btn btn-default"
                style="float:right;border-radius:26px; display: none"></i>
         </header>
         <div style="padding:15px">
-     <?php $pres_image = empty($path) ? url('/').'/assets/images/no_pres_square.png' :   url('/'). '/public/images/prescription/'.$email . '/' . $path; ?>
+     <?php $pres_image = empty($path) ? url('/').'/assets/images/no_pres_square.png' :   url('/'). '/images/prescription/'.$email . '/' . $path; ?>
             <img id='presImgId' src="<?= $pres_image ?>"
                  style="display: block;width: 70%; height:50%;margin-left:100px"/>
         </div>
@@ -52,10 +52,10 @@
                 <?php if ($status == 1) {
                     ?>
                     <button style="float:right" id="add_field_button" class="btn btn-sm btn-default"><i
-                            class="fa fa-plus-square" style="padding-right:5px"></i>Add Medicine
+                            class="fa fa-plus-square" style="padding-right:5px"></i>{{ __('Add Medicine')}}
                     </button>
                 <?php } ?>
-                Shipping Cost : <input type="text" id="shipping" name="shipping" class="form-control auto-input" style="width:400px"
+                {{ __('Shipping Cost')}} : <input type="text" id="shipping" name="shipping" class="form-control auto-input" style="width:400px"
                        placeholder="Enter Shipping Cost For This Order" value=<?php echo $shipping; ?>>
             </header>
             <div class="list-group bg-white" style="display: block;width: 100%; height: 625px;">
@@ -70,7 +70,7 @@
                                 foreach($items as $item){ ?>
                                 <div class="row col-lg-12">
                                     <div class="col-lg-3">
-                                        @if($i == 1)<h5>Medicine Name</h5> @endif
+                                        @if($i == 1)<h5>{{ __('Medicine Name')}}</h5> @endif
                                         <input type="text" id="autocomplete{{ $i }}" name="autocomplete{{ $i }}"
                                                class="form-control auto-input" name="mytext[]"
                                                placeholder="Type Medicine name"
@@ -110,7 +110,7 @@
                                         @if($i == 1)<h5>Mrp</h5>@endif
                                         <input type="text" id="pricee{{ $i }}" name="pricee{{ $i }}" onChange="calculate(this.id)" class="form-control"
                                                                                        placeholder="Mrp"
-                                                                                       value=<?php echo(isset($item['unit_price']) ? $item['unit_price'] : ''); ?>>
+                                                                                       valtem['unit_price']) ? $item['unit_price'] : ''); ?>>
                                     </div>
                                     <div class="col-lg-1">
                                         @if($i == 1)<h5>S Total</h5>@endif
