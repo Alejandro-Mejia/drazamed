@@ -48,7 +48,7 @@
                     $extension = strtolower($file->getClientOriginalExtension());
                     if (in_array($extension, ['png', 'jpg'])) {
                         $image = 'logo.' . $extension;
-                        $file->move( 'SYSTEM_SETTINGS_IMAGE' , $image);
+                        $file->move( base_path() . '/assets/images/setting/' , $image);
                     } else {
                         throw new Exception('Invalid File Uploaded ! Please upload either png or jpg file', 400);
                     }
