@@ -204,6 +204,7 @@
                     $user->user_status = UserStatus::ACTIVE();
                     $user->user_id = $admin->id;
                     $user->created_by = 1;
+                    $user->updated_by = 1;
                     $user->created_at = date('Y-m-d H:i:s');
                 } else {
                     $user->password = Hash::make($password);
