@@ -8,6 +8,8 @@ use App\Setting;
 use Redirect;
 use Mail;
 use View;
+use Cache;
+use Artisan;
 use App\Mail\TestAmazonSes;
 use App\Mail\AulalExample;
 use App\Mail\NewMail;
@@ -43,11 +45,10 @@ use Illuminate\Database\Eloquent\Model;
     // Cache Clear
     Route::get('/cache', function () {
         Cache::flush();
-
         return Redirect::back();
     });
     // Logout
-    Route::any('logout', function () {
+    Route::any('/logout', function () {
         Auth::logout();
         return Redirect::to('/');
     });
@@ -69,7 +70,11 @@ use Illuminate\Database\Eloquent\Model;
     Route::get('payment/failure', function () {
         return View::make('/users/payment_failed');
     });
-    // My Cart
+
+
+    /**
+     * General Routes
+     */
     Route::get('/my-cart', 'MedicineController@getMyCart');
     Route::get('/my-prescription/{option?}', 'MedicineController@getMyPrescription');
     Route::get('/paid-prescription', 'MedicineController@getPaidPrescription');
@@ -77,8 +82,9 @@ use Illuminate\Database\Eloquent\Model;
     Route::get('/medicine-detail/{item_code}', 'MedicineController@getMedicineDetail');
     Route::get('/account-page', 'UserController@getAccountPage');
 
-    //Route::controller('user', 'UserController');
-    //Route::resource('/user', 'UserController');
+    /**
+     * User routes
+     */
     Route::get('/user/check-session', 'UserController@getCheckSession');
     Route::any('/user/create-user/{is_web}', 'UserController@anyCreateUser');
     Route::any('/user/check-user-name', 'UserController@anyCheckUserName');
@@ -86,8 +92,10 @@ use Illuminate\Database\Eloquent\Model;
     Route::any('/user/activate-account', 'UserController@anyActivateAccount');
     Route::any('/user/contact-us', 'UserController@anyContactUs');
     Route::any('/user/web-activate-account/{code}', 'UserController@anyWebActivateAccount');
-    // Route::controller('medicine', 'MedicineController');
-    // Route::resource('/medicine', 'MedicineController');
+
+    /**
+     * Medicine routes
+     */
     Route::post('/medicine/add-new-medicine', 'MedicineController@postAddNewMedicine');
     Route::post('/medicine/upload', 'MedicineController@postUpload');
     Route::any('/medicine/load-medicine-web/{is_web}', 'MedicineController@anyLoadMedicineWeb');
@@ -96,9 +104,10 @@ use Illuminate\Database\Eloquent\Model;
     Route::any('/medicine/load-sub-medicine', 'MedicineController@anyLoadSubMedicine');
     Route::any('/medicine/store-prescription/{is_web}', 'MedicineController@anyStorePrescription');
 
-    // Route::controller('admin', 'AdminController');
-    // Route::get('/admin', 'AdminController@index');
-    // Route::resource('/admin', 'AdminController');
+
+    /**
+     * Admin routes
+     */
     Route::any('/admin/login', 'AdminController@anyLogin');
     Route::get('/admin/dashboard', 'AdminController@getDashboard');
     Route::get('/admin/today-pres-dash', 'AdminController@getTodayPresDash');
@@ -119,29 +128,14 @@ use Illuminate\Database\Eloquent\Model;
     Route::any('/admin/load-all-prescription', 'AdminController@anyLoadAllPrescription');
     Route::get('/admin/add-med', 'AdminController@getAddMed');
 
-    // Route::controller('setting', 'SettingController');
-    // Route::get('/setting', 'SettingController@index');
-    Route::resource('/setting', 'SettingController');
+
+    /**
+     * Settings routes
+     */
     Route::post('/setting/basic', 'SettingController@postBasic');
     Route::post('/setting/mail', 'SettingController@postMail');
     Route::post('/setting/payment', 'SettingController@postPayment');
     Route::post('/setting/user', 'SettingController@postUser');
-
- //    Route::any('{catchall}', function() {
-	//   //some code
-	// })->where('catchall', '.*');
-    // Implicit Controllers
-    // php artisan clear-compiled
-    //
-
-    /**
-     * Test related routes
-     */
-    Route::get('import-test', 'TestController@importExport');
-    Route::post('import', 'TestController@import');
-    Route::get('export', 'TestController@export');
-
-
 
     /*
     |--------------------------------------------------------------------------
