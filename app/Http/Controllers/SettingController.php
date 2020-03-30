@@ -196,7 +196,7 @@
                 if ($status && is_null($user)) {
                     $user = new User();
                     $user->email = $email;
-                    $user->name = $name;
+                    // $user->name = $name;
                     $user->password = Hash::make($password);
                     $user->user_type_id = UserType::ADMIN();
                     $user->user_status = UserStatus::ACTIVE();
