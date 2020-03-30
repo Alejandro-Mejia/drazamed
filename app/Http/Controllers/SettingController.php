@@ -2,6 +2,7 @@
     namespace app\Http\Controllers;
     use Illuminate\Routing\Controller as BaseController;
     use Illuminate\Support\Facades\URL;
+    use Illuminate\Support\Str;
     use Request;
     use Response;
     use App\Setting;
