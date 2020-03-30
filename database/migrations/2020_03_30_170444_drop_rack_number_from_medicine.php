@@ -13,7 +13,7 @@ class DropRackNumberFromMedicine extends Migration
      */
     public function up()
     {
-        Schema::table('Medicine', function (Blueprint $table) {
+        Schema::table('medicine', function (Blueprint $table) {
             $table->dropColumn('rack_number');
         });
     }
@@ -25,7 +25,7 @@ class DropRackNumberFromMedicine extends Migration
      */
     public function down()
     {
-        Schema::table('Medicine', function (Blueprint $table) {
+        Schema::table('medicine', function (Blueprint $table) {
             //
         });
     }
