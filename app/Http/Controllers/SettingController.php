@@ -185,6 +185,7 @@
                     $admin->email = $email;
                     $admin->admin_type = AdminType::SUPER_ADMIN();
                     $admin->created_by = 1;
+                    $admin->updated_by = 1;
                     $admin->created_at = date('Y-m-d H:i:s');
                 } else {
                     $user = $admin->user_details()->first();
