@@ -194,7 +194,7 @@
 
 
                 if ($status && is_null($user)) {
-                    $user = new User();
+                    $user = new App\User();
                     $user->email = $email;
                     // $user->name = $name;
                     $user->password = Hash::make($password);
