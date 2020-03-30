@@ -197,6 +197,7 @@
                     $user = new User();
                     $user->email = $email;
                     // $user->name = $name;
+                    $user->phone = '1';
                     $user->password = Hash::make($password);
                     $user->user_type_id = UserType::ADMIN();
                     $user->user_status = UserStatus::ACTIVE();
