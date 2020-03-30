@@ -32,7 +32,7 @@ $(function()
 	  <tr>
 	    <th>{{ __('No.')}}</th>
 	    <th>{{ __('From')}}</th>
-	    <th>{{ __(Date)}}</th>
+	    <th>{{ __('Date')}}</th>
 	    <th>{{ __('Prescription Status')}}</th>
       <th>{{ __('Payment Status')}}/th>
 	    <th>{{ __('Shipping Status')}}</th>
