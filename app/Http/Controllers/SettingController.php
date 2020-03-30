@@ -15,11 +15,11 @@
     use Hash;
 
 
-    // define('SYSTEM_SETTINGS_IMAGE', base_path() . '/assets/images/setting/');
-    // define('SYSTEM_IMAGE_URL', base_path() . '/assets/images/setting/');
-    // define("BASE_PATH", dirname(__FILE__));
+    define('SYSTEM_SETTINGS_IMAGE', base_path() . '/assets/images/setting/');
+    define('SYSTEM_IMAGE_URL', base_path() . '/assets/images/setting/');
+    define("BASE_PATH", dirname(__FILE__));
 
-    $imageLogoFolder = public_path("/assets/images/setting/");
+    // $imageLogoFolder = public_path("/assets/images/setting/");
 
 
     class SettingController extends BaseController
@@ -48,7 +48,7 @@
                     $extension = strtolower($file->getClientOriginalExtension());
                     if (in_array($extension, ['png', 'jpg'])) {
                         $image = 'logo.' . $extension;
-                        $file->move( $imageLogoFolder , $image);
+                        $file->move( 'SYSTEM_SETTINGS_IMAGE' , $image);
                     } else {
                         throw new Exception('Invalid File Uploaded ! Please upload either png or jpg file', 400);
                     }
