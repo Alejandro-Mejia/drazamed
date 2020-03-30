@@ -21,7 +21,7 @@
                 $table->string('description');
                 $table->string('type')->default('TEXT');
                 $table->boolean('is_hidden')->default(0);
-                $table->text('dataset')->comment = 'Serialised Data set';
+                $table->text('dataset')->nullable()->comment = 'Serialised Data set';
                 $table->timestamps();
             });
         }
