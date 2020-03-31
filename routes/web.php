@@ -127,6 +127,8 @@ use Illuminate\Database\Eloquent\Model;
     Route::any('/admin/load-deleted-prescription', 'AdminController@anyLoadDeletedPrescription');
     Route::any('/admin/load-all-prescription', 'AdminController@anyLoadAllPrescription');
     Route::get('/admin/add-med', 'AdminController@getAddMed');
+    Route::post('/admin/update-invoice', 'AdminController@postUpdateInvoice');
+    Route::post('/admin/update-invoice', 'AdminController@postUpdateInvoice');
 
 
     /**
