@@ -6,6 +6,7 @@ use Illuminate\Routing\Controller as BaseController;
 // use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 use App\User;
 use App\UserType;
 use App\UserStatus;
@@ -142,6 +143,7 @@ class UserController extends BaseController
 			$user->security_code = $randomValue;
 			$user->created_by = 1;
 			$user->updated_by = 1;
+			$user->remember_token = Str::random(10);
 			$user->save ();
 			$postData = array(
 				array(
