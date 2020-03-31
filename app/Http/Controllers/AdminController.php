@@ -16,6 +16,7 @@
 	use App\Prescription;
 	use App\PrescriptionStatus;
 	use App\ShippingStatus;
+	use App\ItemList;
 	use App\Invoice;
 	use App\InvoiceStatus;
 	use App\Setting;
