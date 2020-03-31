@@ -103,6 +103,7 @@ use Illuminate\Database\Eloquent\Model;
     Route::any('/medicine/remove-from-cart/{item_id}', 'MedicineController@anyRemoveFromCart');
     Route::any('/medicine/load-sub-medicine', 'MedicineController@anyLoadSubMedicine');
     Route::any('/medicine/store-prescription/{is_web}', 'MedicineController@anyStorePrescription');
+    Route::any('/medicine/make-paypal-payment/{invoice}/{is_mobile}', 'MedicineController@anyMakePaypalPayment');
 
 
     /**
@@ -129,6 +130,7 @@ use Illuminate\Database\Eloquent\Model;
     Route::get('/admin/add-med', 'AdminController@getAddMed');
     Route::post('/admin/update-invoice', 'AdminController@postUpdateInvoice');
     Route::post('/admin/update-invoice', 'AdminController@postUpdateInvoice');
+    Route::post('/admin/pay-invoice', 'AdminController@postUpdateInvoice');
 
 
     /**
