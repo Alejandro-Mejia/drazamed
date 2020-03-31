@@ -10,6 +10,7 @@
 	use Redirect;
 	use Response;
 	use DB;
+	use Mail;
 	use App\User;
 	use App\UserType;
 	use App\UserStatus;
