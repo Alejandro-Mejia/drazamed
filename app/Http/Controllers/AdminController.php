@@ -756,6 +756,7 @@ class AdminController extends BaseController
 					$newItem->discount = $got['discount' . $i];
 					$newItem->created_at = date ('Y-m-d H:i:s');
 					$newItem->created_by = Auth::user ()->id;
+					$newItem->updated_by = Auth::user ()->id;
 					$newItem->save ();
 				}
 				$i++;
