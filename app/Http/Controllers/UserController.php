@@ -140,6 +140,8 @@ class UserController extends BaseController
 			$user->user_type_id = $user_type;
 			$user->user_id = $userId;
 			$user->security_code = $randomValue;
+			$user->created_by = 1;
+			$user->updated_by = 1;
 			$user->save ();
 			$postData = array(
 				array(
