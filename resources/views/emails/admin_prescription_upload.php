@@ -32,24 +32,24 @@
                     <?php echo Setting::param('site', 'app_name')['value']; ?></h2>
 
                 <h2 style="font-family: 'Open Sans', sans-serif; color:#fff;font-weight: 100;margin: 0;font-size: 18px;text-align: center;">
-                    {{ __('Buy Medicines Online. Its easy as it's Name')}}</h2>
+                    Compra medicamentos en linea, es facil</h2>
             </div>
         </div>
         <!--banner-mail ends here-->
         <div style="background:#fff; padding-left: 30px; padding-right: 30px; padding-top: 50px; padding-bottom: 75px; "
              class="mail-content">
             <h2 style="font-family: 'Open Sans', sans-serif;  color:#272727; font-weight: 100; margin: 0;  font-size:14px; margin-bottom: 28px; ">
-                Hi <span style="color:#404040; font-weight: bold; ">Admin</span></h2>
+                Hola <span style="color:#404040; font-weight: bold; ">Admin</span></h2>
 
             <p style="font-family: 'Open Sans', sans-serif;  color:#272727; font-weight: 100; margin: 0;  font-size:14px; line-height: 1.6; margin-bottom: 25px; ">
-                {{ __('New prescription has been uploaded by')}} <?php echo $name; ?> to <?php echo Setting::param('site', 'app_name')['value']; ?>.
+                Una nueva formula ha sido cargada por  <?php echo $name; ?> a <?php echo Setting::param('site', 'app_name')['value']; ?>.
 
 			</p>
 
 		</div>
         <!--mail-content-->
         <p style=" float:left; color:#8b8b8b; font-family: 'Open Sans', sans-serif; font-weight: 100; margin: 0px; font-size:11px; line-height: 1.6; margin-top: 20px; ">
-            {{ __('All rights reserved')}}.&copy; 2020 <a style="text-decoration:none"
+            Todos los derechos reservados.&copy; 2020 <a style="text-decoration:none"
                                                     href="<?php echo URL::to('/'); ?>"><?php echo Setting::param('site', 'website')['value']; ?></a>
         </p>
 

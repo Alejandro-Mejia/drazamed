@@ -59,8 +59,8 @@
                 </div>
               </div>
               <p class="m-t m-b">{{ __('Order date')}}: <strong><?php echo date('Y-m-d',$orderDate) ?></strong><br>
-                  {{ __('Order status')}}: <span class="label bg-success">Shipped</span><br>
-                  {{ __('Order ID')}}: <strong>#<?php echo $id?></strong>
+                  Estado de la Orden: <span class="label bg-success">Enviado</span><br>
+                  Orden ID: <strong>#<?php echo $id?></strong>
               </p>
               <div class=""></div>
               <table class="table">

@@ -32,7 +32,7 @@
                     <?php echo Setting::param('site', 'app_name')['value']; ?></h2>
 
                 <h2 style="font-family: 'Open Sans', sans-serif; color:#fff;font-weight: 100;margin: 0;font-size: 18px;text-align: center;">
-                    Buy Medicines Online. Its easy as it's Name</h2>
+                    Compra medicamentos en linea, es facil</h2>
             </div>
         </div>
         <!--banner-mail ends here-->
@@ -41,42 +41,24 @@
             <h2 style="font-family: 'Open Sans', sans-serif;  color:#272727; font-weight: 100; margin: 0;  font-size:14px; margin-bottom: 28px; ">
                 Hi <span style="color:#404040; font-weight: bold; "><?php echo $name; ?></span></h2>
 
-            <p>{{ __('We would like to inform you that your')}}  <?php echo Setting::param('site', 'app_name')['value']; ?>
-                {{ __('password has been changed')}}. {{__('Please make sure to use the new password while logging in to')}}  <?php echo Setting::param('site', 'app_name')['value']; ?>.</p>
+            <p>Queremos informarle que   <?php echo Setting::param('site', 'app_name')['value']; ?>
+                su contraseña ha sido cambiada. por favor asegurese de usar la nueva para ingresar a su cuenta  <?php echo Setting::param('site', 'app_name')['value']; ?>.</p>
 
-            <p>{{ __('If you feel that your account password was changed by somebody else, please let us know about it immediately.')}}</p>
+            <p>Si usted piensa que la contraseña ha sido cambiada por alguien mas, por favor comuniquese con nosotros</p>
 
-            <p>{{ __('If you have any questions, please send an email to')}} <?php echo Setting::param('site', 'mail')['value']; ?>
+            <p>Preguntas? escribanos a  <?php echo Setting::param('site', 'mail')['value']; ?>
                 .</p>
 
             <p style="font-family: 'Open Sans', sans-serif;  color:#272727; font-weight: 100; margin: 0;  font-size:14px; line-height: 1.6; margin-bottom:0px; ">
-                {{ __('Thank you')}}.</p>
+                Gracias.</p>
 
             <p style="font-family: 'Open Sans', sans-serif;  color:#d1d1d1; font-weight: 100; margin: 0;  font-size:14px; line-height: 1.6; margin-bottom:0px; border-bottom: 1px solid #f0f0f0; padding-bottom: 40px; ">
                 Equipo:  <?php echo Setting::param('site', 'app_name')['value']; ?> </p>
 
-            <p style="font-family: 'Open Sans', sans-serif;  color:#47a1b8; font-weight: 100; margin-bottom: 40px; font-size:16px; line-height: 1.6; text-align: center; margin-top: 38px; ">
-                {{ __('Get our Mobile app from')}}</p>
 
-            <div style="width:380px;  margin:0 auto; ">
-                <div style="width: 170px; float: left; margin-right: 40px; " class="app-store-img-mail">
-                    <a href="#">
-                        <img src="<?php echo URL::to('/'); ?>images/google_play.png"
-                             alt=" <?php echo Setting::param('site', 'app_name')['value']; ?> Google Play">
-                    </a>
-                </div>
-                <div style="width: 170px; float: left; " class="app-store-img-mail">
-                    <a href="#">
-                        <img src="<?php echo URL::to('/'); ?>images/app_store.png"
-                             alt=" <?php echo Setting::param('site', 'app_name')['value']; ?> App Store">
-                    </a>
-                </div>
-                <div style="clear:both"></div>
-            </div>
-        </div>
         <!--mail-content-->
         <p style=" float:left; color:#8b8b8b; font-family: 'Open Sans', sans-serif; font-weight: 100; margin: 0px; font-size:11px; line-height: 1.6; margin-top: 20px; ">
-            {{ __('All rights reserved')}}.&copy; 2011-2015 <a style="text-decoration:none"
+            Todos los derechos reservados.&copy; 2011-2015 <a style="text-decoration:none"
                                                     href="<?php echo URL::to('/'); ?>"><?php echo Setting::param('site', 'website')['value']; ?></a>
         </p>
 

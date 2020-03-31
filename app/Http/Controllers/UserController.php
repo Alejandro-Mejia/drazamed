@@ -161,18 +161,18 @@ class UserController extends BaseController
 					});
 				} else {
 					Mail::send ('emails.register' , array('name' => $name , 'user_name' => $email , 'pwd' => $password , 'code' => $randomValue) , function ($message) use ($email) {
-						$message->to ($email)->subject ('Activate Account');
+						$message->to ($email)->subject ("{{ __('Activate Account')}}");
 					});
 				}
 
 			}
 			catch (Exception $e) {
-				return Response::make (['status' => 'FAILURE' , 'msg' => 'Some techinical issues has occured'] , 500);
+				return Response::make (['status' => 'FAILURE' , 'msg' => '{{ __("Some techinical issues has occured")}}'] , 500);
 			}
 
 
 			//else
-			return Response::json (['status' => 'SUCCESS' , 'msg' => 'Acccount has been successfully created, Please check mail for the code'] , 201);
+			return Response::json (['status' => 'SUCCESS' , 'msg' => '{{ __("Acccount has been successfully created, Please check mail for the code")}}'] , 201);
 		}
 		catch (Exception $e) {
 			return Response::make (['status' => 'FAILURE' , 'msg' => $e->getMessage()] , 409);
@@ -334,7 +334,7 @@ class UserController extends BaseController
 				$pass = Session::get ('user_password');
 				Auth::attempt (array('email' => $email , 'password' => $pass));
 				Session::put ('user_id' , $email);
-				$result = ['status' => 'SUCCESS' , 'msg' => 'Your account has been successfully activated !'];
+				$result = ['status' => 'SUCCESS' , 'msg' => '{{ __("Your account has been successfully activated !")}}'];
 			} else {
 				throw new Exception('Invalid activation code' , 400);
 			}
