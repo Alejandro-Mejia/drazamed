@@ -330,7 +330,7 @@ class UserController extends BaseController
 
 			$sec_code = Request::get ('security_code' , '');
 			$securityCode = $user->security_code;
-			if (str_is($securityCode , $sec_code)) {
+			if (strcmp($security_code, $sec_coe)) {
 				$updatedValues = array('user_status' => UserStatus::ACTIVE ());
 				User::where ('email' , '=' , $email)->update ($updatedValues);
 				$pass = Session::get ('user_password');
