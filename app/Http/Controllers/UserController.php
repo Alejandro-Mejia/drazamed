@@ -133,7 +133,7 @@ class UserController extends BaseController
 					break;
 			}//switch
 			$user = new User;
-			$user->name = $name;
+			// $user->name = $name;
 			$user->email = $email;
 			$user->password = Hash::make ($password);
 			$user->phone = $phone;

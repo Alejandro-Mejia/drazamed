@@ -32,7 +32,7 @@
                     <?php echo Setting::param('site', 'app_name')['value']; ?></h2>
 
                 <h2 style="font-family: 'Open Sans', sans-serif; color:#fff;font-weight: 100;margin: 0;font-size: 18px;text-align: center;">
-                    {{ __('Buy Medicines Online. Its easy as it's Nam')}}e</h2>
+                    {{ __('Buy Medicines Online. Its easy as it's Name')}}</h2>
             </div>
         </div>
         <!--banner-mail ends here-->
