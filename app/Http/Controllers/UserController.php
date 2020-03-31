@@ -6,7 +6,9 @@ use Illuminate\Routing\Controller as BaseController;
 // use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
+
 use App\User;
 use App\UserType;
 use App\UserStatus;
@@ -328,7 +330,7 @@ class UserController extends BaseController
 
 			$sec_code = Request::get ('security_code' , '');
 			$securityCode = $user->security_code;
-			if (str_is ($securityCode , $sec_code)) {
+			if (str_is($securityCode , $sec_code)) {
 				$updatedValues = array('user_status' => UserStatus::ACTIVE ());
 				User::where ('email' , '=' , $email)->update ($updatedValues);
 				$pass = Session::get ('user_password');
