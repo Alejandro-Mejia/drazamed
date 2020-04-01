@@ -28,8 +28,8 @@ if(isset($_POST['paypal']))
     $transaction_id=abs(crc32($_SESSION['invoice']));
     $query['txn_id'] = $transaction_id;
 
-    $query['cancel_return'] = URL."/medicine/paypal-fail?status=cancel";
-    $query['return'] = URL."/medicine/paypal-success?status=success&pay_id=" . $_SESSION['invoice']."&transaction_id=".$transaction_id;
+    $query['cancel_return'] = 'URL'."/medicine/paypal-fail?status=cancel";
+    $query['return'] = 'URL'."/medicine/paypal-success?status=success&pay_id=" . $_SESSION['invoice']."&transaction_id=".$transaction_id;
     // Prepare query string
     $query_string = http_build_query($query);
     header('Location: '.$paypal_location. $query_string);
