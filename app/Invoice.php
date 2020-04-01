@@ -11,7 +11,7 @@
          */
         public function prescription()
         {
-            return $this->hasOne('Prescription', 'id', 'pres_id')->first();
+            return $this->hasOne('App\Prescription', 'id', 'pres_id')->first();
         }
 
         /**
@@ -19,7 +19,7 @@
          */
         public function verifiedPrescription()
         {
-            return $this->hasOne('Prescription', 'id', 'pres_id')->where('status', '=', PrescriptionStatus::VERIFIED())->first();
+            return $this->hasOne('App\Prescription', 'id', 'pres_id')->where('status', '=', PrescriptionStatus::VERIFIED())->first();
 
         }
 
@@ -29,7 +29,7 @@
          */
         public function unverifiedPrescription()
         {
-            return $this->hasOne('Prescription', 'id', 'pres_id')->where('status', '=', PrescriptionStatus::UNVERIFIED())->first();
+            return $this->hasOne('App\rescription', 'id', 'pres_id')->where('status', '=', PrescriptionStatus::UNVERIFIED())->first();
         }
 
         /**
@@ -37,7 +37,7 @@
          */
         public function cartList()
         {
-            return $this->hasMany('ItemList', 'invoice_id', 'id')->where('is_removed','=',0)->get();
+            return $this->hasMany('App\ItemList', 'invoice_id', 'id')->where('is_removed','=',0)->get();
         }
 
         /**
@@ -46,7 +46,7 @@
          */
         public function getUser()
         {
-            return $this->hasOne('User', 'id', 'user_id');
+            return $this->hasOne('App\User', 'id', 'user_id');
         }
 
 
