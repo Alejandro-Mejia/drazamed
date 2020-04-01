@@ -24,6 +24,7 @@ use App\PayStatus;
 use App\UserType;
 use App\Medicine;
 use App\Invoice;
+use App\Customer;
 use App\Cache;
 
 use Maatwebsite\Excel\Facades\Excel;
@@ -1060,7 +1061,7 @@ class MedicineController extends BaseController
 		$user = Auth::user ();
 		$type = $user->user_type_id;
 		if ($type == UserType::CUSTOMER ()) {
-			$user_info = Customer::find ($user->user_id);
+			$user_info = App\Customer::find ($user->user_id);
 			$phone = $user_info->phone;
 			$fname = $user_info->first_name;
 			$lname = $user_info->last_name;
