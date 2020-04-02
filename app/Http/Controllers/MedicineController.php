@@ -104,6 +104,7 @@ class MedicineController extends BaseController
 				$prescription->path = $file_name;
 				$prescription->created_at = date ('Y-m-d H:i:s');
 				$prescription->user_id = $user_id;
+				$prescription->status = ($is_pres_required == 1) ? 1 : 2;
 				$prescription->created_by = $user_id;
 				$prescription->updated_by = $user_id;
 				$prescription->save ();
