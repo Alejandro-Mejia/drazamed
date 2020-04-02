@@ -12,8 +12,8 @@ $(function()
   <section class="scrollable padder">
 
   <div class="row">
-  <div class="col-lg-9">  <h3 class="m-b-none">Shipped Prescriptions</h3></div>
-  <div class="col-lg-3" style="padding-top: 7px">  <input class="form-control" type="text" name="pres_search" id="pres_search" placeholder="Search prescription by email" onkeyup="filter_pres(this.value,'shipped')" />
+  <div class="col-lg-9">  <h3 class="m-b-none">{{ __('Shipped Prescriptions')}}</h3></div>
+  <div class="col-lg-3" style="padding-top: 7px">  <input class="form-control" type="text" name="pres_search" id="pres_search" placeholder="{{ __('Search prescription by email')}}" onkeyup="filter_pres(this.value,'shipped')" />
 </div>
   </div>
   <?php
