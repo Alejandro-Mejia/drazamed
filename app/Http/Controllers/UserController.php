@@ -330,7 +330,7 @@ class UserController extends BaseController
 
 			$sec_code = Request::get ('security_code' , '');
 			$securityCode = $user->security_code;
-			if (strcmp($security_code, $sec_coe)) {
+			if (str_is($securityCode, $sec_code)) {
 				$updatedValues = array('user_status' => UserStatus::ACTIVE ());
 				User::where ('email' , '=' , $email)->update ($updatedValues);
 				$pass = Session::get ('user_password');
@@ -345,7 +345,7 @@ class UserController extends BaseController
 		}
 		catch (Exception $e) {
 			// $message = $this->catchException ($e);
-			return Response::make (['status' => 'FAILURE' , 'msg' => $e->getMessage()] ,$e->getCode());
+			return Response::make (['status' => 'FAILURE' , 'msg' => $e->getMessage()] ,400);
 		}
 
 	}
@@ -438,6 +438,7 @@ class UserController extends BaseController
 			$email = Request::get ('email' , '');
 			if (Request::has ('email') && Request::has ('security_code') && Request::has ('new_password')) {
 				$security_code = Request::get ('security_code');
+				dd($security_code);
 				$password = Request::get ('new_password');
 				$confirm_password = Request::get ('confirm_password');
 				$user = User::where ('email' , '=' , $email)->where ('security_code' , '=' , $security_code)->first ();

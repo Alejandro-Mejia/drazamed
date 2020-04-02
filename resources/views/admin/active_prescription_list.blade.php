@@ -49,8 +49,8 @@ $(function()
 	   <td>{{date('d-M-Y',strtotime($pres[$i]->created_date))}}</td>
 	   <td>{{'Verified'}}</td>
 	   <td><a class='btn btn-s-md btn-info btn-rounded' href='{{url("/")}}/admin/pres-edit/{{$pres[$i]->pres_id}}/0' >Details</a>&nbsp;&nbsp;&nbsp;
-	   {{--<a class='btn btn-s-md btn-danger btn-rounded' onclick="return confirm('Do you really want to delete this order?');" href='{{url("/")}}/admin/pres-delete/{{$pres[$i]->pres_id}}/active'>Delete</a>&nbsp;&nbsp;&nbsp;--}}
-	   <a onclick="return confirm('Do you really want to make this order as paid?');" class='btn btn-s-md btn-danger btn-rounded' href='{{url("/")}}/medicine/admin-pay-success/{{$pres[$i]->id}}'>Pay</a></td>
+	   {{--<a class='btn btn-s-md btn-danger btn-rounded' onclick="return confirm('Realmente quiere borrar esta orden');" href='{{url("/")}}/admin/pres-delete/{{$pres[$i]->pres_id}}/active'>Delete</a>&nbsp;&nbsp;&nbsp;--}}
+	   <a onclick="return confirm('Realmente quiere marcar esta orden como pagada?');" class='btn btn-s-md btn-danger btn-rounded' href='{{url("/")}}/medicine/admin-pay-success/{{$pres[$i]->id}}'>Pay</a></td>
 	   <td><a class='text-info' href='{{url("/")}}/admin/load-invoice/{{$pres[$i]->id}}'>{{ $pres[$i]->invoice }}</a></td>
 	   </tr>
 	   <?php } } else {?>

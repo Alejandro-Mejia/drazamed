@@ -82,7 +82,7 @@ $(function()
                    if(data.length>0)
                    {
                        $.each(data, function ($key, $med) {
-                            table_con+="<tr><td>"+i+"</td><td>"+$med.email+"</td><td>"+$med.created_date+"</td><td style='text-align: center'><i class='fa fa-check'  style='color:#01DF01'></i></td><td>Shipped</td>" +
+                            table_con+="<tr><td>"+i+"</td><td>"+$med.email+"</td><td>"+$med.created_date+"</td><td style='text-align: center'> Pagada </td><td>Shipped</td>" +
                              "<td><a class='btn btn-s-md btn-info btn-rounded' href='{{url("/")}}/admin/pres-edit/"+$med.pres_id+"/0' >Details</a></td>" +
                                "<td><a class='text-info' href='{{url("/")}}/admin/load-invoice/"+$med.pres_id+"'>EZ" +(1000000+$med.pres_id)+"</a></td></tr>";
                             i++;
