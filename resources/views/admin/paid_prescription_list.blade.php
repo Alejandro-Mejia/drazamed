@@ -36,7 +36,7 @@ $(function()
 <?php
 	if(count($pres)>0)
 	{
-	$pageNumber= Input::get('page');
+	$pageNumber= Request::get('page');
 	for($i=0;$i<count($pres);$i++)
 	{
 	if ($pres[$i]->in_status == InvoiceStatus::PAID()) {
@@ -46,7 +46,7 @@ $(function()
     }
 	?>
 	   <tr>
-	   <td>{{(isset($pageNumber)?$i+1+((Input::get('page')-1)*30):$i+1)}}</td>
+	   <td>{{(isset($pageNumber)?$i+1+((Request::get('page')-1)*30):$i+1)}}</td>
 	   <td>{{$pres[$i]->email}}</td>
 	   <td>{{date('d-M-Y',strtotime($pres[$i]->created_date))}}</td>
 	   <td>
