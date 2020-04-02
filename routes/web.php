@@ -111,6 +111,7 @@ use Illuminate\Database\Eloquent\Model;
      */
     Route::any('/admin/login', 'AdminController@anyLogin');
     Route::get('/admin/dashboard', 'AdminController@getDashboard');
+    Route::get('/admin/load-invoice/{id}', 'AdminController@getLoadInvoice');
     Route::get('/admin/today-pres-dash', 'AdminController@getTodayPresDash');
     Route::post('/admin/pres-delete/{pres_id}/{status}', 'AdminController@anyPresDelete');
     Route::get('/admin/pres-edit/{pres_id}/{status}', 'AdminController@getPresEdit');

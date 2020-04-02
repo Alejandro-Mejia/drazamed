@@ -23,14 +23,14 @@
          */
         public static function gateway($key = '')
         {
-            $payment_gateways = Cache::get(CACHE_PARAM_PAYMENT_GATEWAY, null);
+            $payment_gateways = Cache::get('CACHE_PARAM_PAYMENT_GATEWAY', null);
             if (is_null($payment_gateways)) {
                 $invoice_status = self::all();
                 $payment_gateways = [];
                 foreach ($invoice_status as $status) {
                     $payment_gateways[strtoupper($status->name)] = $status->id;
                 }
-                Cache::put(CACHE_PARAM_PAYMENT_GATEWAY, $payment_gateways, 43200);
+                Cache::put('CACHE_PARAM_PAYMENT_GATEWAY', $payment_gateways, 43200);
             }
 
             return empty($key) ? $payment_gateways : $payment_gateways[$key];
@@ -51,4 +51,13 @@
         {
             return self::gateway('PAYPAL');
         }
+
+        /**
+         * MERCADOPAGO
+         */
+        public function MERCADOPAGO()
+        {
+            return self::gateway('MERCADOPAGO');
+        }
+
     }

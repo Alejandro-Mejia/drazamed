@@ -510,7 +510,7 @@ class MedicineController extends BaseController
 
 //				$link_url = $payment_mode->value ==
 				$link_url = "";
-				if ($payment_mode == PaymentGateway::PAYU_INDIA ()) {
+				if ($payment_mode == PaymentGateway::MERCADOLIBRE ()) {
 					$link_url = URL::to ('medicine/make-payment/');
 				} else if ($payment_mode == PaymentGateway::PAYPAL ()) {
 					$link_url = URL::to ('medicine/make-paypal-payment/');
