@@ -105,6 +105,7 @@ use Illuminate\Database\Eloquent\Model;
     Route::any('/medicine/store-prescription/{is_web}', 'MedicineController@anyStorePrescription');
     Route::any('/medicine/make-paypal-payment/{invoice}/{is_mobile}', 'MedicineController@anyMakePaypalPayment');
     Route::any('/medicine/make-paypal-payment/{invoice}', 'MedicineController@anyMakePaypalPayment');
+    Route::any('/medicine/admin_pay_success/{invoice}', 'MedicineController@anyAdminPaySuccess');
 
     /**
      * Admin routes

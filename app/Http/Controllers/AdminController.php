@@ -490,7 +490,7 @@ class AdminController extends BaseController
 		$medicine = Medicine::find ($id);
 		$medicine->is_pres_required = ($medicine->is_pres_required == 1) ? 0 : 1;
 		$medicine->save ();
-		Cache::forget (CACHE_PARAM_MEDICINE);
+		Cache::forget ('CACHE_PARAM_MEDICINE');
 
 		return Redirect::to ('admin/load-medicines');
 	}
