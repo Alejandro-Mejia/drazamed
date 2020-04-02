@@ -75,7 +75,7 @@ class UserController extends BaseController
 			$email = Request::get ('email' , '');
 			$last_name = Request::get ('last_name' , '');
 			$first_name = Request::get ('first_name' , '');
-			$name = $first_name . ' ' . $last_name;
+			$full_name = $first_name . ' ' . $last_name;
 			$phone = Request::get ('phone' , '');
 			$address = Request::geT ('address' , '');
 			$password = Request::get ('password' , '');
@@ -92,12 +92,12 @@ class UserController extends BaseController
 			switch (intval ($user_type)) {
 				case (UserType::MEDICAL_PROFESSIONAL ())://med
 					if ($is_Web) {
-						$name = Request::get ('user_name' , '');
+						// $name = Request::get ('user_name' , '');
 						$medProf = new MedicalProfessional;
 						$medProf->prof_mail = $email;
 						$medProf->prof_phone = $phone;
 						$medProf->prof_address = $address;
-						$medProf->prof_first_name = $name;
+						$medProf->prof_first_name = $full_name;
 						$medProf->prof_created_on = date ('Y-m-d H:i:s');
 						$medProf->prof_updated_on = date ('Y-m-d H:i:s');
 						$medProf->save ();
@@ -114,7 +114,7 @@ class UserController extends BaseController
 					break;
 				case (UserType::CUSTOMER ())://cust
 					if ($is_Web) {
-						$name = Request::get ('last_name' , '');
+						// $name = Request::get ('last_name' , '');
 						$customer = new Customer;
 						$customer->mail = $email;
 						$customer->phone = $phone;
@@ -162,7 +162,7 @@ class UserController extends BaseController
 						$message->to ($email)->subject ('Activate Account');
 					});
 				} else {
-					Mail::send ('emails.register' , array('name' => $name , 'user_name' => $email , 'pwd' => $password , 'code' => $randomValue) , function ($message) use ($email) {
+					Mail::send ('emails.register' , array('name' => $full_name , 'user_name' => $email , 'pwd' => $password , 'code' => $randomValue) , function ($message) use ($email) {
 						$message->to ($email)->subject ("{{ __('Activate Account')}}");
 					});
 				}

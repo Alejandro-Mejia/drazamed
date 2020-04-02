@@ -942,8 +942,6 @@ class MedicineController extends BaseController
 	public
 	function anyUpdateCart ()
 	{
-		if (!$this->isCsrfAccepted ())
-			return 0;
 		// Update Item
 		$item_code = Request::get ('item_code');
 		$new_qty = Request::get ('new_qty');

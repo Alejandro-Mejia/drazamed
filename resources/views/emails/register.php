@@ -32,7 +32,7 @@
                     <?php echo Setting::param('site', 'app_name')['value']; ?></h2>
 
                 <h2 style="font-family: 'Open Sans', sans-serif; color:#fff;font-weight: 100;margin: 0;font-size: 18px;text-align: center;">
-                    {{ __('Buy Medicines Online. Its easy as it's Name')}}</h2>
+                    Compra medicamentos en linea, es muy facil</h2>
             </div>
         </div>
         <!--banner-mail ends here-->
@@ -45,7 +45,7 @@
                 Gracias por registrarse <a href="<?php echo Setting::param('site', 'app_name')['value']; ?>"> <?php echo Setting::param('site', 'app_name')['value']; ?></a>
                 . Queremos ayudarle a ahorrar dinero y tiempo en sus compras de medicamentos.</p>
 
-            <p> {{ __('Your')}}  <?php echo Setting::param('site', 'app_name')['value']; ?> Abajo encontrara sus datos de ingreso.</p>
+            <p> Abajo encontrara sus datos de ingreso.</p>
 
             <p> Email ID: <?php echo $user_name; ?></p>
 
@@ -55,10 +55,8 @@
                 Recuerda que para ingresar debes activar tu cuenta </p>
 
             <p style="font-family: 'Open Sans', sans-serif;  color:#272727; font-weight: 100; margin: 0;  font-size:14px; line-height: 1.6; margin-bottom: 25px; ">
-                <a href="<?php echo URL::to('/'); ?>/user/web-activate-account/<?php echo $code; ?>">  haciendo click en el siguiente enlace </a>, si estas usando la apliacion de escritorio o</p>
+                <a href="<?php echo URL::to('/'); ?>/user/web-activate-account/<?php echo $code; ?>">  haciendo click en el siguiente enlace </a></p>
 
-            <p style="font-family: 'Open Sans', sans-serif;  color:#272727; font-weight: 100; margin: 0;  font-size:14px; line-height: 1.6; margin-bottom: 25px; ">
-                ingresando tu código de seguridad en la app (Codigo - <?php echo $code; ?>) en su primer ingreso, {{ __('if you are using')}}  <?php echo Setting::param('site', 'app_name')['value']; ?>.</p>
 
             <p style="font-family: 'Open Sans', sans-serif;  color:#272727; font-weight: 100; margin: 0;  font-size:14px; line-height: 1.6; margin-bottom:0px; ">
                 Tienes preguntas? escribenos a   <?php echo Setting::param('site', 'mail')['value']; ?>.</p>
