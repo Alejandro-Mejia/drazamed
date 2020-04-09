@@ -103,7 +103,8 @@ if(isset($_POST['paypal']))
                       </td>
                       </tr>
                       <tr>
-                        <td colspan="2" style="text-align: center"><input type="submit" value="Pay Now" name="paypal" class="btn-success" style="height: 40px; width: 100px"/></td>
+                        <td colspan="2" style="text-align: center">
+                            <input type="submit" value="Pay Now" name="paypal" class="btn-success" style="height: 40px; width: 100px"/></td>
                       </tr>
                   </table>
                 </form>

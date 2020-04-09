@@ -7,6 +7,8 @@ use App\Http\Requests;
 use App\Setting;
 use Redirect;
 use Mail;
+use URL;
+use MP;
 use View;
 use Cache;
 use Artisan;
@@ -15,6 +17,8 @@ use App\Mail\AulalExample;
 use App\Mail\NewMail;
 use Elasticquent\ElasticquentTrait;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Sitemap\SitemapGenerator;
+use App\MercadoPago\SDK;
 
 /*
 |--------------------------------------------------------------------------
@@ -105,7 +109,10 @@ use Illuminate\Database\Eloquent\Model;
     Route::any('/medicine/store-prescription/{is_web}', 'MedicineController@anyStorePrescription');
     Route::any('/medicine/make-paypal-payment/{invoice}/{is_mobile}', 'MedicineController@anyMakePaypalPayment');
     Route::any('/medicine/make-paypal-payment/{invoice}', 'MedicineController@anyMakePaypalPayment');
+    Route::any('/medicine/make-mercado-pago-payment/{invoice}/{is_mobile}', 'MedicineController@anyMakeMercadoPagoPayment');
+    Route::any('/medicine/make-mercado-pago-payment/{invoice}', 'MedicineController@anyMakeMercadoPagoPayment');
     Route::any('/medicine/admin-pay-success/{invoice}', 'MedicineController@anyAdminPaySuccess');
+    Route::any('/medicine/create-order/{invoice}/{request}', 'MedicineController@anyCreateOrder');
 
     /**
      * Admin routes
@@ -257,3 +264,7 @@ Route::get('/clear-cache', function() {
 });
 
 
+/**
+ * MercadoPago
+ */
+Route::get('/mercado-pago', 'MercadoPagoController@anyCreatePreferencePayment');

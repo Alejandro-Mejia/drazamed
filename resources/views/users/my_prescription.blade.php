@@ -161,6 +161,8 @@
                                     <button type="button"class="btn btn-info buynow-btn ripple" invoice="<?php if (!empty($prescription['id'])) { echo $prescription['id']; }?>" onclick="purchase(this)">BUY NOW</button>
                                     @elseif($payment_mode==PaymentGateway::PAYPAL())
                                     <button type="button"class="btn btn-info buynow-btn ripple" invoice="<?php if (!empty($prescription['id'])) { echo $prescription['id']; }?>" onclick="purchase_paypal(this)">BUY NOW</button>
+                                    @elseif($payment_mode==PaymentGateway::MERCADOPAGO())
+                                    <button type="button"class="btn btn-info buynow-btn ripple" invoice="<?php if (!empty($prescription['id'])) { echo $prescription['id']; }?>" onclick="purchase_mercadopago(this)">BUY NOW</button>
                                     @endif
                                  @endif
 
@@ -256,6 +258,12 @@
             function purchase_paypal(obj) {
                 var invoice = $(obj).attr('invoice');
                 window.location = "{{URL::to('medicine/make-paypal-payment/')}}/" + invoice;
+
+            }
+
+            function purchase_mercadopago(obj) {
+                var invoice = $(obj).attr('invoice');
+                window.location = "{{URL::to('medicine/make-mercadopago-payment/')}}/" + invoice;
 
             }
             function change_list() {

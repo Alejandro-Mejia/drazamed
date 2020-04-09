@@ -8,6 +8,8 @@ $transaction_mode = Setting::param('payment','type')['value'];
 // Gateway params
 $gateway_params = PaymentGatewaySetting::select('key','value')->where('gateway_id','=',$payment_mode)->get();
 
+
+
 $settings = [];
     foreach($gateway_params as $params){
         $settings[$params->key] = $params->value;
@@ -92,6 +94,7 @@ if(empty($posted['hash']) && sizeof($posted) > 0) {
                   <input type="hidden" name="key" value="<?php echo $MERCHANT_KEY ?>" />
                   <input type="hidden" name="hash" value="<?php echo $hash ?>"/>
                   <input type="hidden" name="txnid" value="<?php echo $txnid ?>" />
+                  <!-- {{ dd(get_defined_vars()) }} -->
                   <table class="table">
                     <tr>
                       <td>{{ __('Amount')}}: </td>

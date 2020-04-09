@@ -180,7 +180,9 @@ return [
         App\Providers\RouteServiceProvider::class,
         Collective\Html\HtmlServiceProvider::class,
 
-        // Html Helper
+        // Mercado Pago
+        MercadoPagoLaravel\Providers\MercadoPagoServiceProvider::class,
+        // Patosmack\MercadoPago\Providers\MercadoPagoServiceProvider,
 
 
     ],
@@ -250,6 +252,8 @@ return [
         'Debugbar' => Barryvdh\Debugbar\Facade::class,
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
         // 'AWS' => Aws\Laravel\AwsFacade::class,
+        // 'MP' => Patosmack\MercadoPago\Facades\MP::class,
+        'MP' => MercadoPagoLaravel\Facades\MP::class,
     ],
 
 ];

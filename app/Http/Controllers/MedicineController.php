@@ -4,6 +4,7 @@ namespace app\Http\Controllers;
 use Illuminate\Routing\Controller as BaseController;
 use Intervention\Image\ImageManagerStatic as Image;
 use Illuminate\Support\Facades\Auth;
+// use Illuminate\Http\Request;
 // use Illuminate\Mail\Mailer;
 use Session;
 use Redirect;
@@ -1099,6 +1100,134 @@ class MedicineController extends BaseController
 
 	}
 
+
+	public function anySetUpOrder($invoice)
+	{
+		// If User Authenticated
+		if (!Auth::check ())
+			return Redirect::to ('/');
+		// Get Invoice
+		$invoiceDetails = Invoice::find ($invoice);
+		// If Invoice Is Not Present
+		if (is_null ($invoice))
+			return Redirect::to ('/paid-prescription');
+
+		$data = array();
+		$email = Session::get ('user_id');
+		$user = Auth::user ();
+		$type = $user->user_type_id;
+
+		if ($type == UserType::CUSTOMER ()) {
+			$user_info = Customer::find ($user->user_id);
+			$phone = $user_info->phone;
+			$fname = $user_info->first_name;
+			$lname = $user_info->last_name;
+			$address = $user_info->address;
+		} elseif ($type == UserType::MEDICAL_PROFESSIONAL ()) {
+			$user_info = MedicalProfessional::find ($user->user_id);
+			$phone = $user_info->prof_phone;
+			$fname = $user_info->prof_first_name;
+			$lname = $user_info->prof_last_name;
+			$address = $user_info->prof_address;
+		}
+		$data = array();
+		$item_name = "";
+		$i = 0;
+		foreach ($invoiceDetails->cartList () as $cart) {
+			$item_name .= Medicine::medicines ($cart->medicine)['item_name'];
+			$item_name .= " ,";
+
+		}
+		$total = $invoiceDetails->total;
+		$data['amount'] = $total;
+		$data['email'] = $email;
+		$data['phone'] = $phone;
+		$data['firstname'] = $fname;
+		$data['lname'] = $lname;
+		$data['address'] = $address;
+		$data['invoice'] = $invoiceDetails->invoice;
+		$data['id'] = $invoice;
+		$data['productinfo'] = $item_name;
+
+		return $data;
+	}
+
+
+
+	public function anyMakeMercadoPagoPayment($invoice, $isMobile = 0)
+	{
+		$allowedPaymentMethods = config('payment-methods.enabled');
+
+		$token= '';
+		$payment_method_id = '';
+		$installments = '';
+		$issuer_id = '';
+
+		if (Request::isMethod('post'))
+		{
+		   	$token = $name = Request::input('token');
+			$payment_method_id = Request::input("payment_method_id");
+			$installments = Request::input("installments");
+			$issuer_id = Request::input("issuer_id");
+		}
+
+	    // $order = $this->anySetUpOrder($invoice);
+	    // If User Authenticated
+		if (!Auth::check ())
+			return Redirect::to ('/');
+		// Get Invoice
+		$invoiceDetails = Invoice::find ($invoice);
+		// If Invoice Is Not Present
+		if (is_null ($invoice))
+			return Redirect::to ('/paid-prescription');
+
+		$data = array();
+		$email = Session::get ('user_id');
+		$user = Auth::user ();
+		$type = $user->user_type_id;
+
+		if ($type == UserType::CUSTOMER ()) {
+			$user_info = Customer::find ($user->user_id);
+			$phone = $user_info->phone;
+			$fname = $user_info->first_name;
+			$lname = $user_info->last_name;
+			$address = $user_info->address;
+		} elseif ($type == UserType::MEDICAL_PROFESSIONAL ()) {
+			$user_info = MedicalProfessional::find ($user->user_id);
+			$phone = $user_info->prof_phone;
+			$fname = $user_info->prof_first_name;
+			$lname = $user_info->prof_last_name;
+			$address = $user_info->prof_address;
+		}
+		$data = array();
+		$item_name = "";
+		$i = 0;
+		foreach ($invoiceDetails->cartList () as $cart) {
+			$item_name .= Medicine::medicines ($cart->medicine)['item_name'];
+			$item_name .= " ,";
+
+		}
+		$total = $invoiceDetails->total;
+		$data['amount'] = $total;
+		$data['email'] = $email;
+		$data['phone'] = $phone;
+		$data['firstname'] = $fname;
+		$data['lname'] = $lname;
+		$data['address'] = $address;
+		$data['invoice'] = $invoiceDetails->invoice;
+		$data['id'] = $invoice;
+		$data['productinfo'] = $item_name;
+	    // //$this->notify($order);
+	    // $url = $this->generatePaymentGateway(
+	    //          $request->get('payment_method'),
+	    //          $order
+	    //      );
+	    // return redirect()->to($url);
+	    if ($isMobile)
+			return View::make ('/users/mobile_paypal_payment' , array('posted' => $data, 'token'));
+		else
+			return View::make ('/users/mercadopago_payment' , array('posted' => $data, 'token'));
+	}
 	/**
 	 * URL for success payment
 	 *
@@ -1404,6 +1533,36 @@ class MedicineController extends BaseController
 		catch (Exception $e) {
 			return Response::json (['msg' => $e->getMessage ()] , $e->getCode ());
 		}
+	}
+
+
+	public function anyCreateOrder(PreOrder $preOrder, Request $request)
+	{
+	    $allowedPaymentMethods = config('payment-methods.enabled');
+
+	    $request->validate([
+	        'payment_method' => [
+	            'required',
+	            Rule::in($allowedPaymentMethods),
+	        ],
+	        'terms' => 'accepted',
+	    ]);
+
+	    $order = $this->setUpOrder($preOrder, $request);
+
+	    $this->notify($order);
+	    $url = $this->generatePaymentGateway(
+	             $request->get('payment_method'),
+	             $order
+	         );
+	    return redirect()->to($url);
+	}
+
+	protected function generatePaymentGateway($paymentMethod, Order $order) : string
+	{
+	    $method = new \App\PaymentMethods\MercadoPago;
+
+	    return $method->setupPaymentAndGetRedirectURL($order);
 	}
 
 }

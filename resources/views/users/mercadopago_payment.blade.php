@@ -6,35 +6,10 @@ $_SESSION['first_name']=$posted['firstname'];
 $_SESSION['item_name']=$posted['amount'];
 $_SESSION['invoice']=$posted['invoice'];
 
-if(isset($_POST['paypal']))
-{
-    $payment_mode = Setting::param('payment','mode')['value'];
-    $transaction_mode = Setting::param('payment','type')['value'];
-    $gateway_params = PaymentGatewaySetting::select('key','value')->where('gateway_id','=',$payment_mode)->get();
-    $settings = [];
-    foreach($gateway_params as $params){
-        $settings[$params->key] = $params->value;
-    }
-    $paypal_location  = ($transaction_mode == 'LIVE') ? $settings['paypal_live_url'] : $settings['paypal_sandbox_url'];
-    $query = array();
-    $query['cmd'] = '_xclick';
-    $query['business'] = $settings['business_email'];
-    $query['first_name'] = $_SESSION['first_name'];
-    $query['email'] = $_POST['email'];
-    $query['item_name'] = $_SESSION['invoice'];
-    $query['quantity'] = 1;
-    $query['amount'] = $_SESSION['amount'];
-    $query['currency_code'] = $settings['paypal_currency'];
-    $transaction_id=abs(crc32($_SESSION['invoice']));
-    $query['txn_id'] = $transaction_id;
+// if(isset($_POST['paypal']))
+// {
 
-    $query['cancel_return'] = 'URL'."/medicine/paypal-fail?status=cancel";
-    $query['return'] = 'URL'."/medicine/paypal-success?status=success&pay_id=" . $_SESSION['invoice']."&transaction_id=".$transaction_id;
-    // Prepare query string
-    $query_string = http_build_query($query);
-    header('Location: '.$paypal_location. $query_string);
-    exit;
-}
+// }
 ?>
     <div class="contact-container" style="min-height: 760px">
         <div class="prescription-inner container">
@@ -63,7 +38,18 @@ if(isset($_POST['paypal']))
                       </tr>
                       <tr>
                         <td></td>
-                        <td colspan="3"><input type="submit" value="Pay Now" name="paypal" class="btn-success" style="height: 40px; width: 100px"/></td>
+                        <td colspan="3">
+                          <form action="{{ action('MedicineController@anyMakeMercadoPagoPayment', $parameters=[5]) }}" method="POST">
+                            <script
+                              src="https://www.mercadopago.com.co/integrations/v1/web-tokenize-checkout.js"
+                              data-public-key="TEST-d33e5f52-3efc-4607-8205-7d17f0a2c88d"
+                              data-transaction-amount="20000.00">
+                            </script>
+                          </form>
+                          {{ $token ?? '' }}
+                          {{ $payment_method_id ?? '' }}
+                          {{ $installments ?? '' }}
+                          {{ $issuer_id ?? '' }}
                       </tr>
                   </table>
                 </form>
