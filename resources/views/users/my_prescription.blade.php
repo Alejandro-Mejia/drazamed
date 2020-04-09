@@ -157,11 +157,10 @@
                          <div class="prescription-buttons">
                                 @if(!empty($prescription['path']))<button type="button" class="btn btn-success download-btn ripple" onclick="window.open('{{ URL::to('medicine/downloading/'.$prescription['path']) }}')"><i class="glyphicon "></i> Download Prescription</button>@endif
                                  @if (($prescription['pres_status'] == PrescriptionStatus::VERIFIED() && $prescription['invoice_status'] != InvoiceStatus::PAID()) && !empty($prescription['cart']))
-                                    @if($payment_mode==PaymentGateway::PAYU_INDIA())
-                                    <button type="button"class="btn btn-info buynow-btn ripple" invoice="<?php if (!empty($prescription['id'])) { echo $prescription['id']; }?>" onclick="purchase(this)">BUY NOW</button>
-                                    @elseif($payment_mode==PaymentGateway::PAYPAL())
+
+                                    @if($payment_mode==1)
                                     <button type="button"class="btn btn-info buynow-btn ripple" invoice="<?php if (!empty($prescription['id'])) { echo $prescription['id']; }?>" onclick="purchase_paypal(this)">BUY NOW</button>
-                                    @elseif($payment_mode==PaymentGateway::MERCADOPAGO())
+                                    @elseif($payment_mode==2)
                                     <button type="button"class="btn btn-info buynow-btn ripple" invoice="<?php if (!empty($prescription['id'])) { echo $prescription['id']; }?>" onclick="purchase_mercadopago(this)">BUY NOW</button>
                                     @endif
                                  @endif
@@ -252,7 +251,7 @@
             }
             function purchase(obj) {
                 var invoice = $(obj).attr('invoice');
-                window.location = "{{URL::to('medicine/make-payment/')}}/" + invoice;
+                window.location = "{{URL::to('medicine/make-mercado-pago-payment/')}}/" + invoice;
 
             }
             function purchase_paypal(obj) {
@@ -263,7 +262,7 @@
 
             function purchase_mercadopago(obj) {
                 var invoice = $(obj).attr('invoice');
-                window.location = "{{URL::to('medicine/make-mercadopago-payment/')}}/" + invoice;
+                window.location = "{{URL::to('medicine/make-mercado-pago-payment/')}}/" + invoice;
 
             }
             function change_list() {

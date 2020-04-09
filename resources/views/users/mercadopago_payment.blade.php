@@ -1,20 +1,9 @@
 @include('...header')
-<?php
-session_start();
-$_SESSION['amount']=$posted['amount'];
-$_SESSION['first_name']=$posted['firstname'];
-$_SESSION['item_name']=$posted['amount'];
-$_SESSION['invoice']=$posted['invoice'];
 
-// if(isset($_POST['paypal']))
-// {
-
-// }
-?>
     <div class="contact-container" style="min-height: 760px">
         <div class="prescription-inner container">
              <h2>{{__('Payment Details')}}</h2>
-                <form action="" method="post" name="paypalForm">
+                <!-- <form action="" method="post" name="paypalForm"> -->
                   <table class="table">
                     <tr>
                       <td>{{__('Amount')}}: </td>
@@ -52,7 +41,7 @@ $_SESSION['invoice']=$posted['invoice'];
                           {{ $issuer_id ?? '' }}
                       </tr>
                   </table>
-                </form>
+                <!-- </form> -->
         </div>
         <!-- prescription-cont -->
     </div>

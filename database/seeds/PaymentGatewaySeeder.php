@@ -11,7 +11,7 @@
             DB::table('payment_gateways')->insert(
                 array(
                     array('id' => 1, 'name' => 'Paypal', 'image' => 'paypal.png', 'created_at' => date('Y-m-d H:i:s'), 'created_by' => 1),
-                    array('id' => 2, 'name' => 'Pay U Money', 'image' => 'payumoney.png', 'created_at' => date('Y-m-d H:i:s'), 'created_by' => 1),
+                    array('id' => 2, 'name' => 'Mercadopago', 'image' => 'mercadopago.png', 'created_at' => date('Y-m-d H:i:s'), 'created_by' => 1),
                 ));
             // Paypal Currency
             $currencies = serialize(['AUD' => 'Australian Dollar',
