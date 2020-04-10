@@ -13,7 +13,7 @@
 <div class="col-sm-4">
     <div class="right-inner-addon">
         <button type="button" class="btn btn-primary logout-btn ripple" data-color="#4BE7EC"
-                onclick="goto_detail_page();">SEARCH
+                onclick="goto_detail_page();">{{__('SEARCH')}}
         </button>
         <input type="text" id="tags" class="form-control search_medicine" placeholder="{{ __('Search medicines here')}}"/>
     </div>
@@ -73,7 +73,7 @@
                              <tr class="bg_clr">
                                  <th class="col-lg-4 text-center"><img class="" src="{{ $prescription_image }}" height="60" width="60"></th>
                                  <th class="col-lg-4 text-center"><span class="date-added"><?php echo $prescription['created_on']; ?></span></th>
-                                 <th class="col-lg-4 text-center">{{ PrescriptionStatus::statusName($prescription['pres_status']) }}</th>
+                                 <th class="col-lg-4 text-center">{{ __(PrescriptionStatus::statusName($prescription['pres_status'])) }}</th>
                              </tr>
                              </thead>
                          </table>
@@ -126,7 +126,7 @@
                              </div>
                              <div class="row">
                                  <div class="col-lg-10 col-md-10 col-sm-10 col-xs-8">
-                                     <p style="color:rgb(55, 213, 218);">Shipping Cost</p>
+                                     <p style="color:rgb(55, 213, 218);">{{__('Shipping Cost')}}</p>
                                  </div>
                                  <div class="col-lg-2 col-md-2 col-sm-2 col-xs-4">
                                      <p >{{ Setting::currencyFormat($prescription['shipping'])}}</p>
@@ -134,7 +134,7 @@
                              </div>
                              <div class="row">
                                  <div class="col-lg-10 col-md-10 col-sm-10 col-xs-8">
-                                     <p style="color:rgb(55, 213, 218);">Discount</p>
+                                     <p style="color:rgb(55, 213, 218);">{{__('Discount')}}</p>
                                  </div>
                                  <div class="col-lg-2 col-md-2 col-sm-2 col-xs-4">
                                      <p >{{ Setting::currencyFormat($prescription['discount'])}}</p>
@@ -142,7 +142,7 @@
                              </div>
                              <div class="row">
                                  <div class="col-lg-10 col-md-10 col-sm-10 col-xs-8">
-                                     <p style="color:rgb(255, 0, 0);">Net Payabale</p>
+                                     <p style="color:rgb(255, 0, 0);">{{__('Net Payable')}}</p>
                                  </div>
                                  <div class="col-lg-2 col-md-2 col-sm-2 col-xs-4">
                                      <p >{{ empty($prescription['total']) ? Setting::currencyFormat($sub_total) : Setting::currencyFormat($prescription['total'])}}</p>
@@ -155,7 +155,7 @@
                          </div>
                          @endif
                          <div class="prescription-buttons">
-                                @if(!empty($prescription['path']))<button type="button" class="btn btn-success download-btn ripple" onclick="window.open('{{ URL::to('medicine/downloading/'.$prescription['path']) }}')"><i class="glyphicon "></i> Download Prescription</button>@endif
+                                @if(!empty($prescription['path']))<button type="button" class="btn btn-success download-btn ripple" onclick="window.open('{{ URL::to('medicine/downloading/'.$prescription['path']) }}')"><i class="glyphicon "></i> {{__('Download Prescription')}}</button>@endif
                                  @if (($prescription['pres_status'] == PrescriptionStatus::VERIFIED() && $prescription['invoice_status'] != InvoiceStatus::PAID()) && !empty($prescription['cart']))
 
                                     @if($payment_mode==1)

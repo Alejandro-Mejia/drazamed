@@ -49,7 +49,7 @@
     "Composition": "Componente",
     "Manufacturer": "Laboratorio",
     "Nature of Drug": "Grupo",
-    "Discount": "Descuentos",
+    "Discount": "Descuento",
     "Is Prescription Required": "Requiere formula médica",
     "Add": "Adicionar",
     "All Prescriptions": "Todas las formulas médicas",
@@ -310,6 +310,13 @@
     "We will be there at the end for answering even your simple queries. Also users are encouraged to leave a voice call, if we are not available on the spot right at that time": "Estaremos atentos a responder hasta las preguntas mas sencillas. Si no podemos responder por favor dejenos un mensaje de voz",
     "You can tie with us through email also - a convenient tool which enables us stay connected with our customers faster and smoother throughout. Mail us at":"Usted tambien se puede comunicar con nosotros por email, una herramienta que nos permite estar conectados con nuestros clientes de una forma rapida y sencilla. Escribanos a",
     "Walk-In Offices": "Oficinas",
-    "Our users can also take the benefit of in-person support and consultation as we are accessible on live for our customers": "Si usted necesita una asesoria personal, estamos disponibles para atenderlo en nuestras oficinas en "
+    "Our users can also take the benefit of in-person support and consultation as we are accessible on live for our customers": "Si usted necesita una asesoria personal, estamos disponibles para atenderlo en nuestras oficinas en ",
+    "Unverified": "Sin verificar",
+    "Verified": "Verificada",
+    "Net Payable": "Neto a pagar",
+    "Shipping Cost": "Costo de envio",
+    "Download Prescription": "Descargar formula médica",
+    "Paid": "Pagado",
+    "Shipped": "Enviado"
 
 }

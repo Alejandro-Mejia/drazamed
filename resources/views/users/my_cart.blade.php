@@ -102,7 +102,7 @@
                                        <td>
 
                                        <div class="col-sm-12 text-center">
-                                            <h2>Upload Prescription</h2>
+                                            <h2>{{__('Upload Prescription')}}</h2>
 
                                           <div class=" text-center">
                                               <p style="white-space: normal">{{ __('You can use either JPG or PNG images')}}. {{ __('We will identify the medicines and process your order at the earliest')}}.</p>

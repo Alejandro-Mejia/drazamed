@@ -57,7 +57,7 @@
                                  <th class="col-lg-3 text-center"><span class="date-added">{{ $invoice->invoice  }}</span></th>
                                  <th class="col-lg-3 text-center"><img class="" src="{{ $pres_image }}" height="60" width="60"></th>
                                  <th class="col-lg-3 text-center"><span class="date-added"><?php echo $prescription->created_at; ?></span></th>
-                                 <th class="col-lg-3 text-center">{{ InvoiceStatus::statusName($invoice->status_id) }}</th>
+                                 <th class="col-lg-3 text-center">{{ __(InvoiceStatus::statusName($invoice->status_id)) }}</th>
                              </tr>
                              </thead>
                          </table>
