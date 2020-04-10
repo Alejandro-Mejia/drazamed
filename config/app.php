@@ -39,7 +39,7 @@ return [
     |
     */
 
-    'debug' => env('APP_DEBUG', false),
+    'debug' => env('APP_DEBUG', true),
 
     /*
     |--------------------------------------------------------------------------
@@ -182,7 +182,7 @@ return [
 
         // Mercado Pago
         MercadoPagoLaravel\Providers\MercadoPagoServiceProvider::class,
-        // Patosmack\MercadoPago\Providers\MercadoPagoServiceProvider,
+
 
 
     ],
@@ -251,9 +251,9 @@ return [
         'Image' => Intervention\Image\Facades\Image::class,
         'Debugbar' => Barryvdh\Debugbar\Facade::class,
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
-        // 'AWS' => Aws\Laravel\AwsFacade::class,
-        // 'MP' => Patosmack\MercadoPago\Facades\MP::class,
+        // Mercadopago
         'MP' => MercadoPagoLaravel\Facades\MP::class,
+
     ],
 
 ];

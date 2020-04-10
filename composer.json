@@ -20,12 +20,10 @@
         "laravel/helpers": "^1.2",
         "laravel/tinker": "^2.0",
         "laravelcollective/html": "^6.1",
-        "laravelium/sitemap": "^7.0",
         "maatwebsite/excel": "^3.1",
         "mercadopago/dx-php": "2.0.0",
         "mews/captcha": "^3.1",
-        "rodggall/mercadopago": "@dev",
-        "spatie/laravel-sitemap": "^5.7"
+        "rodggall/mercadopago": "@dev"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.2",

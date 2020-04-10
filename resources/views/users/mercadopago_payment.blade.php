@@ -1,5 +1,28 @@
 @include('...header')
+<?php
+session_start();
+$_SESSION['amount']=$posted['amount'];
+$_SESSION['first_name']=$posted['firstname'];
+$_SESSION['item_name']=$posted['amount'];
+$_SESSION['invoice']=$posted['invoice'];
 
+
+// if(isset($_POST['token']))
+// {
+
+//     /**
+//      * Recibe los datos de la tokenizacion de Mercadopago
+//      */
+//     $token = $name = Request::input('token');
+//     $payment_method_id = Request::input("payment_method_id");
+//     $installments = Request::input("installments");
+//     $issuer_id = Request::input("issuer_id");
+
+// }
+
+
+
+?>
     <div class="contact-container" style="min-height: 760px">
         <div class="prescription-inner container">
              <h2>{{__('Payment Details')}}</h2>
@@ -28,17 +51,13 @@
                       <tr>
                         <td></td>
                         <td colspan="3">
-                          <form action="{{ action('MedicineController@anyMakeMercadoPagoPayment', $parameters=[5]) }}" method="POST">
+                          <form action="{{ action('MedicineController@anyMakeMercadoPagoPayment', [$posted['invoice_id']]) }}" method="POST">
                             <script
                               src="https://www.mercadopago.com.co/integrations/v1/web-tokenize-checkout.js"
                               data-public-key="TEST-d33e5f52-3efc-4607-8205-7d17f0a2c88d"
                               data-transaction-amount="20000.00">
                             </script>
                           </form>
-                          {{ $token ?? '' }}
-                          {{ $payment_method_id ?? '' }}
-                          {{ $installments ?? '' }}
-                          {{ $issuer_id ?? '' }}
                       </tr>
                   </table>
                 <!-- </form> -->

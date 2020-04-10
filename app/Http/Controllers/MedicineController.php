@@ -5,15 +5,18 @@ use Illuminate\Routing\Controller as BaseController;
 use Intervention\Image\ImageManagerStatic as Image;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+// use MercadoPagoLaravel\Facades\MP;
 // use Illuminate\Http\Request;
 // use Illuminate\Mail\Mailer;
 use Session;
 use Redirect;
 use Request;
 use Response;
+use Debugbar;
 use View;
 use Mail;
 use DB;
+// use MP;
 use MercadoPago;
 use App\MedicalProfessional;
 use App\PrescriptionStatus;
@@ -1101,62 +1104,9 @@ class MedicineController extends BaseController
 
 	}
 
-
-	public function anySetUpOrder($invoice)
-	{
-		// If User Authenticated
-		if (!Auth::check ())
-			return Redirect::to ('/');
-		// Get Invoice
-		$invoiceDetails = Invoice::find ($invoice);
-		// If Invoice Is Not Present
-		if (is_null ($invoice))
-			return Redirect::to ('/paid-prescription');
-
-		$data = array();
-		$email = Session::get ('user_id');
-		$user = Auth::user ();
-		$type = $user->user_type_id;
-
-		if ($type == UserType::CUSTOMER ()) {
-			$user_info = Customer::find ($user->user_id);
-			$phone = $user_info->phone;
-			$fname = $user_info->first_name;
-			$lname = $user_info->last_name;
-			$address = $user_info->address;
-		} elseif ($type == UserType::MEDICAL_PROFESSIONAL ()) {
-			$user_info = MedicalProfessional::find ($user->user_id);
-			$phone = $user_info->prof_phone;
-			$fname = $user_info->prof_first_name;
-			$lname = $user_info->prof_last_name;
-			$address = $user_info->prof_address;
-		}
-		$data = array();
-		$item_name = "";
-		$i = 0;
-		foreach ($invoiceDetails->cartList () as $cart) {
-			$item_name .= Medicine::medicines ($cart->medicine)['item_name'];
-			$item_name .= " ,";
-
-		}
-		$total = $invoiceDetails->total;
-		$data['amount'] = $total;
-		$data['email'] = $email;
-		$data['phone'] = $phone;
-		$data['firstname'] = $fname;
-		$data['lname'] = $lname;
-		$data['address'] = $address;
-		$data['invoice'] = $invoiceDetails->invoice;
-		$data['id'] = $invoice;
-		$data['productinfo'] = $item_name;
-
-		return $data;
-	}
-
-
-
 	public function anyMakeMercadoPagoPayment($invoice, $isMobile = 0)
 	{
+		\Debugbar::enable();
 		if (!Auth::check ())
 			return Redirect::to ('/');
 		// Get Invoice
@@ -1197,34 +1147,49 @@ class MedicineController extends BaseController
 			/**
 			 * Realiza el pago
 			 */
-			// Establecemos el acces token
-			MercadoPago\SDK::setAccessToken(env('MP_APP_ACCESS_TOKEN'));
+			// Establecemos el access token
+			$access_token = env('MP_APP_ACCESS_TOKEN', null);
 
-			$payment = new MercadoPago\Payment();
-		    $payment->transaction_amount = 20000;
-		    $payment->token = $token;
-		    $payment->description = "Orden No ";
-		    $payment->installments = $installments;
-		    $payment->payment_method_id = $payment_method_id;
-		    $payment->issuer_id = $issuer_id;
-		    $payment->payer = array(
-		    	"email" => $email
-		    );
-		    // Guarda y postea el pago
-		    $payment->save();
-		    //...
-		    // Imprime el estado del pago
-		    echo '<pre>'; print_r($payment); echo '</pre>';
-		    // echo $payment->status;
-		    if($payment->status == 'approved') {
-		    	$invoiceDetails->status_id = InvoiceStatus::PAID ();
-				$invoiceDetails->payment_status = PayStatus::SUCCESS ();
-				$invoiceDetails->transaction_id = $payment->id;
-				$invoiceDetails->updated_at = date ('Y-m-d H:i:s');
-				$invoiceDetails->updated_by = Auth::user ()->id;
-				$invoiceDetails->save ();
-		    }
-		    return Redirect::to ('/payment/success');
+			if($access_token != null)
+			{
+				Log::info('Access_Token:'.$access_token);
+
+				MercadoPago\SDK::setAccessToken($access_token);
+
+				$payment = new MercadoPago\Payment();
+			    $payment->transaction_amount = 20000;
+			    $payment->token = $token;
+			    $payment->description = "Orden No ";
+			    $payment->installments = $installments;
+			    $payment->payment_method_id = $payment_method_id;
+			    $payment->issuer_id = $issuer_id;
+			    $payment->payer = array(
+			    	"email" => $email
+			    );
+			    // Guarda y postea el pago
+			    $payment->save();
+			    Log::info(print_r($payment, true));
+			    //...
+			    // Imprime el estado del pago
+			    // echo '<pre>'; print_r($payment); echo '</pre>';
+			    // echo $payment->status;
+			    if($payment->status == 'approved') {
+			    	$invoiceDetails->status_id = InvoiceStatus::PAID ();
+					$invoiceDetails->payment_status = PayStatus::SUCCESS ();
+					$invoiceDetails->transaction_id = $payment->id;
+					$invoiceDetails->updated_at = date ('Y-m-d H:i:s');
+					$invoiceDetails->updated_by = Auth::user ()->id;
+					$invoiceDetails->save ();
+
+
+					return Redirect::to ('/payment/success');
+			    } else {
+			    	return Redirect::to ('/payment/failure');
+			    }
+			} else {
+				return Redirect::to ('/payment/failure');
+			}
+
 		}
 
 	    // $order = $this->anySetUpOrder($invoice);
@@ -1254,6 +1219,7 @@ class MedicineController extends BaseController
 
 		}
 		$total = $invoiceDetails->total;
+		$data['invoice_id'] = $invoiceDetails->id;
 		$data['amount'] = $total;
 		$data['email'] = $email;
 		$data['phone'] = $phone;
@@ -1270,7 +1236,7 @@ class MedicineController extends BaseController
 	    //      );
 	    // return redirect()->to($url);
 	    if ($isMobile)
-			return View::make ('/users/mobile_paypal_payment' , array('posted' => $data, ));
+			return View::make ('/users/mobile_paypal_payment' , array('posted' => $data));
 		else
 			return View::make ('/users/mercadopago_payment' , array('posted' => $data));
 	}

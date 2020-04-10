@@ -7,19 +7,20 @@ use MP;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
+
 class MercadoPagoController extends Controller
 {
     public function createPayment()
 	{
 		$payment_data = array(
-			"transaction_amount" => 'Monto a pagar',
+			"transaction_amount" => 10000,
 			"description" => 'Descripcion para el pago',
-			"installments" => 'Cantidad de entregas, debe ser entero',
-			"payment_method_id" => 'Metodo elegido de pago',
+			"installments" => 1,
+			"payment_method_id" => 'visa',
 			"payer" => array(
-	            "email" => 'Correo del cliente'
+	            "email" => 'alejandro@aulalibre.org'
 			),
-			"statement_descriptor" => "Nombre de quien recibe el pago"
+			"statement_descriptor" => "Drazamed"
 		);
 		$payment = MP::post("/v1/payments",$payment_data);
 		return dd($payment);
@@ -36,7 +37,7 @@ class MercadoPagoController extends Controller
 					"picture_url" => '',
 					"quantity" => 1,
 					"currency_id" => 'COP',
-					"unit_price" => 3500
+					"unit_price" => 10000
 				]
 			],
 			"payer" => [

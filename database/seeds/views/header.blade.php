@@ -36,13 +36,13 @@
                 <span class="icons-bar"></span>
             </li>
             @if (Auth::check() && Auth::user()->user_type_id != UserType::ADMIN())
-            <li role="presentation"><a role="menuitem" tabindex="-1" href="{{ URL::to('my-cart') }}">My cart</a></li>
-            <li role="presentation"><a role="menuitem" tabindex="-1" href="{{URL::to('my-prescription')}}">My prescriptions</a></li>
-            <li role="presentation"><a role="menuitem" tabindex="-1" href="{{URL::to('paid-prescription')}}">Awaiting shipping</a></li>
-            <li role="presentation"><a role="menuitem" tabindex="-1" href="{{ URL::to('my-order') }}">Shipped orders</a></li>
-            <li role="presentation"><a role="menuitem" tabindex="-1" href="{{URL::to('account-page')}}">Profile</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="{{URL::to('my-cart') }}"> {{__('My cart')}} </a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="{{URL::to('my-prescription')}}">{{__('My prescriptions')}}</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="{{URL::to('paid-prescription')}}">{{__('Awaiting shipping')}}</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="{{URL::to('my-order') }}">{{__('Shipped orders')}}</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="{{URL::to('account-page')}}">{{__('Profile')}}</a></li>
             <li role="presentation" class="divider"></li>
-            <li role="presentation"><a role="menuitem" tabindex="-1" href="{{ URL::to('logout') }}">Log out</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="{{URL::to('logout') }}">{{__('Log out')}}</a></li>
              @else
             <li class="animated ripple" data-color="#7C829D">
                 <a href="#" class="loginModal">Login</a>
@@ -71,12 +71,12 @@
                     <ul class="nav nav-pills pull-right register-menu">
                          @if (Auth::check() && Auth::user()->user_type_id != UserType::ADMIN())
                          <div class="dropdown">
-                             <button class="btn btn-default dropdown-toggle" type="button" id="menu1" data-toggle="dropdown"><?php if(Auth::user()->user_type_id==UserType::CUSTOMER()) {  echo Auth::user()->customer->first_name} else { echo Auth::user()->professional->prof_first_name;}?>
+                             <button class="btn btn-default dropdown-toggle" type="button" id="menu1" data-toggle="dropdown"><?php if(Auth::user()->user_type_id==UserType::CUSTOMER()) {  echo Auth::user()->customer->first_name;} else { echo Auth::user()->professional->prof_first_name;}?>
                              <span class="caret"></span></button>
                              <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
-                                <li role="presentation"><a role="menuitem" tabindex="-1" href="{{ URL::to('my-cart') }}">My cart</a></li>
-                                <li role="presentation"><a role="menuitem" tabindex="-1" href="{{URL::to('my-prescription')}}">My prescriptions</a></li>
-                                <li role="presentation"><a role="menuitem" tabindex="-1" href="{{URL::to('paid-prescription')}}">Awaiting shipping</a></li>
+                                <li role="presentation"><a role="menuitem" tabindex="-1" href="{{ URL::to('my-cart') }}">{{__('My cart')}}</a></li>
+                                <li role="presentation"><a role="menuitem" tabindex="-1" href="{{URL::to('my-prescription')}}">{{__('My prescriptions')}}</a></li>
+                                <li role="presentation"><a role="menuitem" tabindex="-1" href="{{URL::to('paid-prescription')}}">{{__('Awaiting shipping')}}</a></li>
                                 <li role="presentation"><a role="menuitem" tabindex="-1" href="{{ URL::to('my-order') }}">Shipped orders</a></li>
                                 <li role="presentation"><a role="menuitem" tabindex="-1" href="{{URL::to('account-page')}}">Profile</a></li>
                                 <li role="presentation" class="divider"></li>
