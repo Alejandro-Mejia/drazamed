@@ -1177,13 +1177,48 @@ class AdminController extends BaseController
 	}
 
 	/**
+	 * Make an order delivered from admin side
+	 *
+	 * @param $pres_id
+	 *
+	 * @return mixed
+	 */
+	public function anyDeliverOrder ($pres_id)
+	{
+		$prescription = Prescription::find ($pres_id);
+		$invoice = $prescription->getInvoice;
+		$userDetails = $prescription->getUser;
+		// Save Invoice Details
+		$invoice->shipping_status = ShippingStatus::DELIVERED ();
+		$invoice->updated_at = date ('Y-m-d H:i:s');
+		$invoice->updated_by = Auth::user ()->id;
+		$invoice->save ();
+		// Send Mail
+		$type = $userDetails->user_type_id;
+		if ($type == UserType::CUSTOMER ()) {
+			$user = Customer::find ($userDetails->user_id);
+			$user_email = $user->mail;
+			$user_name = $user->first_name;
+		} elseif ($type == UserType::MEDICAL_PROFESSIONAL ()) {
+			$user = MedicalProfessional::find ($userDetails->user_id);
+			$user_email = $user->prof_mail;
+			$user_name = $user->prof_first_name;
+		}
+		Mail::send ('emails.shipped' , array('name' => $user_name) , function ($message) use ($user_email) {
+			$message->to ($user_email)->subject ('Your item delivered from ' . Setting::param ('site' , 'app_name')['value']);
+		});
+
+		return Redirect::to ('admin/load-shipped-prescription');
+	}
+
+	/**
 	 * Load paid prescriptions for admin side
 	 *
 	 * @return mixed
 	 */
 	public function anyLoadShippedPrescription ()
 	{
-		$data = DB::table ('prescription')->select ('prescription.created_at as created_date' , 'prescription.status' , 'users.email' , 'prescription.path' , 'prescription.id as pres_id' , 'invoice.status_id as in_status' , 'invoice.id' , 'invoice.created_at as date_created' , 'invoice')
+		$data = DB::table ('prescription')->select ('prescription.created_at as created_date' , 'prescription.status' , 'users.email' , 'prescription.path' , 'prescription.id as pres_id' , 'invoice.status_id as in_status' , 'invoice.id' , 'invoice.created_at as date_created' , 'invoice', 'invoice.shipping_status')
 			->leftjoin ('users' , 'users.id' , '=' , 'prescription.user_id')
 			->leftjoin ('invoice' , 'invoice.pres_id' , '=' , 'prescription.id')
 			->where ('prescription.user_id' , '<>' , "")
@@ -1193,6 +1228,25 @@ class AdminController extends BaseController
 			->paginate (30);
 
 		return View::make ('admin.shipped_prescription_list' , ['pres' => $data]);
+	}
+
+	/**
+	 * Load paid prescriptions for admin side
+	 *
+	 * @return mixed
+	 */
+	public function anyLoadDeliveredPrescription ()
+	{
+		$data = DB::table ('prescription')->select ('prescription.created_at as created_date' , 'prescription.status' , 'users.email' , 'prescription.path' , 'prescription.id as pres_id' , 'invoice.status_id as in_status' , 'invoice.id' , 'invoice.created_at as date_created' , 'invoice')
+			->leftjoin ('users' , 'users.id' , '=' , 'prescription.user_id')
+			->leftjoin ('invoice' , 'invoice.pres_id' , '=' , 'prescription.id')
+			->where ('prescription.user_id' , '<>' , "")
+			->where ('invoice.shipping_status' , '=' , ShippingStatus::RECEIVED ())
+			->where ('prescription.is_delete' , '=' , 0)
+			->orderBy ('prescription.id' , 'DESC')
+			->paginate (30);
+
+		return View::make ('admin.delivered_prescription_list' , ['pres' => $data]);
 	}
 
 	/**

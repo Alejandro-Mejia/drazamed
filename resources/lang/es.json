@@ -317,6 +317,14 @@
     "Shipping Cost": "Costo de envio",
     "Download Prescription": "Descargar formula médica",
     "Paid": "Pagado",
-    "Shipped": "Enviado"
-
+    "Shipped": "Enviado",
+    "Not Shipped": "No enviado",
+    "Pending Verification": "Por verificar",
+    "Deleted": "Borrada",
+    "Search prescription by email": "Busque por email cliente",
+    "Invoice Not Created": "Sin factura",
+    "Delivered Prescriptions": "Formulas entregadas",
+    "Do you really want to make this order as delivered?": "Esta seguro de colocar esta orden como entregada?",
+    "Delivery Order": "Marcar Entregado",
+    "Your item deliverd from ": "Su orden ha sido entregada por"
 }

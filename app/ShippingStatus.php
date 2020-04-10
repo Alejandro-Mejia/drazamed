@@ -18,14 +18,14 @@
          */
         public static function status($key = '')
         {
-            $shipping_statuses = Cache::get(CACHE_PARAM_SHIPPING_STATUS, null);
+            $shipping_statuses = Cache::get('CACHE_PARAM_SHIPPING_STATUS', null);
             if (is_null($shipping_statuses)) {
                 $shipping_status = self::all();
                 $shipping_statuses = [];
                 foreach ($shipping_status as $status) {
                     $shipping_statuses[strtoupper($status->name)] = $status->id;
                 }
-                Cache::put(CACHE_PARAM_SHIPPING_STATUS, $shipping_statuses, 43200);
+                Cache::put('CACHE_PARAM_SHIPPING_STATUS', $shipping_statuses, 43200);
             }
 
             return empty($key) ? $shipping_statuses : $shipping_statuses[$key];
@@ -64,6 +64,14 @@
         }
 
         /**
+         * Delivered
+         */
+        public static function DELIVERED()
+        {
+            return self::status('DELIVERED');
+        }
+
+        /**
          * Get  Status Name
          * @param $status_id
          * @return string
@@ -83,6 +91,9 @@
                     break;
                 case (self::NOTSHIPPED()):
                     return "Not Shipped";
+                    break;
+                case (self::DELIVERED()):
+                    return "Delivered";
                     break;
                 default:
                     return "Not Shipped";

@@ -12,7 +12,7 @@ $(function()
   <section class="scrollable padder">
 
   <div class="row">
-  <div class="col-lg-9">  <h3 class="m-b-none">{{ __('Shipped Prescriptions')}}</h3></div>
+  <div class="col-lg-9">  <h3 class="m-b-none">{{ __('Delivered Prescriptions')}}</h3></div>
   <div class="col-lg-3" style="padding-top: 7px">  <input class="form-control" type="text" name="pres_search" id="pres_search" placeholder="{{ __('Search prescription by email')}}" onkeyup="filter_pres(this.value,'shipped')" />
 </div>
   </div>
@@ -27,7 +27,7 @@ $(function()
       <th>{{ __('From')}}</th>
       <th>{{ __('Date')}}</th>
       <th>{{ __('Invoice Payment Status')}}</th>
-      <th>{{ __('Shipping Status')}}</th>
+      <th>{{ __('Prescription Status')}}</th>
       <th>{{ __('Actions')}}</th>
       <th>{{ __('Invoice')}}</th>
 	  </tr>
@@ -50,14 +50,7 @@ $(function()
 	   <td>{{$pres[$i]->email}}</td>
 	   <td>{{date('d-M-Y',strtotime($pres[$i]->date_created))}}</td>
 	   <td style="text-align: center">{{$paid}}</td>
-
-	   <td>
-      @if($pres[$i]->shipping_status != ShippingStatus::DELIVERED())
-          <a class='btn btn-s-md btn-info btn-rounded' href='{{url("/")}}/admin/deliver-order/{{$pres[$i]->pres_id}}'  onclick="return confirm('Do you really want to make this order as delivered?');">{{ __('Delivery Order')}}</a>
-        @else
-            {{ __('Delivered')}}
-        @endif
-     </td>
+	   <td>{{ __(PrescriptionStatus::statusName($pres[$i]->status))}}</td>
 	   <td><a class='btn btn-s-md btn-info btn-rounded' href='{{url("/")}}/admin/pres-edit/{{$pres[$i]->pres_id}}/0' >{{ __('Details')}}</a>&nbsp;&nbsp;&nbsp;
 	   {{--<a class='btn btn-s-md btn-danger btn-rounded' href='{{url("/")}}/admin/pres-delete/{{$pres[$i]->pres_id}}/shipped' onclick="return confirm('Do you really want to delete this order?');">{{ __('Delete')}}</a></td>--}}
 	   <td><a class='text-info' href='{{url("/")}}/admin/load-invoice/{{$pres[$i]->id}}'>{{ $pres[$i]->invoice}}</a></td>

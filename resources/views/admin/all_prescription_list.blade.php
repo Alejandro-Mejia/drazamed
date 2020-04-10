@@ -14,7 +14,7 @@ $(function()
   <div class="row">
     <div class="col-lg-9">  <h3 class="m-b-none">{{ __('All Prescriptions')}}</h3>
 </div>
-    <div class="col-lg-3" style="padding-top: 7px">  <input type="text" class="form-control" name="pres_search" id="pres_search" placeholder="Search prescription by email" onkeyup="filter_pres(this.value,'all')" >
+    <div class="col-lg-3" style="padding-top: 7px">  <input type="text" class="form-control" name="pres_search" id="pres_search" placeholder="{{__('Search prescription by email')}}" onkeyup="filter_pres(this.value,'all')" >
 </div>
     </div>
     <!-- Status -->
@@ -66,18 +66,18 @@ $(function()
 	   <td>{{(isset($pageNumber)?$i+1+((Request::get('page')-1)*30):$i+1)}}</td>
 	   <td>{{$pres[$i]->email}}</td>
 	   <td>{{date('d-M-Y',strtotime($pres[$i]->created_date))}}</td>
-	   <td><strong>{{ PrescriptionStatus::statusName($pres[$i]->status)}}</strong></td>
-	   <td ><strong>{{ InvoiceStatus::statusName($pres[$i]->in_status)}}</strong></td>
-	   <td><strong>{{ ShippingStatus::statusName($pres[$i]->shipping_status)}}</strong></td>
+	   <td><strong>{{ __(PrescriptionStatus::statusName($pres[$i]->status))}}</strong></td>
+	   <td ><strong>{{ __(InvoiceStatus::statusName($pres[$i]->in_status))}}</strong></td>
+	   <td><strong>{{ __(ShippingStatus::statusName($pres[$i]->shipping_status))}}</strong></td>
 	   <td><a class='text-info' href='{{url("/")}}/admin/load-invoice/{{$pres[$i]->id}}'>{{ $pres[$i]->invoice}}</a></td>
 
-	   <td><a class='btn btn-s-md btn-info btn-rounded' href='{{url("/")}}/admin/pres-edit/{{$pres[$i]->pres_id}}/{{$edit}}' >Details</a>&nbsp;&nbsp;&nbsp;
-	   <?php if($pres[$i]->status==PrescriptionStatus::UNVERIFIED()){?><a class='btn btn-s-md btn-danger btn-rounded' data-href='{{url("/")}}/admin/pres-delete/{{$pres[$i]->pres_id}}/all' onclick="confirm_deletion(this);">Delete</a>&nbsp;&nbsp;&nbsp;<?php }?>
-	   @if($pres[$i]->status=='paid')<a class='btn btn-s-md btn-info btn-rounded' href='{{url("/")}}/admin/ship-order/{{$pres[$i]->pres_id}}'  onclick="return confirm('Do you really want to make this order as shipped?');">Ship Order</a>@endif
+	   <td><a class='btn btn-s-md btn-info btn-rounded' href='{{url("/")}}/admin/pres-edit/{{$pres[$i]->pres_id}}/{{$edit}}' >{{__('Details')}}</a>&nbsp;&nbsp;&nbsp;
+	   <?php if($pres[$i]->status==PrescriptionStatus::UNVERIFIED()){?><a class='btn btn-s-md btn-danger btn-rounded' data-href='{{url("/")}}/admin/pres-delete/{{$pres[$i]->pres_id}}/all' onclick="confirm_deletion(this);">{{__('Delete')}}</a>&nbsp;&nbsp;&nbsp;<?php }?>
+	   @if($pres[$i]->status=='paid')<a class='btn btn-s-md btn-info btn-rounded' href='{{url("/")}}/admin/ship-order/{{$pres[$i]->pres_id}}'  onclick="return confirm('Do you really want to make this order as shipped?');">{{__('Ship Order')}}</a>@endif
 	   </td>
 	   </tr>
 	   <?php } } else {?>
-	   <tr><td colspan="7">No Prescriptions Found.</td></tr>
+	   <tr><td colspan="7">{{__('No Prescriptions Found.')}}</td></tr>
 	   <?php }?>
 
 

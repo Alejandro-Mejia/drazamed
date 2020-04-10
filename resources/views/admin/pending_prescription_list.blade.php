@@ -50,7 +50,7 @@ $(function()
 	   <td>{{(isset($pageNumber)?$i+1+((Request::get('page')-1)*30):$i+1)}}</td>
 	   <td>{{$pres[$i]->email}}</td>
 	   <td>{{date('d-M-Y',strtotime($pres[$i]->created_date))}}</td>
-	   <td><?php echo "Pending Verification";?></td>
+	   <td>{{__('Pending Verification')}}</td>
 	   <td><a class='btn btn-s-md btn-info btn-rounded' href='{{url("/")}}/admin/pres-edit/{{$pres[$i]->pres_id}}/1' >{{ __('Details')}}</a>&nbsp;&nbsp;&nbsp;
 	   <a class='btn btn-s-md btn-danger btn-rounded' data-href='{{url("/")}}/admin/pres-delete/{{$pres[$i]->pres_id}}/{{ PrescriptionStatus::UNVERIFIED() }}' onclick="confirm_deletion(this);">{{ __('Delete')}}</a></td>
 	   </tr>

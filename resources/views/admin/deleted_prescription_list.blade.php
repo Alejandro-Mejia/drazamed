@@ -15,7 +15,7 @@ $(function()
   <div class="row">
   <div class="col-lg-9">  <h3 class="m-b-none">{{ __('Deleted Prescriptions')}}</h3>
 </div>
-  <div class="col-lg-3" style="padding-top: 7px">  <input type="text" class="form-control" name="pres_search" id="pres_search" placeholder="Search prescription by email" onkeyup="filter_pres(this.value,'deleted')" >
+  <div class="col-lg-3" style="padding-top: 7px">  <input type="text" class="form-control" name="pres_search" id="pres_search" placeholder="{{__('Search prescription by email')}}" onkeyup="filter_pres(this.value,'deleted')" >
 </div>
   </div>
   <?php
@@ -48,7 +48,7 @@ $(function()
 	   <td>{{(isset($pageNumber)?$i+1+((Request::get('page')-1)*30):$i+1)}}</td>
 	   <td>{{$pres[$i]->email}}</td>
 	   <td>{{date('d-M-Y',strtotime($pres[$i]->created_date))}}</td>
-	   <td>Deleted</td>
+	   <td>{{__('Deleted')}}</td>
 	   </tr>
 	   <?php } } else {?>
 	   <tr><td colspan="7">{{ __('No Prescriptions Found.')}}</td></tr>

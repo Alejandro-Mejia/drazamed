@@ -162,7 +162,7 @@
                     <input id="input-20" type="file" name="file"
                            class="prescription-upload custom-file-input cart_file_input" required="required">
                 </div>
-                <button type="submit" class="btn btn-primary save-btn ripple" data-color="#40E0BC" id="upload">UPLOAD
+                <button type="submit" class="btn btn-primary save-btn ripple" data-color="#40E0BC" id="upload">{{__('UPLOAD')}}
                 </button>
                 {{ Form::close() }}
                 <div class="clear"></div>

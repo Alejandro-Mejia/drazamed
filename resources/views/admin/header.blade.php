@@ -217,6 +217,12 @@
                           </a>
                         </li>
                         <li >
+                          <a href="{{url('/')}}/admin/load-delivered-prescription" class="auto">
+                            <i class="fa fa-truck"></i>
+                            <span>{{ __('Delivered Prescriptions')}}</span>
+                          </a>
+                        </li>
+                        <li >
                           <a href="{{url('/')}}/admin/load-deleted-prescription" class="auto">
                              <i class="fa fa-th-list"></i>
                             <span>{{ __('Deleted Prescriptions')}}</span>
