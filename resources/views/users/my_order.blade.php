@@ -145,7 +145,7 @@
 <div class="col-sm-3">
     <div class="prescription-right">
         <div class="col-sm-12">
-            <h2 style="text-align: center">Upload Prescription</h2>
+            <h2 style="text-align: center">{{__('Upload Prescription')}}</h2>
 
             <div class="upload-pres ">
                 <p>{{ __('You can use either JPG or PNG images')}}. {{ __('We will identify the medicines and process your order at the earliest')}}.</p>
