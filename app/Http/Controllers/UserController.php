@@ -17,6 +17,7 @@ use App\Customer;
 use App\MedicalProfessional;
 use DB;
 use File;
+use Image;
 use Session;
 use Request;
 use Response;

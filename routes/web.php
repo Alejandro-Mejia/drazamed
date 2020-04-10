@@ -37,44 +37,6 @@ use App\MercadoPago\SDK;
     //     var_dump($admin->user_details()->first());
     // });
 
-    Route::get('/', function () {
-        Setting::settings();
-
-        return View::make('users.index');
-    });
-    // Configuration Screen
-    Route::get('/system-setup', function () {
-        return View::make('install.index');
-    });
-    // Cache Clear
-    Route::get('/cache', function () {
-        Cache::flush();
-        return Redirect::back();
-    });
-    // Logout
-    Route::any('/logout', function () {
-        Auth::logout();
-        return Redirect::to('/');
-    });
-    // About US Page
-    Route::get('/about', function () {
-        return View::make('/users/about');
-    });
-    // Contact Us
-    Route::get('/contact', function () {
-        return View::make('/users/contact');
-    });
-    // Help Desk
-    Route::get('/help-desk', function () {
-        return View::make('/users/help_desk');
-    });
-    Route::get('payment/success', function () {
-        return View::make('/users/payment_success');
-    });
-    Route::get('payment/failure', function () {
-        return View::make('/users/payment_failed');
-    });
-
 
     /**
      * General Routes
@@ -95,6 +57,7 @@ use App\MercadoPago\SDK;
     Route::any('/user/user-login/{is_web}', 'UserController@anyUserLogin');
     Route::any('/user/activate-account', 'UserController@anyActivateAccount');
     Route::any('/user/contact-us', 'UserController@anyContactUs');
+    Route::any('/user/store-profile-pic', 'UserController@anyStoreProfilePic');
     Route::any('/user/web-activate-account/{code}', 'UserController@anyWebActivateAccount');
 
     /**
@@ -263,8 +226,42 @@ Route::get('/clear-cache', function() {
     return "Cache is cleared";
 });
 
+// Configuration Screen
+Route::get('/system-setup', function () {
+    return View::make('install.index');
+});
+// Cache Clear
+Route::get('/cache', function () {
+    Cache::flush();
+    return Redirect::back();
+});
+// Logout
+Route::any('/logout', function () {
+    Auth::logout();
+    return Redirect::to('/');
+});
 
-/**
- * MercadoPago
- */
-Route::get('/mercado-pago', 'MercadoPagoController@anyCreatePreferencePayment');
+// Contact Us
+Route::get('/contact', function () {
+    return View::make('/users/contact');
+});
+// Help Desk
+Route::get('/help-desk', function () {
+    return View::make('/users/help_desk');
+});
+Route::get('payment/success', function () {
+    return View::make('/users/payment_success');
+});
+Route::get('payment/failure', function () {
+    return View::make('/users/payment_failed');
+});
+
+// About US Page
+Route::get('/about', function () {
+    return View::make('/users/about');
+});
+
+Route::get('/', function () {
+    Setting::settings();
+    return View::make('users.index');
+});

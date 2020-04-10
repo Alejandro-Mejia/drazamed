@@ -38,7 +38,7 @@
                               </span>
                               <span class="clear">
                                 <a href="{{url('/')}}/admin/load-paid-prescription" class="auto">
-                                <span id='tobe' class="h3 block m-t-xs text-info">25 <span class="text-sm">m</span></span>
+                                <span id='tobe' class="h3 block m-t-xs text-info">0 <span class="text-sm">m</span></span>
                                 <small class="text-muted text-u-c">{{ __('To be shipped')}}</small>
                               </span>
                             </a>
@@ -51,7 +51,7 @@
                               </span>
                               <span class="clear">
                                 <a href="{{url('/')}}/admin/load-shipped-prescription" class="auto">
-                                <span id='shipped'class="h3 block m-t-xs text-primary">9:30</span>
+                                <span id='shipped'class="h3 block m-t-xs text-primary">0</span>
                                 <small class="text-muted text-u-c">{{ __('Shipped')}}</small>
                               </span>
                             </a>
