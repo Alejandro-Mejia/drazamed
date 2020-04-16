@@ -111,18 +111,20 @@ class MedicinesImport implements ToModel, WithHeadingRow, WithBatchInserts , Wit
     }
 
     public function cleanManufacturer($value) {
-
-        $value = Str::replaceLast(' S.A.', '', $value);
-        $value = Str::replaceLast(' S.A', '', $value);
         $value = Str::replaceLast(' SAS', '', $value);
         $value = Str::replaceLast(' SAS.', '', $value);
+        $value = Str::replaceLast(' S.A.S', '', $value);
+        $value = Str::replaceLast(' S.A.S.', '', $value);
+        $value = Str::replaceLast(' S.A.', '', $value);
+        $value = Str::replaceLast(' S.A', '', $value);
         $value = Str::replaceLast(' LTDA.', '', $value);
         $value = Str::replaceLast(' LTDA', '', $value);
         $value = Str::replaceLast(' S.A.S.', '', $value);
-        $value = Str::replaceLast(' DE C', '', $value);
         $value = Str::replaceLast(' COLOMBIANA S.A', '', $value);
+        $value = Str::replaceLast(' DE COLOMBIA S.A', '', $value);
         $value = Str::replaceLast(' DE COLOMBIA', '', $value);
         $value = Str::replaceLast(' DE COLOMBI', '', $value);
+        $value = Str::replaceLast(' DE C', '', $value);
 
         return $value;
 
