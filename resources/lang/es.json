@@ -326,5 +326,6 @@
     "Delivered Prescriptions": "Formulas entregadas",
     "Do you really want to make this order as delivered?": "Esta seguro de colocar esta orden como entregada?",
     "Delivery Order": "Marcar Entregado",
-    "Your item deliverd from ": "Su orden ha sido entregada por"
+    "Your item deliverd from ": "Su orden ha sido entregada por",
+    "Yes":"Si"
 }

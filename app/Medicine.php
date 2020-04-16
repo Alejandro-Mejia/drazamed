@@ -2,10 +2,10 @@
 
 	namespace App;
     use Illuminate\Database\Eloquent\Model;
-    use Request;
-    use Response;
-
+    use App\Traits\CacheClear;
 	use App\Medicine;
+	use Response;
+    use Request;
 	use Cache;
 
 
@@ -14,12 +14,42 @@
 	{
 		protected $table = 'medicine';
 		public $timestamps = false;
+		use CacheClear;
 
 
 		/**
 		 * Fillable fields
 		 */
-		protected $fillable = ['item_code' , 'item_name' , 'quantity' , 'batch_no' , 'cost_price' , 'purchase_price' , 'marketed_by' , 'selling_price' , 'composition' , 'discount' , 'discount_type' , 'tax' , 'tax_type' , 'manufacturer' , 'group' , 'expiry' , 'is_delete' , 'is_pres_required', 'created_by' , 'added_by'];
+		protected $fillable = [
+			'item_code' ,
+			'item_name' ,
+			'provider',
+			'denomination',
+			'units',
+			'quantity' ,
+			'batch_no' ,
+			'cost_price' ,
+			'current_price',
+			'real_price',
+			'marked_price',
+			'purchase_price' ,
+			'bonification',
+			'catalog',
+			'marketed_by' ,
+			'selling_price' ,
+			'composition' ,
+			'discount' ,
+			'discount_type' ,
+			'tax' ,
+			'tax_type' ,
+			'manufacturer' ,
+			'group' ,
+			'expiry' ,
+			'is_delete' ,
+			'is_pres_required',
+			'created_by' ,
+			'added_by'
+		];
 
 		/**
 		 * Get all Medicines

@@ -34,6 +34,7 @@ use App\Customer;
 use App\Cache;
 
 use Maatwebsite\Excel\Facades\Excel;
+use Maatwebsite\Excel\HeadingRowImport;
 use App\Imports\MedicinesImport;
 
 define ('CACHE_PARAM_MEDICINE' , 'medicines');
@@ -605,6 +606,47 @@ class MedicineController extends BaseController
 			$result = ['status' => 'SUCCESS' , 'msg' => 'Search Results' , 'data' => $medicines];
 
 			return Response::json ($result);
+		}
+
+
+	}
+
+
+	/**
+	 * Clean database
+	 */
+	public function anyAuditDatabase()
+	{
+		$deletedRow = 0;
+		$deletedRows = 0;
+		header ("Access-Control-Allow-Origin: *");
+		// Retrieve all medicines
+		$medicines = Medicine::medicines ();
+		echo '<pre>'; print_r($medicines); echo '</pre>';
+		if (empty($medicines))
+			throw new Exception('No medicines available' , 404);
+		foreach ($medicines as &$value) {
+			// print_r($value, true);
+			$search = '(C)';
+            if(strpos($value['item_name'], $search)) {
+                echo $value['id'] . ' : ' . $value['item_name'];
+                $toBeDeleted = $value['item_code'];
+				try {
+					$rowTobeDeleted = Medicine::where ('id' , '=' , $value['id'])->first ();
+					if ($rowTobeDeleted != null){
+						$deletedRow = $rowTobeDeleted->delete ();
+						$deletedRows++;
+					}
+				}
+				catch (Exception $e) {
+					echo $e;
+				}
+                // echo 'true';
+            }
+		}
+
+		if($deletedRows > 0){
+			echo "Se borraron " . $deletedRows . " medicamentos controlados";
 		}
 
 
@@ -1538,51 +1580,21 @@ class MedicineController extends BaseController
 
 			// $medicines = Excel::import(new MedicinesImport, $file);
 			// dd($medicines);
-
-			(new MedicinesImport)->import($file);
-
-			// \Excel::selectSheets(0)->load ($file , function ($reader) {
-			// 	// Getting all results
-			// 	$content = $reader->get ();
-
-			// 	$results = [];
-			// 	$aAllMedcines = Medicine::select ('item_name')->get ()->toArray ();
-			// 	$available_medicines = array_column ($aAllMedcines , 'item_name');
-			// 	$availableMed = array_map ('trim' , $available_medicines);
-
-			// 	$iLoggedUserId = Auth::user ()->id;
-			// 	$curDate = date ('Y-m-d H:i:s');
-			// 	$i=0;
+			// $headings = (new HeadingRowImport)->toArray($file);
+			// dd($headings);
 			//
-			// foreach ($medicines as $result) {
-			// 	$itemName = ((isset($result->item_name) && !empty($result->item_name)) ? trim ($result->item_name) : '');
-			// 	if (!$itemName || in_array (trim ($result->item_name) , $availableMed))
-			// 		continue;
+			try {
+		    	$import = (new MedicinesImport)->import($file);
+			} catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
+			     $failures = $e->failures();
 
-			// 	$results = ['item_code' => ((isset($result->item_code) && !empty($result->item_code)) ? $result->item_code : '') ,
-			// 		'item_name' => $itemName ,
-			// 		'batch_no' => ((isset($result->batch_no) && !empty($result->batch_no)) ? $result->batch_no : '') ,
-			// 		'quantity' => ((isset($result->quantity) && !empty($result->quantity)) ? $result->quantity : 0) ,
-			// 		'cost_price' => ((isset($result->cost_price) && !empty($result->cost_price)) ? $result->cost_price : 0.00) ,
-			// 		'purchase_price' => ((isset($result->purchase_price) && !empty($result->purchase_price)) ? $result->purchase_price : 0.00) ,
-			// 		'rack_number' => ((isset($result->rack) && !empty($result->rack)) ? $result->rack : '') ,
-			// 		'selling_price' => ((isset($result->mrp) && !empty($result->mrp)) ? $result->mrp : 0.00) ,
-			// 		'expiry' => ((isset($result->expiry) && !empty($result->expiry)) ? $result->expiry : '') ,
-			// 		'tax' => ((isset($result->tax) && !empty($result->tax)) ? $result->tax : 0.00) ,
-			// 		'composition' => ((isset($result->composition) && !empty($result->composition)) ? $result->composition : '') ,
-			// 		'discount' => ((isset($result->discount) && !empty($result->discount)) ? $result->discount : 0.00) ,
-			// 		'manufacturer' => ((isset($result->manufactured_by) && !empty($result->manufactured_by)) ? $result->manufactured_by : '') ,
-			// 		'marketed_by' => ((isset($result->marketed_by) && !empty($result->marketed_by)) ? $result->marketed_by : '') ,
-			// 		'group' => ((isset($result->group) && !empty($result->group)) ? $result->group : '') ,
-			// 		'created_at' => $curDate ,
-			// 		'created_by' => $iLoggedUserId ,
-			// 	];
-
-			// 	Medicine::insert ($results);
-			// 	$availableMed[] = $itemName;
-			// }
-
-
+			     foreach ($failures as $failure) {
+			         $failure->row(); // row that went wrong
+			         $failure->attribute(); // either heading key (if using heading row concern) or column index
+			         $failure->errors(); // Actual error messages from Laravel validator
+			         $failure->values(); // The values of the row that has failed.
+			     }
+			}
 
 			return Response::json ('success' , 200);
 

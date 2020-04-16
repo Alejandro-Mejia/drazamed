@@ -1,54 +1,174 @@
 <?php
 
-namespace App\Http\Controllers\User;
+namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Model\User\Category;
-use App\Model\User\Post;
-use App\Model\User\Tag;
-use App\Model\User\Subcategory;
 use Illuminate\Http\Request;
-class SitemapController extends Controller
+use Carbon\Carbon;
+use Admin;
+use Customer;
+use Medicine;
+use Invoice;
+use PaymentGateway;
+use Prescription;
+use Setting;
+use User;
+
+class SiteMap
 {
-    public function index() {
-      $articles = Post::all()->first();
-      $categories = Category::all()->first();
-      $tags = Tag::all()->first();
-      $subcategories = Subcategory::all()->first();
-      return response()->view('sitemap.index', [
-          'article' => $articles,
-          'category' => $categories,
-          'subcategory' => $subcategories,
-          'tag' => $tags,
-      ])->header('Content-Type', 'text/xml');
+    const START_TAG = '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">';
+    const END_TAG = '</urlset>';
+
+    // to build the XML content
+    private $content;
+
+    public function add(Url $siteMapUrl)
+    {
+        $this->content .= $siteMapUrl->build();
     }
 
-    public function articles() {
-       $article = Post::latest()->get();
-       return response()->view('sitemap.article', [
-           'article' => $article,
-       ])->header('Content-Type', 'text/xml');
-   }
+    public function build()
+    {
+        return self::START_TAG . $this->content . self::END_TAG;
+    }
+}
 
-   public function categories() {
-       $category = Category::all();
-       return response()->view('sitemap.category', [
-           'category' => $category,
-       ])->header('Content-Type', 'text/xml');
-   }
+class Url
+{
+    private $url;
+    private $lastUpdate;
+    private $frequency;
+    private $priority;
 
-   public function subcategories() {
-       $subcategory = Subcategory::all();
-       return response()->view('sitemap.subcategory', [
-           'subcategory' => $subcategory,
-       ])->header('Content-Type', 'text/xml');
-   }
+    public static function create($url)
+    {
+        $newNode = new self();
+        $newNode->url = url($url);
+        return $newNode;
+    }
 
-   public function tags() {
-       $tag = Tag::all();
-       return response()->view('sitemap.tag', [
-           'tag' => $tag,
-       ])->header('Content-Type', 'text/xml');
-   }
+    public function lastUpdate($lastUpdate)
+    {
+        $this->lastUpdate = $lastUpdate;
+        return $this;
+    }
+
+    public function frequency($frequency)
+    {
+        $this->frequency = $frequency;
+        return $this;
+    }
+
+    public function priority($priority)
+    {
+        $this->priority = $priority;
+        return $this;
+    }
+
+    public function build()
+    {
+        // $url = 'https://programacionymas.com/';
+        // $lastUpdate = '2019-07-31T01:06:39+00:00';
+        // $frequency = 'monthly';
+        // $priority = '1.00';
+        return "<url>" .
+            "<loc>$this->url</loc>" .
+            "<lastmod>$this->lastUpdate</lastmod>" .
+            "<changefreq>$this->frequency</changefreq>" .
+            "<priority>$this->priority</priority>" .
+        "</url>";
+    }
+}
+
+class SitemapController extends Controller
+{
+
+  public function index()
+  {
+      $this->siteMap = new SiteMap();
+
+
+      $this->addUniqueRoutes();
+      $this->addMedicines();
+
+
+      return response($this->siteMap->build(), 200)
+        ->header('Content-Type', 'text/xml');
+  }
+
+  private function addUniqueRoutes()
+  {
+      $startOfMonth = Carbon::now()->startOfMonth()->format('c');
+
+    $this->siteMap->add(
+        Url::create('/')
+            ->lastUpdate($startOfMonth)
+            ->frequency('monthly')
+            ->priority('1.00')
+    );
+
+    $this->siteMap->add(
+        Url::create('/medicines')
+            ->lastUpdate($startOfMonth)
+            ->frequency('monthly')
+            ->priority('0.8')
+    );
+
+    $this->siteMap->add(
+        Url::create('/prescriptions')
+            ->lastUpdate($startOfMonth)
+            ->frequency('yearly')
+            ->priority('0.8')
+    );
+
+    $this->siteMap->add(
+        Url::create('/admin')
+            ->lastUpdate($startOfMonth)
+            ->frequency('monthly')
+            ->priority('0.7')
+    );
+
+  }
+
+  private function addProfilePages()
+  {
+      // ...
+  }
+
+  private function addMedicines()
+  {
+      $medicines = Medicine::published()->whereNotNull('slug')->get([
+        'slug', 'updated_at'
+      ]);
+
+      foreach ($medicines as $medicine) {
+          $this->siteMap->add(
+              Url::create("/medicine/$medicine->slug")
+                  ->lastUpdate($medicine->updated_at->startOfMonth()->format('c'))
+                  ->frequency('monthly')
+                  ->priority('0.9')
+          );
+      }
+  }
+
+  private function addCategories()
+  {
+      // ...
+  }
+
+  private function addTags()
+  {
+      // ...
+  }
+
+  private function addProjects()
+  {
+      // ...
+  }
+
+  private function addDynamicPages()
+  {
+      // ...
+  }
 
 }

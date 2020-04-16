@@ -39,7 +39,7 @@ $(function()
 	    <th>{{ __('No.')}}</th>
 	    <th>{{ __('Item Name')}}</th>
 	    <th>{{ __('Item Code')}}</th>
-	    <th>{{ __('Expiry Date')}}</th>
+	    <!-- <th>{{ __('Expiry Date')}}</th> -->
 	    <th>{{ __('Batch No.')}}</th>
 	    <th>{{ __('MFG')}}</th>
 	    <th>{{ __('Nature')}}</th>
@@ -60,13 +60,13 @@ $(function()
 	   <td><?php echo(isset($pageNumber)?$i+1+((Request::get('page')-1)*30):$i+1)?></td>
 	   <td><?php echo $medicines[$i]['name']?></td>
 	   <td><?php echo $medicines[$i]['item_code']?></td>
-	   <td><?php echo $medicines[$i]['exp']?></td>
+	   <!-- loa<td><?php echo $medicines[$i]['exp']?></td> -->
 	   <td><?php echo $medicines[$i]['batch_no']?></td>
 	   <td><?php echo $medicines[$i]['mfg']?></td>
 	   <td><?php echo $medicines[$i]['group']?></td>
 	   <td><?php echo round($medicines[$i]['mrp'],2);?></td>
 	   <td><?php echo $medicines[$i]['composition']; ?></td>
-	   <td><?= ($medicines[$i]['is_pres_required'] == 1) ? 'Yes' : 'No'; ?> </td>
+	   <td><?= ($medicines[$i]['is_pres_required'] == 1) ? __('Yes') : __('No') ; ?> </td>
 	   <td><div class="btn-group">
 	   <button type="button" class="btn btn-sm btn-primary dropdown-toggle" data-toggle="dropdown">
            Actions <span class="caret"></span></button>

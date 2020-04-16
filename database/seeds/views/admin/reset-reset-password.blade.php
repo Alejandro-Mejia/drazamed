@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>Reset</title>
 
-<script type="text/javascript" src="https://code.jquery.com/jquery-1.11.2.js"></script>
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
 <script src="http://jqueryvalidation.org/files/dist/jquery.validate.min.js"></script>
 
 </head>
@@ -14,7 +14,7 @@
 
 
  <h1>Reset Password</h1>
-<?php 
+<?php
  if(Session::has('passwordError')){?>
 <div style="color: green"><h3><?php echo Session::get('passwordError');?> </h3></div>
 <?php }?>
@@ -45,14 +45,14 @@
 <script>
 $("#formCheckPassword").validate({
            rules: {
-               password: { 
+               password: {
                  required: true,
                     minlength: 4,
                     maxlength: 10
 
-               } , 
+               } ,
 
-                   cpassword: { 
+                   cpassword: {
                     equalTo: "#password",
                      minlength: 4,
                      maxlength: 10
@@ -61,7 +61,7 @@ $("#formCheckPassword").validate({
 
            },
      messages:{
-         password: { 
+         password: {
                  required:"the password is required"
 
                }

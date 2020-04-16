@@ -28,7 +28,7 @@ $(function()
 	  </tr>
 	</thead>
 	<tbody>
-	<?php 
+	<?php
 	if(count($customers)>0)
 	{
 	$pageNumber= Input::get('page');
@@ -62,7 +62,7 @@ $(function()
 	</table>
  </section>
 </div>
- <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.2.js"></script>
+ <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
   <script>
 				$(document).ready(function(e){
 				document.getElementById('searchTop').style.display = 'none';

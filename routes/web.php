@@ -37,7 +37,9 @@ use App\MercadoPago\SDK;
     //     var_dump($admin->user_details()->first());
     // });
 
-
+    Route::get('/admin-login', function () {
+        return View::make('admin.signin');
+    });
     /**
      * General Routes
      */
@@ -76,6 +78,7 @@ use App\MercadoPago\SDK;
     Route::any('/medicine/make-mercado-pago-payment/{invoice}', 'MedicineController@anyMakeMercadoPagoPayment');
     Route::any('/medicine/admin-pay-success/{invoice}', 'MedicineController@anyAdminPaySuccess');
     Route::any('/medicine/create-order/{invoice}/{request}', 'MedicineController@anyCreateOrder');
+    Route::any('/medicine/audit-database', 'MedicineController@anyAuditDatabase');
 
     /**
      * Admin routes
@@ -139,9 +142,7 @@ use App\MercadoPago\SDK;
     Route::any('load-prescription-to-be-paid', function () {
         return View::make('admin.prescriptionlistToBePaid');
     });
-    Route::get('admin-login', function () {
-        return View::make('admin.signin');
-    });
+
     // App::missing(function ($exception) {
     //     return Response::view('admin.missing', array(), 404);
     // });
@@ -267,3 +268,5 @@ Route::get('/', function () {
     Setting::settings();
     return View::make('users.index');
 });
+
+Route::get('/sitemap.xml', 'SiteMapController@index');
