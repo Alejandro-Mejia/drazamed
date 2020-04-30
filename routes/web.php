@@ -266,7 +266,7 @@ Route::get('/about', function () {
 
 Route::get('/', function () {
     Setting::settings();
-    return View::make('users.index');
+    return View::make('design.index');
 });
 
 Route::get('/sitemap.xml', 'SiteMapController@index');

@@ -1,0 +1,28 @@
+main {
+	background-image: url('/assets/images/bg_banner_search-min.jpg');
+	background-attachment: fixed;
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+	height: 600px;
+
+	h1,
+	p {
+		color: white;
+		text-align: center;
+	}
+
+	h1 {
+		font-size: 4em;
+		font-weight: bolder;
+	}
+
+	p {
+		width: 800px;
+		font-size: 1.2em;
+	}
+
+	.form-search-med {
+		width: 25%;
+	}
+}
