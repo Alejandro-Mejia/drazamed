@@ -3,5 +3,7 @@
     "/css/app.css": "/css/app.css",
     "/css/header.css": "/css/header.css",
     "/css/index.css": "/css/index.css",
-    "/css/footer.css": "/css/footer.css"
+    "/css/footer.css": "/css/footer.css",
+    "/css/login.css": "/css/login.css",
+    "/css/drazamed.css": "/css/drazamed.css"
 }

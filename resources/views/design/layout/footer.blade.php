@@ -1,7 +1,7 @@
 <footer>
 	<div class="container">
 		<div class="row">
-			<div class="col-6">
+			<div class="col-sm-5">
 				<img src="/assets/images/logo_white.png" alt="Drazamed logo" />
 				<p class="text-justify text-white">
 					Lorem ipsum dolor sit amet, consectetur adipisicing elit.
@@ -12,7 +12,7 @@
 				</p>
 			</div>
 
-			<div class="col-2">
+			<div class="col-sm">
 				<h3 class="footer-menu-title">Mi Cuenta</h3>
 				<nav class="footer-menu">
 					<ul>
@@ -38,7 +38,7 @@
 				</nav>
 			</div>
 
-			<div class="col-2">
+			<div class="col-sm">
 				<h3 class="footer-menu-title">Categorías de Productos</h3>
 				<nav class="footer-menu">
 					<ul>
@@ -50,7 +50,7 @@
 				</nav>
 			</div>
 
-			<div class="col-2">
+			<div class="col-sm">
 				<h3 class="footer-menu-title">Información de Interés</h3>
 				<nav class="footer-menu">
 					<ul>

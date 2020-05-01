@@ -2,8 +2,6 @@ footer {
   width: 100%;
   padding: 20px 0;
   background-color: #00a1db;
-  display: flex;
-  align-items: center;
 }
 
 footer .footer-menu-title {
@@ -14,6 +12,7 @@ footer .footer-menu-title {
 }
 
 footer .footer-menu ul {
+  padding-left: 0;
   list-style-type: none;
 }
 

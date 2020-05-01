@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
+        <title>Drazamed</title>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-        <title>Drazamed</title>
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+
         <link
             rel="stylesheet"
             href="/css/bootstrap.min.css"
@@ -29,8 +31,10 @@
         <link rel="stylesheet" href="/css/header.css">
         <link rel="stylesheet" href="/css/footer.css">
 
-        <link href="/assets/fonts/fontawesome/css/fontawesome.css" rel="stylesheet">
-        <link href="/assets/fonts/fontawesome/css/solid.css" rel="stylesheet">
+        <link rel="stylesheet" href="/assets/fonts/fontawesome/css/fontawesome.css">
+        <link rel="stylesheet" href="/assets/fonts/fontawesome/css/solid.css">
+        <link rel="stylesheet" href="/css/fonts.css">
+        <link rel="stylesheet" href="/css/drazamed.css">
 
         @yield('custom-css')
     </head>
@@ -38,5 +42,9 @@
         @include('design.layout.header')
         @yield('content')
         @include('design.layout.footer')
+
+        <script src="/js/modal_manager.js"></script>
+
+        @yield('custom-js')
     </body>
 </html>

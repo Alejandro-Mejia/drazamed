@@ -1,0 +1,57 @@
+main {
+  margin-top: 92px;
+  background-image: url("/assets/images/bg_banner_search-min.jpg");
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 600px;
+}
+main .wrapper {
+  max-width: 900px;
+  height: 600px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+main .wrapper h1,
+main .wrapper p {
+  color: #fff;
+  font-family: "louis_george_cafe";
+}
+main .wrapper h1 {
+  font-size: 4rem;
+  font-weight: bolder;
+  width: 100%;
+}
+main .wrapper p {
+  font-size: 16px;
+}
+main .wrapper .form-search-med {
+  width: 90%;
+  margin: 0 auto;
+}
+main .wrapper .form-search-med input {
+  padding: 20px 20px !important;
+  border: 2px solid #00a1db;
+  border-radius: 20px 0 0 20px;
+  border-right: none;
+}
+main .wrapper .form-search-med .btn-med-search {
+  background: #00a1db;
+  border: 2px solid #00a1db;
+  color: #fff;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 0 20px 20px 0;
+}
+@media (max-width: 1000px) {
+  main .wrapper {
+    max-width: 100%;
+  }
+  main .wrapper p {
+    width: 90%;
+    margin: 0 auto;
+  }
+}
