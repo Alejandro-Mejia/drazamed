@@ -39,7 +39,7 @@ class MedicinesImport implements ToModel, WithHeadingRow, WithBatchInserts , Wit
             'quantity'      => $row['cantidad'],
 
             'marked_price'  => $row['marcado']*1000,
-            'bonification'  => $row['boni'],
+            // 'bonification'  => $row['boni'],
 
 
             'catalog'       => $row['catalogo'],
@@ -116,13 +116,12 @@ class MedicinesImport implements ToModel, WithHeadingRow, WithBatchInserts , Wit
     public function cleanManufacturer($value) {
         $value = Str::replaceLast(' SAS', '', $value);
         $value = Str::replaceLast(' SAS.', '', $value);
-        $value = Str::replaceLast(' S.A.S', '', $value);
         $value = Str::replaceLast(' S.A.S.', '', $value);
+        $value = Str::replaceLast(' S.A.S', '', $value);
         $value = Str::replaceLast(' S.A.', '', $value);
         $value = Str::replaceLast(' S.A', '', $value);
         $value = Str::replaceLast(' LTDA.', '', $value);
         $value = Str::replaceLast(' LTDA', '', $value);
-        $value = Str::replaceLast(' S.A.S.', '', $value);
         $value = Str::replaceLast(' COLOMBIANA S.A', '', $value);
         $value = Str::replaceLast(' DE COLOMBIA S.A', '', $value);
         $value = Str::replaceLast(' DE COLOMBIA', '', $value);
@@ -136,21 +135,53 @@ class MedicinesImport implements ToModel, WithHeadingRow, WithBatchInserts , Wit
 
     public function cleanDenomination($value) {
 
+        // Limpia los codigos comerciales
         $value = Str::replaceLast('(PAE)', '', $value);
+        $value = Str::replaceLast('(SAV)', '', $value);
         $value = Str::replaceLast('(3%+)', '', $value);
-        $value = Str::replaceLast('(A)', '', $value);
         $value = Str::replaceLast('(R)', '', $value);
         $value = Str::replaceLast('(PDB)', '', $value);
         $value = Str::replaceLast('(SF)', '', $value);
         $value = Str::replaceLast('(SC)', '', $value);
-        $value = Str::replaceLast('(T', '', $value);
+        $value = Str::replaceLast('(T)', '', $value);
         $value = preg_replace_array('/\(M\)\d{3,6}/', [''], $value);
-        $value = preg_replace_array('/\(M\)\d{3,6}/', [''], $value);
+        // $value = preg_replace_array('/\(M\)\d{3,6}/', [''], $value);
         $value = preg_replace_array('/\(P\)\d{3,6}/', [''], $value);
         $value = Str::replaceLast('(A)', '', $value);
         $value = Str::replaceLast('(M)', '', $value);
         $value = Str::replaceLast('(E)', '', $value);
         $value = Str::replaceLast('(P)', '', $value);
+        $value = Str::replaceLast('(DES)', '', $value);
+        $value = Str::replaceLast('(D)', '', $value);
+        $value = Str::replaceLast('(DAD)', '', $value);
+        $value = Str::replaceLast('(DSF)', '', $value);
+        $value = Str::replaceLast('(A50)', '', $value);
+        $value = Str::replaceLast('(LBD)', '', $value);
+        $value = Str::replaceLast('(CYA)', '', $value);
+        $value = Str::replaceLast('(PDI)', '', $value);
+        $value = Str::replaceLast('(GDI)', '', $value);
+        $value = Str::replaceLast('(G13)', '', $value);
+        $value = Str::replaceLast('(ASI)', '', $value);
+        $value = Str::replaceLast('(MSF)', '', $value);
+        $value = Str::replaceLast('(MAX)', '', $value);
+        $value = Str::replaceLast('(ALZ)', '', $value);
+        $value = Str::replaceLast('(ERT)', '', $value);
+        $value = Str::replaceLast('(LPO)', '', $value);
+        $value = Str::replaceLast('(PAM)', '', $value);
+        $value = Str::replaceLast('(DPT)', '', $value);
+        $value = Str::replaceLast('(RYS)', '', $value);
+        $value = Str::replaceLast('(DPD)', '', $value);
+        $value = Str::replaceLast('(MGF)', '', $value);
+        $value = Str::replaceLast('(FCR)', '', $value);
+        $value = Str::replaceLast('(MDN)', '', $value);
+
+        // Limpia abreviacion del proveedor
+        // $value = Str::replaceLast(' AG ', '', $value);
+        // $value = Str::replaceLast(' BMS ', '', $value);
+        // $value = Str::replaceLast(' PC ', '', $value);
+        // $value = Str::replaceLast(' EC ', '', $value);
+        // $value = Str::replaceLast(' GF ', '', $value);
+        // $value = Str::replaceLast(' LS ', '', $value);
 
         return $value;
 
@@ -357,11 +388,11 @@ class MedicinesImport implements ToModel, WithHeadingRow, WithBatchInserts , Wit
                             if((int)$labs[substr($manufacturer, 0, 15)] > 1) {
                                 echo ".";
                                 // Descuento
-                                $sellprice = $vtaReal - (int)$labs[substr($manufacturer, 0, 15)];
+                                $sellprice = $vtaReal + (int)$labs[substr($manufacturer, 0, 15)];
                             } else {
                                 echo '%';
                                 // Porcentaje
-                                $sellprice = $vtaReal - $vtaReal * (float)$labs[substr($manufacturer, 0, 15)];
+                                $sellprice = $vtaReal + $vtaReal * (float)$labs[substr($manufacturer, 0, 15)];
                             }
 
                         } else {
