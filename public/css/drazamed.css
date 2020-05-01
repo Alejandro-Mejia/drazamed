@@ -1,0 +1,16 @@
+.drazamed-link {
+  cursor: pointer;
+  transition: 0.15s ease-in-out;
+  text-decoration: none;
+  color: #121416;
+}
+
+.drazamed-link:hover {
+  color: #00a1db !important;
+}
+
+.modal-content {
+  border-radius: 20px;
+  padding: 30px;
+}
+
