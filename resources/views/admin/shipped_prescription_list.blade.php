@@ -52,7 +52,7 @@ $(function()
 	   <td style="text-align: center">{{$paid}}</td>
 
 	   <td>
-      @if($pres[$i]->shipping_status != ShippingStatus::DELIVERED())
+      @if($pres[$i]->shipping_status != ShippingStatus::SHIPPED())
           <a class='btn btn-s-md btn-info btn-rounded' href='{{url("/")}}/admin/deliver-order/{{$pres[$i]->pres_id}}'  onclick="return confirm('Do you really want to make this order as delivered?');">{{ __('Delivery Order')}}</a>
         @else
             {{ __('Delivered')}}

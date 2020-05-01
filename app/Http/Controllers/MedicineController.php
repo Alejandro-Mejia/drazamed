@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Log;
 // use MercadoPagoLaravel\Facades\MP;
 // use Illuminate\Http\Request;
 // use Illuminate\Mail\Mailer;
+
+use Exception;
 use Session;
 use Redirect;
 use Request;
@@ -20,6 +22,7 @@ use DB;
 use MercadoPago;
 use App\MedicalProfessional;
 use App\PrescriptionStatus;
+use App\Exceptions\Handler;
 use App\ShippingStatus;
 use App\InvoiceStatus;
 use App\Prescription;
