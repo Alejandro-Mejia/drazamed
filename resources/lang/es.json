@@ -327,5 +327,11 @@
     "Do you really want to make this order as delivered?": "Esta seguro de colocar esta orden como entregada?",
     "Delivery Order": "Marcar Entregado",
     "Your item deliverd from ": "Su orden ha sido entregada por",
-    "Yes":"Si"
+    "Yes":"Si",
+    "MEDICAL_PROFESSIONAL":"Profesional Médico",
+    "CUSTOMER":"Cliente",
+    "DOMICILIARY":"Domiciliario",
+    "MEDICAL_CENTER":"Centro Médico",
+    "Select": "Seleccione",
+    "Please enter your phone number": "Por favor introduzca un número telefónico"
 }
