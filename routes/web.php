@@ -264,6 +264,8 @@ Route::get('/about', function () {
     return View::make('/users/about');
 });
 
+
+// Landing page route
 Route::get('/', function () {
     Setting::settings();
     return View::make('design.index');

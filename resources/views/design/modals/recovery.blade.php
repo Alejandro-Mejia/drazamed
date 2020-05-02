@@ -12,11 +12,11 @@
                 <h2 class="text-center login-title">Restaurar Contraseña</h2>
                 <form action="" method="POST">
                     <div class="form-group">
-                        <label for="email-input">Correo Electrónico</label>
+                        <label for="email-input-rec">Correo Electrónico</label>
                         <input
                             type="email"
                             class="form-control input-modal"
-                            id="email-input"
+                            id="email-input-rec"
                             placeholder="Ingrese su correo electrónico"
                         />
                     </div>

@@ -111,11 +111,12 @@ class UserController extends BaseController
 						$medProf->prof_created_on = date ('Y-m-d H:i:s');
 						$medProf->prof_updated_on = date ('Y-m-d H:i:s');
 						$medProf->save ();
+						$userId = $customer->id;
 					}
 					break;
 				case (UserType::CUSTOMER ())://cust
 					if ($is_Web) {
-						// $name = Request::get ('last_name' , '');
+						$name = $full_name;
 						$customer = new Customer;
 						$customer->mail = $email;
 						$customer->phone = $phone;
@@ -136,8 +137,10 @@ class UserController extends BaseController
 					}
 					break;
 			}//switch
+
+			// Create User register
 			$user = new User;
-			// $user->name = $name;
+			$user->name = $first_name;
 			$user->email = $email;
 			$user->password = Hash::make ($password);
 			$user->phone = $phone;

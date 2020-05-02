@@ -83,7 +83,7 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <!--                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>-->
-                        <h4 class="modal-title" id="myModalLabel">{{ __('Welcome to')}} {{ Setting::param('site','app_name')['value'] }}</h4>
+                        <h4 class="modal-title" id="myModalLabel">{{ __('Welcome to')}}  {{ Setting::param('site','app_name')['value'] }}</h4>
                     </div>
                     <div class="modal-body">
                     <div class="alert alert-success success_msg" style="display: none;"></div>
@@ -108,7 +108,7 @@
                             <div class="login-fields">
                                 <label class="control-label" for="Address">{{ __('Email Id')}}</label>
                                 <div class="">
-                                    <input class="form-control" type="text" placeholder="yourname@email.com" name="email" id="email" onblur="CheckUsername(this.value);">
+                                    <input class="form-control" type="text" placeholder="yourname@email.com" name="email" id="email" onblur="this.CheckUsername(this.value)" onchange="CheckUsername(this.value)">
                                 </div>
                                 <p style="display: none;" id="user_mail_error"></p>
                             </div>
@@ -125,9 +125,14 @@
                                  <option value="0">{{_('Select')}}</option>
                                  <?php
                                     $user_type = UserType::users();
+
                                     foreach($user_type as $key => $type){
                                         if($type != UserType::ADMIN()){
-                                        echo "<option value='$type'>$key</option>";
+                                            if($type != UserType::CUSTOMER()){
+                                                echo "<option value='$type'>$key UserType::CUSTOMER()</option>";
+                                            } else {
+                                                echo "<option value='$type' selected>$key</option>";
+                                            }
                                         }
                                     }
                                  ?>
@@ -342,6 +347,10 @@
             });
         });
 
+        $( "#email-input-reg" ).blur(function() {
+            alert( "Handler for .blur() called." );
+        });
+
         /* ripple effect */
 //        ( function( $ ) {
 //            $( function() {
@@ -365,6 +374,8 @@
         var last_name=$('#last_name').val();
         var user_type=$('#user_type').val();
         var address = $('#reg_address').val();
+
+        console.log ("UserType:" + user_type);
 
          if(last_name=="")
           {
@@ -433,7 +444,18 @@
             url: '{{ URL::to('user/create-user/1' )}}',
             data: $( "#user_reg" ).serialize(),
             datatype: 'json',
-            statusCode:{
+
+            done: function (data) {
+                    console.log(textStatus + ": " + jqXHR.status);
+            	    $(".success_msg").css({"display":"block"});
+                    $(".success_msg").html('Successfully registered...<br> Please check your mail, we will send a secret code');
+                    $(".success_msg").delay(10000).fadeOut("slow");
+                    location.reload();
+            },
+            fail: function(jqXHR, textStatus, errorThrown){
+                console.log(textStatus + ": " + jqXHR.status + " " + errorThrown);
+            },
+            statusCode: {
                 500:function(data){
                     $(".failure_msg").css({"display":"block"});
                     $(".failure_msg").html('Oops ! Some Technical Failure has occured');
@@ -450,12 +472,6 @@
                     $(".failure_msg").delay(10000).fadeOut("slow");
                 }
             },
-            success: function (data) {
-            	    $(".success_msg").css({"display":"block"});
-                    $(".success_msg").html('Successfully registered...<br> Please check your mail, we will send a secret code');
-                    $(".success_msg").delay(10000).fadeOut("slow");
-                    location.reload();
-            }
           });
 
 
@@ -466,32 +482,32 @@
     */
     function CheckUsername(u_name)
     {
-               $.ajax({
-                  type: "GET",
+        $.ajax({
+          type: "GET",
 
-                  url: '{{ URL::to('user/check-user-name')}}',
-                  data: "u_name="+u_name,
-                  datatype: 'json',
-                  statusCode:{
-                    400:function(data){
-                        $("#user_mail_error").css({"display":"block", "color":"red"});
-                        $("#user_mail_error").html('Enter a valid email');
-                        $('#register').attr("disabled", true);
-                    },
-                    409:function(data){
+          url: '{{ URL::to('user/check-user-name')}}',
+          data: "u_name="+u_name,
+          datatype: 'json',
+          statusCode:{
+            400:function(data){
+                $("#user_mail_error").css({"display":"block", "color":"red"});
+                $("#user_mail_error").html('Enter a valid email');
+                $('#register').attr("disabled", true);
+            },
+            409:function(data){
 
-                        $("#user_mail_error").css({"display":"block", "color":"red"});
-                        $("#user_mail_error").html('Email already exist');
-                        $('#register').attr("disabled", true);
-                    }
-                  },
-                  success: function (data) {
-                  	    $("#user_mail_error").css({"display":"block", "color":"green"});
-                        $("#user_mail_error").html('Valid Email');
-                        $('#register').attr("disabled", false);
+                $("#user_mail_error").css({"display":"block", "color":"red"});
+                $("#user_mail_error").html('Email already exist');
+                $('#register').attr("disabled", true);
+            }
+          },
+          success: function (data) {
+          	    $("#user_mail_error").css({"display":"block", "color":"green"});
+                $("#user_mail_error").html('Valid Email');
+                $('#register').attr("disabled", false);
 
-                  }
-                });
+          }
+        });
     }
 
 /**

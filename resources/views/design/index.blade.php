@@ -17,10 +17,11 @@
 			<div class="input-group mb-3">
 				<input
 					type="text"
-					class="form-control"
+					class="form-control .search_medicine"
 					placeholder="Busca un medicamento por nombre"
 					aria-label="Busca un medicamento por nombre"
 					aria-describedby="basic-addon2"
+					id="search_medicine"
 				/>
 				<div class="input-group-append">
 					<span class="input-group-text btn-med-search" id="basic-addon2"
