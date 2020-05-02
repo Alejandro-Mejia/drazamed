@@ -536,6 +536,9 @@ function login()
         var uname=$(".login_mail").val();
         var pwd=$('.login_pass').val();
 
+        console.log ('UName:' + uname);
+        console.log ('pwd:' + pwd);
+
         if(uname=="")
         {
             $("#login_name_error").css({"display":"block", "color":"red"});

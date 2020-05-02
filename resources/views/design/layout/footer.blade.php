@@ -368,87 +368,90 @@ function login()
     $("#login_name_error").hide();
     $("#login_pwd_error").hide();
     var activate_form = "";
-        var uname=$(".login_mail").val();
-        var pwd=$('.login_pass').val();
+    var uname=$(".login_mail").val();
+    var pwd=$('.login_pass').val();
 
-        if(uname=="")
-        {
-            $("#login_name_error").css({"display":"block", "color":"red"});
-            $("#login_name_error").html('Please enter user name');
-            return false;
-        }
-        if(pwd=="")
-        {
-            $("#login_name_error").hide();
-            $("#login_pwd_error").css({"display":"block", "color":"red"});
-            $("#login_pwd_error").html('Please enter password');
-            return false;
-        }else{
-            $("#login_name_error").hide();
-            $("#login_pwd_error").hide();
-        }
-  $.ajax({
-            type: "POST",
-            url: '{{ URL::to('user/user-login/1')}}',
-            data: $( "#login_form" ).serialize(),
-            datatype: 'json',
-            complete:function(data){
+    console.log ('UName:' + uname);
+    console.log ('UPwd:' + pwd);
 
-            },
-            statusCode:{
-                403:function(data){
-                   $(".login_msg").html('Please Login from Admin URL');
-                    $(".login_msg").css({"display":"block"});
-                    $(".login_msg").delay(5000).fadeOut("slow");
-                }
-            },
-            success: function (data) {
-            var status=data[0].result.status;
-            var page=data[0].result.page;
+    if(uname=="")
+    {
+        $("#login_name_error").css({"display":"block", "color":"red"});
+        $("#login_name_error").html('Please enter user name');
+        return false;
+    }
+    if(pwd=="")
+    {
+        $("#login_name_error").hide();
+        $("#login_pwd_error").css({"display":"block", "color":"red"});
+        $("#login_pwd_error").html('Please enter password');
+        return false;
+    }else{
+        $("#login_name_error").hide();
+        $("#login_pwd_error").hide();
+    }
+  	$.ajax({
+        type: "POST",
+        url: '{{ URL::to('user/user-login/1')}}',
+        data: $( "#login_form" ).serialize(),
+        datatype: 'json',
+        complete:function(data){
 
-                if(status=='pending')
-                {
-                    var mail=$('.login_mail').val();
-
-                     $(".login_msg").html('Please activate your account');
-                     $(".login_msg").css({"display":"block"});
-                     $(".login_msg").delay(5000).fadeOut("slow");
-
-                     activate_form +='<input type="hidden" id="hidden_user_id" value="'+mail+'">';
-
-                     activate_form +=' <div class="login-fields">';
-                     activate_form +='<label class="control-label" for="Address">Enter Your activation code</label>';
-                     activate_form +=' <div class=""> <input class="form-control" type="text" id="activation_code" placeholder="Enter your Activation Code" name="user_name"> </div> </div>';
-                     activate_form +='<div class="signup-btn">';
-                     activate_form +='<button type="button" class="btn btn-primary save-btn ripple" id="register"  data-color="#82DCDF" onclick="activate_user();">ACTIVATE</button>';
-                     activate_form +=' <div class="clear"></div> </div>';
-
-
-                     $(".user_activate").html(activate_form);
-                }
-                 if(status=='failure')
-                {
-                $(".login_msg").html('Invalid username or password');
+        },
+        statusCode:{
+            403:function(data){
+               $(".login_msg").html('Please Login from Admin URL');
                 $(".login_msg").css({"display":"block"});
                 $(".login_msg").delay(5000).fadeOut("slow");
+            }
+        },
+        success: function (data) {
+	        var status=data[0].result.status;
+	        var page=data[0].result.page;
 
-                }
-                if(status=='success')
-                {
-                    if(page=='no')
-                        location.href="{{ URl::to('/').'/account-page' }}"
-                    else
-                        location.href='../medicine/add-cart/1';
-                }
+            if(status=='pending')
+            {
+                var mail=$('.login_mail').val();
 
-                if(status == 'delete'){
-                 $(".login_msg").html('You have been deleted by admin ! Contact support team.');
-                                $(".login_msg").css({"display":"block"});
-                                $(".login_msg").delay(5000).fadeOut("slow");
-                }
+                 $(".login_msg").html('Please activate your account');
+                 $(".login_msg").css({"display":"block"});
+                 $(".login_msg").delay(5000).fadeOut("slow");
+
+                 activate_form +='<input type="hidden" id="hidden_user_id" value="'+mail+'">';
+
+                 activate_form +=' <div class="login-fields">';
+                 activate_form +='<label class="control-label" for="Address">Enter Your activation code</label>';
+                 activate_form +=' <div class=""> <input class="form-control" type="text" id="activation_code" placeholder="Enter your Activation Code" name="user_name"> </div> </div>';
+                 activate_form +='<div class="signup-btn">';
+                 activate_form +='<button type="button" class="btn btn-primary save-btn ripple" id="register"  data-color="#82DCDF" onclick="activate_user();">ACTIVATE</button>';
+                 activate_form +=' <div class="clear"></div> </div>';
+
+
+                 $(".user_activate").html(activate_form);
+            }
+             if(status=='failure')
+            {
+            $(".login_msg").html('Invalid username or password');
+            $(".login_msg").css({"display":"block"});
+            $(".login_msg").delay(5000).fadeOut("slow");
 
             }
-          });
+            if(status=='success')
+            {
+                if(page=='no')
+                    location.href="{{ URl::to('/').'/account-page' }}"
+                else
+                    location.href='../medicine/add-cart/1';
+            }
+
+            if(status == 'delete'){
+             $(".login_msg").html('You have been deleted by admin ! Contact support team.');
+                            $(".login_msg").css({"display":"block"});
+                            $(".login_msg").delay(5000).fadeOut("slow");
+            }
+
+        }
+      });
 
 
 }
