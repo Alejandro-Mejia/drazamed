@@ -55,7 +55,7 @@
             <i class="fa fa-envelope-o"></i>
 
             <span id='todaysCount' class="badge badge-sm up bg-danger " style="display: inline-block;"></span>
-              <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.2.js"></script>
+              <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
                        	<script>
                         	var not = '<?php echo URL::to('admin/today-pres-dash'); ?>';
 				$(document).ready(function(e){

@@ -22,7 +22,7 @@
     <script src="/assets/javascripts/jquery.min.js"></script>
 
     <link rel="stylesheet" href="/assets/javascripts/jquery-ui.css">
-    <script src="/assets/javascripts/jquery-1.11.2.js"></script>
+    <script src="/assets/javascripts/jquery-1.11.2.min.js"></script>
     <script src="/assets/javascripts/jquery-ui.js"></script>
     <script src="/assets/javascripts/smk-accordion.js"></script>
     {{--<script src="assets/js/jquery.form.js"></script>--}}
