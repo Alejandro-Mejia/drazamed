@@ -39,7 +39,7 @@ $(function()
 	<span id='paginate'></span>
 	</table>
 
-  	<script type="text/javascript" src="https://code.jquery.com/jquery-1.11.2.js"></script>
+  	<script type="text/javascript" src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
 
 
 	<script>

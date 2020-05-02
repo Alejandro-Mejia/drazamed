@@ -15,7 +15,7 @@
   <link rel="stylesheet" href="{{url('/')}}/assets/adminFiles/css/font.css" type="text/css" />
   <link rel="stylesheet" href="{{url('/')}}/assets/adminFiles/css/app.css" type="text/css" />
   <link rel="stylesheet" href="//cdn.datatables.net/1.10.7/css/jquery.dataTables.min.css" type="text/css" />
-   <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.2.js"></script>
+   <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
   <!--[if lt IE 9]>
     <script src="js/ie/html5shiv.js"></script>
     <script src="js/ie/respond.min.js"></script>
@@ -57,7 +57,7 @@
             <i class="fa fa-envelope-o"></i>
 
             <span id='todaysCount' class="badge badge-sm up bg-danger " style="display: inline-block;"></span>
-              <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.2.js"></script>
+              <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
                        	<script>
                         	var not = '<?php echo URL::to('admin/today-pres-dash'); ?>';
 				$(document).ready(function(e){
