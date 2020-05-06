@@ -7,7 +7,6 @@ header {
   left: 0;
   z-index: 1;
 }
-
 header .header-content {
   width: 80%;
   margin: auto;
@@ -15,7 +14,6 @@ header .header-content {
   justify-content: space-between;
   align-items: center;
 }
-
 header .header-content .btn-header-resp {
   display: none;
   border: none;
@@ -23,13 +21,11 @@ header .header-content .btn-header-resp {
   background-color: white;
   font-size: 1.75em;
 }
-
 header nav a {
   color: black;
   font-weight: bold;
   margin-right: 20px;
 }
-
 header .btn-login {
   background: #00a1db;
   border: 2px solid #00a1db;
@@ -38,12 +34,10 @@ header .btn-login {
   color: #fff !important;
   font-weight: 600 !important;
 }
-
 header .btn-login:hover {
   background: #fff;
   color: #000 !important;
 }
-
 header .side-nav {
   width: 0;
   height: 100%;
@@ -51,11 +45,10 @@ header .side-nav {
   top: 0;
   right: 0;
   z-index: 1;
-  background-color: #FFF;
+  background-color: #fff;
   overflow-x: hidden;
   transition: 0.3s;
 }
-
 header .side-nav .close-btn {
   position: absolute;
   top: 0;
@@ -63,12 +56,10 @@ header .side-nav .close-btn {
   font-size: 36px;
   margin-left: 50px;
 }
-
 header .side-nav ul {
   list-style-type: none;
   margin: 50px 70px 0 70px;
 }
-
 header .side-nav ul li a {
   text-decoration: none;
   font-size: 22px;
@@ -77,7 +68,6 @@ header .side-nav ul li a {
   padding: 10px 10px 10px 0px;
   text-align: center;
 }
-
 header .side-nav ul .m-login-btn {
   margin-top: 20px;
   width: 100%;
@@ -88,18 +78,14 @@ header .side-nav ul .m-login-btn {
   color: #fff !important;
   font-weight: 600 !important;
 }
-
 @media (max-width: 1000px) {
   header nav {
     display: none;
   }
-
   header .header-content {
     width: 90%;
   }
-
   header .header-content .btn-header-resp {
     display: block;
   }
 }
-
