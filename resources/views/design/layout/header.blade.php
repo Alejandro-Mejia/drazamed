@@ -16,8 +16,19 @@
             </button>
         </nav>
 
-        <button type="button" class="btn-header-resp">
+        <button id="side-menu-btn" type="button" class="btn-header-resp">
             <span class="fas fa-bars"></span>
         </button>
+
+        <div id="side-menu" class="side-nav">
+            <a href="#" id="side-close-btn" class="close-btn">&times;</a>
+
+            <ul>
+                <li><a href="/">Inicio</a></li>
+                <li><a href="/about">Quienes somos</a></li>
+                <li><a href="/contact">Contacto</a></li>
+                <button class="m-login-btn" data-toggle="modal" data-target="#login-modal">Ingresar</button>
+            </ul>
+        </div>
     </div>
 </header>

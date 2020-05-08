@@ -6,7 +6,7 @@
     aria-labelledby="register-modal-label"
     aria-hidden="true"
 >
-    <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
         <div class="modal-content">
             <div class="modal-body">
                 <div class="alert alert-success success_msg" style="display: none;"></div>
