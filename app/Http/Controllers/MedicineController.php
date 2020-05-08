@@ -27,6 +27,7 @@ use App\ShippingStatus;
 use App\InvoiceStatus;
 use App\Prescription;
 use App\SessionsData;
+use App\NewMedicine;
 use App\Setting;
 use App\ItemList;
 use App\PayStatus;
@@ -378,7 +379,11 @@ class MedicineController extends BaseController
 			$medicines = Medicine::medicines ();
 			if (!is_null ($result->id) || !empty($result->id)) {
 				$carts = ItemList::where ('invoice_id' , '=' , $result->id)->get ();
+
+
+
 				foreach ($carts as $cart) {
+					// dd($cart, $medicines, $results);
 					$items[] = ['id' => $cart->id ,
 						'item_id' => $cart->medicine ,
 						'item_code' => $medicines[$cart->medicine]['item_code'] ,
@@ -696,12 +701,14 @@ class MedicineController extends BaseController
 						throw new Exception('No medicines available' , 404);
 
 					$medicines = array_slice ($medicines , 0 , 5);
+					// dd($medicines);
 					foreach ($medicines as &$value) {
 						$value['selling_price'] = $value['mrp'];
-						$value['mrp'] = Setting::currencyFormat ($value['mrp']);
+						$value['mrp'] = $value['mrp'];
 					}
 					$result = array(array('result' => array('status' => 'success' , 'price' => Setting::currencyFormat ($key['mrp']) , 'msg' => $medicines)));
 					$result = ['status' => 'SUCCESS' , 'msg' => 'Alternatives Found !' , 'data' => ['price' => $key['mrp'] , 'medicines' => $medicines]];
+					// dd($result);
 
 				} else {
 					throw new Exception('No medicines available' , 404);
@@ -857,6 +864,7 @@ class MedicineController extends BaseController
 		$med_info = Medicine::select ('*')
 			->where ('item_code' , '=' , $searched_medicine)
 			->get ();
+		// dd($med_info);
 		if (count ($med_info) > 0) {
 			return View::make ('users.medicine_detail' , array('med_info' => $med_info));
 		} else {

@@ -94,14 +94,14 @@
                             <div class="login-fields">
                                 <label class="control-label" for="Address">{{__('First Name')}}</label>
                                 <div class="">
-                                    <input class="form-control" type="text" placeholder="{{ __('Enter your Name') }}" name="first_name" id="user_name">
+                                    <input class="form-control" type="text" placeholder="{{ __('Enter your Name') }}" name="first_name" id="first_name">
                                 </div>
                                 <p style="display: none;" id="user_name_error"></p>
                             </div>
                             <div class="login-fields">
                                 <label class="control-label" for="Address">{{__('Last Name')}}</label>
                                 <div class="">
-                                    <input class="form-control" type="text" placeholder="{{ __('Enter your Last Name')}}" name="last_name" id="user_name">
+                                    <input class="form-control" type="text" placeholder="{{ __('Enter your Last Name')}}" name="last_name" id="last_name">
                                 </div>
                                 <p style="display: none;" id="user_name_error"></p>
                             </div>
@@ -262,7 +262,7 @@
                             </div>
 
                             <div class="cancel-btn">
-                                <button type="button" class="btn ripple" id="change_pass"  data-color="#82DCDF" onclick="$('#myModal_change_password').hide();">{{ __('Cancel')}}</button>
+                                <button type="button" class="btn ripple" id="change_pass_cancel"  data-color="#82DCDF" onclick="$('#myModal_change_password').hide();">{{ __('Cancel')}}</button>
                                 <div class="clear"></div>
                             </div>
 

@@ -8975,11 +8975,12 @@ div.show-image input.delete {
 }
 .ui-menu,.ui-menu-item{
     color: #7F7D7D;
+    background-color: #fff;
     font-family: "Myriad-pro", Helvetica, Arial, sans-serif;
     padding: 15px !important;
 }
 .ui-widget-content{
-    max-height: 250px;
+    max-height: 150px;
     overflow-y: auto;
     background: #fff !important;
     border: 1px solid #E5E2E2 !important;

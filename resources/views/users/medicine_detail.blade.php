@@ -51,7 +51,11 @@ if(count($med_info)>0)
                         </div>
 
                         <div class="col-sm-11 nopadding">
-                        <?php if($med_info[0]->marketed_by!="Not available" || $med_info[0]->manufacturer!="Not available"){?>
+                            <div class="info-content">
+                                <h2>{{__('Price')}}</h2>
+                                <p id="drug">{{ '$' . number_format($med_info[0]->selling_price, 2)}}</p>
+                            </div>
+                            <?php if($med_info[0]->marketed_by!="Not available" || $med_info[0]->manufacturer!="Not available"){?>
                             <div class="info-content">
                                 <h2>{{ __('Marketed By')}}</h2>
                                 <p id="mfg"><?php  if($med_info[0]->marketed_by!="Not available") echo $med_info[0]->marketed_by; elseif($med_info[0]->manufacturer!="Not available") echo $med_info[0]->manufacturer; ?></p>
@@ -166,44 +170,49 @@ var hidden_medicine_id=$('#hidden_medicine_id').val();
 var alternative="";
 var count=1;
 
-                $.ajax({
-                  type: "GET",
-                  url: '{{ URL::to('medicine/load-sub-medicine' )}}',
-                  data: "n="+hidden_medicine+"&id="+hidden_medicine_id,
-                  datatype: 'json',
-                  complete:function(data){
+  $.ajax({
+    type: "GET",
+    url: '{{ URL::to('medicine/load-sub-medicine' )}}',
+    data: "n="+hidden_medicine+"&id="+hidden_medicine_id,
+    datatype: 'json',
+    complete:function(data){
 
-                  },
-                  statusCode:{
-                   404:function(data){
-                            alternative="<p style='text-align: center; padding-top: 15px; font-size: 16px'>No alternate medicines available</p>";
-                           $('.alter-list').html(alternative);
-                   }
-                  },
-                  success: function (data) {
-                    var medicines = data.data.medicines;
-                    var price = data.data.price
-                    alternative+="<ol>";
-                    for(i=0;i<(medicines.length);i++)
-                    {
-                    var st="";
-                    if(parseFloat(price) >= parseFloat(medicines[i].selling_price))
-                    {
-                        var st="style='color:green'";
-                    }else if(parseFloat(price) < parseFloat(medicines[i].selling_price)){
-                        var st="style='color:red'";
-                    }
-                    count=+1;
-                    alternative+=" <li>";
-                    alternative+='<a href="{{URL::to('medicine-detail/')}}/'+ medicines[i].item_code +'"><p><span> '+(i+1)+' .</span>'+medicines[i].item_name+'</p></a>';
-                    alternative+="<p "+ st +">MRP "+medicines[i].mrp+"</p>";
-                    alternative+="</li>";
-                    }
+    },
+    statusCode:{
+     404:function(data){
+              alternative="<p style='text-align: center; padding-top: 15px; font-size: 16px'>No alternate medicines available</p>";
+             $('.alter-list').html(alternative);
+     }
+    },
+    success: function (data) {
 
-                    alternative+="</ol>";
-                    $('.alter-list').html(alternative);
-                  }
-                });
+      console.log(data);
+      var medicines = data.data.medicines;
+      var price = data.data.price
+      alternative+="<ol>";
+      for(i=0;i<(medicines.length);i++)
+      {
+      var st="";
+      if(parseFloat(price) >= parseFloat(medicines[i].selling_price))
+      {
+          var st="style='color:green'";
+      }else if(parseFloat(price) < parseFloat(medicines[i].selling_price)){
+          var st="style='color:red'";
+      }
+      count=+1;
+      alternative+=" <li>";
+      alternative+='<a href="{{URL::to('medicine-detail/')}}/'+ medicines[i].item_code +'"><p><span> '+(i+1)+' .</span>'+medicines[i].item_name+'</p></a>';
+      precio = '$ ' + medicines[i].mrp.toFixed(2).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
+      console.log(precio);
+      alternative+="<p "+ st +'>'+ precio +"</p>";
+      alternative+="</li>";
+      console.log(alternative);
+      }
+
+      alternative+="</ol>";
+      $('.alter-list').html(alternative);
+    }
+  });
 }
 
 $('.add_to_cart').click(function(){
