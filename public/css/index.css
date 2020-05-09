@@ -1,4 +1,4 @@
-main {
+main .cover {
   margin-top: 92px;
   background-image: url("/assets/images/bg_banner_search-min.jpg");
   background-attachment: fixed;
@@ -8,7 +8,7 @@ main {
   height: 600px;
 }
 
-main .wrapper {
+main .cover .wrapper {
   max-width: 900px;
   height: 600px;
   margin: 0 auto;
@@ -17,49 +17,98 @@ main .wrapper {
   justify-content: center;
 }
 
-main .wrapper h1,
-main .wrapper p {
+main .cover .wrapper h1,
+main .cover .wrapper p {
   color: #fff;
   font-family: "louis_george_cafe";
 }
 
-main .wrapper h1 {
+main .cover .wrapper h1 {
   font-size: 4rem;
   font-weight: bolder;
   width: 100%;
 }
 
-main .wrapper p {
+main .cover .wrapper p {
   font-size: 16px;
 }
 
-main .wrapper .form-search-med {
+main .cover .wrapper .cover-search {
   width: 90%;
   margin: 0 auto;
 }
 
-main .wrapper .form-search-med input {
-  padding: 20px 20px !important;
-  border: 2px solid #00a1db;
-  border-radius: 20px 0 0 20px;
-  border-right: none;
+main .preload {
+  width: 100%;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  background-color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  -webkit-animation-name: upPreload;
+          animation-name: upPreload;
+  -webkit-animation-duration: 0.75s;
+          animation-duration: 0.75s;
+  -webkit-animation-delay: 1.25s;
+          animation-delay: 1.25s;
+  -webkit-animation-fill-mode: forwards;
+          animation-fill-mode: forwards;
 }
 
-main .wrapper .form-search-med .btn-med-search {
-  background: #00a1db;
-  border: 2px solid #00a1db;
-  color: #fff;
-  font-size: 16px;
-  font-weight: bold;
-  border-radius: 0 20px 20px 0;
+main .quicksearch {
+  display: flex;
+  justify-content: center;
+  background-color: #FAFAF8;
+  padding: 60px 0;
+}
+
+main .quicksearch .qs-elems {
+  width: 70%;
+}
+
+main .quicksearch .qs-elems .qs-med-form {
+  margin-bottom: 20px;
+}
+
+main .quicksearch .qs-elems .med-categories ul {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+main .quicksearch .qs-elems .med-categories ul li {
+  margin-bottom: 8px;
+  font-weight: bolder;
+}
+
+main .quicksearch .qs-elems .med-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: center;
+}
+
+@-webkit-keyframes upPreload {
+  to {
+    transform: translateY(-100%);
+  }
+}
+
+@keyframes upPreload {
+  to {
+    transform: translateY(-100%);
+  }
 }
 
 @media (max-width: 1000px) {
-  main .wrapper {
+  main .cover .wrapper {
     max-width: 100%;
   }
 
-  main .wrapper p {
+  main .cover .wrapper p {
     width: 90%;
     margin: 0 auto;
   }

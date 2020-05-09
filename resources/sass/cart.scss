@@ -1,0 +1,52 @@
+main {
+    margin-top: 90px;
+    background-color: #fafaf8;
+    padding: 50px 100px 10px 100px;
+}
+
+.cart-section {
+    max-width: 1200px;
+    margin: 0 auto;
+
+    .cart {
+        border-radius: 20px;
+        padding: 40px;
+        background-color: #ffffff;
+
+        .cart-title {
+            font-weight: 600;
+        }
+
+        .med-quantity-input {
+            width: 60%;
+            padding: 0 15px;
+            height: 40px;
+            border: 1px solid #eeeeee;
+            transition: all 0.4s ease-out 0s;
+            color: #333333;
+        }
+
+        .med-quantity-input:focus {
+            outline: none;
+            border-color: #0038e3;
+        }
+
+        .upload-zone {
+            border: 1px dashed #b0bebf;
+            border-radius: 5px;
+            background: #f9f9f9;
+            padding: 30px 0px 50px;
+
+            span {
+                font-size: 32px;
+            }
+        }
+    }
+
+    .cart:after {
+        content: " ";
+        display: block;
+        height: 0;
+        clear: both;
+    }
+}
