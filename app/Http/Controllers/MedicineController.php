@@ -582,6 +582,39 @@ class MedicineController extends BaseController
 
 	}
 
+
+	/**
+	 * Load Medicine List
+	 *
+	 * @return mixed
+	 */
+	public
+	function anySearchMedicine ()
+	{
+		header ("Access-Control-Allow-Origin: *");
+		$term = Request::get ('term' , '');
+		$limitResutls = Request::get ('limit' , 4);
+		$medicine = Medicine::where ('item_name' , 'LIKE' , $term . '%')
+					->orWhere('group' , 'LIKE' , $term . '%')
+					->orWhere('composition' , 'LIKE' , $term . '%')
+					->orWhere('marketed_by' , 'LIKE' , $term . '%')
+					->take ($limitResutls)->get ();
+		$i = 0;
+		if ($medicine->count () > 0) {
+			foreach ($medicine as $med) {
+				$medicineNameArray[$i] = array("id" => $i + 1 ,'item_code' => $med->item_code,  "name" => $med->item_name , 'mrp' => substr ($med->selling_price , 0 , 4) , 'lab' => $med->marketed_by , 'composition' => $med->composition);
+				$i++;
+			}
+			$result = array(array('result' => array('status' => 'sucess' , 'msg' => $medicineNameArray)));
+		} else {
+			$result = array(array('result' => array('status' => 'failure')));
+		}
+
+		return Response::json ($result);
+
+	}
+
+
 	/**
 	 * Load Medicine Categories
 	 *
