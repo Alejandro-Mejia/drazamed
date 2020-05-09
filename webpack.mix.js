@@ -17,4 +17,5 @@ mix.js("resources/js/app.js", "public/js")
     .sass("resources/sass/index.scss", "public/css")
     .sass("resources/sass/footer.scss", "public/css")
     .sass("resources/sass/login.scss", "public/css")
-    .sass("resources/sass/drazamed.scss", "public/css");
+    .sass("resources/sass/drazamed.scss", "public/css")
+    .sass("resources/sass/search-form.scss", "public/css");

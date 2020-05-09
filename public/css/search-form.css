@@ -1,0 +1,16 @@
+.form-search-med input {
+  padding: 20px 20px !important;
+  border: 2px solid #00a1db;
+  border-radius: 20px 0 0 20px;
+  border-right: none;
+}
+
+.form-search-med .btn-med-search {
+  background: #00a1db;
+  border: 2px solid #00a1db;
+  color: #fff;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 0 20px 20px 0;
+}
+
