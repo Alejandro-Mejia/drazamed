@@ -8,7 +8,8 @@ function hideRegisterModal() {
 }
 
 function openProductInfoModal(product) {
-    $("pinfo-modal").modal("show");
+    $("#pinfo-modal").modal("show");
+    console.log("modal abierto");
 }
 
 (function() {
