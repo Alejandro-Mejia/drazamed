@@ -4,6 +4,9 @@
   text-decoration: none;
   color: #121416;
 }
+.dra-color {
+  color: #00a1db;
+}
 .drazamed-link:hover {
   color: #00a1db !important;
 }
@@ -26,8 +29,14 @@
   color: #fff;
   border-radius: 20px;
   background-color: #00a1db;
-  border: none;
-  padding: 10px;
+  border: 2px solid #00a1db;
+  padding: 10px 20px;
+  font-weight: bold;
+  transition: 0.15s ease-in-out;
+}
+.dra-button:hover {
+  color: #000;
+  background-color: #fff;
 }
 .dra-divider {
   width: 100%;
