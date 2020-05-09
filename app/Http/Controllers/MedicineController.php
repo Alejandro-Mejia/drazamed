@@ -15,6 +15,7 @@ use Redirect;
 use Request;
 use Response;
 use Debugbar;
+use Config;
 use View;
 use Mail;
 use DB;
@@ -118,8 +119,9 @@ class MedicineController extends BaseController
 				$prescription->created_by = $user_id;
 				$prescription->updated_by = $user_id;
 				$prescription->save ();
-
 				$pres_id = $prescription->id;
+
+
 				$invoice = new Invoice;
 				$invoice->pres_id = $pres_id;
 				$invoice->user_id = $user_id;
@@ -1134,12 +1136,13 @@ class MedicineController extends BaseController
 		$data = array();
 		$item_name = "";
 		$i = 0;
+		$total=0;
 		foreach ($invoiceDetails->cartList () as $cart) {
 			$item_name .= Medicine::medicines ($cart->medicine)['item_name'];
 			$item_name .= " ,";
-
+			$total += $cart->total_price;
 		}
-		$total = $invoiceDetails->total;
+		// $total = $invoiceDetails->total;
 		$data['amount'] = $total;
 		$data['email'] = $email;
 		$data['phone'] = $phone;
@@ -1173,14 +1176,32 @@ class MedicineController extends BaseController
 		$user = Auth::user ();
 		$type = $user->user_type_id;
 
+		// Agrega credenciales
+		// MercadoPago\SDK::setAccessToken('APP_USR-2009643657185989-050901-f80d5fbf89c8c43f650efb2167d51d1b-544483632');
 
 		$allowedPaymentMethods = config('payment-methods.enabled');
+
+		$access_token = config('mercadopago.mp_pub_key_sb');
+		// $access_token = env("MP_APP_ACCESS_TOKEN", null);
+
+
 
 		$token= '';
 		$payment_method_id = '';
 		$installments = '';
 		$issuer_id = '';
 		$payment = [];
+
+		$data = array();
+		$item_name = "";
+		$i = 0;
+		$total = 0;
+		foreach ($invoiceDetails->cartList() as $cart) {
+			$item_name .= Medicine::medicines ($cart->medicine)['item_name'];
+			$item_name .= " ,";
+			$total += $cart->total_price;
+		}
+
 
 		if (Request::isMethod('post'))
 		{
@@ -1201,16 +1222,18 @@ class MedicineController extends BaseController
 			 * Realiza el pago
 			 */
 			// Establecemos el access token
-			$access_token = env('MP_APP_ACCESS_TOKEN', null);
+			$access_token = config('mercadopago.mp_pub_key_sb');
 
 			if($access_token != null)
 			{
 				Log::info('Access_Token:'.$access_token);
+				// dd($access_token);
 
-				MercadoPago\SDK::setAccessToken($access_token);
+				MercadoPago\SDK::setAccessToken("TEST-2009643657185989-050901-fca361ac1da29db05fd762e38448d574-544483632");
 
+				// $email = "test_user_44639121@testuser.com";
 				$payment = new MercadoPago\Payment();
-			    $payment->transaction_amount = 20000;
+			    $payment->transaction_amount = $total;
 			    $payment->token = $token;
 			    $payment->description = "Orden No ";
 			    $payment->installments = $installments;
@@ -1263,15 +1286,11 @@ class MedicineController extends BaseController
 			$lname = $user_info->prof_last_name;
 			$address = $user_info->prof_address;
 		}
-		$data = array();
-		$item_name = "";
-		$i = 0;
-		foreach ($invoiceDetails->cartList() as $cart) {
-			$item_name .= Medicine::medicines ($cart->medicine)['item_name'];
-			$item_name .= " ,";
 
-		}
-		$total = $invoiceDetails->total;
+
+
+
+		// $total = $invoiceDetails->total;
 		$data['invoice_id'] = $invoiceDetails->id;
 		$data['amount'] = $total;
 		$data['email'] = $email;
@@ -1282,6 +1301,7 @@ class MedicineController extends BaseController
 		$data['invoice'] = $invoiceDetails->invoice;
 		$data['id'] = $invoice;
 		$data['productinfo'] = $item_name;
+		$data['access_token'] = $access_token;
 	    // //$this->notify($order);
 	    // $url = $this->generatePaymentGateway(
 	    //          $request->get('payment_method'),
