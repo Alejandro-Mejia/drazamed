@@ -36,6 +36,12 @@ use App\MercadoPago\SDK;
     //     $admin = Admin::find(1);
     //     var_dump($admin->user_details()->first());
     // });
+//
+//
+
+    Route::get('testEmail', function () {
+          Mail::to('alejomejia1@gmail.com')->send(new TestAmazonSes("It works!"));
+    });
 
     Route::get('/admin-login', function () {
         return View::make('admin.signin');

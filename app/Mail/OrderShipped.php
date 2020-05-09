@@ -7,19 +7,18 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class TestAmazonSes extends Mailable
+class OrderShipped extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $email_content;
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($email_content)
+    public function __construct()
     {
-        $this->email_content = $email_content;
+        //
     }
 
     /**
@@ -29,7 +28,6 @@ class TestAmazonSes extends Mailable
      */
     public function build()
     {
-        return $this->view('emails.tpl');
-        // return $this->view('view.name');
+        return $this->view('view.name');
     }
 }
