@@ -15,3 +15,45 @@
     border-radius: 20px;
     padding: 30px;
 }
+
+.dra-box {
+    background-color: #fff;
+    border-radius: 20px;
+    padding: 30px 20px;
+
+    h3 {
+        color: #00a1db;
+        font-size: 22px;
+    }
+}
+
+.med {
+    width: 250px;
+    border-radius: 20px;
+    box-shadow: 2px 2px 5px 0px rgba(201, 201, 201, 1);
+    word-wrap: break-words;
+    padding: 20px;
+    margin-bottom: 20px;
+    cursor: pointer;
+
+
+    .med-thumbnail {
+        display: block;
+        width: 50px;
+        height: 50px;
+        margin: 0 auto;
+    }
+
+    .med-title {
+        font-size: 18px;
+        color: #00a1db;
+    }
+
+    .med-description {
+        font-size: 14px;
+    }
+}
+
+.med:hover {
+    box-shadow: 2px 2px 5px 0px rgb(126, 126, 126);
+}
