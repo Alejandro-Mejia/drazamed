@@ -74,6 +74,7 @@ use App\MercadoPago\SDK;
     Route::post('/medicine/add-new-medicine', 'MedicineController@postAddNewMedicine');
     Route::post('/medicine/upload', 'MedicineController@postUpload');
     Route::any('/medicine/load-medicine-web/{is_web}', 'MedicineController@anyLoadMedicineWeb');
+    Route::any('/medicine/load-medicine-cats/{is_web}', 'MedicineController@anyLoadMedicineCategories');
     Route::any('/medicine/add-cart/{is_web}', 'MedicineController@anyAddCart');
     Route::any('/medicine/remove-from-cart/{item_id}', 'MedicineController@anyRemoveFromCart');
     Route::any('/medicine/load-sub-medicine', 'MedicineController@anyLoadSubMedicine');
