@@ -582,6 +582,28 @@ class MedicineController extends BaseController
 
 	}
 
+	/**
+	 * Load Medicine Categories
+	 *
+	 * @return mixed
+	 */
+	public
+	function anyLoadMedicineCategories ()
+	{
+		header ("Access-Control-Allow-Origin: *");
+
+		$cats = Medicine::select('group')->distinct()->orderBy('group')->get();
+
+		if ($cats->count () > 0) {
+			$result = array(array('result' => array('status' => 'sucess' , 'msg' => $cats)));
+		} else {
+			$result = array(array('result' => array('status' => 'failure')));
+		}
+
+		return Response::json ($result);
+
+	}
+
 	public
 	function anyLoadMedicineWeb ($isWeb = 0)
 	{
