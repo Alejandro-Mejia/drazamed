@@ -45,7 +45,7 @@ use App\Imports\MedicinesImport;
 define ('CACHE_PARAM_MEDICINE' , 'medicines');
 define ('CURRENCY_BEFORE' , 'BEFORE');
 define ('CURRENCY_AFTER' , 'AFTER');
-date_default_timezone_set ("Asia/Calcutta");
+date_default_timezone_set ("America/Bogota");
 
 class MedicineController extends BaseController
 {
@@ -67,10 +67,13 @@ class MedicineController extends BaseController
 				$user_type = Auth::user ()->user_type_id;
 				$customer = Auth::user()->with('customer')->first();
 
-				// dd($customer);
 				$address = $customer->address;
 
 				$is_pres_required = Request::get ('is_pres_required' , 1);
+
+				// Getting shipping_cost
+				$shipping_cost = Request::get ('shipping' , 0);
+
 				$path = base_path () . '/public/images/prescription/' . $email . '/';
 
 //				if($is_pres_required)
@@ -130,12 +133,14 @@ class MedicineController extends BaseController
 				$invoice->updated_by = $user_id;
 				$invoice->shipping_address = $address;
 				$invoice->shipping_mode = 1;
+				$invoice->shipping = $shipping_cost;
 				$invoice->save ();
 				$invoice_id = $invoice->id;
 
 				$current_medicines = SessionsData::select ('medicine_id' , 'medicine_count')->where ('user_id' , '=' , $email)->get ();
 
 				// dd($current_medicines);
+				$sub_total = 0;
 				if (count ($current_medicines) > 0) {
 
 					foreach ($current_medicines as $medicine) {
@@ -154,9 +159,16 @@ class MedicineController extends BaseController
 						$itemList->created_by = $user_id;
 						$itemList->updated_by = $user_id;
 						$itemList->save ();
+
+						$sub_total += $total_price;
 					}
 
 				}
+
+				// Update invoice sub_total
+				$invoice->latest()->update(array('sub_total' => $sub_total));
+				$invoice->latest()->update(array('total' => $sub_total + $shipping_cost));
+
 				$data['email'] = $email;
 				$name = "";
 				if ($user_type == UserType::CUSTOMER ()) {
@@ -362,7 +374,6 @@ class MedicineController extends BaseController
 			->join ('invoice as i' , 'i.pres_id' , '=' , DB::raw ("prescription.id AND i.payment_status IN (" . PayStatus::PENDING () . ",0) "));
 //                ->whereIn('i.payment_status', [PayStatus::PENDING(), 0]);
 
-
 		$responses = [];
 		switch ($is_category) {
 			case (PrescriptionStatus::VERIFIED ()):
@@ -375,7 +386,7 @@ class MedicineController extends BaseController
 				break;
 		}
 		$results = $prescriptions->get ();
-
+		// dd($results);
 		foreach ($results as $result) {
 			$items = [];
 			$medicines = Medicine::medicines ();
@@ -1203,6 +1214,7 @@ class MedicineController extends BaseController
 		}
 
 
+
 		if (Request::isMethod('post'))
 		{
 			/**
@@ -1222,10 +1234,11 @@ class MedicineController extends BaseController
 			 * Realiza el pago
 			 */
 			// Establecemos el access token
-			$access_token = config('mercadopago.mp_pub_key_sb');
+
 
 			if($access_token != null)
 			{
+				$access_token = config('mercadopago.mp_app_access_token_sb');
 				Log::info('Access_Token:'.$access_token);
 				// dd($access_token);
 
@@ -1235,7 +1248,7 @@ class MedicineController extends BaseController
 				$payment = new MercadoPago\Payment();
 			    $payment->transaction_amount = $total;
 			    $payment->token = $token;
-			    $payment->description = "Orden No ";
+			    $payment->description = "Compra medicamentos Drazamed";
 			    $payment->installments = $installments;
 			    $payment->payment_method_id = $payment_method_id;
 			    $payment->issuer_id = $issuer_id;
@@ -1251,6 +1264,9 @@ class MedicineController extends BaseController
 			    // echo $payment->status;
 			    if($payment->status == 'approved') {
 			    	$invoiceDetails->status_id = InvoiceStatus::PAID ();
+			    	$invoiceDetails->sub_total = $total;
+			    	$invoiceDetails->shipping = 10000;
+			    	$invoiceDetails->total = $invoiceDetails->shipping + $invoiceDetails->sub_total;
 					$invoiceDetails->payment_status = PayStatus::SUCCESS ();
 					$invoiceDetails->transaction_id = $payment->id;
 					$invoiceDetails->updated_at = date ('Y-m-d H:i:s');
@@ -1292,7 +1308,7 @@ class MedicineController extends BaseController
 
 		// $total = $invoiceDetails->total;
 		$data['invoice_id'] = $invoiceDetails->id;
-		$data['amount'] = $total;
+		$data['amount'] = $invoiceDetails->sub_total + $invoiceDetails->shipping;
 		$data['email'] = $email;
 		$data['phone'] = $phone;
 		$data['firstname'] = $fname;

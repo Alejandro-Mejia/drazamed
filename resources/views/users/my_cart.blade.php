@@ -96,9 +96,11 @@
                                                 </tr>
 
                                                 <tr>
+                                                  @if($pres_required == 1)
                                                   <td colspan="4"><p class="text-center">{{ __('If you are done with adding medicines to cart')}}, {{ __('please browse and upload the prescription from the link below')}}. <br>
                                                 {{ __('Alternatively, you may even upload a prescription without adding any medicine to cart')}}. {{ __('We will identify the medicines and process the order further')}}.</p>
                                                   </td>
+                                                  @endif
                                                 </tr>
                                                 @else
                                                   <?php $pres_required = 1; ?>
@@ -122,9 +124,11 @@
 
 
                                            <div class="col-sm-12 text-center">
+
                                                 <h2>{{__('Upload Prescription')}}</h2>
 
                                               <div class=" text-center">
+
                                                   <p style="white-space: normal">{{ __('You can use either JPG or PNG images')}}. {{ __('We will identify the medicines and process your order at the earliest')}}.</p>
 
                                                        @if ( Session::has('flash_message') )
@@ -136,16 +140,35 @@
 
                                                       <i class="icon-browse-upload"></i>
                                                       <p>{{ __('Upload your prescription here')}}</p>
+
                                                       {{ Form::open(array('url'=>'medicine/store-prescription/1','files'=>true,'id'=>'upload_form')) }}
+
                                                       <input id="input-20" type="file" name="file"
                                                       @if($pres_required == 1)
                                                             required="required"
                                                       @endif
                                                       class="prescription-upload custom-file-input cart_file_input" >
 
-                                                      <input id="input-20" type="hidden" name="is_pres_required" value="<?= $pres_required; ?>"  />
+                                                      <input id="input-21" type="hidden" name="is_pres_required" value="<?= $pres_required; ?>"  />
 
                                                   </div>
+
+                                                  <br>
+                                                  <div id="shipping_options" class="col-lg-12 col-md-12 col-sm-12">
+                                                    <fieldset id="shipping_method">
+                                                      <label class="radio-inline">
+                                                        <input type="radio" name="shipping" value=0 checked> Recoger en la farmacia (Gratis)
+                                                      </label>
+                                                      <label class="radio-inline">
+                                                        <input type="radio" name="shipping" value=1000> Domiciliario (Distancia < 2km - $1000 )
+                                                      </label>
+                                                      <label class="radio-inline">
+                                                        <input type="radio" name="shipping" value=8000> Mensajeria Urbana ($ 10.000)
+                                                      </label>
+                                                    </fieldset>
+                                                  </div>
+
+
                                                   <button type="submit" class="btn btn-primary save-btn ripple upload_for_cart" data-color="#40E0BC" id="upload">{{ __('Place Order')}}</button>
 
                                                   @if($pres_required == 1)
@@ -230,10 +253,11 @@ $('#upload_form').submit(function(e){
   $('#upload').attr('disabled','disabled');
 });
 
-$('#upload').on('click', function(){
-  console.log('Submit form');
-  $('#upload_form').submit();
-});
+// $('#upload').on('click', function(){
+//   console.log('Submit form');
+//   $('#upload_form').submit();
+// });
+
 
 
 $(".search_medicine").autocomplete({
