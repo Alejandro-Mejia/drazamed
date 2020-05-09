@@ -89,8 +89,8 @@
                                  <th class="text-right text-align-responsive">{{ __('Unit Price')}}</th>
                                  <th class="text-right text-align-responsive">{{ __('Quantity')}}</th>
                                  <th class="text-right text-align-responsive">{{ __('Sub Total')}}</th>
-                                 <th class="text-right text-align-responsive">{{ __('Unit Disc')}}</th>
-                                 <th class="text-right text-align-responsive">{{ __('Discount')}}</th>
+                                 <th class="text-right text-align-responsive" hidden>{{ __('Unit Disc')}}</th>
+                                 <th class="text-right text-align-responsive" hidden>{{ __('Discount')}}</th>
                                  <th class="text-right text-align-responsive">{{ __('Total Price')}}</th>
                              </tr>
                              </thead>
@@ -98,13 +98,14 @@
                              @foreach($prescription['cart'] as $cart)
 
                                 <tr>
+
                                  <td class="text-center text-align-responsive">{{ $cart['item_name'] }}</td>
                                  <td class="text-right text-align-responsive">{{ number_format($cart['unit_price'],2)}}</td>
                                  <td class="text-right text-align-responsive">{{ $cart['quantity'] }}</td>
                                  <td class="text-right text-align-responsive">{{ number_format($cart['unit_price']* $cart['quantity'],2)}}</td>
-                                 <td class="text-right text-align-responsive">{{ number_format($cart['discount_percent'],2)}}</td>
-                                 <td class="text-right text-align-responsive">{{ number_format($cart['discount'],2)}}</td>
-                                 <td class="text-right text-align-responsive">{{ Setting::currencyFormat($cart['total_price'])}}</td>
+                                 <td class="text-right text-align-responsive" hidden>{{ number_format($cart['discount_percent'],2)}}</td>
+                                 <td class="text-right text-align-responsive" hidden>{{ number_format($cart['discount'],2)}}</td>
+                                 <td class="text-right text-align-responsive">{{ number_format($cart['total_price'], 2)}}</td>
                              </tr>
                                 <?php
                                          $sub_total += $cart['total_price'];
@@ -121,7 +122,7 @@
                                      <p style="color:rgb(55, 213, 218);">Sub Total</p>
                                  </div>
                                  <div class="col-lg-2 col-md-2 col-sm-2 col-xs-4">
-                                     <p >{{ empty($prescription['total']) ? Setting::currencyFormat($sub_total) : Setting::currencyFormat($prescription['sub_total'])}}</p>
+                                     <p >{{ empty($prescription['total']) ? number_format($sub_total,2) : number_format($prescription['sub_total'],2)}}</p>
                                  </div>
                              </div>
                              <div class="row">
@@ -129,15 +130,15 @@
                                      <p style="color:rgb(55, 213, 218);">{{__('Shipping Cost')}}</p>
                                  </div>
                                  <div class="col-lg-2 col-md-2 col-sm-2 col-xs-4">
-                                     <p >{{ Setting::currencyFormat($prescription['shipping'])}}</p>
+                                     <p >{{ number_format($prescription['shipping'],2)}}</p>
                                  </div>
                              </div>
-                             <div class="row">
+                             <div class="row" hidden>
                                  <div class="col-lg-10 col-md-10 col-sm-10 col-xs-8">
                                      <p style="color:rgb(55, 213, 218);">{{__('Discount')}}</p>
                                  </div>
                                  <div class="col-lg-2 col-md-2 col-sm-2 col-xs-4">
-                                     <p >{{ Setting::currencyFormat($prescription['discount'])}}</p>
+                                     <p >{{ number_format($prescription['discount'],2)}}</p>
                                  </div>
                              </div>
                              <div class="row">
@@ -145,7 +146,7 @@
                                      <p style="color:rgb(255, 0, 0);">{{__('Net Payable')}}</p>
                                  </div>
                                  <div class="col-lg-2 col-md-2 col-sm-2 col-xs-4">
-                                     <p >{{ empty($prescription['total']) ? Setting::currencyFormat($sub_total) : Setting::currencyFormat($prescription['total'])}}</p>
+                                     <p >{{ empty($prescription['total']) ? number_format($sub_total,2) : number_format($prescription['total'],2)}}</p>
                                  </div>
                              </div>
                          </div>
@@ -262,6 +263,8 @@
 
             function purchase_mercadopago(obj) {
                 var invoice = $(obj).attr('invoice');
+                console.log("Invoice:");
+                console.log(invoice);
                 window.location = "{{URL::to('medicine/make-mercado-pago-payment/')}}/" + invoice;
 
             }

@@ -49,13 +49,15 @@
          * Create Currency Format
          */
         public static function currencyFormat($amount){
+            // dd($amount);
             $currency_position = self::param('site', 'curr_position')['value'];
             $currency = self::param('site', 'currency')['value'];
+
             switch ($currency_position) {
-                case 'CURRENCY_BEFORE':
+                case 'BEFORE':
                     return implode(' ', [$currency, number_format($amount, 2)]);
                     break;
-                case 'CURRENCY_AFTER':
+                case 'AFTER':
                     return implode(' ', [number_format($amount, 2), $currency]);
                     break;
             }
