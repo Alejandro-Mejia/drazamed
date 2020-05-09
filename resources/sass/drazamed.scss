@@ -5,6 +5,10 @@
     color: #121416;
 }
 
+.dra-color {
+    color: #00a1db;
+}
+
 .drazamed-link:hover {
     color: #00a1db !important;
 }
@@ -31,8 +35,15 @@
     color: #fff;
     border-radius: 20px;
     background-color: #00a1db;
-    border: none;
-    padding: 10px;
+    border: 2px solid #00a1db;
+    padding: 10px 20px;
+    font-weight: bold;
+    transition: 0.15s ease-in-out;
+}
+
+.dra-button:hover {
+    color: #000;
+    background-color: #fff;
 }
 
 .dra-divider {
@@ -69,3 +80,16 @@
 .med:hover {
     box-shadow: 2px 2px 5px 0px rgb(126, 126, 126);
 }
+
+// .dra-button {
+
+// }
+
+// .dra-button:hover {
+//     background: #fff;
+//     border: 2px solid #00a1db;
+//     padding: 10px 20px;
+//     border-radius: 20px;
+//     color: #000 !important;
+//     font-weight: 600 !important;
+// }

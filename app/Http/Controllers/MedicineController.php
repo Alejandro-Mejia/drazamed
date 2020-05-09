@@ -885,7 +885,7 @@ class MedicineController extends BaseController
 		$email = Session::get ('user_id');
 		$current_orders = DB::table ('sessions')->where ('user_id' , '=' , $email)->get ();
 
-		return View::make ('/users/my_cart' , array('current_orders' => $current_orders));
+		return View::make ('/design/cart' , array('current_orders' => $current_orders));
 
 	}
 
