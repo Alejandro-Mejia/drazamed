@@ -35,6 +35,7 @@
                                     id="pi-med-comby"
                                     class="pi-input"
                                     value="GLAXOSMITHKLINE CONSUMER"
+                                    readonly
                                 />
                             </div>
                             <div class="col">
@@ -46,6 +47,7 @@
                                     id="pi-med-form"
                                     class="pi-input"
                                     value="Optional"
+                                    readonly
                                 />
                             </div>
                         </div>
@@ -60,6 +62,7 @@
                                     id="pi-med-comps"
                                     class="pi-input"
                                     value="ACETAMINOFEN"
+                                    readonly
                                 />
                             </div>
                             <div class="col">
@@ -71,6 +74,7 @@
                                     id="pi-med-typm"
                                     class="pi-input"
                                     value="ANALGESICOS"
+                                    readonly
                                 />
                             </div>
                         </div>
