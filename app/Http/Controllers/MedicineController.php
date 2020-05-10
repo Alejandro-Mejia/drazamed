@@ -655,7 +655,7 @@ class MedicineController extends BaseController
 
 				// dd('Medicine:' . $med['item_name'], 'Laboratory:' .  $med['marketed_by'], 'Precio Real:' .  $med['real_price'], 'Precio Corriente:' .  $med['current_price'], $labRule, 'Precio Venta:' .  $sellprice, 'Rule Type : ' . $labRule[0]['rule_type'], 'Rule : ' . $labRule[0]['rule']);
 
-				$medicineNameArray[$i] = array("id" => $i + 1 ,'item_code' => $med->item_code,  "name" => $med->item_name , 'mrp' => $sellprice , 'lab' => $med->marketed_by , 'composition' => $med->composition);
+				$medicineNameArray[$i] = array("id" => $i + 1 ,'item_code' => $med->item_code,  "name" => $med->item_name , 'mrp' => $sellprice ,'quantity' => $med->quantity, 'lab' => $med->marketed_by , 'composition' => $med->composition);
 				$i++;
 			}
 			$result = array(array('result' => array('status' => 'sucess' , 'msg' => $medicineNameArray)));
