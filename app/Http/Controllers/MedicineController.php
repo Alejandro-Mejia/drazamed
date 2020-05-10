@@ -651,6 +651,9 @@ class MedicineController extends BaseController
 		        }
 
 		        $sellprice = ceil($sellprice);
+		        $sellprice = round( $sellprice, -2, PHP_ROUND_HALF_UP);
+
+
 
 
 				// dd('Medicine:' . $med['item_name'], 'Laboratory:' .  $med['marketed_by'], 'Precio Real:' .  $med['real_price'], 'Precio Corriente:' .  $med['current_price'], $labRule, 'Precio Venta:' .  $sellprice, 'Rule Type : ' . $labRule[0]['rule_type'], 'Rule : ' . $labRule[0]['rule']);
