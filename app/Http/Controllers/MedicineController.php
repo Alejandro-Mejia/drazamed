@@ -29,6 +29,7 @@ use App\InvoiceStatus;
 use App\Prescription;
 use App\SessionsData;
 use App\NewMedicine;
+use App\Pricerule;
 use App\Setting;
 use App\ItemList;
 use App\PayStatus;
@@ -600,8 +601,60 @@ class MedicineController extends BaseController
 					->orWhere('marketed_by' , 'LIKE' , $term . '%')
 					->take ($limitResutls)->get ();
 		$i = 0;
+		$labRule=[];
+
 		if ($medicine->count () > 0) {
 			foreach ($medicine as $med) {
+
+				if($med->marked_price == 0) {
+		            switch ($med->tax) {
+		                case '19':
+		                    $sellprice = $med->real_price / 0.71;
+		                    break;
+		                case '5':
+		                    $sellprice = $med->real_price / 0.85;
+		                    break;
+		                default:
+		                    {
+		                       $labRule = Pricerule::where('laboratory','LIKE',substr ($med['marketed_by'],0,15) . '%')->get()->toArray();
+								if ($labRule[0]['isByProd'] == 1) {
+									// $labRule = Pricerule::with(["prodrule" => function($q) { $q->where('product', 'LIKE', substr ($med['item_name'],0,15);}])->where('laboratory','LIKE',substr ($med['marketed_by'],0,15) . '%')->get();
+									$prod = substr($med['item_name'],0,15);
+
+									$labRule = Pricerule::with(["prodrule"=> function($q) use($prod) {$q->where('product', 'LIKE' , $prod . '%');}])->where('laboratory','LIKE','lafran%' . '%')->get()->toArray();
+									$labRule[0]['rule_type'] = $labRule[0]['prodrule'][0]['rule_type'];
+									$labRule[0]['rule'] = $labRule[0]['prodrule'][0]['rule'];
+								}
+
+								$sellprice = ($med->real_price*$labRule[0]['isVtaReal'] + $med->current_price*$labRule[0]['isVtaCte']);
+
+								switch ($labRule[0]['rule_type']) {
+									case '0':
+										# code...
+										break;
+									case '1':
+										$sellprice = $sellprice * (1+$labRule[0]['rule']);
+										break;
+									case '2':
+										$sellprice = $sellprice + $labRule[0]['rule'];
+										break;
+									default:
+										# code...
+										break;
+								}
+
+		                    }
+		                    break;
+		            }
+		        } else {
+		            $sellprice = $med->marked_price;
+		        }
+
+		        $sellprice = ceil($sellprice);
+
+
+				dd('Medicine:' . $med['item_name'], 'Laboratory:' .  $med['marketed_by'], 'Precio Real:' .  $med['real_price'], 'Precio Corriente:' .  $med['current_price'], $labRule, 'Precio Venta:' .  $sellprice, 'Rule Type : ' . $labRule[0]['rule_type'], 'Rule : ' . $labRule[0]['rule']);
+
 				$medicineNameArray[$i] = array("id" => $i + 1 ,'item_code' => $med->item_code,  "name" => $med->item_name , 'mrp' => substr ($med->selling_price , 0 , 4) , 'lab' => $med->marketed_by , 'composition' => $med->composition);
 				$i++;
 			}
@@ -628,7 +681,36 @@ class MedicineController extends BaseController
 		$cats = Medicine::select('group')->distinct()->orderBy('group')->get();
 
 		if ($cats->count () > 0) {
+
 			$result = array(array('result' => array('status' => 'sucess' , 'msg' => $cats)));
+		} else {
+			$result = array(array('result' => array('status' => 'failure')));
+		}
+
+		return Response::json ($result);
+
+	}
+
+
+	/**
+	 * Load Medicine Laboratories
+	 *
+	 * @return mixed
+	 */
+	public
+	function anyLoadMedicineLabs ()
+	{
+		header ("Access-Control-Allow-Origin: *");
+
+		$labs = Medicine::select('marketed_by')->distinct()->orderBy('marketed_by')->get();
+
+		$i=0;
+		if ($labs->count () > 0) {
+			foreach ($labs as $lab) {
+				$laboratories[$i] = array($i + 1  => $lab->marketed_by);
+				$i++;
+			}
+			$result = array(array('result' => array('status' => 'sucess' , 'msg' => $laboratories)));
 		} else {
 			$result = array(array('result' => array('status' => 'failure')));
 		}
