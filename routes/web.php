@@ -77,6 +77,7 @@ use App\MercadoPago\SDK;
     Route::any('/medicine/load-medicine/{is_web}', 'MedicineController@anyLoadMedicine');
     Route::any('/medicine/search-medicine/{is_web}', 'MedicineController@anySearchMedicine');
     Route::any('/medicine/load-medicine-cats/{is_web}', 'MedicineController@anyLoadMedicineCategories');
+    Route::any('/medicine/load-medicine-labs/{is_web}', 'MedicineController@anyLoadMedicineLabs');
     Route::any('/medicine/add-cart/{is_web}', 'MedicineController@anyAddCart');
     Route::any('/medicine/remove-from-cart/{item_id}', 'MedicineController@anyRemoveFromCart');
     Route::any('/medicine/load-sub-medicine', 'MedicineController@anyLoadSubMedicine');
@@ -120,6 +121,12 @@ use App\MercadoPago\SDK;
     Route::post('/admin/update-invoice', 'AdminController@postUpdateInvoice');
     Route::post('/admin/pay-invoice', 'AdminController@postUpdateInvoice');
 
+
+
+    /**
+     * PriceRules
+     */
+    Route::get('/pricerules/get-by-lab/{searched_lab}', 'PricerulesController@getLabPriceRule');
 
     /**
      * Settings routes

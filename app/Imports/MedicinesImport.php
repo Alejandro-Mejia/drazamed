@@ -54,7 +54,7 @@ class MedicinesImport implements ToModel, WithHeadingRow, WithBatchInserts , Wit
             'tax_type'      => 'PERCENTAGE',
             'tax'           => $this->ivaImport($row['impuesto']) ,
             'purchase_price'=> $row['venta_real'],
-            'selling_price' => $this->sellingPrice($row['venta_real'], $row['venta_cte'], $row['impuesto'], $row['proveedor'], $row['marcado']),
+            'selling_price' => $this->sellingPrice($row['venta_real'], $row['venta_cte'], $row['impuesto'], $row['proveedor'], $row['marcado'], $row['denominacion']),
             'cost_price'    => $row['venta_real'],
             'current_price' => $row['venta_cte'],
             'real_price'    => $row['venta_real'],
@@ -122,6 +122,7 @@ class MedicinesImport implements ToModel, WithHeadingRow, WithBatchInserts , Wit
         $value = Str::replaceLast(' S.A', '', $value);
         $value = Str::replaceLast(' LTDA.', '', $value);
         $value = Str::replaceLast(' LTDA', '', $value);
+        $value = Str::replaceLast(' LTD', '', $value);
         $value = Str::replaceLast(' COLOMBIANA S.A', '', $value);
         $value = Str::replaceLast(' DE COLOMBIA S.A', '', $value);
         $value = Str::replaceLast(' DE COLOMBIA', '', $value);
@@ -187,7 +188,7 @@ class MedicinesImport implements ToModel, WithHeadingRow, WithBatchInserts , Wit
 
     }
 
-    public function sellingPrice($vtaReal, $vtaCte, $ivaImport, $manufacturer, $marked)
+    public function sellingPrice($vtaReal, $vtaCte, $ivaImport, $manufacturer, $marked, $item)
     {
         $sellprice = 0;
         $labs = [
@@ -385,6 +386,7 @@ class MedicinesImport implements ToModel, WithHeadingRow, WithBatchInserts , Wit
                 default:
                     {
                         if (array_key_exists(substr($manufacturer, 0, 15),$labs)) {
+
                             if((int)$labs[substr($manufacturer, 0, 15)] > 1) {
                                 echo ".";
                                 // Descuento
@@ -396,7 +398,8 @@ class MedicinesImport implements ToModel, WithHeadingRow, WithBatchInserts , Wit
                             }
 
                         } else {
-                            echo 'x';
+                            echo '<br>';
+                            echo $manufacturer . ', ' . $item . '<br>';
                             // $sellprice = $sellprice;
                         }
 
