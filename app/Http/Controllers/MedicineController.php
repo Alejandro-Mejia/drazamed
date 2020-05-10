@@ -616,12 +616,12 @@ class MedicineController extends BaseController
 		                    break;
 		                default:
 		                    {
-		                       $labRule = Pricerule::where('laboratory','LIKE',substr ($med['marketed_by'],0,15) . '%')->get()->toArray();
+		                       $labRule = Pricerule::where('laboratory','LIKE','%' . substr ($med['marketed_by'],0,15) . '%')->get()->toArray();
 								if ($labRule[0]['isByProd'] == 1) {
 									// $labRule = Pricerule::with(["prodrule" => function($q) { $q->where('product', 'LIKE', substr ($med['item_name'],0,15);}])->where('laboratory','LIKE',substr ($med['marketed_by'],0,15) . '%')->get();
 									$prod = substr($med['item_name'],0,15);
 
-									$labRule = Pricerule::with(["prodrule"=> function($q) use($prod) {$q->where('product', 'LIKE' , $prod . '%');}])->where('laboratory','LIKE','lafran%' . '%')->get()->toArray();
+									$labRule = Pricerule::with(["prodrule"=> function($q) use($prod) {$q->where('product', 'LIKE' , '%' . $prod . '%');}])->where('laboratory','LIKE', '%' . $med['marketed_by'] . '%')->get()->toArray();
 									$labRule[0]['rule_type'] = $labRule[0]['prodrule'][0]['rule_type'];
 									$labRule[0]['rule'] = $labRule[0]['prodrule'][0]['rule'];
 								}
