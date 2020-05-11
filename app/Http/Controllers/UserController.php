@@ -1,6 +1,5 @@
 <?php
 
-
 namespace app\Http\Controllers;
 use Illuminate\Routing\Controller as BaseController;
 // use Illuminate\Http\Request;
@@ -188,7 +187,7 @@ class UserController extends BaseController
 	}
 
 	/**
-	 * Update User Details
+	 * @brief Update User Details
 	 *
 	 * @param int $isWeb
 	 *
