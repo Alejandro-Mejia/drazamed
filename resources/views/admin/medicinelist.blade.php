@@ -111,7 +111,7 @@ $(function()
         <form class="" enctype="multipart/form-data" id="frmUpload">
                 <div class="form-group">
                 {{ Form::token() }}
-                <p>{{ __('Upload .xls .xlsx)'}}</p>
+                <p>{{ __('Upload .xls .xlsx)')}}</p>
                         <input class="form-control" type="file" name="file" id="file" />
                 </div>
                 <div class="progress-bar" role="progressbar" aria-valuenow="" aria-valuemin="0" aria-valuemax="100" width=0%>
