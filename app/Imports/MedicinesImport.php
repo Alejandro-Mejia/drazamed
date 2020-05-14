@@ -54,7 +54,7 @@ class MedicinesImport implements ToModel, WithHeadingRow, WithBatchInserts , Wit
             'tax_type'      => 'PERCENTAGE',
             'tax'           => $this->ivaImport($row['impuesto']) ,
             'purchase_price'=> $row['venta_real'],
-            'selling_price' => $this->sellingPrice($row['venta_real'], $row['venta_cte'], $row['impuesto'], $row['proveedor'], $row['marcado'], $row['denominacion']),
+            'selling_price' => 0,
             'cost_price'    => $row['venta_real'],
             'current_price' => $row['venta_cte'],
             'real_price'    => $row['venta_real'],
@@ -66,7 +66,7 @@ class MedicinesImport implements ToModel, WithHeadingRow, WithBatchInserts , Wit
         ]);
     }
 
-
+    //$this->sellingPrice($row['venta_real'], $row['venta_cte'], $row['impuesto'], $row['proveedor'], $row['marcado'], $row['denominacion']),
 
     public function batchSize(): int
     {
