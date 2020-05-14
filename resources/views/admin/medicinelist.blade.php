@@ -111,8 +111,7 @@ $(function()
         <form class="" enctype="multipart/form-data" id="frmUpload">
                 <div class="form-group">
                 {{ Form::token() }}
-                <p>{{ __('Upload .xls .xlsx file with following headers to update the medicine list.')}} <b>{{ __('(item_code ,item_name ,batch_no ,quantity ,cost_price ,purchase_price ,rack ,composition ,manufactured_by ,marketed_by ,group ,tax ,expiry ,MRP ,discount)')}}</b></b></p>
-                <p><span class="js-mand">*</span>{{ __('Please enter date by this format mm/dd/yyyy')}}</p>
+                <p>{{ __('Upload .xls .xlsx)'}}</p>
                         <input class="form-control" type="file" name="file" id="file" />
                 </div>
                 <div class="progress-bar" role="progressbar" aria-valuenow="" aria-valuemin="0" aria-valuemax="100" width=0%>
