@@ -50,6 +50,7 @@ use App\MercadoPago\SDK;
      * General Routes
      */
     Route::get('/my-cart', 'MedicineController@getMyCart');
+    Route::get('/my-cart1', 'MedicineController@getMyCart1');
     Route::get('/my-prescription/{option?}', 'MedicineController@getMyPrescription');
     Route::get('/paid-prescription', 'MedicineController@getPaidPrescription');
     Route::get('/my-order', 'MedicineController@getMyOrder');
@@ -90,10 +91,14 @@ use App\MercadoPago\SDK;
     Route::any('/medicine/create-order/{invoice}/{request}', 'MedicineController@anyCreateOrder');
     Route::any('/medicine/audit-database', 'MedicineController@anyAuditDatabase');
     Route::any('/medicine/update-cart', 'MedicineController@anyUpdateCart');
+    Route::get('/medicine/medicine-list-from-name', 'MedicineController@getMedicineListFromName');
 
     /**
      * Admin routes
      */
+
+    Route::get('/admin/import', 'MedicineController@import');
+
     Route::any('/admin/login', 'AdminController@anyLogin');
     Route::get('/admin/dashboard', 'AdminController@getDashboard');
     Route::get('/admin/load-invoice/{id}', 'AdminController@getLoadInvoice');

@@ -51,6 +51,17 @@ date_default_timezone_set ("America/Bogota");
 class MedicineController extends BaseController
 {
 
+
+	/**
+	 * Import test
+	 */
+	public function import()
+	{
+	    (new MedicinesImport)->import('inv.xls');
+
+	    return redirect('/')->with('success', 'File imported successfully!');
+	}
+
 	/**
 	 * Store Prescription
 	 *
@@ -1038,6 +1049,16 @@ class MedicineController extends BaseController
 		$email = Session::get ('user_id');
 		$current_orders = DB::table ('sessions')->where ('user_id' , '=' , $email)->get ();
 
+		return View::make ('/users/my_cart' , array('current_orders' => $current_orders));
+
+	}
+
+
+	function getMyCart1 ()
+	{
+		$email = Session::get ('user_id');
+		$current_orders = DB::table ('sessions')->where ('user_id' , '=' , $email)->get ();
+
 		return View::make ('/design/cart' , array('current_orders' => $current_orders));
 
 	}
@@ -1698,9 +1719,9 @@ class MedicineController extends BaseController
 		$name = Request::get ('name');
 		$order = Request::get ('ord' , 'ASC');
 		if ($name != "")
-			$medicines = Medicine::select ('id' , 'item_name as name' , 'batch_no' , 'manufacturer as mfg' , 'group' , 'expiry as exp' , 'item_code' , 'selling_price as mrp' , 'composition' , 'is_pres_required')->where ('item_name' , 'LIKE' , $name . "%")->orderBy ('composition' , $order)->where ('is_delete' , '=' , 0)->paginate (30);
+			$medicines = Medicine::select ('id' , 'item_name as name' , 'batch_no' , 'manufacturer as mfg' , 'group' , 'item_code' , 'selling_price as mrp' , 'composition' , 'is_pres_required')->where ('item_name' , 'LIKE' , $name . "%")->orderBy ('composition' , $order)->where ('is_delete' , '=' , 0)->paginate (30);
 		else
-			$medicines = Medicine::select ('id' , 'item_name as name' , 'batch_no' , 'manufacturer as mfg' , 'group' , 'expiry as exp' , 'item_code' , 'selling_price as mrp' , 'composition' , 'is_pres_required')->where ('item_name' , 'LIKE' , $name . "%")->orderBy ('composition' , $order)->where ('is_delete' , '=' , 0)->paginate (30);
+			$medicines = Medicine::select ('id' , 'item_name as name' , 'batch_no' , 'manufacturer as mfg' , 'group'  , 'item_code' , 'selling_price as mrp' , 'composition' , 'is_pres_required')->where ('item_name' , 'LIKE' , $name . "%")->orderBy ('composition' , $order)->where ('is_delete' , '=' , 0)->paginate (30);
 
 		return Response::json (['medicines' => $medicines->getCollection () , 'link' => $medicines->links ()->render ()]);
 	}
