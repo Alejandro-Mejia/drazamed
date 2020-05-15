@@ -75,7 +75,7 @@ $(function()
 	    <th>{{ __('Item Name')}}</th>
 	    <th>{{ __('Item Code')}}</th>
 	    <!-- <th>{{ __('Expiry Date')}}</th> -->
-	    <th>{{ __('Batch No.')}}</th>
+	    <!-- <th>{{ __('Batch No.')}}</th> -->
 	    <th>{{ __('MFG')}}</th>
 	    <th>{{ __('Nature')}}</th>
 	    <th>{{ __('MRP')}}</th>
@@ -96,7 +96,7 @@ $(function()
 	   <td><?php echo $medicines[$i]['name']?></td>
 	   <td><?php echo $medicines[$i]['item_code']?></td>
 	   <!-- loa<td><?php echo $medicines[$i]['exp']?></td> -->
-	   <td><?php echo $medicines[$i]['batch_no']?></td>
+	   <!-- <td><?php echo $medicines[$i]['batch_no']?></td> -->
 	   <td><?php echo $medicines[$i]['mfg']?></td>
 	   <td><?php echo $medicines[$i]['group']?></td>
 	   <td nowrap style="text-align: right"><?php echo Setting::currencyFormat($medicines[$i]['mrp']);?></td>
@@ -245,7 +245,7 @@ $("#file_upload").click(function(e){
                     $.each(data, function ($key, $med) {
 
                      $status = ($med.is_pres_required == 1) ? 'Yes' : 'No';
-                     table_con+="<tr><td>"+i+"</td><td>"+$med.name+"</td><td>"+$med.item_code+"</td><td>"+$med.batch_no+"</td><td>"+$med.mfg+"</td><td>"+$med.group+"</td><td style='text-align:right' nowrap> $ "+$med.mrp+"</td><td style='width:300px'>"+$med.composition+"</td>" +
+                     table_con+="<tr><td>"+i+"</td><td>"+$med.name+"</td><td>"+$med.item_code+"</td><td>"+$med.mfg+"</td><td>"+$med.group+"</td><td style='text-align:right' nowrap> $ "+$med.mrp+"</td><td style='width:300px'>"+$med.composition+"</td>" +
                       "<td>"+$status+"</td>" +
                       "<td><div class='btn-group'><button type='button' class='btn btn-sm btn-primary dropdown-toggle' data-toggle='dropdown'>Actions <span class='caret'></span></button>" +
                       "<ul class='dropdown-menu' role='menu'>" +

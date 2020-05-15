@@ -217,7 +217,7 @@ class AdminController extends BaseController
 	{
 		header ("Access-Control-Allow-Origin: *");
 		$medicines = Medicine::select
-		('id' , 'item_name as name' , 'batch_no' , 'manufacturer as mfg' , 'group' , 'item_code' , 'selling_price as mrp' , 'composition' , 'is_pres_required')->where ('is_delete' , '=' , 0)->orderBy ('item_name' , 'ASC')->paginate (30);
+		('id' , 'item_name as name' , 'batch_no' , 'marketed_by as mfg' , 'group' , 'item_code' , 'selling_price as mrp' , 'composition' , 'is_pres_required')->where ('is_delete' , '=' , 0)->orderBy ('item_name' , 'ASC')->paginate (30);
 
 		foreach ($medicines as $key => $value) {
 			$mrp = $this->getSellingPrice($value['item_code']);
