@@ -99,7 +99,7 @@ $(function()
 	   <td><?php echo $medicines[$i]['batch_no']?></td>
 	   <td><?php echo $medicines[$i]['mfg']?></td>
 	   <td><?php echo $medicines[$i]['group']?></td>
-	   <td><?php echo round($medicines[$i]['mrp'],2);?></td>
+	   <td nowrap style="text-align: right"><?php echo Setting::currencyFormat($medicines[$i]['mrp']);?></td>
 	   <td><?php echo $medicines[$i]['composition']; ?></td>
 	   <td><?= ($medicines[$i]['is_pres_required'] == 1) ? __('Yes') : __('No') ; ?> </td>
 	   <td><div class="btn-group">
@@ -243,16 +243,17 @@ $("#file_upload").click(function(e){
                 if(data.length>0)
                 {
                     $.each(data, function ($key, $med) {
-                         $status = ($med.is_pres_required == 1) ? 'Yes' : 'No';
-                         table_con+="<tr><td>"+i+"</td><td>"+$med.name+"</td><td>"+$med.item_code+"</td><td>"+$med.batch_no+"</td><td>"+$med.mfg+"</td><td>"+$med.group+"</td><td>"+$med.mrp.toFixed(2)+"</td><td style='width:300px'>"+$med.composition+"</td>" +
-                          "<td>"+$status+"</td>" +
-                          "<td><div class='btn-group'><button type='button' class='btn btn-sm btn-primary dropdown-toggle' data-toggle='dropdown'>Actions <span class='caret'></span></button>" +
-                          "<ul class='dropdown-menu' role='menu'>" +
-                          "<li><a target='_blank' href='medicine-edit/"+$med.id+"' >Edit</a></li>" +
-                          "<li><a href='medicine-delete/"+$med.id+"'>Delete</a></li>" +
-                          "<li><a href='medicine-prescription/"+$med.id+"'>Toggle Prescription Status</a></li>" +
-                          "</ul></div></td></tr>";
-                         i++;
+
+                     $status = ($med.is_pres_required == 1) ? 'Yes' : 'No';
+                     table_con+="<tr><td>"+i+"</td><td>"+$med.name+"</td><td>"+$med.item_code+"</td><td>"+$med.batch_no+"</td><td>"+$med.mfg+"</td><td>"+$med.group+"</td><td>"+$med.mrp+"</td><td style='width:300px'>"+$med.composition+"</td>" +
+                      "<td>"+$status+"</td>" +
+                      "<td><div class='btn-group'><button type='button' class='btn btn-sm btn-primary dropdown-toggle' data-toggle='dropdown'>Actions <span class='caret'></span></button>" +
+                      "<ul class='dropdown-menu' role='menu'>" +
+                      "<li><a target='_blank' href='medicine-edit/"+$med.id+"' >Edit</a></li>" +
+                      "<li><a href='medicine-delete/"+$med.id+"'>Delete</a></li>" +
+                      "<li><a href='medicine-prescription/"+$med.id+"'>Toggle Prescription Status</a></li>" +
+                      "</ul></div></td></tr>";
+                     i++;
                     });
                 }else{
                     table_con+="<tr><td colspan='8'><h4>No medicines found!!</h4></td></tr>";

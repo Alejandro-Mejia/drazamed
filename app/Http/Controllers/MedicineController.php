@@ -582,7 +582,7 @@ class MedicineController extends BaseController
 		$i = 0;
 		if ($medicine->count () > 0) {
 			foreach ($medicine as $med) {
-				$medicineNameArray[$i] = array("id" => $i + 1 , "name" => $med->item_name , 'mrp' => substr ($med->mrp , 0 , 4) , 'exp' => $med->expdt , 'item_code' => $med->item_code);
+				$medicineNameArray[$i] = array("id" => $i + 1 , "name" => $med->item_name , 'mrp' => $this->getSellingPrice($med->item_code), 'item_code' => $med->item_code);
 				$i++;
 			}
 			$result = array(array('result' => array('status' => 'sucess' , 'msg' => $medicineNameArray)));
@@ -678,6 +678,79 @@ class MedicineController extends BaseController
 		}
 
 		return Response::json ($result);
+
+	}
+
+
+	/**
+	 * Load Medicine List
+	 *
+	 * @return mixed
+	 */
+	public
+	function getSellingPrice($item_code)
+	{
+
+		$medicine = Medicine::where ('item_code', $item_code)->get ();
+		$i = 0;
+		$labRule=[];
+
+		if ($medicine->count () > 0) {
+			foreach ($medicine as $med) {
+
+				if($med->marked_price == 0) {
+		            switch ($med->tax) {
+		                case '19':
+		                    $sellprice = $med->real_price / 0.71;
+		                    break;
+		                case '5':
+		                    $sellprice = $med->real_price / 0.85;
+		                    break;
+		                default:
+		                    {
+		                       $labRule = Pricerule::where('laboratory','LIKE','%' . substr ($med['marketed_by'],0,15) . '%')->get()->toArray();
+								if ($labRule[0]['isByProd'] == 1) {
+									// $labRule = Pricerule::with(["prodrule" => function($q) { $q->where('product', 'LIKE', substr ($med['item_name'],0,15);}])->where('laboratory','LIKE',substr ($med['marketed_by'],0,15) . '%')->get();
+									$prod = substr($med['item_name'],0,15);
+
+									$labRule = Pricerule::with(["prodrule"=> function($q) use($prod) {$q->where('product', 'LIKE' , '%' . $prod . '%');}])->where('laboratory','LIKE', '%' . $med['marketed_by'] . '%')->get()->toArray();
+									$labRule[0]['rule_type'] = $labRule[0]['prodrule'][0]['rule_type'];
+									$labRule[0]['rule'] = $labRule[0]['prodrule'][0]['rule'];
+								}
+
+								$sellprice = ($med->real_price*$labRule[0]['isVtaReal'] + $med->current_price*$labRule[0]['isVtaCte']);
+
+								switch ($labRule[0]['rule_type']) {
+									case '0':
+										# code...
+										break;
+									case '1':
+										$sellprice = $sellprice * (1+$labRule[0]['rule']);
+										break;
+									case '2':
+										$sellprice = $sellprice + $labRule[0]['rule'];
+										break;
+									default:
+										# code...
+										break;
+								}
+
+		                    }
+		                    break;
+		            }
+		        } else {
+		            $sellprice = $med->marked_price;
+		        }
+
+		        $sellprice = ceil($sellprice);
+		        $sellprice = round( $sellprice, -2, PHP_ROUND_HALF_UP);
+
+		        return $sellprice;
+		    }
+
+		} else {
+			return 0;
+		}
 
 	}
 
@@ -1722,6 +1795,13 @@ class MedicineController extends BaseController
 			$medicines = Medicine::select ('id' , 'item_name as name' , 'batch_no' , 'manufacturer as mfg' , 'group' , 'item_code' , 'selling_price as mrp' , 'composition' , 'is_pres_required')->where ('item_name' , 'LIKE' , $name . "%")->orderBy ('composition' , $order)->where ('is_delete' , '=' , 0)->paginate (30);
 		else
 			$medicines = Medicine::select ('id' , 'item_name as name' , 'batch_no' , 'manufacturer as mfg' , 'group'  , 'item_code' , 'selling_price as mrp' , 'composition' , 'is_pres_required')->where ('item_name' , 'LIKE' , $name . "%")->orderBy ('composition' , $order)->where ('is_delete' , '=' , 0)->paginate (30);
+
+		foreach ($medicines as $key => $value) {
+			$mrp = $this->getSellingPrice($value['item_code']);
+			$value['mrp'] = $mrp;
+			Log::info($value['item_name' . ' : $ ' . $mrp]);
+
+		}
 
 		return Response::json (['medicines' => $medicines->getCollection () , 'link' => $medicines->links ()->render ()]);
 	}

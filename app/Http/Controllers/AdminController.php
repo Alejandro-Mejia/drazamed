@@ -22,6 +22,7 @@
 	use App\Prescription;
 	use App\PrescriptionStatus;
 	use App\Exceptions\Handler;
+	use App\Pricerule;
 	use App\ShippingStatus;
 	use App\ItemList;
 	use App\Invoice;
@@ -47,9 +48,11 @@
 class AdminController extends BaseController
 {
 
-	public function __construct ()
-	{
+	protected $medicineController;
 
+	public function __construct (Medicine $medicineController)
+	{
+		$this->medicineController = $medicineController;
 	}
 
 	public function getShowlogin ()
@@ -125,6 +128,80 @@ class AdminController extends BaseController
 		return Redirect::to ('admin');
 	}
 
+
+	/**
+	 * Load Medicine List
+	 *
+	 * @return mixed
+	 */
+	public
+	function getSellingPrice($item_code)
+	{
+
+		$medicine = Medicine::where ('item_code', $item_code)->get ();
+		$i = 0;
+		$labRule=[];
+
+		if ($medicine->count () > 0) {
+			foreach ($medicine as $med) {
+
+				if($med->marked_price == 0) {
+		            switch ($med->tax) {
+		                case '19':
+		                    $sellprice = $med->real_price / 0.71;
+		                    break;
+		                case '5':
+		                    $sellprice = $med->real_price / 0.85;
+		                    break;
+		                default:
+		                    {
+		                       $labRule = Pricerule::where('laboratory','LIKE','%' . substr ($med['marketed_by'],0,15) . '%')->get()->toArray();
+								if ($labRule[0]['isByProd'] == 1) {
+									// $labRule = Pricerule::with(["prodrule" => function($q) { $q->where('product', 'LIKE', substr ($med['item_name'],0,15);}])->where('laboratory','LIKE',substr ($med['marketed_by'],0,15) . '%')->get();
+									$prod = substr($med['item_name'],0,15);
+
+									$labRule = Pricerule::with(["prodrule"=> function($q) use($prod) {$q->where('product', 'LIKE' , '%' . $prod . '%');}])->where('laboratory','LIKE', '%' . $med['marketed_by'] . '%')->get()->toArray();
+									$labRule[0]['rule_type'] = $labRule[0]['prodrule'][0]['rule_type'];
+									$labRule[0]['rule'] = $labRule[0]['prodrule'][0]['rule'];
+								}
+
+								$sellprice = ($med->real_price*$labRule[0]['isVtaReal'] + $med->current_price*$labRule[0]['isVtaCte']);
+
+								switch ($labRule[0]['rule_type']) {
+									case '0':
+										# code...
+										break;
+									case '1':
+										$sellprice = $sellprice * (1+$labRule[0]['rule']);
+										break;
+									case '2':
+										$sellprice = $sellprice + $labRule[0]['rule'];
+										break;
+									default:
+										# code...
+										break;
+								}
+
+		                    }
+		                    break;
+		            }
+		        } else {
+		            $sellprice = $med->marked_price;
+		        }
+
+		        $sellprice = ceil($sellprice);
+		        $sellprice = round( $sellprice, -2, PHP_ROUND_HALF_UP);
+
+		        return $sellprice;
+		    }
+
+		} else {
+			return 0;
+		}
+
+	}
+
+
 	/**
 	 * Load Medicine List
 	 *
@@ -135,6 +212,11 @@ class AdminController extends BaseController
 		header ("Access-Control-Allow-Origin: *");
 		$medicines = Medicine::select
 		('id' , 'item_name as name' , 'batch_no' , 'manufacturer as mfg' , 'group' , 'item_code' , 'selling_price as mrp' , 'composition' , 'is_pres_required')->where ('is_delete' , '=' , 0)->orderBy ('item_name' , 'ASC')->paginate (30);
+
+		foreach ($medicines as $key => $value) {
+			$mrp = $this->getSellingPrice($value['item_code']);
+			$value['mrp'] = $mrp;
+		}
 		return View::make ('admin.medicinelist')->with ('medicines' , $medicines);
 
 	}
@@ -556,7 +638,7 @@ class AdminController extends BaseController
 		$discount = 0;
 		foreach ($items as $itemList) {
 
-			$medicine = Medicine::medicines ($itemList->medicine);
+			$medicine = Medicine::medicines($itemList->medicine);
 			$tbody .= "<tr>
 				    <td>" . $i++ . "</td>
 				    <td>" . $medicine['item_name'] . "</td>
