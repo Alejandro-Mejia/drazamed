@@ -245,7 +245,7 @@ $("#file_upload").click(function(e){
                     $.each(data, function ($key, $med) {
 
                      $status = ($med.is_pres_required == 1) ? 'Yes' : 'No';
-                     table_con+="<tr><td>"+i+"</td><td>"+$med.name+"</td><td>"+$med.item_code+"</td><td>"+$med.batch_no+"</td><td>"+$med.mfg+"</td><td>"+$med.group+"</td><td>"+$med.mrp+"</td><td style='width:300px'>"+$med.composition+"</td>" +
+                     table_con+="<tr><td>"+i+"</td><td>"+$med.name+"</td><td>"+$med.item_code+"</td><td>"+$med.batch_no+"</td><td>"+$med.mfg+"</td><td>"+$med.group+"</td><td style='text-align:right' nowrap> $ "+$med.mrp+"</td><td style='width:300px'>"+$med.composition+"</td>" +
                       "<td>"+$status+"</td>" +
                       "<td><div class='btn-group'><button type='button' class='btn btn-sm btn-primary dropdown-toggle' data-toggle='dropdown'>Actions <span class='caret'></span></button>" +
                       "<ul class='dropdown-menu' role='menu'>" +
