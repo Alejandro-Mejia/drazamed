@@ -55,10 +55,10 @@
 
             switch ($currency_position) {
                 case 'BEFORE':
-                    return implode(' ', [$currency, number_format($amount, 2)]);
+                    return implode(' ', [$currency, number_format($amount, 0)]);
                     break;
                 case 'AFTER':
-                    return implode(' ', [number_format($amount, 2), $currency]);
+                    return implode(' ', [number_format($amount, 0), $currency]);
                     break;
             }
         }

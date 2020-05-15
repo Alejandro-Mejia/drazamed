@@ -92,6 +92,7 @@ use App\MercadoPago\SDK;
     Route::any('/medicine/audit-database', 'MedicineController@anyAuditDatabase');
     Route::any('/medicine/update-cart', 'MedicineController@anyUpdateCart');
     Route::get('/medicine/medicine-list-from-name', 'MedicineController@getMedicineListFromName');
+    Route::get('/medicine/selling-price/{item_code}', 'MedicineController@getSellingPrice');
 
     /**
      * Admin routes
