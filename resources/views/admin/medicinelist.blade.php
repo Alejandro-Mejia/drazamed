@@ -7,6 +7,41 @@
 .js-mand {
   color:red;
 }
+
+
+.loader {
+  animation: spinningColor 1.5s ease-in-out infinite;
+  margin: 50px auto;
+  border: 5px double #f0eff5;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+}
+
+@keyframes spinningColor {
+  0% {
+    transform: rotate(360deg);
+    border-top:5px dashed #f56682;
+    border-bottom:5px dashed #387eff;
+  }
+  25% {
+    border-top:5px dashed #f591a6;
+    border-bottom:5px dashed #6da7f7;
+  }
+  50% {
+    border-top:5px dashed #fd878e;
+    border-bottom:5px dashed #4ba3ff;
+  }
+  75% {
+    border-top:5px dashed #f57f8f;
+    border-bottom:5px dashed #569dff;
+  }
+  100% {
+    border-top:5px dashed #f56682;
+    border-bottom:5px dashed #387eff;
+  }
+}
+
 </style>
 <script>
 $(function()
@@ -114,13 +149,22 @@ $(function()
                 <p>{{ __('Upload .xls .xlsx)')}}</p>
                         <input class="form-control" type="file" name="file" id="file" />
                 </div>
-                <div class="progress-bar" role="progressbar" aria-valuenow="" aria-valuemin="0" aria-valuemax="100" width=0%>
+                <!-- <div class="progress-bar" role="progressbar" aria-valuenow="" aria-valuemin="0" aria-valuemax="100" width=0%>
                   0%
-                </div>
+                </div> -->
+
 
         </form>
       </div>
+
+      <div id="loading" class="hide" style="position:fixed; top:50%; left:45%; z-index:99" >
+        <div class="loader" role="status">
+          <span class="sr-only">Loading...</span>
+        </div>
+      </div>
+
       <div class="modal-footer">
+
         <button type="button" class="btn btn-default" data-dismiss="modal">{{ __('Close')}}</button>
         <button type="button" class="btn btn-info" id="file_upload">{{ __('Submit')}}</button>
       </div>
@@ -128,6 +172,7 @@ $(function()
 
   </div>
 </div>
+
 
   <script>
     $(document).ready(function(e){
@@ -164,6 +209,14 @@ $("#file_upload").click(function(e){
                 $('.alert-danger').html(data.responseJSON.msg).removeClass('hide');
             }
         },
+        beforeSend: function(){
+          // Handle the beforeSend event
+          $('#loading').removeClass('hide');
+        },
+        complete: function(){
+          // Handle the complete event
+          $('#loading').addClass('hide');
+        },
         success:function(data){
             $('.alert-success').removeClass('hide');
             $('.alert-danger').addClass('hide');
@@ -182,9 +235,6 @@ $("#file_upload").click(function(e){
             data: 'name='+medicine+'&ord='+order,
             type: 'GET',
             datatype: 'JSON',
-            beforeSend: function () {
-
-            },
             success: function (data) {
                 links = data.link;
                 data = data.medicines;
@@ -194,7 +244,7 @@ $("#file_upload").click(function(e){
                 {
                     $.each(data, function ($key, $med) {
                          $status = ($med.is_pres_required == 1) ? 'Yes' : 'No';
-                         table_con+="<tr><td>"+i+"</td><td>"+$med.name+"</td><td>"+$med.item_code+"</td><td>"+$med.exp+"</td><td>"+$med.batch_no+"</td><td>"+$med.mfg+"</td><td>"+$med.group+"</td><td>"+$med.mrp.toFixed(2)+"</td><td style='width:300px'>"+$med.composition+"</td>" +
+                         table_con+="<tr><td>"+i+"</td><td>"+$med.name+"</td><td>"+$med.item_code+"</td><td>"+$med.batch_no+"</td><td>"+$med.mfg+"</td><td>"+$med.group+"</td><td>"+$med.mrp.toFixed(2)+"</td><td style='width:300px'>"+$med.composition+"</td>" +
                           "<td>"+$status+"</td>" +
                           "<td><div class='btn-group'><button type='button' class='btn btn-sm btn-primary dropdown-toggle' data-toggle='dropdown'>Actions <span class='caret'></span></button>" +
                           "<ul class='dropdown-menu' role='menu'>" +
@@ -224,6 +274,22 @@ $("#file_upload").click(function(e){
 
 
     }
+
+    $("#loading").ajaxStart(function(){
+       $(this).show();
+     });
+
+    $(".loader").ajaxStart(function(){
+       $(this).show();
+     });
+
+    $("#loading").ajaxComplete(function(){
+       $(this).hide();
+     });
+
+    $(".loader").ajaxComplete(function(){
+       $(this).hide();
+     });
 
   </script>
 @include('admin/footer')

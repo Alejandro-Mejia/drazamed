@@ -2,20 +2,26 @@
 	namespace app\Http\Controllers;
 	use Illuminate\Routing\Controller as BaseController;
 	use Illuminate\Support\Facades\Validator;
-	use Illuminate\Support\Facades\View;
-
 	use Illuminate\Support\Facades\Auth;
-	use Request;
+	use Illuminate\Support\Facades\Log;
+
+	use Exception;
 	use Session;
 	use Redirect;
+	use Request;
 	use Response;
-	use DB;
+	use Debugbar;
+	use Config;
+	use View;
 	use Mail;
+	use DB;
+
 	use App\User;
 	use App\UserType;
 	use App\UserStatus;
 	use App\Prescription;
 	use App\PrescriptionStatus;
+	use App\Exceptions\Handler;
 	use App\ShippingStatus;
 	use App\ItemList;
 	use App\Invoice;
@@ -25,6 +31,7 @@
 	use App\MedicalProfessional;
 	use App\Medicine;
 	use App\NewMedicine;
+	use App\Cache;
 
 
 
@@ -92,7 +99,18 @@ class AdminController extends BaseController
 	 */
 	public function getDashboard ()
 	{
-		return View::make ("admin.dashboard");
+		try {
+			if (!Auth::check ())
+				throw new Exception("You are not authorized to do this action" , 401);
+			return View::make ("admin.dashboard");
+		}
+		catch (Exception $e) {
+			// $message = $this->catchException ($e);
+			return back()->withError($e->getMessage())->withInput();
+			// return Response::make (['status' => 'FAILURE' , 'msg' => $message['msg']] , $message['code']);
+		}
+
+
 	}
 
 	/**
