@@ -19,7 +19,7 @@
                         <h3 class="pi-title" id="pi-med-name">
                             Dolex 500mg 20 tabletas
                         </h3>
-                        <p>
+                        <p id="pi-med-composition">
                             Lorem ipsum dolor sit amet, consectetur adipiscing
                             elit, sed do eiusmod tempor incididunt ut labore et
                             dolore magna aliqua.

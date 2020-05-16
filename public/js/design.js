@@ -2,18 +2,6 @@ var current_item_code="";
 var categories=[];
 var ulclick;
 
-var medicineCard = '<div class="med">'+
-                   '    <div class="row">'+
-                   '        <div class="col-md-4">'+
-                   '            <img class="med-thumbnail" src="/assets/images/dolex.png" alt="">'+
-                   '        </div>'+
-                   '        <div class="col-md-8">'+
-                   '            <h5 class="med-title">DOLEX 500 MG 100 TABLETAS</h5>'+
-                   '            <p class="med-description">Lorem ipsum, dolor sit amet consectetur adipisicing elit.</p>'+
-                   '        </div>'+
-                   '    </div>'+
-                   '</div>';
-
 $(document).ready(function(){
 
         var token = $('#security_token').val();
@@ -86,6 +74,11 @@ $(document).ready(function(){
         	CheckUsername(this.value);
         });
 
+
+        /**
+         * Busqueda de Medicamentos por nombre
+         * @param cat= Categoria lab= Laboratorio term= Nombre Medicamento limit= #resultados max
+         */
 		$("#search_medicine").autocomplete({
 		    search: function(event, ui) {
 		        $('.med_search_loader').css('display','block' );
@@ -106,7 +99,8 @@ $(document).ready(function(){
                     console.log("itemCode="+ui.item.item_code);
                     item_code = ui.item.item_code;
                     current_item_code=item_code;
-                    goto_detail_page();
+                    // goto_detail_page();
+                    show_detail_modal();
             },
 		}).autocomplete( "instance" )._renderItem = function(ul, item ) {
             return $( "<li>" )
@@ -114,6 +108,9 @@ $(document).ready(function(){
                 .appendTo( ul );
         }
 
+        /**
+         * Busqueda de categorias
+         */
         $("#search_medicine2").autocomplete({
             search: function(event, ui) {
                 $('.med_search_loader').css('display','block' );
@@ -148,7 +145,11 @@ $(document).ready(function(){
 
 
 
-
+    /**
+     * Registro de un nuevo usuario
+     *
+     * @return     {boolean}  { registro exitoso }
+     */
     function user_register()
     {
         var last_type=$("#sel1").val();
@@ -449,6 +450,9 @@ function login()
 
 }
 
+/**
+ * Activacion de un usuario
+ */
 function activate_user() {
     var activation_code=$('#activation_code').val();
     var login_mail=$('#hidden_user_id').val();
@@ -474,9 +478,9 @@ function activate_user() {
 
 }
 
-    /**
-     * Reset Forgot Password
-     */
+/**
+ * Reset Forgot Password
+ */
 function forgot_password(){
 
     if(!$('#forgot_email').val()){
@@ -500,6 +504,12 @@ function forgot_password(){
     })
 }
 
+
+/**
+ * Change password
+ *
+ * @return     {boolean}  { description_of_the_return_value }
+ */
 function change_password() {
     var email=$('#change_email').val();
     var token = $("#security_token").val();
@@ -558,6 +568,9 @@ function change_password() {
     }
 }
 
+/**
+ * Va la pagina de los datos del producto
+ */
 function goto_detail_page()
 {
     var name=$(".search_medicine").val();
@@ -591,6 +604,14 @@ function goto_detail_page()
     }
 }
 
+/**
+ * Va la pagina de los datos del producto
+ */
+function show_detail_modal()
+{
+    $('#pinfo-modal').show();
+}
+
 
 function show_our_products(cat = null)
 {
@@ -598,13 +619,15 @@ function show_our_products(cat = null)
 
         $.ajax({
             url: 'medicine/search-medicine/1',
-            data: 'cat='+cat,
+            data: 'cat='+cat+'&lab=icom',
             type: 'GET',
+            async: false,
             datatype: 'JSON',
             success: function (data) {
                 console.log('Productos:')
                 console.log(data);
                 $('#med-list').empty();
+                // $('#med-list').append('<div class="col-lg-12 col-md-12 col-sm12"><h4> Productos Recomendados </h4></div>')
                 $.each(data.result.msg,function(i,item){
                     console.log(item)
                     $('#med-list').append(
@@ -615,7 +638,38 @@ function show_our_products(cat = null)
                        '        </div>'+
                        '        <div class="col-md-8">'+
                        '            <h5 class="med-title">'+ item.name +'</h5>'+
-                       '            <p class="med-description">Lorem ipsum, dolor sit amet consectetur adipisicing elit.</p>'+
+                       '            <p class="med-description"> ' + item.composition +  ' </p>'+
+                       '            <p class="med-mrp" style="text-align:right; font-size:2e; color:green">  $' + item.mrp +  ' </p>'+
+                       '        </div>'+
+                       '    </div>'+
+                       '</div>'
+                    );
+                })
+            }
+        });
+
+        $.ajax({
+            url: 'medicine/search-medicine/1',
+            data: 'cat='+cat,
+            type: 'GET',
+            datatype: 'JSON',
+            success: function (data) {
+                console.log('Productos:')
+                console.log(data);
+                // $('#med-list').empty();
+                // $('#med-list').append('<div class="col-lg-12 col-md-12 col-sm12"><h4> Todos los Productos </h4></div>')
+                $.each(data.result.msg,function(i,item){
+                    console.log(item)
+                    $('#med-list').append(
+                       '<div class="med">'+
+                       '    <div class="row">'+
+                       '        <div class="col-md-4">'+
+                       '            <img class="med-thumbnail" src="/assets/images/dolex.png" alt="">'+
+                       '        </div>'+
+                       '        <div class="col-md-8">'+
+                       '            <h5 class="med-title">'+ item.name +'</h5>'+
+                       '            <p class="med-description"> ' + item.composition +  ' </p>'+
+                       '            <p class="med-mrp"> ' + item.mrp +  ' </p>'+
                        '        </div>'+
                        '    </div>'+
                        '</div>'
@@ -629,7 +683,10 @@ function show_our_products(cat = null)
 
 
 $('#catList').on('click', 'li', function(e) {
-    alert($(this).html());
+    //alert($(this).html());
+    console.log("itemCat="+$(this).html());
+    cat_value = $(this).html();
+    show_our_products(cat_value);
 });
 
 
@@ -647,3 +704,59 @@ function getCategories() {
         }
     });
 }
+
+
+// $('.add_to_cart').click(function(){
+
+// var hidden_medicine=$('#hidden_medicine').val();
+// var med_quantity=$('#med_quantity').val();
+// var hidden_item_code=$('#hidden_item_code').val();
+// var hidden_selling_price=$('#hidden_selling_price').val();
+// var hidden_pres_item =$('#hidden_item_pres_required').val();
+// var _token=$('#_token').val();
+// var id=$('#hidden_medicine_id').val();
+//     if(med_quantity.length>0 && med_quantity >0 )
+//     {
+//           $.ajax({
+//                   type: "GET",
+//                   url: '{{ URL::to('medicine/add-cart/0' )}}',
+//                   data: "id="+id+"&medicine="+hidden_medicine+"&med_quantity="+med_quantity+"&hidden_item_code="+hidden_item_code+"&hidden_selling_price="+hidden_selling_price+"&_token="+_token+"&pres_required="+hidden_pres_item,
+//                   datatype: 'json',
+//                   complete:function(data){
+
+//                   },
+//                   success: function (data) {
+//                    if(data==0)
+//                    {
+//                      $('#loginModal').click();
+//                    }
+//                    if(data=="updated")
+//                    {
+//                     $('.med_detailes_alert').css('display', 'block' );
+//                     $(".med_detailes_alert").html("Your cart has been successfully updated.");
+//                     $(".med_detailes_alert").delay(5000).fadeOut("slow");
+
+
+//                    // alert("your order is updated");
+//                    }
+//                    if(data=="inserted")
+//                    {
+//                    $('.med_detailes_alert').css('display', 'block' );
+//                    $(".med_detailes_alert").html("Your cart has been successfully updated.");
+//                    $(".med_detailes_alert").delay(5000).fadeOut("slow");
+//                     window.location="{{URL::to('my-cart/')}}";
+//                    }
+
+//                   }
+//                 });
+
+
+//     }
+//     else
+//     {
+//     $('.w_med_detailes_alert').css('display', 'block' );
+//     $(".w_med_detailes_alert").html("Please Fill quantity field");
+//     $(".w_med_detailes_alert").delay(3000).fadeOut("slow");
+//     }
+
+//  });
