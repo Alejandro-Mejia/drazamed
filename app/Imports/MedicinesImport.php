@@ -150,6 +150,10 @@ class MedicinesImport implements ToModel, WithHeadingRow, WithBatchInserts , Wit
         $value = Str::replaceLast(' DE COLOMBI', '', $value);
         $value = Str::replaceLast(' DE COLO', '', $value);
         $value = Str::replaceLast(' DE C', '', $value);
+        $value = Str::replaceLast(' CIA.', '', $value);
+        $value = Str::replaceLast(' C.I.', '', $value);
+        $value = Str::replaceLast(' C.I', '', $value);
+
 
         return $value;
 
