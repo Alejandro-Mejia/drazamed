@@ -658,17 +658,17 @@ class MedicineController extends BaseController
 					$query->where('item_name' , 'LIKE' , $term . '%');
 				}
 			})
-		->orWhere(function($query) use ($category){
+		->where(function($query) use ($category){
 				if($category) {
 					$query->where('group' , 'LIKE' , $category . '%');
 				}
 			})
-		->orWhere(function($query) use ($lab){
+		->where(function($query) use ($lab){
 				if($lab) {
 					$query->where('manufacturer' , 'LIKE' , $lab . '%');
 				}
 			})
-		->orWhere(function($query) use ($ean){
+		->where(function($query) use ($ean){
 				if($ean) {
 					$query->where('item_code' , 'LIKE' , $ean . '%');
 				}
@@ -698,7 +698,12 @@ class MedicineController extends BaseController
 		                    break;
 		                default:
 		                    {
-		                       $labRule = Pricerule::where('laboratory','LIKE','%' . substr ($med['manufacturer'],0,15) . '%')->get()->toArray();
+		                       if(strlen($med['manufacturer']) > 15) {
+		                       	$compareLab = substr ($med['manufacturer'],0,15);
+		                       } else {
+		                       	$compareLab = $med['manufacturer'];
+		                       }
+		                       $labRule = Pricerule::where('laboratory','LIKE','%' . $compareLab . '%')->get()->toArray();
 								if ($labRule[0]['isByProd'] == 1) {
 									// $labRule = Pricerule::with(["prodrule" => function($q) { $q->where('product', 'LIKE', substr ($med['item_name'],0,15);}])->where('laboratory','LIKE',substr ($med['marketed_by'],0,15) . '%')->get();
 									$prod = substr($med['item_name'],0,15);
