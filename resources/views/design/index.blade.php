@@ -8,7 +8,9 @@
 @endsection
 
 @section('content')
-
+<style type="text/css">
+    .ui-autocomplete { max-height: 200px; overflow-y: scroll; overflow-x: hidden;}
+</style>
 <main>
     <div class="preload">
         <img src="/assets/images/logo.png" alt="" />
@@ -64,10 +66,10 @@
                                 <input
                                     type="text"
                                     class="form-control search_medicine"
-                                    placeholder="Busca un medicamento por nombre"
-                                    aria-label="Busca un medicamento por nombre"
+                                    placeholder="Busca por categoria"
+                                    aria-label="Busca por categoria"
                                     aria-describedby="basic-addon2"
-                                    id="search_medicine"
+                                    id="search_medicine2"
                                 />
                                 <div class="input-group-append">
                                     <span
@@ -85,11 +87,8 @@
 
                     <div class="dra-box med-categories">
                         <h3 class="mb-4">Categorías</h3>
-                        <ul>
-                            <li>Antibióticos</li>
-                            <li>Analgésicos</li>
-                            <li>Calmantes</li>
-                            <li>Otros</li>
+                        <ul id="catList">
+
                         </ul>
                     </div>
                 </div>
@@ -97,20 +96,7 @@
 					<div class="dra-box">
 						<h3 class="mb-4">Nuestros Productos</h3>
 
-						<div class="med-list">
-							@for ($i = 0; $i < 6; $i++)
-							<div class="med">
-								<div class="row">
-									<div class="col-md-4">
-										<img class="med-thumbnail" src="/assets/images/dolex.png" alt="">
-									</div>
-									<div class="col-md-8">
-										<h5 class="med-title">DOLEX 500 MG 100 TABLETAS</h5>
-										<p class="med-description">Lorem ipsum, dolor sit amet consectetur adipisicing elit.</p>
-									</div>
-								</div>
-							</div>
-							@endfor
+						<div class="med-list" id="med-list">
 						</div>
 					</div>
 				</div>

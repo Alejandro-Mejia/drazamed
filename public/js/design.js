@@ -1,9 +1,24 @@
 var current_item_code="";
+var categories=[];
+var ulclick;
+
+var medicineCard = '<div class="med">'+
+                   '    <div class="row">'+
+                   '        <div class="col-md-4">'+
+                   '            <img class="med-thumbnail" src="/assets/images/dolex.png" alt="">'+
+                   '        </div>'+
+                   '        <div class="col-md-8">'+
+                   '            <h5 class="med-title">DOLEX 500 MG 100 TABLETAS</h5>'+
+                   '            <p class="med-description">Lorem ipsum, dolor sit amet consectetur adipisicing elit.</p>'+
+                   '        </div>'+
+                   '    </div>'+
+                   '</div>';
 
 $(document).ready(function(){
 
         var token = $('#security_token').val();
 
+        getCategories();
 
         if(token != "" || token != 0){
             $('#myModal_change_password').modal({});
@@ -79,8 +94,9 @@ $(document).ready(function(){
 		        $('.med_search_loader').css('display','none' );
 		    },
 		    source: '/medicine/load-medicine-web/1',
-		    minLength: 0,
+		    minLength: 2,
 		    delay: 0 ,
+            max:10 ,
 
 	        response: function( event, ui ) {
 	         $('.med_search_loader').css('display','none' );
@@ -93,6 +109,35 @@ $(document).ready(function(){
                     goto_detail_page();
             },
 		}).autocomplete( "instance" )._renderItem = function(ul, item ) {
+            return $( "<li>" )
+                .append( "<div>" + item.label + "</div>" )
+                .appendTo( ul );
+        }
+
+        $("#search_medicine2").autocomplete({
+            search: function(event, ui) {
+                $('.med_search_loader').css('display','block' );
+            },
+            open: function(event, ui) {
+                $('.med_search_loader').css('display','none' );
+            },
+            source: '/medicine/search-categories/1',
+            minLength: 2,
+            delay: 0 ,
+            max:10 ,
+
+            response: function( event, ui ) {
+             $('.med_search_loader').css('display','none' );
+            },
+
+            select: function (event, ui) {
+                    console.log("itemCat="+ui.item.value);
+                    cat_value = ui.item.value;
+                    show_our_products(cat_value);
+                    // current_item_code=item_code;
+                    // goto_detail_page();
+            },
+        }).autocomplete( "instance" )._renderItem = function(ul, item ) {
             return $( "<li>" )
                 .append( "<div>" + item.label + "</div>" )
                 .appendTo( ul );
@@ -403,29 +448,29 @@ function login()
 
 
 }
-function activate_user()
-{
-var activation_code=$('#activation_code').val();
-var login_mail=$('#hidden_user_id').val();
+
+function activate_user() {
+    var activation_code=$('#activation_code').val();
+    var login_mail=$('#hidden_user_id').val();
 
 
-$.ajax({
-            type: "POST",
-            url: '/user/activate-account',
-            data: 'email='+login_mail+'&security_code='+activation_code,
-            datatype: 'json',
-            error:function (xhr, ajaxOptions, thrownError){
-                    $(".login_msg").html('Sorry...Activation failed! ');
-                    $(".login_msg").css({"display":"block"});
-                    $(".login_msg").delay(5000).fadeOut("slow");
-            },
-            success: function (data) {
-                    $(".login_msg").html('Your account successfully activated ');
-                    $(".login_msg").css({"display":"block"});
-                    $(".login_msg").delay(5000).fadeOut("slow");
-                    location.reload();
-            }
-          });
+    $.ajax({
+        type: "POST",
+        url: '/user/activate-account',
+        data: 'email='+login_mail+'&security_code='+activation_code,
+        datatype: 'json',
+        error:function (xhr, ajaxOptions, thrownError){
+                $(".login_msg").html('Sorry...Activation failed! ');
+                $(".login_msg").css({"display":"block"});
+                $(".login_msg").delay(5000).fadeOut("slow");
+        },
+        success: function (data) {
+                $(".login_msg").html('Your account successfully activated ');
+                $(".login_msg").css({"display":"block"});
+                $(".login_msg").delay(5000).fadeOut("slow");
+                location.reload();
+        }
+        });
 
 }
 
@@ -454,63 +499,63 @@ function forgot_password(){
         }
     })
 }
-function change_password()
-{
-var email=$('#change_email').val();
-var token = $("#security_token").val();
-var new_password=$('#new_password').val();
-var re_password=$('#re_password').val();
-if(email=="")
-{
-    $(".change_pass_msg").css({"display":"block", "color":"red"});
-    $(".change_pass_msg").html('Please enter old password');
-    return false;
-}
-if(new_password=="")
-{
-    $(".change_pass_msg").css({"display":"block", "color":"red"});
-    $(".change_pass_msg").html('Please enter new password');
-    return false;
-}
-if(re_password=="")
-{
-    $(".change_pass_msg").css({"display":"block", "color":"red"});
-    $(".change_pass_msg").html('Please confirm new password');
-    return false;
-}
- if(new_password==re_password)
- {
-  $.ajax({
-    type:"POST",
-    url:'/user/reset-password',
-    data:"new_password="+new_password+"&re_password="+re_password+"&email="+email+"&security_code="+token,
-    dataType:'JSON',
-    statusCode:{
-        401:function(data){
-                $(".change_pass_msg").css({"display":"block", "color":"red"});
-                $(".change_pass_msg").html('Invalid user details !');
-        }
-    },
-    success:function(data){
-             $(".change_pass_msg").css({"display":"block", "color":"green"});
-             $(".change_pass_msg").html('Your passowrd has successfully changed, Please Log in with the new password');
-             setTimeout(function(e){
-             $('#myModal_change_password').modal('hide');
-             $('#myModal').modal('show');
-             },2000);
+
+function change_password() {
+    var email=$('#change_email').val();
+    var token = $("#security_token").val();
+    var new_password=$('#new_password').val();
+    var re_password=$('#re_password').val();
+    if(email=="")
+    {
+        $(".change_pass_msg").css({"display":"block", "color":"red"});
+        $(".change_pass_msg").html('Please enter old password');
+        return false;
     }
+    if(new_password=="")
+    {
+        $(".change_pass_msg").css({"display":"block", "color":"red"});
+        $(".change_pass_msg").html('Please enter new password');
+        return false;
+    }
+    if(re_password=="")
+    {
+        $(".change_pass_msg").css({"display":"block", "color":"red"});
+        $(".change_pass_msg").html('Please confirm new password');
+        return false;
+    }
+    if(new_password==re_password)
+    {
+        $.ajax({
+        type:"POST",
+        url:'/user/reset-password',
+        data:"new_password="+new_password+"&re_password="+re_password+"&email="+email+"&security_code="+token,
+        dataType:'JSON',
+        statusCode:{
+            401:function(data){
+                    $(".change_pass_msg").css({"display":"block", "color":"red"});
+                    $(".change_pass_msg").html('Invalid user details !');
+            }
+        },
+        success:function(data){
+                 $(".change_pass_msg").css({"display":"block", "color":"green"});
+                 $(".change_pass_msg").html('Your passowrd has successfully changed, Please Log in with the new password');
+                 setTimeout(function(e){
+                 $('#myModal_change_password').modal('hide');
+                 $('#myModal').modal('show');
+                 },2000);
+        }
 
-  });
+        });
 
- }
- else
- {
+    }
+    else
+    {
 
-  $(".change_pass_msg").html('Sorry...Password not matching! ');
-  $(".change_pass_msg").css({"display":"block"});
-  $(".change_pass_msg").delay(5000).fadeOut("slow");
+        $(".change_pass_msg").html('Sorry...Password not matching! ');
+        $(".change_pass_msg").css({"display":"block"});
+        $(".change_pass_msg").delay(5000).fadeOut("slow");
 
- }
+    }
 }
 
 function goto_detail_page()
@@ -544,4 +589,61 @@ function goto_detail_page()
         window.location="medicine-detail/"+current_item_code;
 
     }
+}
+
+
+function show_our_products(cat = null)
+{
+    console.log('Categoria:'+cat);
+
+        $.ajax({
+            url: 'medicine/search-medicine/1',
+            data: 'cat='+cat,
+            type: 'GET',
+            datatype: 'JSON',
+            success: function (data) {
+                console.log('Productos:')
+                console.log(data);
+                $('#med-list').empty();
+                $.each(data.result.msg,function(i,item){
+                    console.log(item)
+                    $('#med-list').append(
+                       '<div class="med">'+
+                       '    <div class="row">'+
+                       '        <div class="col-md-4">'+
+                       '            <img class="med-thumbnail" src="/assets/images/dolex.png" alt="">'+
+                       '        </div>'+
+                       '        <div class="col-md-8">'+
+                       '            <h5 class="med-title">'+ item.name +'</h5>'+
+                       '            <p class="med-description">Lorem ipsum, dolor sit amet consectetur adipisicing elit.</p>'+
+                       '        </div>'+
+                       '    </div>'+
+                       '</div>'
+                    );
+                })
+            }
+        });
+
+
+}
+
+
+$('#catList').on('click', 'li', function(e) {
+    alert($(this).html());
+});
+
+
+function getCategories() {
+    $.ajax({
+        type: "GET",
+        url: '/medicine/load-medicine-cats/1',
+        success: function (data) {
+            // console.log(data);
+            $.each(data[0].result.msg, function(i,value){
+                $("#catList").append('<li>' + value.group + '</li>');
+            })
+            categories = data;
+
+        }
+    });
 }

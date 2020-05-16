@@ -77,6 +77,7 @@ use App\MercadoPago\SDK;
     Route::any('/medicine/load-medicine-web/{is_web}', 'MedicineController@anyLoadMedicineWeb');
     Route::any('/medicine/load-medicine/{is_web}', 'MedicineController@anyLoadMedicine');
     Route::any('/medicine/search-medicine/{is_web}', 'MedicineController@anySearchMedicine');
+    Route::any('/medicine/search-categories/{is_web}', 'MedicineController@anySearchCategories');
     Route::any('/medicine/load-medicine-cats/{is_web}', 'MedicineController@anyLoadMedicineCategories');
     Route::any('/medicine/load-medicine-labs/{is_web}', 'MedicineController@anyLoadMedicineLabs');
     Route::any('/medicine/add-cart/{is_web}', 'MedicineController@anyAddCart');
@@ -286,7 +287,6 @@ Route::get('payment/failure', function () {
 Route::get('/about', function () {
     return View::make('/users/about');
 });
-
 
 // Landing page route
 Route::get('/', function () {

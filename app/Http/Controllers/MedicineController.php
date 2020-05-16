@@ -596,6 +596,44 @@ class MedicineController extends BaseController
 
 
 	/**
+	 *  @return filtered categories
+	 */
+	function anySearchCategories ($isWeb)
+	{
+		header ("Access-Control-Allow-Origin: *");
+		$term = Request::get ('term' , null);
+		$limitResutls = Request::get ('limit' , 10);
+
+		$medicines = Medicine::select('group')->where('group', 'LIKE', '%' . $term . '%')->distinct()->orderBy('group')->get();
+
+		$i=0;
+
+		if ($isWeb) {
+			$json = [];
+			foreach ($medicines as $data) {
+				$json[] = array(
+					'value' => $data['group'] ,
+					'label' => $data['group'] ,
+				);
+			}
+
+			return Response::json ($json);
+
+		} else {
+			$medicines = array_slice ($medicines , 0 , 4);
+
+			if (empty($medicines))
+				return Response::make (['status' => 'FAILURE' , 'msg' => 'No Medicines Found'] , 404);
+//			$result = array(array('result' => array('status' => 'success' , 'msg' => $medicines)));
+			$result = ['status' => 'SUCCESS' , 'msg' => 'Search Results' , 'data' => $medicines];
+
+			return Response::json ($result);
+		}
+
+		return Response::json ($result);
+	}
+
+	/**
 	 * Load Medicine List
 	 *
 	 * @return mixed
@@ -604,17 +642,50 @@ class MedicineController extends BaseController
 	function anySearchMedicine ()
 	{
 		header ("Access-Control-Allow-Origin: *");
-		$term = Request::get ('term' , '');
-		$limitResutls = Request::get ('limit' , 4);
-		$medicine = Medicine::where ('item_name' , 'LIKE' , $term . '%')
-					->orWhere('group' , 'LIKE' , $term . '%')
-					->orWhere('composition' , 'LIKE' , $term . '%')
-					->orWhere('manufacurer' , 'LIKE' , $term . '%')
-					->take ($limitResutls)->get ();
+		$term = Request::get ('term' , null);
+		$limitResutls = Request::get ('limit' , 10);
+		$category = Request::get ('cat' , null);
+		$lab = Request::get ('lab' , null);
+		$ean = Request::get ('ean' , null);
+		// where(function($query) use ($gender){
+  //           if ($gender) {
+  //               $query->where('gender', '=', $gender);
+  //           }
+  //           })->get();
+
+		$medicine = Medicine::where (function($query) use ($term){
+				if($term) {
+					$query->where('item_name' , 'LIKE' , $term . '%');
+				}
+			})
+		->orWhere(function($query) use ($category){
+				if($category) {
+					$query->where('group' , 'LIKE' , $category . '%');
+				}
+			})
+		->orWhere(function($query) use ($lab){
+				if($lab) {
+					$query->where('manufacturer' , 'LIKE' , $lab . '%');
+				}
+			})
+		->orWhere(function($query) use ($ean){
+				if($ean) {
+					$query->where('item_code' , 'LIKE' , $ean . '%');
+				}
+			})
+		->take ($limitResutls)->get ();
+			// ->orWhere('group' , 'LIKE' , $term . '%')
+			// ->orWhere('composition' , 'LIKE' , $term . '%')
+			// ->orWhere('manufacurer' , 'LIKE' , $term . '%')
+
+
+
+
+
 		$i = 0;
 		$labRule=[];
 
-		if ($medicine->count () > 0) {
+		if (isset($medicine) &&  $medicine->count () > 0) {
 			foreach ($medicine as $med) {
 
 				if($med->marked_price == 0) {
@@ -664,17 +735,12 @@ class MedicineController extends BaseController
 		        $sellprice = ceil($sellprice);
 		        $sellprice = round( $sellprice, -2, PHP_ROUND_HALF_UP);
 
-
-
-
-				// dd('Medicine:' . $med['item_name'], 'Laboratory:' .  $med['marketed_by'], 'Precio Real:' .  $med['real_price'], 'Precio Corriente:' .  $med['current_price'], $labRule, 'Precio Venta:' .  $sellprice, 'Rule Type : ' . $labRule[0]['rule_type'], 'Rule : ' . $labRule[0]['rule']);
-
-				$medicineNameArray[$i] = array("id" => $i + 1 ,'item_code' => $med->item_code,  "name" => $med->item_name , 'mrp' => $sellprice ,'quantity' => $med->quantity, 'lab' => $med->manufacturer , 'composition' => $med->composition);
+				$medicineNameArray[$i] = array("id" => $i + 1 ,'item_code' => $med->item_code,  "name" => $med->item_name , 'mrp' => $sellprice ,'quantity' => $med->quantity, 'lab' => $med->manufacturer , 'composition' => $med->composition, 'image-url' => $med->photo_url);
 				$i++;
 			}
-			$result = array(array('result' => array('status' => 'sucess' , 'msg' => $medicineNameArray)));
+			$result = array('result' => array('status' => 'sucess' , 'msg' => $medicineNameArray));
 		} else {
-			$result = array(array('result' => array('status' => 'failure')));
+			$result = array('result' => array('status' => 'failure'));
 		}
 
 		return Response::json ($result);
