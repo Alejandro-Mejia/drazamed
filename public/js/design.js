@@ -100,7 +100,7 @@ $(document).ready(function(){
                     item_code = ui.item.item_code;
                     current_item_code=item_code;
                     // goto_detail_page();
-                    show_detail_modal();
+                    show_detail_modal(ui.item);
             },
 		}).autocomplete( "instance" )._renderItem = function(ul, item ) {
             return $( "<li>" )
@@ -334,7 +334,7 @@ $(document).ready(function(){
     }
 
 
-// $('#searchButton').on('click', goto_detail_page());
+// $('#searchButton').on('click', show_detail_modal());
 
 
 
@@ -607,9 +607,33 @@ function goto_detail_page()
 /**
  * Va la pagina de los datos del producto
  */
-function show_detail_modal()
+function show_detail_modal(data)
 {
-    $('#pinfo-modal').show();
+    console.log(data);
+    $.ajax({
+        type: "GET",
+        url: '/medicine/search-medicine/1',
+        data:'term='+data.value,
+        success: function (data) {
+            console.log(data.result.msg[0]);
+            $('#hidden_medicine_id').val(data.result.msg[0].id);
+            $('#hidden_item_code').val(data.result.msg[0].item_code);
+            $('#hidden_item_pres_required').val(data.result.msg[0].is_pres_required);
+            $('#hidden_selling_price').val(data.result.msg[0].mrp);
+            $('#pi-med-name').empty().append(data.result.msg[0].name);
+            $('#pi-med-composition').empty().append(data.result.msg[0].composition);
+            $('#pi-med-comby').val(data.result.msg[0].lab);
+            $('#pi-med-form').val( (data.result.msg[0].is_pres_required)? 'RX' : 'Opcional');
+            $('#pi-med-typm').val(data.result.msg[0].group);
+            $('#pi-med-price-unit').val(data.result.msg[0].mrp)
+            $('#pi-med-price').val('$ ' + (data.result.msg[0].mrp * $('#pi-med-quantity').val()).toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1."));
+
+            $('#pinfo-modal').modal('show');
+
+        }
+    });
+
+
 }
 
 
@@ -669,7 +693,7 @@ function show_our_products(cat = null)
                        '        <div class="col-md-8">'+
                        '            <h5 class="med-title">'+ item.name +'</h5>'+
                        '            <p class="med-description"> ' + item.composition +  ' </p>'+
-                       '            <p class="med-mrp"> ' + item.mrp +  ' </p>'+
+                       '            <p class="med-mrp" style="text-align:right; font-size:2e; color:green">  $' + item.mrp +  ' </p>'+
                        '        </div>'+
                        '    </div>'+
                        '</div>'
@@ -706,57 +730,79 @@ function getCategories() {
 }
 
 
-// $('.add_to_cart').click(function(){
+$('.add_to_cart').click(function(){
 
-// var hidden_medicine=$('#hidden_medicine').val();
-// var med_quantity=$('#med_quantity').val();
-// var hidden_item_code=$('#hidden_item_code').val();
-// var hidden_selling_price=$('#hidden_selling_price').val();
-// var hidden_pres_item =$('#hidden_item_pres_required').val();
-// var _token=$('#_token').val();
-// var id=$('#hidden_medicine_id').val();
-//     if(med_quantity.length>0 && med_quantity >0 )
-//     {
-//           $.ajax({
-//                   type: "GET",
-//                   url: '{{ URL::to('medicine/add-cart/0' )}}',
-//                   data: "id="+id+"&medicine="+hidden_medicine+"&med_quantity="+med_quantity+"&hidden_item_code="+hidden_item_code+"&hidden_selling_price="+hidden_selling_price+"&_token="+_token+"&pres_required="+hidden_pres_item,
-//                   datatype: 'json',
-//                   complete:function(data){
+var hidden_medicine=$('#pi-med-name').html();
+var med_quantity=$('#pi-med-quantity').val();
+var hidden_item_code=$('#hidden_item_code').val();
+var hidden_selling_price=$('#hidden_selling_price').val();
+var hidden_pres_item =$('#hidden_item_pres_required').val();
+var _token=$('#_token').val();
 
-//                   },
-//                   success: function (data) {
-//                    if(data==0)
-//                    {
-//                      $('#loginModal').click();
-//                    }
-//                    if(data=="updated")
-//                    {
-//                     $('.med_detailes_alert').css('display', 'block' );
-//                     $(".med_detailes_alert").html("Your cart has been successfully updated.");
-//                     $(".med_detailes_alert").delay(5000).fadeOut("slow");
+var id=$('#hidden_medicine_id').val();
 
+console.log('SellingPrice:' + $('#hidden_selling_price').val());
 
-//                    // alert("your order is updated");
-//                    }
-//                    if(data=="inserted")
-//                    {
-//                    $('.med_detailes_alert').css('display', 'block' );
-//                    $(".med_detailes_alert").html("Your cart has been successfully updated.");
-//                    $(".med_detailes_alert").delay(5000).fadeOut("slow");
-//                     window.location="{{URL::to('my-cart/')}}";
-//                    }
+if(med_quantity.length>0 && med_quantity >0 )
+{
+    $.ajax({
+        type: "GET",
+        url: 'medicine/add-cart/0',
+        data: "id="+id+"&medicine="+hidden_medicine+"&med_quantity="+med_quantity+"&hidden_item_code="+hidden_item_code+"&hidden_selling_price="+hidden_selling_price+"&_token="+_token+"&pres_required="+hidden_pres_item,
+        datatype: 'json',
+        complete:function(data){
 
-//                   }
-//                 });
+        },
+        success: function (data) {
+            if(data==0)
+            {
+             $('#loginModal').click();
+            }
+            if(data=="updated")
+            {
+            $('.med_detailes_alert').css('display', 'block' );
+            $(".med_detailes_alert").html("Your cart has been successfully updated.");
+            $(".med_detailes_alert").delay(5000).fadeOut("slow");
 
 
-//     }
-//     else
-//     {
-//     $('.w_med_detailes_alert').css('display', 'block' );
-//     $(".w_med_detailes_alert").html("Please Fill quantity field");
-//     $(".w_med_detailes_alert").delay(3000).fadeOut("slow");
-//     }
+            // alert("your order is updated");
+            }
+            if(data=="inserted")
+            {
+                $('.med_detailes_alert').css('display', 'block' );
+                $(".med_detailes_alert").html("Your cart has been successfully updated.");
+                $(".med_detailes_alert").delay(5000).fadeOut("slow");
+                window.location="my-cart/";
+            }
+        }
+    });
+}
+else
+{
+    $('.w_med_detailes_alert').css('display', 'block' );
+    $(".w_med_detailes_alert").html("Please Fill quantity field");
+    $(".w_med_detailes_alert").delay(3000).fadeOut("slow");
+}
 
-//  });
+});
+
+function hideLoginModal() {
+    $("#login-modal").modal("hide");
+}
+
+function hideRegisterModal() {
+    $("#register-modal").modal("hide");
+    $("#login-modal").modal("show");
+}
+
+function openProductInfoModal(product) {
+    $("#pinfo-modal").modal("show");
+    console.log("modal abierto");
+}
+
+(function() {
+    //const meds = document.getElementsByClassName("med");
+    $(".med").click(el => {
+        openProductInfoModal(el);
+    });
+})();

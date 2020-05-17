@@ -10,13 +10,13 @@
             rel="stylesheet"
             href="/css/bootstrap.min.css"
         />
-        <script
-            src="/js/jquery-3.4.1.slim.min.js"
-        ></script>
+        <script src="/js/jquery-3.4.1.slim.min.js"></script>
+        <script src="/js/simple.money.format.js"></script>
 
         <!-- // jQuery UI -->
         <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
         <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
         <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 
 
