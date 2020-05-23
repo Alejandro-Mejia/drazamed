@@ -25,6 +25,13 @@ var translate = {
 };
 
 
+// var lang = new Lang({
+//     messages: source,
+//     locale: 'es',
+//     fallback: 'en'
+// });
+
+
 function trans(key, replace = {})
 {
     let translation = key.split('.').reduce((t, i) => t[i] || null, window.translations);
