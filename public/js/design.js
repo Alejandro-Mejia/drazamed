@@ -208,13 +208,14 @@ $(document).ready(function(){
         var user_type=$('#user_type').val();
         var address = $('#address_input').val();
         var phone = $('#phone_input').val();
+        var agree = $('#agree:checked').length;
 
-        // console.log ("UserType:" + user_type);
+        console.log ("Agree?:" + agree);
 
         if(first_name=="")
 		{
 			$("#first_name_error").css({"display":"block", "color":"red"});
-			$("#first_name_error").html('Please enter your first name');
+			$("#first_name_error").html('Por favor coloque su nombre');
 			return false;
 		} else {
 			$("#first_name_error").css({"display":"none"});
@@ -223,7 +224,7 @@ $(document).ready(function(){
 		if(last_name=="")
 		{
 			$("#last_name_error").css({"display":"block", "color":"red"});
-			$("#last_name_error").html('Please enter your last name');
+			$("#last_name_error").html('Por favor coloque su apellido');
 			return false;
 		} else {
 			$("#last_name_error").css({"display":"none"});
@@ -232,7 +233,7 @@ $(document).ready(function(){
 		if(phone=="")
 		{
 			$("#phone_error").css({"display":"block", "color":"red"});
-			$("#phone_error").html('Please enter your phone number');
+			$("#phone_error").html('Por favor coloque su numero de celular');
 			return false;
 		} else {
 			$("#phone_error").css({"display":"none"});
@@ -244,7 +245,7 @@ $(document).ready(function(){
 			$("#last_name_error").hide();
 			$("#user_mail_error").hide();
 			$("#user_type_error").css({"display":"block", "color":"red"});
-			$("#user_type_error").html('Please choose a type');
+			$("#user_type_error").html('Por favor seleccione un tipo de cliente');
 			return false;
 		} else {
 			$("#user_type_error").css({"display":"none"});
@@ -261,7 +262,7 @@ $(document).ready(function(){
 		{
 			$("#user_name_error").hide();
 			$("#user_mail_error").css({"display":"block", "color":"red"});
-			$("#user_mail_error").html('Please enter your email');
+			$("#user_mail_error").html('Por favor coloque un email valido');
 			return false;
 		} else {
 			$("#user_mail_error").css({"display":"none"});
@@ -274,7 +275,7 @@ $(document).ready(function(){
 			$("#user_mail_error").hide();
 			$("#user_type_error").hide();
 			$("#user_pass_error").css({"display":"block", "color":"red"});
-			$("#user_pass_error").html('Please Enter a password');
+			$("#user_pass_error").html('Por favor introduzca una contraseña');
 			return false;
         } else {
 			$("#user_pass_error").css({"display":"none"});
@@ -283,14 +284,14 @@ $(document).ready(function(){
 		if( !(pass == pass_conf))
         {
 			$("#user_passcnf_error").css({"display":"block", "color":"red"});
-			$("#user_passcnf_error").html('Passwords are different');
+			$("#user_passcnf_error").html('Las contraseñas no coinciden');
 			return false;
         } else {
 			$("#user_passcnf_error").css({"display":"none"});
 		}
 
 
-		if($("#agree").is(':checked')){
+		if($("#agree:checked").length==1){
 			$("#first_name_error").hide();
 			$("#last_name_error").hide();
 			$("#user_mail_error").hide();
@@ -304,7 +305,7 @@ $(document).ready(function(){
 			$("#user_type_error").hide();
 			$("#user_pass_error").hide();
 			$("#user_agree_error").css({"display":"block", "color":"red"});
-			$("#user_agree_error").html('Accept the terms & conditions to proceed');
+			$("#user_agree_error").html('Por favor acepte los terminos y condiciones para continuar');
 			return false;
 		}
 
@@ -664,7 +665,8 @@ function show_detail_modal(data)
             $('#hidden_item_pres_required').val(data.result.msg[0].is_pres_required);
             $('#hidden_selling_price').val(data.result.msg[0].mrp);
             $('#pi-med-name').empty().append(data.result.msg[0].name);
-            $('#pi-med-composition').empty().append(data.result.msg[0].composition);
+            $('#pi-med-description').empty().append(data.result.msg[0].composition);
+            $('#pi-med-composition').val(data.result.msg[0].composition);
             $('#pi-med-comby').val(data.result.msg[0].lab);
             $('#pi-med-form').val( (data.result.msg[0].is_pres_required)? 'RX' : 'Opcional');
             $('#pi-med-typm').val(data.result.msg[0].group);
