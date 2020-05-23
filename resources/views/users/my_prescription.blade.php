@@ -89,8 +89,8 @@
                                  <th class="text-right text-align-responsive">{{ __('Unit Price')}}</th>
                                  <th class="text-right text-align-responsive">{{ __('Quantity')}}</th>
                                  <th class="text-right text-align-responsive">{{ __('Sub Total')}}</th>
-                                 <th class="text-right text-align-responsive">{{ __('Unit Disc')}}</th>
-                                 <th class="text-right text-align-responsive">{{ __('Discount')}}</th>
+                                 <th class="text-right text-align-responsive" hidden>{{ __('Unit Disc')}}</th>
+                                 <th class="text-right text-align-responsive" hidden>{{ __('Discount')}}</th>
                                  <th class="text-right text-align-responsive">{{ __('Total Price')}}</th>
                              </tr>
                              </thead>
@@ -98,12 +98,13 @@
                              @foreach($prescription['cart'] as $cart)
 
                                 <tr>
+
                                  <td class="text-center text-align-responsive">{{ $cart['item_name'] }}</td>
                                  <td class="text-right text-align-responsive">{{ number_format($cart['unit_price'],2)}}</td>
                                  <td class="text-right text-align-responsive">{{ $cart['quantity'] }}</td>
-                                 <td class="text-right text-align-responsive">{{ number_format($cart['unit_price']* $cart['quantity'],2)}}</td>
-                                 <td class="text-right text-align-responsive">{{ number_format($cart['discount_percent'],2)}}</td>
-                                 <td class="text-right text-align-responsive">{{ number_format($cart['discount'],2)}}</td>
+                                 <td class="text-right text-align-responsive">{{ Setting::currencyFormat($cart['unit_price']* $cart['quantity'])}}</td>
+                                 <td class="text-right text-align-responsive" hidden>{{ number_format($cart['discount_percent'],2)}}</td>
+                                 <td class="text-right text-align-responsive" hidden>{{ Setting::currencyFormat($cart['discount'])}}</td>
                                  <td class="text-right text-align-responsive">{{ Setting::currencyFormat($cart['total_price'])}}</td>
                              </tr>
                                 <?php
@@ -125,14 +126,29 @@
                                  </div>
                              </div>
                              <div class="row">
-                                 <div class="col-lg-10 col-md-10 col-sm-10 col-xs-8">
+                                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-6">
+                                    <!-- <form id="shipping_method">
+                                        <label class="radio-inline">
+                                          <input type="radio" name="shipping" value=0 checked>Recoger
+                                        </label>
+                                        <label class="radio-inline">
+                                          <input type="radio" name="shipping" value=1000>Domiciliario
+                                        </label>
+                                        <label class="radio-inline">
+                                          <input type="radio" name="shipping" value=8000>Mensajeria
+                                        </label>
+                                    </form> -->
+
+
+                                </div>
+                                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-4">
                                      <p style="color:rgb(55, 213, 218);">{{__('Shipping Cost')}}</p>
-                                 </div>
-                                 <div class="col-lg-2 col-md-2 col-sm-2 col-xs-4">
+                                </div>
+                                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-4">
                                      <p >{{ Setting::currencyFormat($prescription['shipping'])}}</p>
                                  </div>
                              </div>
-                             <div class="row">
+                             <div class="row" hidden>
                                  <div class="col-lg-10 col-md-10 col-sm-10 col-xs-8">
                                      <p style="color:rgb(55, 213, 218);">{{__('Discount')}}</p>
                                  </div>
@@ -223,52 +239,60 @@
 
 <footer>
     <div class="container innerBtm">
-        @include('...footer')
-        </div>
-        <script type="text/javascript">
-            var current_item_code;
-            $(".search_medicine").autocomplete({
-                search: function(event, ui) {
-                    $('.search_medicine').addClass('search_medicine_my_cart my_cart_search' );
-                },
-                open: function(event, ui) {
-                    $('.search_medicine').removeClass('search_medicine_my_cart my_cart_search' );
-                },
-                source: '{{ URL::to('medicine/load-medicine-web/1' )}}',
-                minLength : 0,
-                select : function (event, ui) {
-                    item_code = ui.item.item_code;
-                    current_item_code = item_code;
-
-                }
-            })
-            ;
-            function goto_detail_page() {
-                $(".search_medicine").val("");
-                var serched_medicine = $(".search_medicine").val();
-                window.location = "{{URL::to('medicine-detail/')}}/" + current_item_code;
+    @include('...footer')
+    </div>
+    <script type="text/javascript">
+        var current_item_code;
+        $(".search_medicine").autocomplete({
+            search: function(event, ui) {
+                $('.search_medicine').addClass('search_medicine_my_cart my_cart_search' );
+            },
+            open: function(event, ui) {
+                $('.search_medicine').removeClass('search_medicine_my_cart my_cart_search' );
+            },
+            source: '{{ URL::to('medicine/load-medicine-web/1' )}}',
+            minLength : 0,
+            select : function (event, ui) {
+                item_code = ui.item.item_code;
+                current_item_code = item_code;
 
             }
-            function purchase(obj) {
-                var invoice = $(obj).attr('invoice');
-                window.location = "{{URL::to('medicine/make-mercado-pago-payment/')}}/" + invoice;
+        })
+        ;
+        function goto_detail_page() {
+            $(".search_medicine").val("");
+            var serched_medicine = $(".search_medicine").val();
+            window.location = "{{URL::to('medicine-detail/')}}/" + current_item_code;
 
-            }
-            function purchase_paypal(obj) {
-                var invoice = $(obj).attr('invoice');
-                window.location = "{{URL::to('medicine/make-paypal-payment/')}}/" + invoice;
+        }
+        function purchase(obj) {
+            var invoice = $(obj).attr('invoice');
+            window.location = "{{URL::to('medicine/make-mercado-pago-payment/')}}/" + invoice;
 
-            }
+        }
+        function purchase_paypal(obj) {
+            var invoice = $(obj).attr('invoice');
+            window.location = "{{URL::to('medicine/make-paypal-payment/')}}/" + invoice;
 
-            function purchase_mercadopago(obj) {
-                var invoice = $(obj).attr('invoice');
-                window.location = "{{URL::to('medicine/make-mercado-pago-payment/')}}/" + invoice;
+        }
 
-            }
-            function change_list() {
-                //alert($('.category').val());
-                var category = $('.category').val();
+        function purchase_mercadopago(obj) {
+            var invoice = $(obj).attr('invoice');
+            console.log("Invoice:");
+            console.log(invoice);
+            window.location = "{{URL::to('medicine/make-mercado-pago-payment/')}}/" + invoice;
 
-                window.location = "{{URL::to('my-prescription')}}/" + category;
-            }
-        </script>
+        }
+        function change_list() {
+            //alert($('.category').val());
+            var category = $('.category').val();
+
+            window.location = "{{URL::to('my-prescription')}}/" + category;
+        }
+
+        $('#shipping_method').on('change', function(){
+            var envio = $("input[name='shipping']:checked").val();
+            // alert('Costo envio :' + envio);
+        })
+    </script>
+</footer>

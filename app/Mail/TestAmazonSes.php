@@ -11,14 +11,15 @@ class TestAmazonSes extends Mailable
 {
     use Queueable, SerializesModels;
 
+    public $email_content;
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($email_content)
     {
-        //
+        $this->email_content = $email_content;
     }
 
     /**
@@ -28,7 +29,7 @@ class TestAmazonSes extends Mailable
      */
     public function build()
     {
-        return $this->from('alejandro@aulalibre.org')->view('emails.tpl');
+        return $this->view('emails.tpl');
         // return $this->view('view.name');
     }
 }

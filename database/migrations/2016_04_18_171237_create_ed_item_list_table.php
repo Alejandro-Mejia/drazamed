@@ -38,7 +38,7 @@
          */
         public function down()
         {
-            Schema::drop('ed_item_list');
+            // Schema::drop('ed_item_list');
         }
 
     }

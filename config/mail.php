@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'default' => env('MAIL_MAILER', 'smtp'),
+    'default' => env('MAIL_MAILER', 'ses'),
 
     /*
     |--------------------------------------------------------------------------
@@ -42,7 +42,7 @@ return [
             'username' => env('MAIL_USERNAME'),
             'password' => env('MAIL_PASSWORD'),
             // "sendmail" => "/usr/sbin/sendmail -bs",
-            "pretend" => false
+            // "pretend" => false
         ],
 
         'ses' => [
@@ -76,8 +76,8 @@ return [
     */
 
     'from' => [
-        'address' => env('MAIL_FROM_ADDRESS', 'alejandro@aulalibre.org'),
-        'name' => env('MAIL_FROM_NAME', 'Alejandro'),
+        'address' => env('MAIL_FROM_ADDRESS', 'info@aulalibre.org'),
+        'name' => env('MAIL_FROM_NAME', 'Desarrollo Drazamed'),
     ],
 
     /*

@@ -15,6 +15,7 @@ use Redirect;
 use Request;
 use Response;
 use Debugbar;
+use Config;
 use View;
 use Mail;
 use DB;
@@ -28,6 +29,7 @@ use App\InvoiceStatus;
 use App\Prescription;
 use App\SessionsData;
 use App\NewMedicine;
+use App\Pricerule;
 use App\Setting;
 use App\ItemList;
 use App\PayStatus;
@@ -44,10 +46,21 @@ use App\Imports\MedicinesImport;
 define ('CACHE_PARAM_MEDICINE' , 'medicines');
 define ('CURRENCY_BEFORE' , 'BEFORE');
 define ('CURRENCY_AFTER' , 'AFTER');
-date_default_timezone_set ("Asia/Calcutta");
+date_default_timezone_set ("America/Bogota");
 
 class MedicineController extends BaseController
 {
+
+
+	/**
+	 * Import test
+	 */
+	public function import()
+	{
+	    (new MedicinesImport)->import('inv.xls');
+
+	    return redirect('/')->with('success', 'File imported successfully!');
+	}
 
 	/**
 	 * Store Prescription
@@ -66,10 +79,13 @@ class MedicineController extends BaseController
 				$user_type = Auth::user ()->user_type_id;
 				$customer = Auth::user()->with('customer')->first();
 
-				// dd($customer);
 				$address = $customer->address;
 
 				$is_pres_required = Request::get ('is_pres_required' , 1);
+
+				// Getting shipping_cost
+				$shipping_cost = Request::get ('shipping' , 0);
+
 				$path = base_path () . '/public/images/prescription/' . $email . '/';
 
 //				if($is_pres_required)
@@ -118,8 +134,9 @@ class MedicineController extends BaseController
 				$prescription->created_by = $user_id;
 				$prescription->updated_by = $user_id;
 				$prescription->save ();
-
 				$pres_id = $prescription->id;
+
+
 				$invoice = new Invoice;
 				$invoice->pres_id = $pres_id;
 				$invoice->user_id = $user_id;
@@ -128,12 +145,14 @@ class MedicineController extends BaseController
 				$invoice->updated_by = $user_id;
 				$invoice->shipping_address = $address;
 				$invoice->shipping_mode = 1;
+				$invoice->shipping = $shipping_cost;
 				$invoice->save ();
 				$invoice_id = $invoice->id;
 
 				$current_medicines = SessionsData::select ('medicine_id' , 'medicine_count')->where ('user_id' , '=' , $email)->get ();
 
 				// dd($current_medicines);
+				$sub_total = 0;
 				if (count ($current_medicines) > 0) {
 
 					foreach ($current_medicines as $medicine) {
@@ -152,9 +171,16 @@ class MedicineController extends BaseController
 						$itemList->created_by = $user_id;
 						$itemList->updated_by = $user_id;
 						$itemList->save ();
+
+						$sub_total += $total_price;
 					}
 
 				}
+
+				// Update invoice sub_total
+				$invoice->latest()->update(array('sub_total' => $sub_total));
+				$invoice->latest()->update(array('total' => $sub_total + $shipping_cost));
+
 				$data['email'] = $email;
 				$name = "";
 				if ($user_type == UserType::CUSTOMER ()) {
@@ -360,7 +386,6 @@ class MedicineController extends BaseController
 			->join ('invoice as i' , 'i.pres_id' , '=' , DB::raw ("prescription.id AND i.payment_status IN (" . PayStatus::PENDING () . ",0) "));
 //                ->whereIn('i.payment_status', [PayStatus::PENDING(), 0]);
 
-
 		$responses = [];
 		switch ($is_category) {
 			case (PrescriptionStatus::VERIFIED ()):
@@ -373,7 +398,7 @@ class MedicineController extends BaseController
 				break;
 		}
 		$results = $prescriptions->get ();
-
+		// dd($results);
 		foreach ($results as $result) {
 			$items = [];
 			$medicines = Medicine::medicines ();
@@ -557,10 +582,303 @@ class MedicineController extends BaseController
 		$i = 0;
 		if ($medicine->count () > 0) {
 			foreach ($medicine as $med) {
-				$medicineNameArray[$i] = array("id" => $i + 1 , "name" => $med->item_name , 'mrp' => substr ($med->mrp , 0 , 4) , 'exp' => $med->expdt , 'item_code' => $med->item_code);
+				$medicineNameArray[$i] = array("id" => $i + 1 , "name" => $med->item_name , 'mrp' => $this->getSellingPrice($med->item_code), 'item_code' => $med->item_code);
 				$i++;
 			}
 			$result = array(array('result' => array('status' => 'sucess' , 'msg' => $medicineNameArray)));
+		} else {
+			$result = array(array('result' => array('status' => 'failure')));
+		}
+
+		return Response::json ($result);
+
+	}
+
+
+	/**
+	 *  @return filtered categories
+	 */
+	function anySearchCategories ($isWeb)
+	{
+		header ("Access-Control-Allow-Origin: *");
+		$term = Request::get ('term' , null);
+		$limitResutls = Request::get ('limit' , 10);
+
+		$medicines = Medicine::select('group')->where('group', 'LIKE', '%' . $term . '%')->distinct()->orderBy('group')->get();
+
+		$i=0;
+
+		if ($isWeb) {
+			$json = [];
+			foreach ($medicines as $data) {
+				$json[] = array(
+					'value' => $data['group'] ,
+					'label' => $data['group'] ,
+				);
+			}
+
+			return Response::json ($json);
+
+		} else {
+			$medicines = array_slice ($medicines , 0 , 4);
+
+			if (empty($medicines))
+				return Response::make (['status' => 'FAILURE' , 'msg' => 'No Medicines Found'] , 404);
+//			$result = array(array('result' => array('status' => 'success' , 'msg' => $medicines)));
+			$result = ['status' => 'SUCCESS' , 'msg' => 'Search Results' , 'data' => $medicines];
+
+			return Response::json ($result);
+		}
+
+		return Response::json ($result);
+	}
+
+	/**
+	 * Load Medicine List
+	 *
+	 * @return mixed
+	 */
+	public
+	function anySearchMedicine ()
+	{
+		header ("Access-Control-Allow-Origin: *");
+		$term = Request::get ('term' , null);
+		$limitResutls = Request::get ('limit' , 10);
+		$category = Request::get ('cat' , null);
+		$lab = Request::get ('lab' , null);
+		$ean = Request::get ('ean' , null);
+		// where(function($query) use ($gender){
+  //           if ($gender) {
+  //               $query->where('gender', '=', $gender);
+  //           }
+  //           })->get();
+		// dd($category, $lab, $ean);
+		$medicine = Medicine::where (function($query) use ($term){
+				if($term) {
+					$query->where('item_name' , 'LIKE' , $term . '%');
+				}
+			})
+		->where(function($query) use ($category){
+				if($category) {
+					$query->where('group' , 'LIKE' , $category . '%');
+				}
+			})
+		->where(function($query) use ($lab){
+				if($lab) {
+					$query->where('manufacturer' , 'LIKE' , $lab . '%');
+				}
+			})
+		->where(function($query) use ($ean){
+				if($ean) {
+					$query->where('item_code' , 'LIKE' , $ean . '%');
+				}
+			})
+		->take ($limitResutls)->get ();
+			// ->orWhere('group' , 'LIKE' , $term . '%')
+			// ->orWhere('composition' , 'LIKE' , $term . '%')
+			// ->orWhere('manufacurer' , 'LIKE' , $term . '%')
+
+
+
+		$i = 0;
+		$labRule=[];
+
+
+		if (isset($medicine) &&  $medicine->count () > 0) {
+			foreach ($medicine as $med) {
+				Log::info('Proveedor:' . $med['manufacturer']);
+				if($med->marked_price == 0) {
+		            switch ($med->tax) {
+		                case '19':
+		                    $sellprice = $med->real_price / 0.71;
+		                    break;
+		                case '5':
+		                    $sellprice = $med->real_price / 0.85;
+		                    break;
+		                default:
+		                    {
+
+								if(strlen($med['manufacturer']) > 15) {
+
+									$compareLab = substr ($med['manufacturer'],0,15);
+								} else {
+									$compareLab = $med['manufacturer'];
+								}
+
+								$labRule = Pricerule::where('laboratory','LIKE','%' . $compareLab . '%')->get()->toArray();
+
+								if (isset($labRule) && sizeof($labRule) > 0) {
+									if ($labRule[0]['isByProd'] == 1) {
+										// $labRule = Pricerule::with(["prodrule" => function($q) { $q->where('product', 'LIKE', substr ($med['item_name'],0,15);}])->where('laboratory','LIKE',substr ($med['marketed_by'],0,15) . '%')->get();
+										$prod = substr($med['item_name'],0,15);
+
+										$labRule = Pricerule::with(["prodrule"=> function($q) use($prod) {$q->where('product', 'LIKE' , '%' . $prod . '%');}])->where('laboratory','LIKE', '%' . $med['manufacturer'] . '%')->get()->toArray();
+										$labRule[0]['rule_type'] = $labRule[0]['prodrule'][0]['rule_type'];
+										$labRule[0]['rule'] = $labRule[0]['prodrule'][0]['rule'];
+									}
+
+									$sellprice = ($med->real_price*$labRule[0]['isVtaReal'] + $med->current_price*$labRule[0]['isVtaCte']);
+
+									switch ($labRule[0]['rule_type']) {
+										case '0':
+											# code...
+											break;
+										case '1':
+											$sellprice = $sellprice * (1+$labRule[0]['rule']);
+											break;
+										case '2':
+											$sellprice = $sellprice + $labRule[0]['rule'];
+											break;
+										default:
+											# code...
+											break;
+									}
+								}
+
+
+		                    }
+		                    break;
+		            }
+		        } else {
+		            $sellprice = $med->marked_price;
+		        }
+
+		        $sellprice = ceil($sellprice);
+		        $sellprice = round( $sellprice, -2, PHP_ROUND_HALF_UP);
+
+				$medicineNameArray[$i] = array("id" => $med->id ,'item_code' => $med->item_code,  "name" => $med->item_name , 'mrp' => $sellprice ,'quantity' => $med->quantity, 'lab' => $med->manufacturer , 'composition' => $med->composition, 'image-url' => $med->photo_url, 'is_pres_required' => $med->is_pres_required, 'group' => $med->group);
+				$i++;
+			}
+			$result = array('result' => array('status' => 'sucess' , 'msg' => $medicineNameArray));
+		} else {
+			$result = array('result' => array('status' => 'failure'));
+		}
+
+		return Response::json ($result);
+
+	}
+
+
+	/**
+	 * Load Medicine List
+	 *
+	 * @return mixed
+	 */
+	public
+	function getSellingPrice($item_code)
+	{
+
+		$medicine = Medicine::where ('item_code', $item_code)->get ();
+		$i = 0;
+		$labRule=[];
+
+		if ($medicine->count () > 0) {
+			foreach ($medicine as $med) {
+
+				if($med->marked_price == 0) {
+		            switch ($med->tax) {
+		                case '19':
+		                    $sellprice = $med->real_price / 0.71;
+		                    break;
+		                case '5':
+		                    $sellprice = $med->real_price / 0.85;
+		                    break;
+		                default:
+		                    {
+		                        $labRule = Pricerule::where('laboratory','LIKE','%' . substr ($med['marketed_by'],0,15) . '%')->get()->toArray();
+		                        if(sizeof($labRule) > 0) {
+									if ($labRule[0]['isByProd'] == 1) {
+										// $labRule = Pricerule::with(["prodrule" => function($q) { $q->where('product', 'LIKE', substr ($med['item_name'],0,15);}])->where('laboratory','LIKE',substr ($med['marketed_by'],0,15) . '%')->get();
+										$prod = substr($med['item_name'],0,15);
+
+										$labRule = Pricerule::with(["prodrule"=> function($q) use($prod) {$q->where('product', 'LIKE' , '%' . $prod . '%');}])->where('laboratory','LIKE', '%' . $med['marketed_by'] . '%')->get()->toArray();
+										$labRule[0]['rule_type'] = $labRule[0]['prodrule'][0]['rule_type'];
+										$labRule[0]['rule'] = $labRule[0]['prodrule'][0]['rule'];
+									}
+
+									$sellprice = ($med->real_price*$labRule[0]['isVtaReal'] + $med->current_price*$labRule[0]['isVtaCte']);
+
+									switch ($labRule[0]['rule_type']) {
+										case '0':
+											# code...
+											break;
+										case '1':
+											$sellprice = $sellprice * (1+$labRule[0]['rule']);
+											break;
+										case '2':
+											$sellprice = $sellprice + $labRule[0]['rule'];
+											break;
+										default:
+											# code...
+											break;
+									}
+								} else {
+									$sellprice = 0;
+								}
+
+		                    }
+		                    break;
+		            }
+		        } else {
+		            $sellprice = $med->marked_price;
+		        }
+
+		        $sellprice = ceil($sellprice);
+		        $sellprice = round( $sellprice, -2, PHP_ROUND_HALF_UP);
+
+		        return $sellprice;
+		    }
+
+		} else {
+			return 0;
+		}
+
+	}
+
+
+	/**
+	 * Load Medicine Categories
+	 *
+	 * @return mixed
+	 */
+	public
+	function anyLoadMedicineCategories ()
+	{
+		header ("Access-Control-Allow-Origin: *");
+
+		$cats = Medicine::select('group')->distinct()->orderBy('group')->get();
+
+		if ($cats->count () > 0) {
+
+			$result = array(array('result' => array('status' => 'sucess' , 'msg' => $cats)));
+		} else {
+			$result = array(array('result' => array('status' => 'failure')));
+		}
+
+		return Response::json ($result);
+
+	}
+
+
+	/**
+	 * Load Medicine Laboratories
+	 *
+	 * @return mixed
+	 */
+	public
+	function anyLoadMedicineLabs ()
+	{
+		header ("Access-Control-Allow-Origin: *");
+
+		$labs = Medicine::select('marketed_by')->distinct()->orderBy('marketed_by')->get();
+
+		$i=0;
+		if ($labs->count () > 0) {
+			foreach ($labs as $lab) {
+				$laboratories[$i] = array($i + 1  => $lab->marketed_by);
+				$i++;
+			}
+			$result = array(array('result' => array('status' => 'sucess' , 'msg' => $laboratories)));
 		} else {
 			$result = array(array('result' => array('status' => 'failure')));
 		}
@@ -885,6 +1203,16 @@ class MedicineController extends BaseController
 		$email = Session::get ('user_id');
 		$current_orders = DB::table ('sessions')->where ('user_id' , '=' , $email)->get ();
 
+		return View::make ('/users/my_cart' , array('current_orders' => $current_orders));
+
+	}
+
+
+	function getMyCart1 ()
+	{
+		$email = Session::get ('user_id');
+		$current_orders = DB::table ('sessions')->where ('user_id' , '=' , $email)->get ();
+
 		return View::make ('/design/cart' , array('current_orders' => $current_orders));
 
 	}
@@ -935,11 +1263,12 @@ class MedicineController extends BaseController
 
 		$medicine = (Session::get ('medicine') == "") ? Request::get ('medicine') : Session::get ('medicine');
 		$med_quantity = (Session::get ('med_quantity') == "") ? Request::get ('med_quantity') : Session::get ('med_quantity');
-		$med_mrp = (Session::get ('med_mrp') == "") ? Request::get ('hidden_selling_price') : Session::get ('med_mrp');
+		$med_mrp = Request::get ('hidden_selling_price') ;
 		$item_code = (Session::get ('item_code') == "") ? Request::get ('hidden_item_code') : Session::get ('item_code');
 		$item_id = (Session::get ('item_id') == "") ? Request::get ('id') : Session::get ('item_id');
 
 		$pres_required = (Session::get ('pres_required') == "") ? Request::get ('pres_required') : Session::get ('pres_required');
+
 		Session::put ('medicine' , $medicine);
 		Session::put ('med_quantity' , $med_quantity);
 		Session::put ('med_mrp' , $med_mrp);
@@ -1134,12 +1463,13 @@ class MedicineController extends BaseController
 		$data = array();
 		$item_name = "";
 		$i = 0;
+		$total=0;
 		foreach ($invoiceDetails->cartList () as $cart) {
 			$item_name .= Medicine::medicines ($cart->medicine)['item_name'];
 			$item_name .= " ,";
-
+			$total += $cart->total_price;
 		}
-		$total = $invoiceDetails->total;
+		// $total = $invoiceDetails->total;
 		$data['amount'] = $total;
 		$data['email'] = $email;
 		$data['phone'] = $phone;
@@ -1173,14 +1503,33 @@ class MedicineController extends BaseController
 		$user = Auth::user ();
 		$type = $user->user_type_id;
 
+		// Agrega credenciales
+		// MercadoPago\SDK::setAccessToken('APP_USR-2009643657185989-050901-f80d5fbf89c8c43f650efb2167d51d1b-544483632');
 
 		$allowedPaymentMethods = config('payment-methods.enabled');
+
+		$access_token = config('mercadopago.mp_pub_key_sb');
+		// $access_token = env("MP_APP_ACCESS_TOKEN", null);
+
+
 
 		$token= '';
 		$payment_method_id = '';
 		$installments = '';
 		$issuer_id = '';
 		$payment = [];
+
+		$data = array();
+		$item_name = "";
+		$i = 0;
+		$total = 0;
+		foreach ($invoiceDetails->cartList() as $cart) {
+			$item_name .= Medicine::medicines ($cart->medicine)['item_name'];
+			$item_name .= " ,";
+			$total += $cart->total_price;
+		}
+
+
 
 		if (Request::isMethod('post'))
 		{
@@ -1201,18 +1550,21 @@ class MedicineController extends BaseController
 			 * Realiza el pago
 			 */
 			// Establecemos el access token
-			$access_token = env('MP_APP_ACCESS_TOKEN', null);
+
 
 			if($access_token != null)
 			{
+				$access_token = config('mercadopago.mp_app_access_token_sb');
 				Log::info('Access_Token:'.$access_token);
+				// dd($access_token);
 
-				MercadoPago\SDK::setAccessToken($access_token);
+				MercadoPago\SDK::setAccessToken("TEST-2009643657185989-050901-fca361ac1da29db05fd762e38448d574-544483632");
 
+				// $email = "test_user_44639121@testuser.com";
 				$payment = new MercadoPago\Payment();
-			    $payment->transaction_amount = 20000;
+			    $payment->transaction_amount = $total;
 			    $payment->token = $token;
-			    $payment->description = "Orden No ";
+			    $payment->description = "Compra medicamentos Drazamed";
 			    $payment->installments = $installments;
 			    $payment->payment_method_id = $payment_method_id;
 			    $payment->issuer_id = $issuer_id;
@@ -1228,6 +1580,9 @@ class MedicineController extends BaseController
 			    // echo $payment->status;
 			    if($payment->status == 'approved') {
 			    	$invoiceDetails->status_id = InvoiceStatus::PAID ();
+			    	$invoiceDetails->sub_total = $total;
+			    	$invoiceDetails->shipping = 10000;
+			    	$invoiceDetails->total = $invoiceDetails->shipping + $invoiceDetails->sub_total;
 					$invoiceDetails->payment_status = PayStatus::SUCCESS ();
 					$invoiceDetails->transaction_id = $payment->id;
 					$invoiceDetails->updated_at = date ('Y-m-d H:i:s');
@@ -1263,17 +1618,13 @@ class MedicineController extends BaseController
 			$lname = $user_info->prof_last_name;
 			$address = $user_info->prof_address;
 		}
-		$data = array();
-		$item_name = "";
-		$i = 0;
-		foreach ($invoiceDetails->cartList() as $cart) {
-			$item_name .= Medicine::medicines ($cart->medicine)['item_name'];
-			$item_name .= " ,";
 
-		}
-		$total = $invoiceDetails->total;
+
+
+
+		// $total = $invoiceDetails->total;
 		$data['invoice_id'] = $invoiceDetails->id;
-		$data['amount'] = $total;
+		$data['amount'] = $invoiceDetails->sub_total + $invoiceDetails->shipping;
 		$data['email'] = $email;
 		$data['phone'] = $phone;
 		$data['firstname'] = $fname;
@@ -1282,6 +1633,7 @@ class MedicineController extends BaseController
 		$data['invoice'] = $invoiceDetails->invoice;
 		$data['id'] = $invoice;
 		$data['productinfo'] = $item_name;
+		$data['access_token'] = $access_token;
 	    // //$this->notify($order);
 	    // $url = $this->generatePaymentGateway(
 	    //          $request->get('payment_method'),
@@ -1522,9 +1874,16 @@ class MedicineController extends BaseController
 		$name = Request::get ('name');
 		$order = Request::get ('ord' , 'ASC');
 		if ($name != "")
-			$medicines = Medicine::select ('id' , 'item_name as name' , 'batch_no' , 'manufacturer as mfg' , 'group' , 'expiry as exp' , 'item_code' , 'selling_price as mrp' , 'composition' , 'is_pres_required')->where ('item_name' , 'LIKE' , $name . "%")->orderBy ('composition' , $order)->where ('is_delete' , '=' , 0)->paginate (30);
+			$medicines = Medicine::select ('id' , 'item_name as name' , 'batch_no' , 'manufacturer as mfg' , 'group' , 'item_code' , 'selling_price as mrp' , 'composition' , 'is_pres_required')->where ('item_name' , 'LIKE' , $name . "%")->orderBy ('composition' , $order)->where ('is_delete' , '=' , 0)->paginate (30);
 		else
-			$medicines = Medicine::select ('id' , 'item_name as name' , 'batch_no' , 'manufacturer as mfg' , 'group' , 'expiry as exp' , 'item_code' , 'selling_price as mrp' , 'composition' , 'is_pres_required')->where ('item_name' , 'LIKE' , $name . "%")->orderBy ('composition' , $order)->where ('is_delete' , '=' , 0)->paginate (30);
+			$medicines = Medicine::select ('id' , 'item_name as name' , 'batch_no' , 'manufacturer as mfg' , 'group'  , 'item_code' , 'selling_price as mrp' , 'composition' , 'is_pres_required')->where ('item_name' , 'LIKE' , $name . "%")->orderBy ('composition' , $order)->where ('is_delete' , '=' , 0)->paginate (30);
+
+		foreach ($medicines as $key => $value) {
+			$mrp = $this->getSellingPrice($value['item_code']);
+			$value['mrp'] = $mrp;
+			Log::info($value['item_name' . ' : $ ' . $mrp]);
+
+		}
 
 		return Response::json (['medicines' => $medicines->getCollection () , 'link' => $medicines->links ()->render ()]);
 	}
@@ -1580,7 +1939,7 @@ class MedicineController extends BaseController
 	function postUpload()
 	{
 		try {
-
+			// dd(Request::file ('file'));
 			if (!Request::hasFile ('file'))
 				throw new Exception('BAD REQUEST' , 400);
 			$file = Request::file ('file');

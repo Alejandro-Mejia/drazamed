@@ -2,7 +2,15 @@
 @import url('https://fonts.googleapis.com/css?family=Nunito');
 
 // Variables
-@import 'variables';
+// @import 'variables';
 
 // Bootstrap
-@import '~bootstrap/scss/bootstrap';
+// @import '~bootstrap/scss/bootstrap';
+@import "cart.scss";
+@import "drazamed.scss";
+@import "footer.scss";
+@import "header.scss";
+@import "index.scss";
+@import "login.scss";
+@import "pinfo.scss";
+@import "styles.scss";

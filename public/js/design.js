@@ -1,9 +1,55 @@
 var current_item_code="";
+var categories=[];
+var ulclick;
+
+var translate = {
+   activate_account: "@lang('Please activate your account')",
+   enter_user_name: "trans('Please enter user name')",
+   enter_password: "trans('Please enter password')",
+   login_admin: "trans('Please Login from Admin URL')",
+   enter_code:  "trans('Enter your Activation Code')",
+   enter_code_p:  "trans('Enter your activation code')",
+   invalid_login: "trans('Invalid username or password')",
+   deleted_by_admin: "trans('You have been deleted by admin ! Contact support team.')",
+   activation_failed: "trans('Sorry...Activation failed!')",
+   activation_success: "trans('Your account successfully activated')",
+   enter_email: "trans('Please enter the email')",
+   user_not_found: "trans('No User Found !')",
+   check_email: "trans('Please check your email for the reset link!')",
+   old_password: "trans('Please enter old password')",
+   new_password: "trans('Please enter new password')",
+   confirm_password: "trans('Please confirm new password')",
+   invalid_user: "trans('Invalid user details !')",
+   password_changed: "trans('Your passowrd has successfully changed, Please Log in with the new password')",
+   password_not_match: "trans('Sorry...Password not matching! ')",
+};
+
+
+// var lang = new Lang({
+//     messages: source,
+//     locale: 'es',
+//     fallback: 'en'
+// });
+
+
+function trans(key, replace = {})
+{
+    let translation = key.split('.').reduce((t, i) => t[i] || null, window.translations);
+
+    for (var placeholder in replace) {
+        translation = translation.replace(`:${placeholder}`, replace[placeholder]);
+    }
+
+    return translation;
+}
+
+
 
 $(document).ready(function(){
 
         var token = $('#security_token').val();
 
+        getCategories();
 
         if(token != "" || token != 0){
             $('#myModal_change_password').modal({});
@@ -68,9 +114,17 @@ $(document).ready(function(){
         });
 
         $( "#email_input_reg" ).blur(function() {
-        	CheckUsername(this.value);
+            if(($("element").data('bs.modal') || {})._isShown) {
+                CheckUsername(this.value);
+            }
+
         });
 
+
+        /**
+         * Busqueda de Medicamentos por nombre
+         * @param cat= Categoria lab= Laboratorio term= Nombre Medicamento limit= #resultados max
+         */
 		$("#search_medicine").autocomplete({
 		    search: function(event, ui) {
 		        $('.med_search_loader').css('display','block' );
@@ -79,8 +133,9 @@ $(document).ready(function(){
 		        $('.med_search_loader').css('display','none' );
 		    },
 		    source: '/medicine/load-medicine-web/1',
-		    minLength: 0,
+		    minLength: 2,
 		    delay: 0 ,
+            max:10 ,
 
 	        response: function( event, ui ) {
 	         $('.med_search_loader').css('display','none' );
@@ -90,9 +145,42 @@ $(document).ready(function(){
                     console.log("itemCode="+ui.item.item_code);
                     item_code = ui.item.item_code;
                     current_item_code=item_code;
-                    goto_detail_page();
+                    // goto_detail_page();
+                    show_detail_modal(ui.item);
             },
 		}).autocomplete( "instance" )._renderItem = function(ul, item ) {
+            return $( "<li>" )
+                .append( "<div>" + item.label + "</div>" )
+                .appendTo( ul );
+        }
+
+        /**
+         * Busqueda de categorias
+         */
+        $("#search_medicine2").autocomplete({
+            search: function(event, ui) {
+                $('.med_search_loader').css('display','block' );
+            },
+            open: function(event, ui) {
+                $('.med_search_loader').css('display','none' );
+            },
+            source: '/medicine/search-categories/1',
+            minLength: 2,
+            delay: 0 ,
+            max:10 ,
+
+            response: function( event, ui ) {
+             $('.med_search_loader').css('display','none' );
+            },
+
+            select: function (event, ui) {
+                    console.log("itemCat="+ui.item.value);
+                    cat_value = ui.item.value;
+                    show_our_products(cat_value);
+                    // current_item_code=item_code;
+                    // goto_detail_page();
+            },
+        }).autocomplete( "instance" )._renderItem = function(ul, item ) {
             return $( "<li>" )
                 .append( "<div>" + item.label + "</div>" )
                 .appendTo( ul );
@@ -103,7 +191,11 @@ $(document).ready(function(){
 
 
 
-
+    /**
+     * Registro de un nuevo usuario
+     *
+     * @return     {boolean}  { registro exitoso }
+     */
     function user_register()
     {
         var last_type=$("#sel1").val();
@@ -117,7 +209,7 @@ $(document).ready(function(){
         var address = $('#address_input').val();
         var phone = $('#phone_input').val();
 
-        console.log ("UserType:" + user_type);
+        // console.log ("UserType:" + user_type);
 
         if(first_name=="")
 		{
@@ -288,7 +380,7 @@ $(document).ready(function(){
     }
 
 
-// $('#searchButton').on('click', goto_detail_page());
+// $('#searchButton').on('click', show_detail_modal());
 
 
 
@@ -319,20 +411,20 @@ function login()
     var uname=$(".login_mail").val();
     var pwd=$('.login_pass').val();
 
-    console.log ('UName:' + uname);
-    console.log ('UPwd:' + pwd);
+    // console.log ('UName:' + uname);
+    // console.log ('UPwd:' + pwd);
 
     if(uname=="")
     {
         $("#login_name_error").css({"display":"block", "color":"red"});
-        $("#login_name_error").html('Please enter user name');
+        $("#login_name_error").html(translate.enter_user_name);
         return false;
     }
     if(pwd=="")
     {
         $("#login_name_error").hide();
         $("#login_pwd_error").css({"display":"block", "color":"red"});
-        $("#login_pwd_error").html('Please enter password');
+        $("#login_pwd_error").html(translate.enter_password);
         return false;
     }else{
         $("#login_name_error").hide();
@@ -343,12 +435,9 @@ function login()
         url: '/user/user-login/1',
         data: $( "#login_form" ).serialize(),
         datatype: 'json',
-        complete:function(data){
-
-        },
         statusCode:{
             403:function(data){
-               $(".login_msg").html('Please Login from Admin URL');
+               $(".login_msg").html(translate.login_admin);
                 $(".login_msg").css({"display":"block"});
                 $(".login_msg").delay(5000).fadeOut("slow");
             }
@@ -356,12 +445,12 @@ function login()
         success: function (data) {
 	        var status=data[0].result.status;
 	        var page=data[0].result.page;
-
+            console.log("Status:"+ data);
             if(status=='pending')
             {
                 var mail=$('.login_mail').val();
 
-                 $(".login_msg").html('Please activate your account');
+                 $(".login_msg").html("Por favor active su cuenta, le hemos enviado un email con instrucciones");
                  $(".login_msg").css({"display":"block"});
                  $(".login_msg").delay(5000).fadeOut("slow");
 
@@ -403,35 +492,38 @@ function login()
 
 
 }
-function activate_user()
-{
-var activation_code=$('#activation_code').val();
-var login_mail=$('#hidden_user_id').val();
+
+/**
+ * Activacion de un usuario
+ */
+function activate_user() {
+    var activation_code=$('#activation_code').val();
+    var login_mail=$('#hidden_user_id').val();
 
 
-$.ajax({
-            type: "POST",
-            url: '/user/activate-account',
-            data: 'email='+login_mail+'&security_code='+activation_code,
-            datatype: 'json',
-            error:function (xhr, ajaxOptions, thrownError){
-                    $(".login_msg").html('Sorry...Activation failed! ');
-                    $(".login_msg").css({"display":"block"});
-                    $(".login_msg").delay(5000).fadeOut("slow");
-            },
-            success: function (data) {
-                    $(".login_msg").html('Your account successfully activated ');
-                    $(".login_msg").css({"display":"block"});
-                    $(".login_msg").delay(5000).fadeOut("slow");
-                    location.reload();
-            }
-          });
+    $.ajax({
+        type: "POST",
+        url: '/user/activate-account',
+        data: 'email='+login_mail+'&security_code='+activation_code,
+        datatype: 'json',
+        error:function (xhr, ajaxOptions, thrownError){
+                $(".login_msg").html('Sorry...Activation failed! ');
+                $(".login_msg").css({"display":"block"});
+                $(".login_msg").delay(5000).fadeOut("slow");
+        },
+        success: function (data) {
+                $(".login_msg").html('Your account successfully activated ');
+                $(".login_msg").css({"display":"block"});
+                $(".login_msg").delay(5000).fadeOut("slow");
+                location.reload();
+        }
+        });
 
 }
 
-    /**
-     * Reset Forgot Password
-     */
+/**
+ * Reset Forgot Password
+ */
 function forgot_password(){
 
     if(!$('#forgot_email').val()){
@@ -454,65 +546,74 @@ function forgot_password(){
         }
     })
 }
-function change_password()
-{
-var email=$('#change_email').val();
-var token = $("#security_token").val();
-var new_password=$('#new_password').val();
-var re_password=$('#re_password').val();
-if(email=="")
-{
-    $(".change_pass_msg").css({"display":"block", "color":"red"});
-    $(".change_pass_msg").html('Please enter old password');
-    return false;
-}
-if(new_password=="")
-{
-    $(".change_pass_msg").css({"display":"block", "color":"red"});
-    $(".change_pass_msg").html('Please enter new password');
-    return false;
-}
-if(re_password=="")
-{
-    $(".change_pass_msg").css({"display":"block", "color":"red"});
-    $(".change_pass_msg").html('Please confirm new password');
-    return false;
-}
- if(new_password==re_password)
- {
-  $.ajax({
-    type:"POST",
-    url:'/user/reset-password',
-    data:"new_password="+new_password+"&re_password="+re_password+"&email="+email+"&security_code="+token,
-    dataType:'JSON',
-    statusCode:{
-        401:function(data){
-                $(".change_pass_msg").css({"display":"block", "color":"red"});
-                $(".change_pass_msg").html('Invalid user details !');
-        }
-    },
-    success:function(data){
-             $(".change_pass_msg").css({"display":"block", "color":"green"});
-             $(".change_pass_msg").html('Your passowrd has successfully changed, Please Log in with the new password');
-             setTimeout(function(e){
-             $('#myModal_change_password').modal('hide');
-             $('#myModal').modal('show');
-             },2000);
+
+
+/**
+ * Change password
+ *
+ * @return     {boolean}  { description_of_the_return_value }
+ */
+function change_password() {
+    var email=$('#change_email').val();
+    var token = $("#security_token").val();
+    var new_password=$('#new_password').val();
+    var re_password=$('#re_password').val();
+    if(email=="")
+    {
+        $(".change_pass_msg").css({"display":"block", "color":"red"});
+        $(".change_pass_msg").html('Please enter old password');
+        return false;
     }
+    if(new_password=="")
+    {
+        $(".change_pass_msg").css({"display":"block", "color":"red"});
+        $(".change_pass_msg").html('Please enter new password');
+        return false;
+    }
+    if(re_password=="")
+    {
+        $(".change_pass_msg").css({"display":"block", "color":"red"});
+        $(".change_pass_msg").html('Please confirm new password');
+        return false;
+    }
+    if(new_password==re_password)
+    {
+        $.ajax({
+        type:"POST",
+        url:'/user/reset-password',
+        data:"new_password="+new_password+"&re_password="+re_password+"&email="+email+"&security_code="+token,
+        dataType:'JSON',
+        statusCode:{
+            401:function(data){
+                    $(".change_pass_msg").css({"display":"block", "color":"red"});
+                    $(".change_pass_msg").html('Invalid user details !');
+            }
+        },
+        success:function(data){
+                 $(".change_pass_msg").css({"display":"block", "color":"green"});
+                 $(".change_pass_msg").html('Your passowrd has successfully changed, Please Log in with the new password');
+                 setTimeout(function(e){
+                 $('#myModal_change_password').modal('hide');
+                 $('#myModal').modal('show');
+                 },2000);
+        }
 
-  });
+        });
 
- }
- else
- {
+    }
+    else
+    {
 
-  $(".change_pass_msg").html('Sorry...Password not matching! ');
-  $(".change_pass_msg").css({"display":"block"});
-  $(".change_pass_msg").delay(5000).fadeOut("slow");
+        $(".change_pass_msg").html('Sorry...Password not matching! ');
+        $(".change_pass_msg").css({"display":"block"});
+        $(".change_pass_msg").delay(5000).fadeOut("slow");
 
- }
+    }
 }
 
+/**
+ * Va la pagina de los datos del producto
+ */
 function goto_detail_page()
 {
     var name=$(".search_medicine").val();
@@ -545,3 +646,214 @@ function goto_detail_page()
 
     }
 }
+
+/**
+ * Va la pagina de los datos del producto
+ */
+function show_detail_modal(data)
+{
+    console.log(data);
+    $.ajax({
+        type: "GET",
+        url: '/medicine/search-medicine/1',
+        data:'term='+data.value,
+        success: function (data) {
+            console.log(data.result.msg[0]);
+            $('#hidden_medicine_id').val(data.result.msg[0].id);
+            $('#hidden_item_code').val(data.result.msg[0].item_code);
+            $('#hidden_item_pres_required').val(data.result.msg[0].is_pres_required);
+            $('#hidden_selling_price').val(data.result.msg[0].mrp);
+            $('#pi-med-name').empty().append(data.result.msg[0].name);
+            $('#pi-med-composition').empty().append(data.result.msg[0].composition);
+            $('#pi-med-comby').val(data.result.msg[0].lab);
+            $('#pi-med-form').val( (data.result.msg[0].is_pres_required)? 'RX' : 'Opcional');
+            $('#pi-med-typm').val(data.result.msg[0].group);
+            $('#pi-med-price-unit').val(data.result.msg[0].mrp)
+            $('#pi-med-price').val('$ ' + (data.result.msg[0].mrp * $('#pi-med-quantity').val()).toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1."));
+
+            $('#pinfo-modal').modal('show');
+
+        }
+    });
+
+
+}
+
+
+function show_our_products(cat = null)
+{
+    console.log('Categoria:'+cat);
+
+        $.ajax({
+            url: 'medicine/search-medicine/1',
+            data: 'cat='+cat+'&lab=icom',
+            type: 'GET',
+            async: false,
+            datatype: 'JSON',
+            success: function (data) {
+                console.log('Productos:')
+                console.log(data);
+                $('#med-list').empty();
+                // $('#med-list').append('<div class="col-lg-12 col-md-12 col-sm12"><h4> Productos Recomendados </h4></div>')
+                $.each(data.result.msg,function(i,item){
+                    console.log(item)
+                    $('#med-list').append(
+                       '<div class="med">'+
+                       '    <div class="row">'+
+                       '        <div class="col-md-4">'+
+                       '            <img class="med-thumbnail" src="/assets/images/dolex.png" alt="">'+
+                       '        </div>'+
+                       '        <div class="col-md-8">'+
+                       '            <h5 class="med-title">'+ item.name +'</h5>'+
+                       '            <p class="med-description"> ' + item.composition +  ' </p>'+
+                       '            <p class="med-mrp" style="text-align:right; font-size:2e; color:green">  $' + item.mrp +  ' </p>'+
+                       '        </div>'+
+                       '    </div>'+
+                       '</div>'
+                    );
+                })
+            }
+        });
+
+        $.ajax({
+            url: 'medicine/search-medicine/1',
+            data: 'cat='+cat,
+            type: 'GET',
+            datatype: 'JSON',
+            success: function (data) {
+                console.log('Productos:')
+                console.log(data);
+                // $('#med-list').empty();
+                // $('#med-list').append('<div class="col-lg-12 col-md-12 col-sm12"><h4> Todos los Productos </h4></div>')
+                $.each(data.result.msg,function(i,item){
+                    console.log(item)
+                    $('#med-list').append(
+                       '<div class="med">'+
+                       '    <div class="row">'+
+                       '        <div class="col-md-4">'+
+                       '            <img class="med-thumbnail" src="/assets/images/dolex.png" alt="">'+
+                       '        </div>'+
+                       '        <div class="col-md-8">'+
+                       '            <h5 class="med-title">'+ item.name +'</h5>'+
+                       '            <p class="med-description"> ' + item.composition +  ' </p>'+
+                       '            <p class="med-mrp" style="text-align:right; font-size:2e; color:green">  $' + item.mrp +  ' </p>'+
+                       '        </div>'+
+                       '    </div>'+
+                       '</div>'
+                    );
+                })
+            }
+        });
+
+
+}
+
+
+$('#catList').on('click', 'li', function(e) {
+    //alert($(this).html());
+    console.log("itemCat="+$(this).html());
+    cat_value = $(this).html();
+    show_our_products(cat_value);
+});
+
+
+$(".btn-profile").on('click', function(){
+    window.location="account-page/";
+})
+
+
+function getCategories() {
+    $.ajax({
+        type: "GET",
+        url: '/medicine/load-medicine-cats/1',
+        success: function (data) {
+            // console.log(data);
+            $.each(data[0].result.msg, function(i,value){
+                $("#catList").append('<li>' + value.group + '</li>');
+            })
+            categories = data;
+
+        }
+    });
+}
+
+
+$('.add_to_cart').click(function(){
+
+var hidden_medicine=$('#pi-med-name').html();
+var med_quantity=$('#pi-med-quantity').val();
+var hidden_item_code=$('#hidden_item_code').val();
+var hidden_selling_price=$('#hidden_selling_price').val();
+var hidden_pres_item =$('#hidden_item_pres_required').val();
+var _token=$('#_token').val();
+
+var id=$('#hidden_medicine_id').val();
+
+console.log('SellingPrice:' + $('#hidden_selling_price').val());
+
+if(med_quantity.length>0 && med_quantity >0 )
+{
+    $.ajax({
+        type: "GET",
+        url: 'medicine/add-cart/0',
+        data: "id="+id+"&medicine="+hidden_medicine+"&med_quantity="+med_quantity+"&hidden_item_code="+hidden_item_code+"&hidden_selling_price="+hidden_selling_price+"&_token="+_token+"&pres_required="+hidden_pres_item,
+        datatype: 'json',
+        complete:function(data){
+
+        },
+        success: function (data) {
+            if(data==0)
+            {
+             $('#loginModal').click();
+            }
+            if(data=="updated")
+            {
+            $('.med_detailes_alert').css('display', 'block' );
+            $(".med_detailes_alert").html("Your cart has been successfully updated.");
+            $(".med_detailes_alert").delay(5000).fadeOut("slow");
+
+
+            // alert("your order is updated");
+            }
+            if(data=="inserted")
+            {
+                $('.med_detailes_alert').css('display', 'block' );
+                $(".med_detailes_alert").html("Your cart has been successfully updated.");
+                $(".med_detailes_alert").delay(5000).fadeOut("slow");
+                window.location="my-cart/";
+            }
+        }
+    });
+}
+else
+{
+    $('.w_med_detailes_alert').css('display', 'block' );
+    $(".w_med_detailes_alert").html("Please Fill quantity field");
+    $(".w_med_detailes_alert").delay(3000).fadeOut("slow");
+}
+
+});
+
+function hideLoginModal() {
+    $("#login-modal").modal("hide");
+}
+
+function hideRegisterModal() {
+    $("#register-modal").modal("hide");
+    $("#login-modal").modal("show");
+}
+
+function openProductInfoModal(product) {
+    $("#pinfo-modal").modal("show");
+    console.log("modal abierto");
+}
+
+(function() {
+    //const meds = document.getElementsByClassName("med");
+    $(".med").click(el => {
+        openProductInfoModal(el);
+    });
+})();
+
+
+
