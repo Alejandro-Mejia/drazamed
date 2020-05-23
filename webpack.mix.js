@@ -11,8 +11,21 @@ let mix = require('laravel-mix');
  |
  */
 
+
+mix.js("resources/js/app.js", "public/js")
+    .sass("resources/sass/app.scss", "public/css")
+    .sass("resources/sass/header.scss", "public/css")
+    .sass("resources/sass/index.scss", "public/css")
+    .sass("resources/sass/footer.scss", "public/css")
+    .sass("resources/sass/login.scss", "public/css")
+    .sass("resources/sass/drazamed.scss", "public/css")
+    .sass("resources/sass/search-form.scss", "public/css")
+    .sass("resources/sass/pinfo.scss", "public/css")
+    .sass("resources/sass/cart.scss", "public/css")
+    .sass("resources/sass/contact.scss", "public/css");
+
 // mix.js('src/app.js', 'dist/').sass('src/app.scss', 'dist/');
-mox.sass('resources/sass/app.scss', 'src/app/webroot/css');
+mix.sass('resources/sass/app.scss', 'src/app/webroot/css');
 
 // Full API
 // mix.js(src, output);
@@ -51,3 +64,4 @@ mox.sass('resources/sass/app.scss', 'src/app/webroot/css');
 //   terser: {}, // Terser-specific options. https://github.com/webpack-contrib/terser-webpack-plugin#options
 //   postCss: [] // Post-CSS options: https://github.com/postcss/postcss/blob/master/docs/plugins.md
 // });
+

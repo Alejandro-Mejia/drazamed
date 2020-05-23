@@ -270,7 +270,7 @@ Route::any('/logout', function () {
 
 // Contact Us
 Route::get('/contact', function () {
-    return View::make('/users/contact');
+    return view('design.contact');
 });
 // Help Desk
 Route::get('/help-desk', function () {
