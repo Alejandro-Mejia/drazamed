@@ -1,6 +1,7 @@
 <?php
     namespace App;
     use Illuminate\Database\Eloquent\Model;
+
     class Invoice extends Model
     {
         protected $table = 'invoice';
@@ -29,7 +30,7 @@
          */
         public function unverifiedPrescription()
         {
-            return $this->hasOne('App\rescription', 'id', 'pres_id')->where('status', '=', PrescriptionStatus::UNVERIFIED())->first();
+            return $this->hasOne('App\Prescription', 'id', 'pres_id')->where('status', '=', PrescriptionStatus::UNVERIFIED())->first();
         }
 
         /**

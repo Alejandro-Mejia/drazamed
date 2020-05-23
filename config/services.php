@@ -25,8 +25,8 @@ return [
     ],
 
     'ses' => [
-        'key' => env('AKIATCMG66637CWVMJPH'),
-        'secret' => env('BCV0B32dlwclfRaryJ+2gSUJ+356u72C40qm9JxHuVMC'),
+        'key' => env('SES_KEY', 'AKIATCMG66637CWVMJPH'),
+        'secret' => env('BCV0B32dlwclfRaryJ+2gSUJ+356u72C40qm9JxHuVMC', 'BCV0B32dlwclfRaryJ+2gSUJ+356u72C40qm9JxHuVMC'),
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 

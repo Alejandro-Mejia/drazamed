@@ -141,7 +141,7 @@
                     </div>
 
                     <div class="login-fields">
-                                <input type="checkbox" class="checkbox accept_terms" id="agree" checked="true" /> <label>{{ __('I am above 18 years of age and I accept all terms and conditions')}}</label>
+                                <input type="checkbox" class="checkbox accept_terms" id="agree" checked="false" /> <label>{{ __('I am above 18 years of age and I accept all terms and conditions')}}</label>
                             </div>
                     <button type="button" class="mt-5 login-btn" id="register"  data-color="#82DCDF" onclick="user_register()">
                         Registrarme

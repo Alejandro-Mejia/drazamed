@@ -178,10 +178,17 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+        App\Providers\TranslationServiceProvider::class,
+
+
+
         Collective\Html\HtmlServiceProvider::class,
 
         // Mercado Pago
         MercadoPagoLaravel\Providers\MercadoPagoServiceProvider::class,
+
+        // JS translations
+        Mariuzzo\LaravelJsLocalization\LaravelJsLocalizationServiceProvider::class,
 
 
 

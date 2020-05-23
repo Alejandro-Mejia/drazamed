@@ -19,11 +19,18 @@
                         <h3 class="pi-title" id="pi-med-name">
                             Dolex 500mg 20 tabletas
                         </h3>
-                        <p>
+                        <p id="pi-med-composition">
                             Lorem ipsum dolor sit amet, consectetur adipiscing
                             elit, sed do eiusmod tempor incididunt ut labore et
                             dolore magna aliqua.
                         </p>
+
+                        <!-- Hidden inputs for special data -->
+                        <input type="hidden" id="hidden_selling_price" value="">
+                        <input type="hidden" id="hidden_medicine_id" value="">
+                        <input type="hidden" id="hidden_item_code" value="">
+                        <input type="hidden" id="hidden_item_pres_required" value="">
+                        <input type="hidden" id="_token" name="_token" value="<?php echo csrf_token(); ?>">
 
                         <div class="row mt-5">
                             <div class="col">
@@ -100,24 +107,33 @@
                                     type="number"
                                 />
                             </div>
+                            <div class="col" hidden>
+                                <h4 class="pi-title">Precio Unit</h4>
+                                <input
+                                    readonly
+                                    id="pi-med-price-unit"
+                                    class="pi-input-border"
+                                    type="number"
+                                />
+                            </div>
                             <div class="col">
                                 <h4 class="pi-title">Precio Total</h4>
                                 <input
                                     readonly
                                     id="pi-med-price"
                                     class="pi-input-border"
-                                    type="number"
+                                    type="text"
                                 />
                             </div>
                             <div class="col">
-                                <button class="dra-button">
+                                <button class="dra-button add_to_cart">
                                     Añadir al Carrito
                                 </button>
                             </div>
                         </div>
                     </div>
 
-                    <h2 class="pi-title">Alternativas</h2>
+                    <!-- <h2 class="pi-title">Alternativas</h2>
                     <div class="dra-divider mb-4"></div>
                     <div class="row">
                         <div class="col-6">
@@ -159,7 +175,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> -->
             </div>
         </div>
     </div>

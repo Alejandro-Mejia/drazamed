@@ -36,6 +36,12 @@ use App\MercadoPago\SDK;
     //     $admin = Admin::find(1);
     //     var_dump($admin->user_details()->first());
     // });
+//
+//
+
+    Route::get('testEmail', function () {
+          Mail::to('alejomejia1@gmail.com')->send(new TestAmazonSes("It works!"));
+    });
 
     Route::get('/admin-login', function () {
         return View::make('admin.signin');
@@ -44,6 +50,7 @@ use App\MercadoPago\SDK;
      * General Routes
      */
     Route::get('/my-cart', 'MedicineController@getMyCart');
+    Route::get('/my-cart1', 'MedicineController@getMyCart1');
     Route::get('/my-prescription/{option?}', 'MedicineController@getMyPrescription');
     Route::get('/paid-prescription', 'MedicineController@getPaidPrescription');
     Route::get('/my-order', 'MedicineController@getMyOrder');
@@ -68,6 +75,11 @@ use App\MercadoPago\SDK;
     Route::post('/medicine/add-new-medicine', 'MedicineController@postAddNewMedicine');
     Route::post('/medicine/upload', 'MedicineController@postUpload');
     Route::any('/medicine/load-medicine-web/{is_web}', 'MedicineController@anyLoadMedicineWeb');
+    Route::any('/medicine/load-medicine/{is_web}', 'MedicineController@anyLoadMedicine');
+    Route::any('/medicine/search-medicine/{is_web}', 'MedicineController@anySearchMedicine');
+    Route::any('/medicine/search-categories/{is_web}', 'MedicineController@anySearchCategories');
+    Route::any('/medicine/load-medicine-cats/{is_web}', 'MedicineController@anyLoadMedicineCategories');
+    Route::any('/medicine/load-medicine-labs/{is_web}', 'MedicineController@anyLoadMedicineLabs');
     Route::any('/medicine/add-cart/{is_web}', 'MedicineController@anyAddCart');
     Route::any('/medicine/remove-from-cart/{item_id}', 'MedicineController@anyRemoveFromCart');
     Route::any('/medicine/load-sub-medicine', 'MedicineController@anyLoadSubMedicine');
@@ -80,10 +92,15 @@ use App\MercadoPago\SDK;
     Route::any('/medicine/create-order/{invoice}/{request}', 'MedicineController@anyCreateOrder');
     Route::any('/medicine/audit-database', 'MedicineController@anyAuditDatabase');
     Route::any('/medicine/update-cart', 'MedicineController@anyUpdateCart');
+    Route::get('/medicine/medicine-list-from-name', 'MedicineController@getMedicineListFromName');
+    Route::get('/medicine/selling-price/{item_code}', 'MedicineController@getSellingPrice');
 
     /**
      * Admin routes
      */
+
+    Route::get('/admin/import', 'MedicineController@import');
+
     Route::any('/admin/login', 'AdminController@anyLogin');
     Route::get('/admin/dashboard', 'AdminController@getDashboard');
     Route::get('/admin/load-invoice/{id}', 'AdminController@getLoadInvoice');
@@ -111,6 +128,12 @@ use App\MercadoPago\SDK;
     Route::post('/admin/update-invoice', 'AdminController@postUpdateInvoice');
     Route::post('/admin/pay-invoice', 'AdminController@postUpdateInvoice');
 
+
+
+    /**
+     * PriceRules
+     */
+    Route::get('/pricerules/get-by-lab/{searched_lab}', 'PricerulesController@getLabPriceRule');
 
     /**
      * Settings routes
@@ -264,7 +287,6 @@ Route::get('payment/failure', function () {
 Route::get('/about', function () {
     return View::make('/users/about');
 });
-
 
 // Landing page route
 Route::get('/', function () {
