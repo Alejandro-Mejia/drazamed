@@ -1,0 +1,52 @@
+.contact-section {
+    margin-top: 90px;
+    padding: 60px 0;
+    background-color: #FAFAF8;
+
+    .contact-content {
+        width: 70%;
+        margin: 0 auto;
+    }
+
+    .panel {
+        background-color: #fff;
+        padding: 40px;
+        border-radius: 20px;
+
+        .panel-title {
+            font-family: "louis_george_cafe";
+            font-weight: 600;
+        }
+
+        .panel-icon {
+            width: 50px;
+        }
+
+        .panel-form {
+            box-shadow: 2px 2px 5px 0px rgba(201, 201, 201, 1);
+            padding: 20px 20px;
+            border-radius: 20px;
+            word-wrap: break-word !important;
+
+            .panel-label {
+                display: block;
+            }
+
+            .panel-input {
+                width: 100%;
+                border: 1px solid #eee;
+                border-radius: 0;
+                padding: 6px 15px;
+                transition: 0.15s ease-in-out;
+            }
+
+            .panel-input:focus {
+                border-color: #0038E3;
+            }
+
+            .panel-textarea {
+                resize: none;
+            }
+        }
+    }
+}
