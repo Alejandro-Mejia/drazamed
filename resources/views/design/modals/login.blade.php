@@ -1,3 +1,7 @@
+<script>
+    window.translations = {!! Cache::get('translations') !!};
+</script>
+
 <div
     class="modal fade"
     id="login-modal"
@@ -16,22 +20,44 @@
                         <label for="email-input">Correo Electrónico</label>
                         <input
                             type="email"
-                            class="form-control input-modal login_mail"
+                            class="form-control input-modal login_mail @error('email') is-invalid @enderror"
                             id="email-input"
                             name="email"
                             placeholder="Ingrese su correo electrónico"
                         />
+                        @error('email')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
                     </div>
                     <div class="form-group">
                         <label for="pwd-input">Contraseña</label>
                         <input
                             type="password"
-                            class="form-control input-modal login_pass"
+                            class="form-control input-modal login_pass @error('password') is-invalid @enderror"
                             id="pwd-input"
                             name="password"
                             placeholder="Ingrese su contraseña"
                         />
+                        @error('password')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
                     </div>
+                    <div class="form-group row">
+                        <div class="col-md-6 ">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
+
+                                <label class="form-check-label" for="remember">
+                                    {{ __('Remember Me') }}
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="alert alert-danger login_msg" style="display: none; text-align: center"></div>
                     <button type="button" class="mt-5 login-btn" onclick='login()'>
                         Iniciar Sesión
                     </button>
