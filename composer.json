@@ -21,6 +21,7 @@
         "laravel/tinker": "^2.0",
         "laravelcollective/html": "^6.1",
         "maatwebsite/excel": "^3.1",
+        "mariuzzo/laravel-js-localization": "^1.6",
         "mercadopago/dx-php": "2.0.0",
         "mews/captcha": "^3.1",
         "rodggall/mercadopago": "@dev",

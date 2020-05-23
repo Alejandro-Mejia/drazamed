@@ -2,6 +2,42 @@ var current_item_code="";
 var categories=[];
 var ulclick;
 
+var translate = {
+   activate_account: "@lang('Please activate your account')",
+   enter_user_name: "trans('Please enter user name')",
+   enter_password: "trans('Please enter password')",
+   login_admin: "trans('Please Login from Admin URL')",
+   enter_code:  "trans('Enter your Activation Code')",
+   enter_code_p:  "trans('Enter your activation code')",
+   invalid_login: "trans('Invalid username or password')",
+   deleted_by_admin: "trans('You have been deleted by admin ! Contact support team.')",
+   activation_failed: "trans('Sorry...Activation failed!')",
+   activation_success: "trans('Your account successfully activated')",
+   enter_email: "trans('Please enter the email')",
+   user_not_found: "trans('No User Found !')",
+   check_email: "trans('Please check your email for the reset link!')",
+   old_password: "trans('Please enter old password')",
+   new_password: "trans('Please enter new password')",
+   confirm_password: "trans('Please confirm new password')",
+   invalid_user: "trans('Invalid user details !')",
+   password_changed: "trans('Your passowrd has successfully changed, Please Log in with the new password')",
+   password_not_match: "trans('Sorry...Password not matching! ')",
+};
+
+
+function trans(key, replace = {})
+{
+    let translation = key.split('.').reduce((t, i) => t[i] || null, window.translations);
+
+    for (var placeholder in replace) {
+        translation = translation.replace(`:${placeholder}`, replace[placeholder]);
+    }
+
+    return translation;
+}
+
+
+
 $(document).ready(function(){
 
         var token = $('#security_token').val();
@@ -71,7 +107,10 @@ $(document).ready(function(){
         });
 
         $( "#email_input_reg" ).blur(function() {
-        	CheckUsername(this.value);
+            if(($("element").data('bs.modal') || {})._isShown) {
+                CheckUsername(this.value);
+            }
+
         });
 
 
@@ -163,7 +202,7 @@ $(document).ready(function(){
         var address = $('#address_input').val();
         var phone = $('#phone_input').val();
 
-        console.log ("UserType:" + user_type);
+        // console.log ("UserType:" + user_type);
 
         if(first_name=="")
 		{
@@ -365,20 +404,20 @@ function login()
     var uname=$(".login_mail").val();
     var pwd=$('.login_pass').val();
 
-    console.log ('UName:' + uname);
-    console.log ('UPwd:' + pwd);
+    // console.log ('UName:' + uname);
+    // console.log ('UPwd:' + pwd);
 
     if(uname=="")
     {
         $("#login_name_error").css({"display":"block", "color":"red"});
-        $("#login_name_error").html('Please enter user name');
+        $("#login_name_error").html(translate.enter_user_name);
         return false;
     }
     if(pwd=="")
     {
         $("#login_name_error").hide();
         $("#login_pwd_error").css({"display":"block", "color":"red"});
-        $("#login_pwd_error").html('Please enter password');
+        $("#login_pwd_error").html(translate.enter_password);
         return false;
     }else{
         $("#login_name_error").hide();
@@ -389,12 +428,9 @@ function login()
         url: '/user/user-login/1',
         data: $( "#login_form" ).serialize(),
         datatype: 'json',
-        complete:function(data){
-
-        },
         statusCode:{
             403:function(data){
-               $(".login_msg").html('Please Login from Admin URL');
+               $(".login_msg").html(translate.login_admin);
                 $(".login_msg").css({"display":"block"});
                 $(".login_msg").delay(5000).fadeOut("slow");
             }
@@ -402,12 +438,12 @@ function login()
         success: function (data) {
 	        var status=data[0].result.status;
 	        var page=data[0].result.page;
-
+            console.log("Status:"+ data);
             if(status=='pending')
             {
                 var mail=$('.login_mail').val();
 
-                 $(".login_msg").html('Please activate your account');
+                 $(".login_msg").html("Por favor active su cuenta, le hemos enviado un email con instrucciones");
                  $(".login_msg").css({"display":"block"});
                  $(".login_msg").delay(5000).fadeOut("slow");
 
@@ -714,6 +750,11 @@ $('#catList').on('click', 'li', function(e) {
 });
 
 
+$(".btn-profile").on('click', function(){
+    window.location="account-page/";
+})
+
+
 function getCategories() {
     $.ajax({
         type: "GET",
@@ -806,3 +847,6 @@ function openProductInfoModal(product) {
         openProductInfoModal(el);
     });
 })();
+
+
+
