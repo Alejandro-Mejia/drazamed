@@ -73,8 +73,8 @@
                                  <th class="text-right text-align-responsive">{{ __('Unit Price')}}</th>
                                  <th class="text-right text-align-responsive">{{ __('Quantity')}}</th>
                                  <th class="text-right text-align-responsive">{{ __('Sub Total')}}</th>
-                                 <th class="text-right text-align-responsive">{{ __('Unit Disc')}}</th>
-                                 <th class="text-right text-align-responsive">{{ __('Discount')}}</th>
+                                 <!-- <th class="text-right text-align-responsive">{{ __('Unit Disc')}}</th> -->
+                                 <!-- <th class="text-right text-align-responsive">{{ __('Discount')}}</th> -->
                                  <th class="text-right text-align-responsive">{{ __('Total Price')}}</th>
                              </tr>
                              </thead>
@@ -85,8 +85,8 @@
                                  <td class="text-right text-align-responsive">{{ number_format($cart->unit_price,2)}}</td>
                                  <td class="text-right text-align-responsive">{{ $cart->quantity}}</td>
                                  <td class="text-right text-align-responsive">{{ number_format($cart->unit_price * $cart->quantity,2)}}</td>
-                                 <td class="text-right text-align-responsive">{{ number_format($cart->discount_percentage,2)}}</td>
-                                 <td class="text-right text-align-responsive">{{ number_format($cart->discount,2)}}</td>
+                                 <!-- <td class="text-right text-align-responsive">{{ number_format($cart->discount_percentage,2)}}</td> -->
+                                 <!-- <td class="text-right text-align-responsive">{{ number_format($cart->discount,2)}}</td> -->
                                  <td class="text-right text-align-responsive">{{ Setting::currencyFormat($cart->total_price)}}</td>
                              </tr>
                              @endforeach

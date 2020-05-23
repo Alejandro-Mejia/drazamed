@@ -20,6 +20,9 @@ try {
  */
 
 window.axios = require('axios');
+window.lang = require('lang.js');
+window.mox = require('mox');
+
 
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
