@@ -49939,6 +49939,17 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/sass/contact.scss":
+/*!*************************************!*\
+  !*** ./resources/sass/contact.scss ***!
+  \*************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+
 /***/ "./resources/sass/drazamed.scss":
 /*!**************************************!*\
   !*** ./resources/sass/drazamed.scss ***!
@@ -50017,22 +50028,23 @@ __webpack_require__.r(__webpack_exports__);
 /***/ }),
 
 /***/ 0:
-/*!*******************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** multi ./resources/js/app.js ./resources/sass/app.scss ./resources/sass/header.scss ./resources/sass/index.scss ./resources/sass/footer.scss ./resources/sass/login.scss ./resources/sass/drazamed.scss ./resources/sass/search-form.scss ./resources/sass/pinfo.scss ./resources/sass/cart.scss ***!
-  \*******************************************************************************************************************************************************************************************************************************************************************************************************/
+/*!*************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** multi ./resources/js/app.js ./resources/sass/app.scss ./resources/sass/header.scss ./resources/sass/index.scss ./resources/sass/footer.scss ./resources/sass/login.scss ./resources/sass/drazamed.scss ./resources/sass/search-form.scss ./resources/sass/pinfo.scss ./resources/sass/cart.scss ./resources/sass/contact.scss ***!
+  \*************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! D:\xampp.v2\htdocs\drazamed\drazamed\resources\js\app.js */"./resources/js/app.js");
-__webpack_require__(/*! D:\xampp.v2\htdocs\drazamed\drazamed\resources\sass\app.scss */"./resources/sass/app.scss");
-__webpack_require__(/*! D:\xampp.v2\htdocs\drazamed\drazamed\resources\sass\header.scss */"./resources/sass/header.scss");
-__webpack_require__(/*! D:\xampp.v2\htdocs\drazamed\drazamed\resources\sass\index.scss */"./resources/sass/index.scss");
-__webpack_require__(/*! D:\xampp.v2\htdocs\drazamed\drazamed\resources\sass\footer.scss */"./resources/sass/footer.scss");
-__webpack_require__(/*! D:\xampp.v2\htdocs\drazamed\drazamed\resources\sass\login.scss */"./resources/sass/login.scss");
-__webpack_require__(/*! D:\xampp.v2\htdocs\drazamed\drazamed\resources\sass\drazamed.scss */"./resources/sass/drazamed.scss");
-__webpack_require__(/*! D:\xampp.v2\htdocs\drazamed\drazamed\resources\sass\search-form.scss */"./resources/sass/search-form.scss");
-__webpack_require__(/*! D:\xampp.v2\htdocs\drazamed\drazamed\resources\sass\pinfo.scss */"./resources/sass/pinfo.scss");
-module.exports = __webpack_require__(/*! D:\xampp.v2\htdocs\drazamed\drazamed\resources\sass\cart.scss */"./resources/sass/cart.scss");
+__webpack_require__(/*! /home/astagg/work/project-drazamed/drazamed/resources/js/app.js */"./resources/js/app.js");
+__webpack_require__(/*! /home/astagg/work/project-drazamed/drazamed/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /home/astagg/work/project-drazamed/drazamed/resources/sass/header.scss */"./resources/sass/header.scss");
+__webpack_require__(/*! /home/astagg/work/project-drazamed/drazamed/resources/sass/index.scss */"./resources/sass/index.scss");
+__webpack_require__(/*! /home/astagg/work/project-drazamed/drazamed/resources/sass/footer.scss */"./resources/sass/footer.scss");
+__webpack_require__(/*! /home/astagg/work/project-drazamed/drazamed/resources/sass/login.scss */"./resources/sass/login.scss");
+__webpack_require__(/*! /home/astagg/work/project-drazamed/drazamed/resources/sass/drazamed.scss */"./resources/sass/drazamed.scss");
+__webpack_require__(/*! /home/astagg/work/project-drazamed/drazamed/resources/sass/search-form.scss */"./resources/sass/search-form.scss");
+__webpack_require__(/*! /home/astagg/work/project-drazamed/drazamed/resources/sass/pinfo.scss */"./resources/sass/pinfo.scss");
+__webpack_require__(/*! /home/astagg/work/project-drazamed/drazamed/resources/sass/cart.scss */"./resources/sass/cart.scss");
+module.exports = __webpack_require__(/*! /home/astagg/work/project-drazamed/drazamed/resources/sass/contact.scss */"./resources/sass/contact.scss");
 
 
 /***/ })

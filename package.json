@@ -25,6 +25,7 @@
     },
     "dependencies": {
         "@fortawesome/fontawesome-free": "^5.13.0",
-        "node-sass": "^4.13.1"
+        "flexboxgrid": "^6.3.1",
+        "node-sass": "^4.14.1"
     }
 }
