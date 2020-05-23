@@ -13,6 +13,8 @@ try {
     require('bootstrap');
 } catch (e) {}
 
+
+import 'jquery-ui/ui/widgets/autocomplete.js';
 /**
  * We'll load the axios HTTP library which allows us to easily issue requests
  * to our Laravel back-end. This library automatically handles sending the
@@ -21,7 +23,9 @@ try {
 
 window.axios = require('axios');
 window.lang = require('lang.js');
-window.mox = require('mox');
+
+
+// import 'jquery-ui/ui/widgets/datepicker.js';
 
 
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';

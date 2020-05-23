@@ -24,9 +24,6 @@ mix.js("resources/js/app.js", "public/js")
     .sass("resources/sass/cart.scss", "public/css")
     .sass("resources/sass/contact.scss", "public/css");
 
-// mix.js('src/app.js', 'dist/').sass('src/app.scss', 'dist/');
-mix.sass('resources/sass/app.scss', 'src/app/webroot/css');
-
 // Full API
 // mix.js(src, output);
 // mix.react(src, output); <-- Identical to mix.js(), but registers React Babel compilation.

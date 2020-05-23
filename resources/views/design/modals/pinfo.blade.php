@@ -19,7 +19,7 @@
                         <h3 class="pi-title" id="pi-med-name">
                             Dolex 500mg 20 tabletas
                         </h3>
-                        <p id="pi-med-composition">
+                        <p id="pi-med-description">
                             Lorem ipsum dolor sit amet, consectetur adipiscing
                             elit, sed do eiusmod tempor incididunt ut labore et
                             dolore magna aliqua.
@@ -61,14 +61,14 @@
 
                         <div class="row mt-2">
                             <div class="col">
-                                <label class="pi-label" for=""
+                                <label class="pi-med-composition" for=""
                                     >Composición:</label
                                 >
                                 <input
                                     type="text"
-                                    id="pi-med-comps"
+                                    id="pi-med-composition"
                                     class="pi-input"
-                                    value="ACETAMINOFEN"
+                                    value=""
                                     readonly
                                 />
                             </div>
