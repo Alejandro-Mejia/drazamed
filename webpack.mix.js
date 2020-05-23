@@ -20,4 +20,5 @@ mix.js("resources/js/app.js", "public/js")
     .sass("resources/sass/drazamed.scss", "public/css")
     .sass("resources/sass/search-form.scss", "public/css")
     .sass("resources/sass/pinfo.scss", "public/css")
-    .sass("resources/sass/cart.scss", "public/css");
+    .sass("resources/sass/cart.scss", "public/css")
+    .sass("resources/sass/contact.scss", "public/css");

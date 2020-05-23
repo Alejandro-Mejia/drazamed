@@ -79,3 +79,13 @@
   box-shadow: 2px 2px 5px 0px #7e7e7e;
 }
 
+.md-mt-20 {
+  margin-top: 0;
+}
+
+@media (max-width: 1199px) {
+  .md-mt-20 {
+    margin-top: 20px;
+  }
+}
+
