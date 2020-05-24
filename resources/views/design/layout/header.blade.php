@@ -26,7 +26,7 @@
                             }
 
                         ?>
-                        {{ $full_name or ''}}
+                        {{ $full_name ?? '' }}
                     </button>
                 @else
                     <button
