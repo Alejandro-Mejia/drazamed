@@ -166,18 +166,18 @@ class UserController extends BaseController
 					});
 				} else {
 					Mail::send ('emails.register' , array('name' => $full_name , 'user_name' => $email , 'pwd' => $password , 'code' => $randomValue) , function ($message) use ($email) {
-						$message->to ($email)->subject ("{{ __('Activate Account')}}");
+						$message->to ($email)->subject ("{{ __('Activate Account') }}");
 					});
 				}
 
 			}
 			catch (Exception $e) {
-				return Response::make (['status' => 'FAILURE' , 'msg' => '{{ __("Some techinical issues has occured")}}'] , 500);
+				return Response::make (['status' => 'FAILURE' , 'msg' => '{{ __("Some techinical issues has occured") }}'] , 500);
 			}
 
 
 			//else
-			return Response::json (['status' => 'SUCCESS' , 'msg' => '{{ __("Acccount has been successfully created, Please check mail for the code")}}'] , 201);
+			return Response::json (['status' => 'SUCCESS' , 'msg' => '{{ __("Acccount has been successfully created, Please check mail for the code") }}'] , 201);
 		}
 		catch (Exception $e) {
 			return Response::make (['status' => 'FAILURE' , 'msg' => $e->getMessage()] , 409);
@@ -339,7 +339,7 @@ class UserController extends BaseController
 				$pass = Session::get ('user_password');
 				Auth::attempt (array('email' => $email , 'password' => $pass));
 				Session::put ('user_id' , $email);
-				$result = ['status' => 'SUCCESS' , 'msg' => '{{ __("Your account has been successfully activated !")}}'];
+				$result = ['status' => 'SUCCESS' , 'msg' => '{{ __("Your account has been successfully activated !") }}'];
 			} else {
 				throw new Exception('Invalid activation code' , 400);
 			}
@@ -516,16 +516,23 @@ class UserController extends BaseController
 	 */
 	public function getAccountPage ()
 	{
-		$user_type = Auth::user ()->user_type_id;
+		$user_type = Auth::user()->user_type_id;
 		switch ($user_type) {
-			case (UserType::MEDICAL_PROFESSIONAL ()):  //for medical professionals
-				return View::make ('users.account_page' , array('user_data' => Auth::user()->professional));
+			case UserType::ADMIN():
+				$user_type_name = "Administrador";
 				break;
-			case (UserType::CUSTOMER ()):  //for customers
-
-				return View::make ('users.account_page' , array('user_data' => Auth::user()->customer));
+			case UserType::CUSTOMER():
+				$user_type_name = "Cliente";
+				break;
+			case UserType::MEDICAL_PROFESSIONAL():
+				$user_type_name = "Profesional Médico";
 				break;
 		}
+
+		return View::make ('design.profile' , [
+			'user_type_name' => $user_type_name,
+			'user_data' => Auth::user()->customer
+		]);
 	}
 
 	/**

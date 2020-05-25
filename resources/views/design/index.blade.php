@@ -18,7 +18,7 @@
 
     <div class="cover">
         <div class="wrapper">
-            <h1 class="text-center">
+            <h1>
                 ¡Compra medicinas en linea, es muy fácil!
             </h1>
             <p class="text-center">
@@ -56,7 +56,7 @@
     <div class="quicksearch">
         <div class="qs-elems">
             <div class="row">
-                <div class="col-4">
+                <div class="col-lg-4 col-sm-12">
                     <div class="dra-box qs-med-form">
                         <h3 class="mb-4">Buscar</h3>
                         <form action="" class="form-search-med">
@@ -88,11 +88,10 @@
                     <div class="dra-box med-categories">
                         <h3 class="mb-4">Categorías</h3>
                         <ul id="catList">
-
                         </ul>
                     </div>
                 </div>
-                <div class="col-8">
+                <div class="col-lg-8 col-sm-12">
 					<div class="dra-box">
 						<h3 class="mb-4">Nuestros Productos</h3>
 
