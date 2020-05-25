@@ -110,7 +110,7 @@
                             <label for="txt-address">Dirección</label>
                             <input
                                 type="text"
-                                value="{{ $user_data->address }}"
+                                value="{{ $user_data->address ?? ''}}"
                                 id="txt-address"
                                 readonly
                             />
@@ -119,7 +119,7 @@
                             <label for="txt-account">Tipo de Cuenta</label>
                             <input
                                 type="text"
-                                value="{{ $user_type_name }}"
+                                value="{{ $user_type_name ?? ''}}"
                                 id="txt-account"
                                 readonly
                             />
@@ -142,7 +142,7 @@
                                 <th>FORMULA MÉDICA</th>
                                 <th>FECHA</th>
                                 <th>ESTADO</th>
-                                <th>ACCIONES</th> 
+                                <th>ACCIONES</th>
                             </thead>
                             <tbody>
                                 <tr>
@@ -173,7 +173,7 @@
                                 <th>FORMULA MÉDICA</th>
                                 <th>FECHA</th>
                                 <th>ESTADO</th>
-                                <th>ACCIONES</th> 
+                                <th>ACCIONES</th>
                             </thead>
                             <tbody>
                                 <tr>
@@ -199,7 +199,7 @@
                                 <th>FORMULA MÉDICA</th>
                                 <th>FECHA</th>
                                 <th>ESTADO</th>
-                                <th>ACCIONES</th> 
+                                <th>ACCIONES</th>
                             </thead>
                             <tbody>
                                 <tr>

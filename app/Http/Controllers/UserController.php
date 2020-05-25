@@ -523,7 +523,7 @@ class UserController extends BaseController
 				break;
 			case (UserType::CUSTOMER ()):  //for customers
 
-				return View::make ('users.account_page' , array('user_data' => Auth::user()->customer));
+				return View::make ('design.profile' , array('user_data' => Auth::user()->customer));
 				break;
 		}
 	}
