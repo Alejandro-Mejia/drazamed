@@ -172,7 +172,7 @@ class UserController extends BaseController
 
 			}
 			catch (Exception $e) {
-				return Response::make (['status' => 'FAILURE' , 'msg' => '{{ __("Some techinical issues has occured")}}'] , 500);
+				return Response::make (['status' => 'FAILURE' , 'msg' => '{{ __("Error enviando correo, esta configurado el sistema de corr")}}'] , 500);
 			}
 
 
