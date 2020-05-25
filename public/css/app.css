@@ -12574,10 +12574,12 @@ main {
 .med .med-title {
   font-size: 18px;
   color: #00a1db;
+  word-break: break-word;
 }
 
 .med .med-description {
   font-size: 14px;
+  word-break: break-word;
 }
 
 .med:hover {

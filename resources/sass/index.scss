@@ -27,6 +27,7 @@ main .cover {
             font-size: 4rem;
             font-weight: bolder;
             width: 100%;
+            text-align: center;
         }
 
         p {
@@ -81,6 +82,12 @@ main {
                     li {
                         margin-bottom: 8px;
                         font-weight: bolder;
+                        cursor: pointer;
+                        transition: 0.15s ease-in;
+                    }
+
+                    li:hover {
+                        color: #00a1db;
                     }
                 }
             }
@@ -104,12 +111,24 @@ main {
 @media (max-width: 1000px) {
     main .cover {
         .wrapper {
-            max-width: 100%;
-
             p {
                 width: 90%;
                 margin: 0 auto;
             }
         }
+    }
+}
+
+@media (max-width: 1199px) {
+    .wrapper {
+        min-width: 95%;
+    }
+
+    .quicksearch .qs-elems {
+        min-width: 95%;
+    }
+
+    .med-categories {
+        display: none;
     }
 }

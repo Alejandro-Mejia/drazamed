@@ -1,0 +1,115 @@
+.profile {
+  margin-top: 90px;
+  background-color: #FAFAF8;
+  padding: 60px;
+  font-family: "louis_george_cafe";
+}
+
+.profile .profile-body {
+  width: 70%;
+  margin: 0 auto;
+}
+
+.profile .panel {
+  background-color: #fff;
+  border-radius: 20px;
+  padding: 30px 20px;
+}
+
+.profile .panel-title {
+  color: #00a1db;
+  font-size: 30px;
+  font-weight: 600;
+}
+
+.profile .profile-icon {
+  font-size: 30px;
+  color: #00a1db;
+  font-size: 40px;
+  vertical-align: middle;
+}
+
+.profile .profile-name {
+  color: #000;
+  font-weight: 600;
+  font-size: 24px;
+}
+
+.profile .profile-menu {
+  margin-top: 20px;
+}
+
+.profile .profile-menu ul {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+.profile .profile-menu ul li {
+  border-top: 1px solid #dddddd;
+  padding: 17px 10px 7px;
+}
+
+.profile .profile-menu ul li a {
+  text-decoration: none;
+  color: #000;
+  transition: 0.15s ease-in;
+}
+
+.profile .profile-menu ul li a span {
+  color: #00a1db;
+}
+
+.profile .profile-menu ul li a:hover {
+  color: #00a1db;
+}
+
+.profile .panel label {
+  display: block;
+  color: #000 !important;
+  margin: 20px 0px 0px !important;
+  font-size: 18px !important;
+  font-weight: 700 !important;
+}
+
+.profile .panel input {
+  border: none;
+  width: 100%;
+  color: gray;
+  border-bottom: 1px solid #dddddd;
+  padding: 5px 0;
+}
+
+.profile .panel table {
+  font-family: "Poppins", sans-serif;
+  font-size: 16px;
+}
+
+.profile .panel .table-header th {
+  font-weight: bold;
+  text-transform: capitalize;
+}
+
+.profile .mr-10 {
+  margin-right: 10px;
+}
+
+.profile .mt-30 {
+  margin-top: 30px;
+}
+
+@media (max-width: 1024px) {
+  .profile-panel {
+    margin-top: 30px;
+  }
+}
+
+@media (max-width: 768px) {
+  .profile {
+    padding: 10px;
+  }
+
+  .profile .profile-body {
+    width: 100%;
+  }
+}
+
