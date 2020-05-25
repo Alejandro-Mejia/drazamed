@@ -1,4 +1,4 @@
-let mix = require('laravel-mix');
+let mix = require("laravel-mix");
 
 /*
  |--------------------------------------------------------------------------
@@ -11,7 +11,6 @@ let mix = require('laravel-mix');
  |
  */
 
-
 mix.js("resources/js/app.js", "public/js")
     .sass("resources/sass/app.scss", "public/css")
     .sass("resources/sass/header.scss", "public/css")
@@ -22,7 +21,8 @@ mix.js("resources/js/app.js", "public/js")
     .sass("resources/sass/search-form.scss", "public/css")
     .sass("resources/sass/pinfo.scss", "public/css")
     .sass("resources/sass/cart.scss", "public/css")
-    .sass("resources/sass/contact.scss", "public/css");
+    .sass("resources/sass/contact.scss", "public/css")
+    .sass("resources/sass/profile.scss", "public/css");
 
 // Full API
 // mix.js(src, output);
@@ -61,4 +61,3 @@ mix.js("resources/js/app.js", "public/js")
 //   terser: {}, // Terser-specific options. https://github.com/webpack-contrib/terser-webpack-plugin#options
 //   postCss: [] // Post-CSS options: https://github.com/postcss/postcss/blob/master/docs/plugins.md
 // });
-
