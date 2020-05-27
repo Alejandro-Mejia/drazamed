@@ -138,47 +138,52 @@
                     </p>
                     <div class="table-responsive">
                         @if(!empty(count($prescriptions)))
-                        <table class="table">
-                            <thead class="table-header">
-                                <th>FORMULA MÉDICA</th>
-                                <th>FECHA</th>
-                                <th>ESTADO</th>
-                                <th>ACCIONES</th>
-                            </thead>
-                            <tbody>
-                                @foreach($prescriptions as $prescription)
-                                <?php
-                                    // Invoice List
-                                    // $invoice = $prescription->invoice();
-                                    // $cart_list = $invoice->cartList();
-                                ?>
-                                          <!-- Section 1 -->
+                            <table class="table">
+                                <thead class="table-header">
+                                    <th>FORMULA MÉDICA</th>
+                                    <th>FECHA</th>
+                                    <th>ESTADO</th>
+                                    <th>ACCIONES</th>
+                                </thead>
+                                <tbody>
+                                    @foreach($prescriptions as $prescription)
+                                    <?php $sub_total = 0; ?>
 
-                                    <tr>
-                                        <td>
-                                            @foreach($prescription['cart'] as $cart)
+                                        <!-- Section 1 -->
 
-                                                 <p class="text-center text-align-responsive">{{ $cart['item_name'] }}</p>
+                                        <tr>
+                                            <td>
+                                                @foreach($prescription['cart'] as $cart)
 
-                                             @endforeach
-                                        </td>
-                                        <td class="col-lg-3 text-center"><span class="date-added"><?php echo $prescription['created_on']; ?></span>
-                                        </td>
+                                                     <p class="text-center text-align-responsive">{{ $cart['item_name'] }}</p>
 
-                                        <td class="col-lg-3 text-center">{{ __(PrescriptionStatus::statusName($prescription['pres_status'])) }}
-                                        </td>
+                                                 @endforeach
+                                            </td>
+                                            <td class="col-lg-3 text-center"><span class="date-added"><?php echo $prescription['created_on']; ?></span>
+                                            </td>
 
-                                        <td>
-                                            <i class="fas fa-edit"></i>
-                                            <i class="fas fa-trash-alt"></i>
-                                            <i class="fas fa-shopping-cart"></i>
-                                        </td>
-                                    </tr>
+                                            <td class="col-lg-3 text-center">{{ __(PrescriptionStatus::statusName($prescription['pres_status'])) }}
+                                            </td>
 
-                                @endforeach
-                            </tbody>
+                                            <td >
+                                                <i class="fas fa-edit details" ></i>
+                                                <i class="fas fa-trash-alt"></i>
+                                                <i class="fas fa-shopping-cart"></i>
+                                            </td>
+                                        </tr>
 
-                        </table>
+                                        <tr>
+                                            <td colspan=4 class="detailCell">
+                                               @include('design.detail')
+                                            </td>
+
+                                        </tr>
+
+
+                                    @endforeach
+                                </tbody>
+
+                            </table>
                         @else
                             <div class="no-items">
                                 <span>{{ __('No Order Availables Presently')}}.</span>
@@ -187,6 +192,7 @@
                     </div>
 
                 </div>
+
 
 
                 <!-- <div class="panel mt-30">
@@ -290,3 +296,11 @@
     </div>
 </section>
 @endsection
+
+
+
+<script type="">
+
+
+
+</script>

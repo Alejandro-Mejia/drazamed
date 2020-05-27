@@ -1,6 +1,7 @@
 var current_item_code = "";
 var categories = [];
 var ulclick;
+var element;
 
 var translate = {
     activate_account: "@lang('Please activate your account')",
@@ -799,6 +800,12 @@ $("#catList").on("click", "li", function(e) {
 $(".btn-profile").on("click", function() {
     window.location = "account-page/";
 });
+
+$('.details').on('click', function(){
+        console.log($(this));
+        element = $(this);
+        element.closest('table').find('.detail').toggle()    //$(this).closest('div').hasClass('detail').toggle();
+    })
 
 function getCategories() {
     $.ajax({
