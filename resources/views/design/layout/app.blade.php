@@ -16,24 +16,24 @@
             src="/js/jquery-3.4.1.slim.min.js"
         ></script>
 
-        <!-- <script src="/js/simple.money.format.js"></script> -->
+        <script src="/js/simple.money.format.js"></script>
 
 
-        <script src="{{ mix('js/app.js') }}"></script>
-        <script src="{{ mix('css/app.css') }}"></script>
+        <!-- <script src="{{ mix('js/app.js') }}"></script>
+        <script src="{{ mix('css/app.css') }}"></script> -->
         <!-- // jQuery UI -->
-        <!-- <script src="https://code.jquery.com/jquery-1.12.4.js"></script> -->
-        <!-- <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script> -->
+        <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
         <link rel="stylesheet" href="/css/jquery-ui.css">
 
 
-        <!-- <script
+        <script
             src="/js/popper.min.js"
         ></script>
         <script
             src="/js/bootstrap.min.js"
-        ></script> -->
+        ></script>
 
         <link rel="stylesheet" href="/css/header.css">
         <link rel="stylesheet" href="/css/footer.css">

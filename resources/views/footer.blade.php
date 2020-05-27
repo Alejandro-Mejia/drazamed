@@ -627,22 +627,22 @@ var login_mail=$('#hidden_user_id').val();
 
 
 $.ajax({
-            type: "POST",
-            url: '{{ URL::to('user/activate-account')}}',
-            data: 'email='+login_mail+'&security_code='+activation_code,
-            datatype: 'json',
-            error:function (xhr, ajaxOptions, thrownError){
-                    $(".login_msg").html('Sorry...Activation failed! ');
-                    $(".login_msg").css({"display":"block"});
-                    $(".login_msg").delay(5000).fadeOut("slow");
-            },
-            success: function (data) {
-                    $(".login_msg").html('Your account successfully activated ');
-                    $(".login_msg").css({"display":"block"});
-                    $(".login_msg").delay(5000).fadeOut("slow");
-                    location.reload();
-            }
-          });
+    type: "POST",
+    url: '{{ URL::to('user/activate-account')}}',
+    data: 'email='+login_mail+'&security_code='+activation_code,
+    datatype: 'json',
+    error:function (xhr, ajaxOptions, thrownError){
+            $(".login_msg").html('Sorry...Activation failed! ');
+            $(".login_msg").css({"display":"block"});
+            $(".login_msg").delay(5000).fadeOut("slow");
+    },
+    success: function (data) {
+            $(".login_msg").html('Your account successfully activated ');
+            $(".login_msg").css({"display":"block"});
+            $(".login_msg").delay(5000).fadeOut("slow");
+            location.reload();
+    }
+  });
 
 }
 

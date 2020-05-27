@@ -333,6 +333,27 @@ class MedicineController extends BaseController
 	}
 
 	/**
+	 * Get ORders
+	 *     * @return mixed
+	 */
+	public function getMyOrders ()
+	{
+		if (!Auth::check ())
+			return Redirect::to ('/');
+
+		$email = Session::get ('user_id');
+		$path = 'URL' . '/public/images/prescription/' . $email . '/';
+		$user_id = Auth::user ()->id;
+		$invoices = Invoice::where ('user_id' , '=' , $user_id)->where ('shipping_status' , '=' , ShippingStatus::SHIPPED ())->get ();
+
+		return json_encode($invoices);
+
+		// return View::make ('/users/my_order' , array('invoices' => $invoices , 'email' => $email , 'default_img' => url ('/') . "/assets/images/no_pres_square.png"));
+
+		// return View::make('/users/my_order');
+	}
+
+	/**
 	 * Create Prescription List
 	 */
 	public function createPrescriptionList ($invoice)
