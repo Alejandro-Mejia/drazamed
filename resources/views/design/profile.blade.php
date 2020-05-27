@@ -137,6 +137,7 @@
                         AHORA.
                     </p>
                     <div class="table-responsive">
+                        @if(!empty(count($prescriptions)))
                         <table class="table">
                             <thead class="table-header">
                                 <th>FORMULA MÉDICA</th>
@@ -145,22 +146,50 @@
                                 <th>ACCIONES</th>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>Nombre del Medicamento</td>
-                                    <td>2020-04-25 07:55:10</td>
-                                    <td>Sin Verificar</td>
-                                    <td>
-                                        <i class="fas fa-edit"></i>
-                                        <i class="fas fa-trash-alt"></i>
-                                        <i class="fas fa-shopping-cart"></i>
-                                    </td>
-                                </tr>
+                                @foreach($prescriptions as $prescription)
+                                <?php
+                                    // Invoice List
+                                    // $invoice = $prescription->invoice();
+                                    // $cart_list = $invoice->cartList();
+                                ?>
+                                          <!-- Section 1 -->
+
+                                    <tr>
+                                        <td>
+                                            @foreach($prescription['cart'] as $cart)
+
+                                                 <p class="text-center text-align-responsive">{{ $cart['item_name'] }}</p>
+
+                                             @endforeach
+                                        </td>
+                                        <td class="col-lg-3 text-center"><span class="date-added"><?php echo $prescription['created_on']; ?></span>
+                                        </td>
+
+                                        <td class="col-lg-3 text-center">{{ __(PrescriptionStatus::statusName($prescription['pres_status'])) }}
+                                        </td>
+
+                                        <td>
+                                            <i class="fas fa-edit"></i>
+                                            <i class="fas fa-trash-alt"></i>
+                                            <i class="fas fa-shopping-cart"></i>
+                                        </td>
+                                    </tr>
+
+                                @endforeach
                             </tbody>
+
                         </table>
+                        @else
+                            <div class="no-items">
+                                <span>{{ __('No Order Availables Presently')}}.</span>
+                            </div>
+                        @endif
                     </div>
+
                 </div>
 
-                <div class="panel mt-30">
+
+                <!-- <div class="panel mt-30">
                     <h2 class="panel-title">Ordenes Canceladas</h2>
                     <p>
                         Por alguna razón su orden ha sido cancelada, a
@@ -189,31 +218,71 @@
                             </tbody>
                         </table>
                     </div>
-                </div>
+                </div> -->
 
                 <div class="panel mt-30">
                     <h2 class="panel-title">Ordenes Completadas</h2>
+                    <h2 class="panel-title">Ordenes Pendientes</h2>
+                    <p>
+                        Por favor espere a que verifiquemos su pedido. Una vez
+                        lo verifiquemos cambiara su estado a "Verificado". Una
+                        vez su formula medica este verificada, usted puede
+                        proceder al pago haciendo click en el boton COMPRAR
+                        AHORA.
+                    </p>
                     <div class="table-responsive">
+                        @if(!empty(count($invoices)))
                         <table class="table">
                             <thead class="table-header">
-                                <th>FORMULA MÉDICA</th>
-                                <th>FECHA</th>
-                                <th>ESTADO</th>
-                                <th>ACCIONES</th>
+                                <tr>
+                                     <th class="text-center text-align-responsive">{{ __('Medicine')}}</th>
+                                     <th class="text-center text-align-responsive">{{ __('Date')}}</th>
+                                     <th class="text-center text-align-responsive">{{ __('Status')}}</th>
+                                     <th class="text-right text-align-responsive">{{ __('Actions')}}</th>
+                                </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>Nombre del Medicamento</td>
-                                    <td>2020-04-25 07:55:10</td>
-                                    <td>Sin Verificar</td>
-                                    <td>
-                                        <i class="fas fa-edit"></i>
-                                        <i class="fas fa-trash-alt"></i>
-                                        <i class="fas fa-shopping-cart"></i>
-                                    </td>
-                                </tr>
+                                @foreach($invoices as $invoice)
+                                <?php
+                                    // Invoice List
+                                    $prescription = $invoice->prescription();
+                                    $cart_list = $invoice->cartList();
+                                ?>
+
+                                @if(__(ShippingStatus::statusName($invoice->shipping_status)) == 'Enviado')
+
+                                          <!-- Section 1 -->
+                                    <tr>
+                                        <td>
+                                            @foreach($cart_list as $cart)
+
+                                                 <p class="text-left text-align-responsive">{{ Medicine::medicines($cart->medicine)['item_name'] }}</p>
+
+                                             @endforeach
+                                        </td>
+                                        <td class="col-lg-3 text-center"><span class="date-added"><?php echo $prescription->created_at; ?></span>
+                                        </td>
+
+                                        <td class="col-lg-3 text-center">{{ __(ShippingStatus::statusName($invoice->shipping_status)) }}
+                                        </td>
+
+                                        <td>
+                                            <i class="fas fa-edit"></i>
+                                            <i class="fas fa-trash-alt"></i>
+                                            <i class="fas fa-shopping-cart"></i>
+                                        </td>
+                                    </tr>
+                                @endif
+
+                                @endforeach
                             </tbody>
+
                         </table>
+                        @else
+                            <div class="no-items">
+                                <span>{{ __('No Order Availables Presently')}}.</span>
+                            </div>
+                        @endif
                     </div>
                 </div>
             </div>

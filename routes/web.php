@@ -54,6 +54,7 @@ use App\MercadoPago\SDK;
     Route::get('/my-prescription/{option?}', 'MedicineController@getMyPrescription');
     Route::get('/paid-prescription', 'MedicineController@getPaidPrescription');
     Route::get('/my-order', 'MedicineController@getMyOrder');
+    Route::get('/my-orders', 'MedicineController@getMyOrders');
     Route::get('/medicine-detail/{item_code}', 'MedicineController@getMedicineDetail');
     Route::get('/account-page', 'UserController@getAccountPage');
 

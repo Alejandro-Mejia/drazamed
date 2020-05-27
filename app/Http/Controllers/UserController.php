@@ -13,6 +13,12 @@ use App\UserType;
 use App\UserStatus;
 use App\Setting;
 use App\Customer;
+use App\Invoice;
+use App\ItemList;
+use App\Medicine;
+use App\PayStatus;
+use App\Prescription;
+use App\ShippingStatus;
 use App\MedicalProfessional;
 use DB;
 use File;
@@ -517,15 +523,70 @@ class UserController extends BaseController
 	public function getAccountPage ()
 	{
 		$user_type = Auth::user ()->user_type_id;
+
+		$email = Session::get ('user_id');
+		$path = 'URL' . '/public/images/prescription/' . $email . '/';
+		$user_id = Auth::user ()->id;
+		$invoices = Invoice::where ('user_id' , '=' , $user_id)->where ('shipping_status' , '=' , ShippingStatus::SHIPPED ())->get ();
+
+		$user_id = Auth::user ()->id;
+		$invoices = Invoice::where ('user_id' , '=' , $user_id)->get ();
+		$prescriptions = Prescription::select ('i.*' , 'prescription.status' , 'prescription.path' , 'prescription.id as pres_id' , 'prescription.created_at as date_added')->where ('prescription.user_id' , '=' , $user_id)->where ('is_delete' , '=' , 0)
+			->join ('invoice as i' , 'i.pres_id' , '=' , DB::raw ("prescription.id AND i.payment_status IN (" . PayStatus::PENDING () . ",0) "));
+		$results = $prescriptions->get ();
+		// dd($results);
+		foreach ($results as $result) {
+			$items = [];
+			$medicines = Medicine::medicines ();
+			if (!is_null ($result->id) || !empty($result->id)) {
+				$carts = ItemList::where ('invoice_id' , '=' , $result->id)->get ();
+
+
+
+				foreach ($carts as $cart) {
+					// dd($cart, $medicines, $results);
+					$items[] = ['id' => $cart->id ,
+						'item_id' => $cart->medicine ,
+						'item_code' => $medicines[$cart->medicine]['item_code'] ,
+						'item_name' => $medicines[$cart->medicine]['item_name'] ,
+						'unit_price' => $cart->unit_price ,
+						'discount_percent' => $cart->discount_percentage ,
+						'discount' => $cart->discount ,
+						'quantity' => $cart->quantity ,
+						'total_price' => $cart->total_price
+					];
+				}
+			}
+			$details = [
+				'id' => (is_null ($result->id)) ? 0 : $result->id ,
+				'invoice' => (is_null ($result->invoice)) ? 0 : $result->invoice ,
+				'sub_total' => (is_null ($result->sub_total)) ? 0 : $result->sub_total ,
+				'discount' => (is_null ($result->discount)) ? 0 : $result->discount ,
+				'tax' => (is_null ($result->tax)) ? 0 : $result->tax ,
+				'shipping' => (is_null ($result->shipping)) ? 0 : $result->shipping ,
+				'total' => (is_null ($result->total)) ? 0 : $result->total ,
+				'created_on' => (is_null ($result->date_added)) ? 0 : $result->date_added ,
+				'cart' => $items ,
+				'shipping_status' => (is_null ($result->shipping_status)) ? 0 : $result->shipping_status ,
+				'pres_status' => $result->status ,
+				'invoice_status' => is_null ($result->status_id) ? 0 : $result->status_id ,
+				'path' => $result->path
+			];
+			$responses[] = $details;
+		}
+
+		// return json_encode($invoices);
+
 		switch ($user_type) {
 			case (UserType::MEDICAL_PROFESSIONAL ()):  //for medical professionals
 				return View::make ('users.account_page' , array('user_data' => Auth::user()->professional));
 				break;
 			case (UserType::CUSTOMER ()):  //for customers
 
-				return View::make ('design.profile' , array('user_data' => Auth::user()->customer));
+				return View::make ('design.profile' , array('user_data' => Auth::user()->customer, 'invoices' => $invoices, 'prescriptions' => $responses, 'default_img' => url ('/') . "/assets/images/no_pres_square.png"));
 				break;
 		}
+
 	}
 
 	/**
