@@ -773,4 +773,26 @@ class UserController extends BaseController
 		}
 	}
 
+	/**
+	 * Delete a particular prescription
+	 *
+	 * @param $pres_id
+	 */
+	public function anyPresDelete ($pres_id)
+	{
+		try {
+			if (!Auth::check ())
+				throw new Exception('UNAUTHORISED : User not logged in ' , 401);
+			$pay_success2 = DB::table ('prescription')->where ('id' , '=' , $pres_id)->update (array('is_delete' => 1 , 'updated_at' => date ('Y-m-d H:i:s')));
+			// If Save is Success
+			if ($pay_success2)
+				return Response::json (['status' => 'SUCCESS' , 'msg' => 'Prescription Deleted Successfully'] , 200);
+
+		}
+		catch (Exception $e) {
+			return Response::json (['status' => 'FAILURE' , 'msg' => $e->getMessage ()] , $e->getCode ());
+		}
+	}
+
+
 }

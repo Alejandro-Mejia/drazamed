@@ -1,7 +1,28 @@
 @extends('design.layout.app') @section('custom-css')
-<link rel="stylesheet" href="/css/cart.css" />
+  <link rel="stylesheet" href="/css/cart.css" />
 @endsection @section('content')
 
+
+<style type="text/css">
+  /*input[type="file"] {
+    display: none;
+  }*/
+
+  #upload-btn {
+    position: relative;
+    margin: auto;
+    font-family: calibri;
+    width: 250px;
+    padding: 10px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border: 1px dashed #BBB;
+    text-align: center;
+    /*background-color: #DDD;*/
+    cursor: pointer;
+  }font-synthesis:
+
+</style>
 <main>
     <div class="cart-section">
         <div class="row">
@@ -19,13 +40,13 @@
                         su orden.
                     </p>
 
-                    <table class="tab-cart">
+                    <table class="table my-4">
                         <thead>
                             <tr>
                                 <th scope="col">ITEM</th>
                                 <th scope="col">CANTIDAD</th>
                                 <th scope="col">PRECIO POR UNIDAD</th>
-                                <th scope="col">DESCUENTO POR UNIDAD</th>
+                                <!-- <th scope="col">DESCUENTO POR UNIDAD</th> -->
                                 <th scope="col">SUBTOTAL</th>
                             </tr>
                         </thead>
@@ -33,7 +54,9 @@
                         <input type="hidden" name="_token" id="_token" value="<?php echo csrf_token(); ?>">
                         <?php $subtotal= $first_medicine = $pres_required = 0; ?>
                         @if(count($current_orders)>0)
-                        <?php $first_medicine = $current_orders[0]->medicine_id;
+                        <?php
+                          $first_medicine = $current_orders[0]->medicine_id;
+                          $shipping = 0;
 
                         ?>
                         @foreach($current_orders as $cart_item)
@@ -78,145 +101,99 @@
 
                             <tr>
                               <td class="text-right" style="text-align:right" colspan="3">
+                                <h4 style="padding-right: 40px;">Sub-Total <span style="font-size: 12px"></span> : </h4>
+                              </td>
+                              <td>
+                                <h4 id="subTotal" data-value={{$subtotal}} >{{ number_format($subtotal,2)}}</h4>
+                              </td>
+                            </tr>
+
+                            <tr>
+                              <td colspan="3" class="col-lg-12 col-md-12 col-sm-12">
+                                <div id="shipping_options" >
+                                  <style type="text/css">
+                                    fieldset {
+                                      overflow: hidden
+                                    }
+
+                                    .shipping_method {
+                                      float: left;
+                                      clear: none;
+                                    }
+
+                                    label {
+                                      float: left;
+                                      clear: none;
+                                      display: block;
+                                      padding: 0px 1em 0px 8px;
+                                    }
+
+                                    input[type=radio],
+                                    input.radio {
+                                      float: left;
+                                      clear: none;
+                                      margin: 2px 0 0 2px;
+                                    }
+                                  </style>
+                                  <fieldset id="shipping_method" >
+                                    <div class="shipping_method">
+                                      <label for="farmacia">
+                                        <input type="radio" class="radio" name="shipping" value=0 id="farmacia"> Recoger en la farmacia (Gratis)
+                                      </label>
+                                      <label for="mensajero">
+                                        <input type="radio" class="radio"  name="shipping" value=1000 id="mensajero"> Mensajero ($ 1.000)
+                                      </label>
+                                    </div>
+
+                                  </fieldset>
+                                </div>
+                              </td>
+                              <td class="text-right">
+                                <h5 id="shipping_value" value={{$shipping}}>{{ number_format($shipping,2)}}</h5>
+                              </td>
+
+                            </tr>
+                            <tr>
+                              <td class="text-right" style="text-align:right" colspan="3">
                                 <h4 style="padding-right: 40px;">Total <span style="font-size: 12px">({{ __('this is an approximate total, price may change')}})</span> : </h4>
                               </td>
                               <td>
-                                <h4>{{ number_format($subtotal,2)}}</h4>
+                                <h4 class="text-right" id="totalOrder" value={{$subtotal+$shipping}}>{{ number_format($subtotal+$shipping,2)}}</h4>
                               </td>
                             </tr>
 
-                            <tr>
-                              @if($pres_required == 1)
-                              <td colspan="4"><p class="text-center">{{ __('If you are done with adding medicines to cart')}}, {{ __('please browse and upload the prescription from the link below')}}. <br>
-                            {{ __('Alternatively, you may even upload a prescription without adding any medicine to cart')}}. {{ __('We will identify the medicines and process the order further')}}.</p>
-                              </td>
-                              @endif
-                            </tr>
-                            @else
-                              <?php $pres_required = 1; ?>
-                              <h4 style="color: red;" align="center">{{ __('Cart is empty')}}</h4>
-                            @endif
+                            @if($pres_required == 1)
+                              <tr>
 
-                        </tbody>
-
-                    </table>
-
-                    <table class="table my-4">
-                        <thead>
-                            <tr>
-                                <th scope="col">ITEM</th>
-                                <th scope="col">CANTIDAD</th>
-                                <th scope="col">PRECIO POR UNIDAD</th>
-                                <th scope="col">DESCUENTO POR UNIDAD</th>
-                                <th scope="col">SUBTOTAL</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <th scope="row" class="font-weight-normal">
-                                    Nombre del medicamento
-                                </th>
-                                <td>
-                                    <input
-                                        class="med-quantity-input"
-                                        type="number"
-                                        min="1"
-                                        value="1"
-                                    />
+                                <td colspan="4"><p class="text-center">
+                                  {{ __('If you are done with adding medicines to cart')}}, {{ __('please browse and upload the prescription from the link below')}}. <br>
+                                  {{ __('Alternatively, you may even upload a prescription without adding any medicine to cart')}}. {{ __('We will identify the medicines and process the order further')}}.</p>
                                 </td>
-                                <td>$</td>
-                                <td>$</td>
-                                <td>$</td>
-                            </tr>
+                              </tr>
+                            @endif
+                        <!-- Si el carrito esta vacio -->
+                        @else
+                          <?php $pres_required = 1; ?>
+                          <h4 style="color: red;" align="center">{{ __('Cart is empty')}}</h4>
+                        @endif
+
                         </tbody>
+
                     </table>
+                    <!-- {{ Form::open(array('url'=>'medicine/store-prescription/1','files'=>true,'id'=>'upload_form')) }} -->
 
-                    <div class="upload-zone text-center">
-                        <span class="dra-color fas fa-cloud-upload-alt"></span>
-                        <p class="text-black-50">
-                            Adjunta a continuación tu formula médica
-                        </p>
-                        <button class="mt-2 dra-button">Subir Archivo</button>
-                    </div>
+                    <!-- Envio de formulas medicas mediante drag & drop -->
+                    @include('design.dropbox')
 
+                    <button type="submit" class="float-right mt-4 dra-button save-btn ripple upload_for_cart" data-color="#40E0BC" id="upload">{{ __('Place Order')}}</button>
 
-
-                    <!-- Script para subir archivo con la formula medica -->
-                    <tr>
-                                    <td>
-
-
-                                    <table class="tab-cart  tab-btm-cart">
-                                        <tr>
-
-                                           <td>
-
-
-                                           <div class="col-sm-12 text-center">
-
-                                                <h2>{{__('Upload Prescription')}}</h2>
-
-                                              <div class=" text-center">
-
-                                                  <p style="white-space: normal">{{ __('You can use either JPG or PNG images')}}. {{ __('We will identify the medicines and process your order at the earliest')}}.</p>
-
-                                                       @if ( Session::has('flash_message') )
-                                                         <div class="alert {{ Session::get('flash_type') }}">
-                                                             <h3 style="text-align: center;margin: 0px;font-size: 18px;">{{ Session::get('flash_message') }}</h3>
-                                                         </div>
-                                                       @endif
-                                                  <div class="col-sm-12 file-upload ">
-
-                                                      <i class="icon-browse-upload"></i>
-                                                      <p>{{ __('Upload your prescription here')}}</p>
-
-                                                      {{ Form::open(array('url'=>'medicine/store-prescription/1','files'=>true,'id'=>'upload_form')) }}
-
-                                                      <input id="input-20" type="file" name="file"
-                                                      @if($pres_required == 1)
-                                                            required="required"
-                                                      @endif
-                                                      class="prescription-upload custom-file-input cart_file_input" >
-
-                                                      <input id="input-21" type="hidden" name="is_pres_required" value="<?= $pres_required; ?>"  />
-
-                                                  </div>
-
-                                                  <br>
-                                                  <div id="shipping_options" class="col-lg-12 col-md-12 col-sm-12">
-                                                    <fieldset id="shipping_method">
-                                                      <label class="radio-inline">
-                                                        <input type="radio" name="shipping" value=0 checked> Recoger en la farmacia (Gratis)
-                                                      </label>
-                                                      <label class="radio-inline">
-                                                        <input type="radio" name="shipping" value=2000> Mensajeria Urbana ($ 2.000)
-                                                      </label>
-                                                    </fieldset>
-                                                  </div>
-
-
-                                                  <button type="submit" class="btn btn-primary save-btn ripple upload_for_cart" data-color="#40E0BC" id="upload">{{ __('Place Order')}}</button>
-
-                                                  @if($pres_required == 1)
-                                                    <p style="padding: 10px;font-size: 14px;color: red;">{{ __('You are mandated to upload prescription to place the order')}}.</p>
-                                                  @endif
-
-                                                  {{ Form::close() }}
-
-                                                  <div class="clear"></div>
-                                              </div>
-                                            </div>
-                                          </td>
-
-
-                                      </tr>
-                                    </table>
-                                    </td>
-                                </tr>
-
-                    <button class="float-right mt-4 dra-button">
+                    <!-- <button class="float-right mt-4 dra-button" id="orderNow">
                         Realizar Pedido
-                    </button>
+                    </button> -->
+                    <!-- </form> -->
+                    <!-- {{ Form::close() }} -->
+
+
                 </div>
             </div>
             <div class="col-md-4">
@@ -255,14 +232,14 @@
         </div>
     </div>
 </main>
+
+@include('design.modals.pinfo')
+
 @endsection
 
 
-<script>
 
-$('#upload_form').submit(function(e){
-  $('#upload').attr('disabled','disabled');
-});
+<script>
 
 // $('#upload').on('click', function(){
 //   console.log('Submit form');
@@ -271,21 +248,21 @@ $('#upload_form').submit(function(e){
 
 
 
-$(".search_medicine").autocomplete({
-    search: function(event, ui) {
-        $('.search_medicine').addClass('search_medicine_my_cart my_cart_search' );
-    },
-    open: function(event, ui) {
-        $('.search_medicine').removeClass('search_medicine_my_cart my_cart_search' );
-    },
-    source: '{{ URL::to('medicine/load-medicine-web/1' )}}',
-    minLength: 0,
-    select: function (event, ui) {
-            item_code = ui.item.item_code;
-           current_item_code=item_code;
+// $(".search_medicine").autocomplete({
+//     search: function(event, ui) {
+//         $('.search_medicine').addClass('search_medicine_my_cart my_cart_search' );
+//     },
+//     open: function(event, ui) {
+//         $('.search_medicine').removeClass('search_medicine_my_cart my_cart_search' );
+//     },
+//     source: '{{ URL::to('medicine/load-medicine-web/1' )}}',
+//     minLength: 0,
+//     select: function (event, ui) {
+//             item_code = ui.item.item_code;
+//            current_item_code=item_code;
 
-     }
-})
+//      }
+// })
   function goto_detail_page()
      {
      $(".search_medicine").val("");
