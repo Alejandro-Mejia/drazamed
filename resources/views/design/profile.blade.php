@@ -50,7 +50,7 @@
                                 >
                             </li>
                             <li>
-                                <a href="/"
+                                <a href="/my-cart"
                                     ><span
                                         class="mr-10 fa fa-shopping-cart"
                                     ></span

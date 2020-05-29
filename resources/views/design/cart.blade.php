@@ -185,7 +185,7 @@
                     <!-- Envio de formulas medicas mediante drag & drop -->
                     @include('design.dropbox')
 
-                    <button type="submit" class="float-right mt-4 dra-button save-btn ripple upload_for_cart" data-color="#40E0BC" id="upload">{{ __('Place Order')}}</button>
+
 
                     <!-- <button class="float-right mt-4 dra-button" id="orderNow">
                         Realizar Pedido
@@ -235,16 +235,47 @@
 
 @include('design.modals.pinfo')
 
-@endsection
-
-
-
 <script>
 
+// $('#uploadBtn').on('click', function(){
+//   console.log('Uploading order...')
+//   store_prescription();
+// })
+
+
+function store_prescription() {
+  is_pres_required = "{{ $pres_required }}";
+  shipping = $('#shipping_value').val();
+  sub_total = $('#subTotal').data('value');
+
+  console.log('P Req: ' + is_pres_required);
+  console.log('Shipping: ' + shipping);
+  console.log('SubTotal: ' + sub_total);
+
+}
+
+
+// Cambio en el metodo de envio
+$('input:radio[name="shipping"]').change(
+function(){
+    // console.log(element = $(this))
+    if ($(this).is(':checked')) {
+        shipping = $(this).val();
+        subTotal = $('#subTotal').data('value');
+        console.log('subTotal:'+ subTotal);
+        console.log('Shipping:'+ shipping);
+        $('#shipping_value').val(shipping);
+        $('#shipping_value').html($('#shipping_value').val());
+        total = Number(shipping)+Number(subTotal);
+        $('#totalOrder').val(total.toFixed(2));
+        $('#totalOrder').html($('#totalOrder').val());
+    }
+});
 // $('#upload').on('click', function(){
 //   console.log('Submit form');
 //   $('#upload_form').submit();
 // });
+
 
 
 
@@ -263,68 +294,73 @@
 
 //      }
 // })
-  function goto_detail_page()
-     {
-     $(".search_medicine").val("");
-     var serched_medicine=$(".search_medicine").val();
-      window.location="{{URL::to('medicine-detail/')}}/"+current_item_code;
+function goto_detail_page()
+ {
+ $(".search_medicine").val("");
+ var serched_medicine=$(".search_medicine").val();
+  window.location="{{URL::to('medicine-detail/')}}/"+current_item_code;
 
-     }
+ }
 
 
-     function change_count(obj)
-     {
-    // alert();
-       var item_code=$(obj).attr('item_code');
-       var new_qty=parseInt($(obj).val());
-       var _token = $('#_token').val();
-       if(new_qty <= 0 || isNaN(new_qty)){
-            $('.quantity-alert').addClass('show').removeClass('hide');
-           setTimeout(function(){
-            $('.quantity-alert').addClass('hide').removeClass('show');
+function change_count(obj)
+{
+// alert();
+  var item_code=$(obj).attr('item_code');
+  var new_qty=parseInt($(obj).val());
+  var _token = $('#_token').val();
+  if(new_qty <= 0 || isNaN(new_qty)){
+      $('.quantity-alert').addClass('show').removeClass('hide');
+     setTimeout(function(){
+      $('.quantity-alert').addClass('hide').removeClass('show');
 
-           },2000);
-           return false;
-       }
+     },2000);
+     return false;
+  }
 
-        $.ajax({
+  $.ajax({
 
-            url:'{{ URL::to('medicine/update-cart/' )}}',
-            type:'POST',
-            data:'item_code='+item_code+'&new_qty='+new_qty+'&_token='+_token,
-            success: function(alerts){
-                if(alerts==1)
-                {
-                    location.reload();
-                }
-                else
-                {
-                alert("{{ __('Could\'t complete your request')}}");
-                }
-            }
-        });
-     }
-     function get_medicine_data(id)
-     {
-        $.ajax({
-        url:'{{ URL::to('medicine/medicine-data/' )}}',
-        type:'GET',
-        data:'id='+id,
-        datatype: 'JSON',
-        success: function(data){
-        var data = data.data;
-        var med_comp="";
-            $('#med_name').html(data.item_name);
-            comp=data.composition.split(',');
-            for(i=0;i<comp.length;i++)
-            {
-                med_comp+="<h5>"+comp[i]+"</h5>";
-            }
-            $('#med_comp').html(med_comp);
-            $('#mfg').html(data.manufacturer);
-            $('#group').html(data.group);
+      url:'{{ URL::to('medicine/update-cart/' )}}',
+      type:'POST',
+      data:'item_code='+item_code+'&new_qty='+new_qty+'&_token='+_token,
+      success: function(alerts){
+          if(alerts==1)
+          {
+              location.reload();
+          }
+          else
+          {
+          alert("{{ __('Could\'t complete your request')}}");
+          }
+      }
+  });
+}
+function get_medicine_data(id)
+{
+  $.ajax({
+  url:'{{ URL::to('medicine/medicine-data/' )}}',
+  type:'GET',
+  data:'id='+id,
+  datatype: 'JSON',
+  success: function(data){
+  var data = data.data;
+  var med_comp="";
+      $('#med_name').html(data.item_name);
+      comp=data.composition.split(',');
+      for(i=0;i<comp.length;i++)
+      {
+          med_comp+="<h5>"+comp[i]+"</h5>";
+      }
+      $('#med_comp').html(med_comp);
+      $('#mfg').html(data.manufacturer);
+      $('#group').html(data.group);
 
-        }
-        });
-     }
+  }
+  });
+}
 </script>
+
+@endsection
+
+
+

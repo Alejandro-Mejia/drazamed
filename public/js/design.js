@@ -2,6 +2,7 @@ var current_item_code = "";
 var categories = [];
 var ulclick;
 var element;
+var archivos = false;
 
 var translate = {
     activate_account: "@lang('Please activate your account')",
@@ -125,22 +126,6 @@ $(document).ready(function() {
         }
     });
 
-    // Cambio en el metodo de envio
-    $('input:radio[name="shipping"]').change(
-    function(){
-        // console.log(element = $(this))
-        if ($(this).is(':checked')) {
-            shipping = $(this).val();
-            subTotal = $('#subTotal').data('value');
-            console.log('subTotal:'+ subTotal);
-            console.log('Shipping:'+ shipping);
-            $('#shipping_value').val(shipping);
-            $('#shipping_value').html($('#shipping_value').val());
-            total = Number(shipping)+Number(subTotal);
-            $('#totalOrder').val(total.toFixed(2));
-            $('#totalOrder').html($('#totalOrder').val());
-        }
-    });
     /**
      * Busqueda de Medicamentos por nombre
      * @param cat= Categoria lab= Laboratorio term= Nombre Medicamento limit= #resultados max
@@ -210,6 +195,9 @@ $(document).ready(function() {
             .appendTo(ul);
     };
 });
+
+
+
 
 /**
  * Registro de un nuevo usuario
