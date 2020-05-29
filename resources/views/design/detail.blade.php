@@ -1,4 +1,4 @@
-<div class="detail" style="display:none">
+<div class="detail" style="display:none" id="d{{$prescription['id']}}">
     <div class="det_content">
             @if(!empty($prescription['cart']))
                 <table class="table">
@@ -43,7 +43,19 @@
                     </div>
                     <div class="row">
                         <div class="col-lg-8 col-md-8 col-sm-8 col-xs-6">
+                            <div id="shipping_options" class="col-lg-12 col-md-12 col-sm-12">
+                                <form>
+                                    <fieldset id="shipping_method" style="form-inline">
+                                  <label class="radio-inline">
+                                    <input type="radio" name="shipping" value=0 checked> Recoger (Gratis)
+                                  </label>
+                                  <label class="radio-inline">
+                                    <input type="radio" name="shipping" value=2000> Mensajero ($ 1.000)
+                                  </label>
+                                </fieldset>
+                                </form>
 
+                              </div>
                         </div>
                         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-4">
                              <p style="color:rgb(55, 213, 218);">{{__('Shipping Cost')}}</p>
@@ -66,7 +78,8 @@
                              <p style="color:rgb(255, 0, 0);">{{__('Net Payable')}}</p>
                          </div>
                          <div class="col-lg-2 col-md-2 col-sm-2 col-xs-4 text-right text-align-responsive">
-                             <p >{{ empty($prescription['total']) ? Setting::currencyFormat($sub_total) : Setting::currencyFormat($prescription['total'])}}</p>
+                             <?php $netPay =  (empty($prescription['total']) ? $sub_total : $prescription['total']) + $prescription['shipping']; ?>
+                             <p >{{ Setting::currencyFormat($netPay) }}</p>
                          </div>
                     </div>
                 </div>

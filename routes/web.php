@@ -69,6 +69,7 @@ use App\MercadoPago\SDK;
     Route::any('/user/contact-us', 'UserController@anyContactUs');
     Route::any('/user/store-profile-pic', 'UserController@anyStoreProfilePic');
     Route::any('/user/web-activate-account/{code}', 'UserController@anyWebActivateAccount');
+    Route::any('/user/pres-delete/{pres_id}', 'UserController@anyPresDelete');
 
     /**
      * Medicine routes

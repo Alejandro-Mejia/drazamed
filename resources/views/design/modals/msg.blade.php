@@ -31,7 +31,8 @@
     $(document).ready(function () {
         // var msg = $('#msg').val();
         let url = window.location.href;
-        if (url.includes('?')) {
+        if (url.includes('?') && url.includes('msg')) {
+
           var msg = decodeURIComponent(window.location.search.match(/(\?|&)msg\=([^&]*)/)[2]);
 
           console.log(msg);
@@ -45,6 +46,12 @@
               $('#res-title').css('color','red');
               $('#res-title').html('Error');
               $('#res-content').html('Algo salio mal, comunicate con nosotros por favor.');
+              $('#resultModal').modal({
+              });
+          }else if(msg == "activate") {
+              $('#res-title').css('color','orange');
+              $('#res-title').html('Atención');
+              $('#res-content').html('Para activar tu cuenta, por favor revisa el correo electrónico y sigue las instrucciones.');
               $('#resultModal').modal({
               });
           }

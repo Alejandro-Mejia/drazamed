@@ -65,6 +65,14 @@
             <div class="col-lg-9 col-md-12">
                 <div class="panel profile-panel">
                     <h2 class="panel-title">Mi Perfil</h2>
+                    <div hidden>
+                        <div class="right-inner-addon">
+                            <button type="button" class="btn btn-primary logout-btn ripple" data-color="#4BE7EC"
+                                    onclick="goto_detail_page();">{{__('SEARCH')}}
+                            </button>
+                            <input type="text" id="tags" class="form-control search_medicine" placeholder="{{ __('Search medicines here')}}"/>
+                        </div>
+                    </div>
                     <div class="row">
                         <div class="col-md-6">
                             <label for="txt-name">Nombre</label>
@@ -138,7 +146,7 @@
                     </p>
                     <div class="table-responsive">
                         @if(!empty(count($prescriptions)))
-                            <table class="table">
+                            <table class="table" id="ordenes_pendientes">
                                 <thead class="table-header">
                                     <th>FORMULA MÉDICA</th>
                                     <th>FECHA</th>
@@ -151,7 +159,7 @@
 
                                         <!-- Section 1 -->
 
-                                        <tr>
+                                        <tr id="r{{$prescription['id']}}">
                                             <td>
                                                 @foreach($prescription['cart'] as $cart)
 
@@ -166,8 +174,8 @@
                                             </td>
 
                                             <td >
-                                                <i class="fas fa-edit details" ></i>
-                                                <i class="fas fa-trash-alt"></i>
+                                                <i class="fas fa-edit details" data-id={{ $prescription["id"]}}></i>
+                                                <i class="fas fa-trash-alt presDelete" data-id={{ $prescription["id"]}}></i>
                                                 <i class="fas fa-shopping-cart"></i>
                                             </td>
                                         </tr>
@@ -301,6 +309,42 @@
 
 <script type="">
 
+    // Funciones para el pago de ordenes
 
+    function goto_detail_page() {
+        $(".search_medicine").val("");
+        var serched_medicine = $(".search_medicine").val();
+        window.location = "{{URL::to('medicine-detail/')}}/" + current_item_code;
+
+    }
+    function purchase(obj) {
+        var invoice = $(obj).attr('invoice');
+        window.location = "{{URL::to('medicine/make-mercado-pago-payment/')}}/" + invoice;
+
+    }
+    function purchase_paypal(obj) {
+        var invoice = $(obj).attr('invoice');
+        window.location = "{{URL::to('medicine/make-paypal-payment/')}}/" + invoice;
+
+    }
+
+    function purchase_mercadopago(obj) {
+        var invoice = $(obj).attr('invoice');
+        console.log("Invoice:");
+        console.log(invoice);
+        window.location = "{{URL::to('medicine/make-mercado-pago-payment/')}}/" + invoice;
+
+    }
+    function change_list() {
+        //alert($('.category').val());
+        var category = $('.category').val();
+
+        window.location = "{{URL::to('my-prescription')}}/" + category;
+    }
+
+    // $('#shipping_method').on('change', function(){
+    //     var envio = $("input[name='shipping']:checked").val();
+    //     // alert('Costo envio :' + envio);
+    // })
 
 </script>

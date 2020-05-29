@@ -1219,7 +1219,7 @@ class MedicineController extends BaseController
 	 */
 
 	public
-	function getMyCart ()
+	function getMyCart1()
 	{
 		$email = Session::get ('user_id');
 		$current_orders = DB::table ('sessions')->where ('user_id' , '=' , $email)->get ();
@@ -1229,7 +1229,7 @@ class MedicineController extends BaseController
 	}
 
 
-	function getMyCart1 ()
+	function getMyCart()
 	{
 		$email = Session::get ('user_id');
 		$current_orders = DB::table ('sessions')->where ('user_id' , '=' , $email)->get ();
