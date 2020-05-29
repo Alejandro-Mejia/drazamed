@@ -79,6 +79,7 @@ class MedicineController extends BaseController
 				$user_type = Auth::user ()->user_type_id;
 				$customer = Auth::user()->with('customer')->first();
 
+
 				$address = $customer->address;
 
 				$is_pres_required = Request::get ('is_pres_required' , 1);
@@ -87,7 +88,7 @@ class MedicineController extends BaseController
 				$shipping_cost = Request::get ('shipping' , 0);
 
 				$path = base_path () . '/public/images/prescription/' . $email . '/';
-
+				dd( Request::all());
 //				if($is_pres_required)
 				$file_name = "";
 

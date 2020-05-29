@@ -1,5 +1,4 @@
 'use strict';
-
 ;( function ( document, window, index )
 {
 	// feature detection for drag&drop upload
@@ -8,6 +7,8 @@
 			var div = document.createElement( 'div' );
 			return ( ( 'draggable' in div ) || ( 'ondragstart' in div && 'ondrop' in div ) ) && 'FormData' in window && 'FileReader' in window;
 		}();
+
+
 
 
 	// applying the effect for every form
@@ -42,8 +43,9 @@
 		{
 			showFiles( e.target.files );
 
+			archivos = e.target.files;
 
-			triggerFormSubmit();
+			// triggerFormSubmit();
 
 
 		});
@@ -79,6 +81,9 @@
 			form.addEventListener( 'drop', function( e )
 			{
 				droppedFiles = e.dataTransfer.files; // the files that were dropped
+
+				archivos = droppedFiles;
+
 				showFiles( droppedFiles );
 
 				// Dispara el llamado a submit
