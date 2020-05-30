@@ -136,7 +136,7 @@
                 </div>
 
                 <div class="panel mt-30">
-                    <h2 class="panel-title">Ordenes Pendientes</h2>
+                    <h2 class="panel-title">Ordenes Pendientes de Pago</h2>
                     <p>
                         Por favor espere a que verifiquemos su pedido. Una vez
                         lo verifiquemos cambiara su estado a "Verificado". Una
@@ -180,7 +180,7 @@
                                             </td>
                                         </tr>
 
-                                        <tr>
+                                        <tr id="pinfo{{$prescription['id']}}">
                                             <td colspan=4 class="detailCell">
                                                @include('design.detail')
                                             </td>
@@ -204,7 +204,7 @@
 
 
                 <!-- <div class="panel mt-30">
-                    <h2 class="panel-title">Ordenes Canceladas</h2>
+                    <h2 class="panel-title">Ordenes Pendientes de Envio</h2>
                     <p>
                         Por alguna razón su orden ha sido cancelada, a
                         continuación le mostramos las observaciones par que
@@ -234,9 +234,11 @@
                     </div>
                 </div> -->
 
+
+
                 <div class="panel mt-30">
+
                     <h2 class="panel-title">Ordenes Completadas</h2>
-                    <h2 class="panel-title">Ordenes Pendientes</h2>
                     <p>
                         Por favor espere a que verifiquemos su pedido. Una vez
                         lo verifiquemos cambiara su estado a "Verificado". Una
@@ -274,7 +276,7 @@
 
                                              @endforeach
                                         </td>
-                                        <td class="col-lg-3 text-center"><span class="date-added"><?php echo $prescription->created_at; ?></span>
+                                        <td class="col-lg-3 text-center"><span class="date-added"> {{$prescription->created_at  ?? ''}}</span>
                                         </td>
 
                                         <td class="col-lg-3 text-center">{{ __(ShippingStatus::statusName($invoice->shipping_status)) }}
@@ -299,6 +301,41 @@
                         @endif
                     </div>
                 </div>
+
+
+                <!-- <div class="panel mt-30">
+                    <h2 class="panel-title">Ordenes Canceladas</h2>
+                    <p>
+                        Por alguna razón su orden ha sido cancelada, a
+                        continuación le mostramos las observaciones par que
+                        vuelva a crearla nuevamente
+                    </p>
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead class="table-header">
+                                <th>FORMULA MÉDICA</th>
+                                <th>FECHA</th>
+                                <th>ESTADO</th>
+                                <th>ACCIONES</th>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Nombre del Medicamento</td>
+                                    <td>2020-04-25 07:55:10</td>
+                                    <td>Sin Verificar</td>
+                                    <td>
+                                        <i class="fas fa-edit"></i>
+                                        <i class="fas fa-trash-alt"></i>
+                                        <i class="fas fa-shopping-cart"></i>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div> -->
+
+
+
             </div>
         </div>
     </div>
