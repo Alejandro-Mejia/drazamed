@@ -109,7 +109,7 @@
 
 				// gathering the form data
 				var ajaxData = new FormData( form );
-				// console.log(ajaxData);
+
 
 				if( droppedFiles )
 				{
@@ -119,11 +119,7 @@
 						ajaxData.append( input.getAttribute( 'name' ), file );
 					});
 
-					console.log(ajaxData);
 				}
-
-				// console.log(ajaxData);
-				// ajaxData.append( input.getAttribute('name'),  );
 
 				// ajax request
 				var ajax = new XMLHttpRequest();
@@ -131,13 +127,16 @@
 
 				ajax.onload = function()
 				{
+					console.log(ajax.responseText);
+
 					form.classList.remove( 'is-uploading' );
 					if( ajax.status >= 200 && ajax.status < 400 )
 					{
-						console.log(ajax.responseText);
 						var data = JSON.parse( ajax.responseText );
-						form.classList.add( data.success == true ? 'is-success' : 'is-error' );
+						form.classList.add( data.status == "SUCCESS" ? 'is-success' : 'is-error' );
 						if( !data.success ) errorMsg.textContent = data.error;
+
+						setTimeout(function(){window.location="/account-page/#por_pagar";}, 2000)
 
 					}
 					else alert( 'Error. Please, contact the webmaster!' );
@@ -176,7 +175,6 @@
 			}
 		});
 
-
 		// restart the form if has a state of error/success
 		Array.prototype.forEach.call( restart, function( entry )
 		{
@@ -185,6 +183,8 @@
 				e.preventDefault();
 				form.classList.remove( 'is-error', 'is-success' );
 				input.click();
+
+
 			});
 		});
 

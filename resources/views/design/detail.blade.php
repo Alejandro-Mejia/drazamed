@@ -1,4 +1,4 @@
-<div class="detail" style="display:none" id="d{{$prescription['id']}}">
+<div class="detail" style="display:{{$hide}}" id="d{{$prescription['id']}}">
     <div class="det_content">
             @if(!empty($prescription['cart']))
                 <table class="table">

@@ -5,11 +5,18 @@
 @endsection
 
 @section('content')
+
+<style type="text/css">
+    .nav-profile {
+        overflow:hidden;
+        position:absolute;
+    }
+</style>
 <section class="profile">
     <div class="profile-body">
         <div class="row">
             <div class="col-lg-3 col-md-12">
-                <div class="panel">
+                <div class="panel nav-profile">
                     <div class="row">
                         <div class="col-md-3">
                             <span
@@ -57,12 +64,20 @@
                                     >Carrito de Compras</a
                                 >
                             </li>
+                            <li>
+                                <a href="/logout"
+                                    ><span
+                                        class="mr-10 fas fa-sign-out-alt"
+                                    ></span
+                                    >Cerrar sesión</a
+                                >
+                            </li>
                         </ul>
                     </nav>
                 </div>
             </div>
 
-            <div class="col-lg-9 col-md-12">
+            <div class="col-lg-9 col-md-12" style="max-height: 90%; overflow: auto;">
                 <div class="panel profile-panel">
                     <h2 class="panel-title">Mi Perfil</h2>
                     <div hidden>
@@ -136,7 +151,7 @@
                 </div>
 
                 <div class="panel mt-30">
-                    <h2 class="panel-title">Ordenes Pendientes de Pago</h2>
+                    <h2 class="panel-title" id="por_pagar">Ordenes Pendientes de Pago</h2>
                     <p>
                         Por favor espere a que verifiquemos su pedido. Una vez
                         lo verifiquemos cambiara su estado a "Verificado". Una
@@ -154,6 +169,8 @@
                                     <th>ACCIONES</th>
                                 </thead>
                                 <tbody>
+                                    <?php $i=0; $pres = sizeof($prescriptions); ?>
+
                                     @foreach($prescriptions as $prescription)
                                     <?php $sub_total = 0; ?>
 
@@ -179,8 +196,9 @@
                                                 <i class="fas fa-shopping-cart"></i>
                                             </td>
                                         </tr>
-
-                                        <tr id="pinfo{{$prescription['id']}}">
+                                        <?php $i++; ?>
+                                        <?php $hide = ($i < $pres) ? 'none' : 'block'; ?>
+                                        <tr id="pinfo{{$prescription['id']}}" >
                                             <td colspan=4 class="detailCell">
                                                @include('design.detail')
                                             </td>

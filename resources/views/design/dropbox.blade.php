@@ -28,7 +28,7 @@
 		</div>
 		<div style="text-align: center;">
 			<div class="box__uploading">Uploading&hellip;</div>
-			<div class="box__success">Cargado! <a href="https://css-tricks.com/examples/DragAndDropFileUploading//?" class="box__restart" role="button">Enviar mas?</a></div>
+			<div class="box__success" style="color: green"> <br> Orden enviada! En unos segundos sera redirigido a su perfil para realizar el pago </div>
 			<div class="box__error">Error! <span></span>. <a href="https://css-tricks.com/examples/DragAndDropFileUploading//?" class="box__restart" role="button">Intente de nuevo!</a></div>
 		</div>
 
