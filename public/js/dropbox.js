@@ -138,9 +138,7 @@
 						var data = JSON.parse( ajax.responseText );
 						form.classList.add( data.success == true ? 'is-success' : 'is-error' );
 						if( !data.success ) errorMsg.textContent = data.error;
-						setTimeout(function() {
-						  window.location.href = "/account-page";
-						}, 2000);
+
 					}
 					else alert( 'Error. Please, contact the webmaster!' );
 				};

@@ -15,13 +15,13 @@
                     <tbody>
                         @foreach($prescription['cart'] as $cart)
                         <tr>
-                            <td class="text-center text-align-responsive"> {{ $cart['item_name'] }} </td>
-                            <td class="text-right text-align-responsive"> {{ number_format($cart['unit_price'],2)}} </td>
+                            <td class="text-left text-align-responsive"> {{ $cart['item_name'] }} </td>
+                            <td class="text-right text-align-responsive" nowrap> {{ number_format($cart['unit_price'],2)}} </td>
                             <td class="text-right text-align-responsive"> {{ $cart['quantity'] }}</td>
-                            <td class="text-right text-align-responsive">
+                            <td class="text-right text-align-responsive" nowrap>
                                 {{ Setting::currencyFormat($cart['unit_price']* $cart['quantity'])}}
                             </td>
-                            <td class="text-right text-align-responsive">
+                            <td class="text-right text-align-responsive" nowrap>
                                 {{ Setting::currencyFormat($cart['total_price'])}}
                             </td>
                         </tr>
@@ -31,6 +31,7 @@
                         @endforeach
                     </tbody>
                 </table>
+
                 <div class="price_breakdown">
                     <div class="row">
                         <div class="col-lg-8 col-md-8 col-sm-8 col-xs-6"></div>
@@ -43,25 +44,26 @@
                     </div>
                     <div class="row">
                         <div class="col-lg-8 col-md-8 col-sm-8 col-xs-6">
-                            <div id="shipping_options" class="col-lg-12 col-md-12 col-sm-12">
-                                <form>
-                                    <fieldset id="shipping_method" style="form-inline">
-                                  <label class="radio-inline">
-                                    <input type="radio" name="shipping" value=0 checked> Recoger (Gratis)
-                                  </label>
-                                  <label class="radio-inline">
-                                    <input type="radio" name="shipping" value=2000> Mensajero ($ 1.000)
-                                  </label>
-                                </fieldset>
-                                </form>
 
-                              </div>
                         </div>
                         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-4">
                              <p style="color:rgb(55, 213, 218);">{{__('Shipping Cost')}}</p>
                         </div>
-                        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-4 text-right text-align-responsive">
+
+                        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-4 text-right text-align-responsive" nowrap>
                              <p >{{ Setting::currencyFormat($prescription['shipping'])}}</p>
+                         </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-6">
+
+                        </div>
+                        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-4">
+                             <p style="color:rgb(55, 213, 218);">{{__('Taxes')}}</p>
+                        </div>
+
+                        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-4 text-right text-align-responsive" nowrap>
+                             <p >{{ Setting::currencyFormat($prescription['tax'])}}</p>
                          </div>
                     </div>
                     <div class="row" hidden>

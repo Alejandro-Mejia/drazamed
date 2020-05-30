@@ -542,9 +542,10 @@ class UserController extends BaseController
 				$carts = ItemList::where ('invoice_id' , '=' , $result->id)->get ();
 
 
-
+				$taxTotal = 0;
 				foreach ($carts as $cart) {
 					// dd($cart, $medicines, $results);
+					$tax = $cart->unit_price - ceil(($cart->unit_price / (1+($medicines[$cart->medicine]['tax']/100))));
 					$items[] = ['id' => $cart->id ,
 						'item_id' => $cart->medicine ,
 						'item_code' => $medicines[$cart->medicine]['item_code'] ,
@@ -552,9 +553,11 @@ class UserController extends BaseController
 						'unit_price' => $cart->unit_price ,
 						'discount_percent' => $cart->discount_percentage ,
 						'discount' => $cart->discount ,
+						'tax' => $tax,
 						'quantity' => $cart->quantity ,
 						'total_price' => $cart->total_price
 					];
+					$taxTotal += $tax;
 				}
 			}
 			$details = [
@@ -562,7 +565,7 @@ class UserController extends BaseController
 				'invoice' => (is_null ($result->invoice)) ? 0 : $result->invoice ,
 				'sub_total' => (is_null ($result->sub_total)) ? 0 : $result->sub_total ,
 				'discount' => (is_null ($result->discount)) ? 0 : $result->discount ,
-				'tax' => (is_null ($result->tax)) ? 0 : $result->tax ,
+				'tax' => (is_null ($taxTotal)) ? 0 : $taxTotal ,
 				'shipping' => (is_null ($result->shipping)) ? 0 : $result->shipping ,
 				'total' => (is_null ($result->total)) ? 0 : $result->total ,
 				'created_on' => (is_null ($result->date_added)) ? 0 : $result->date_added ,

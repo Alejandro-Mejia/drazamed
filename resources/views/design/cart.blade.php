@@ -246,20 +246,6 @@
 // })
 
 
-
-function store_prescription() {
-  is_pres_required = "{{ $pres_required }}";
-  shipping = $('#shipping_value').val();
-  sub_total = $('#subTotal').data('value');
-  sub_total = $('#sub_total_form').data('value');
-
-  console.log('P Req: ' + is_pres_required);
-  console.log('Shipping: ' + shipping);
-  console.log('SubTotal: ' + sub_total);
-
-}
-
-
 // Cambio en el metodo de envio
 $('input:radio[name="shipping"]').change(
 function(){
