@@ -86,13 +86,13 @@
                             </div>
                         </div>
                     </div>
+
                     <div class="col-md-4">
                         <img
                             class="pi-img"
                             id="pi-med-img"
                             width=240px
-                            height=120px
-                            src="/assets/images/dolex.png"
+                            src="/images/products/default.png"
                             alt=""
                         />
                     </div>

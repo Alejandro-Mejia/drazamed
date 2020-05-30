@@ -688,7 +688,7 @@ function show_detail_modal(data) {
         url: "/medicine/search-medicine/1",
         data: "term=" + data.value,
         success: function(data) {
-            console.log(data.result.msg[0]);
+            console.log(data.result.msg);
             $("#hidden_medicine_id").val(data.result.msg[0].id);
             $("#hidden_item_code").val(data.result.msg[0].item_code);
             $("#hidden_item_pres_required").val(
@@ -701,6 +701,9 @@ function show_detail_modal(data) {
             $("#pi-med-description")
                 .empty()
                 .append(data.result.msg[0].composition);
+            $("#pi-med-img")
+                .empty()
+                .attr('src', data.result.msg[0].url_img);
             $("#pi-med-composition").val(data.result.msg[0].composition);
             $("#pi-med-comby").val(data.result.msg[0].lab);
             $("#pi-med-form").val(
@@ -822,12 +825,14 @@ $(".presDelete").on("click", function() {
             // console.log(data);
             alert('Se ha borrado su orden');
             rowId = 'r' + id;
+            rowInfo = 'pinfo' + id;
             console.log("Row Name: " + rowId);
             element = document.getElementById(rowId);
             rowIndex = element.rowIndex;
             document.getElementById('ordenes_pendientes').deleteRow(rowIndex);
-            document.getElementById('ordenes_pendientes').deleteRow(rowIndex+1);
-            console.log(element);
+            element = document.getElementById(rowInfo);
+            rowIndex = element.rowIndex;
+            document.getElementById('ordenes_pendientes').deleteRow(rowIndex);
         }
     });
     } else {

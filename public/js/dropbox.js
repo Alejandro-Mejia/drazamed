@@ -22,7 +22,8 @@
 			droppedFiles = false,
 			showFiles	 = function( files )
 			{
-				label.textContent = files.length > 1 ? ( input.getAttribute( 'data-multiple-caption' ) || '' ).replace( '{count}', files.length ) : files[ 0 ].name;
+				// label.textContent = files.length > 1 ? ( input.getAttribute( 'data-multiple-caption' ) || '' ).replace( '{count}', files.length ) : files[ 0 ].name;
+				label.textContent = files.name;
 			},
 			triggerFormSubmit = function()
 			{
@@ -80,7 +81,7 @@
 			});
 			form.addEventListener( 'drop', function( e )
 			{
-				droppedFiles = e.dataTransfer.files; // the files that were dropped
+				droppedFiles = e.dataTransfer.files[0]; // the files that were dropped
 
 				archivos = droppedFiles;
 
@@ -121,6 +122,9 @@
 					console.log(ajaxData);
 				}
 
+				// console.log(ajaxData);
+				// ajaxData.append( input.getAttribute('name'),  );
+
 				// ajax request
 				var ajax = new XMLHttpRequest();
 				ajax.open( form.getAttribute( 'method' ), form.getAttribute( 'action' ), true );
@@ -134,6 +138,9 @@
 						var data = JSON.parse( ajax.responseText );
 						form.classList.add( data.success == true ? 'is-success' : 'is-error' );
 						if( !data.success ) errorMsg.textContent = data.error;
+						setTimeout(function() {
+						  window.location.href = "/account-page";
+						}, 2000);
 					}
 					else alert( 'Error. Please, contact the webmaster!' );
 				};

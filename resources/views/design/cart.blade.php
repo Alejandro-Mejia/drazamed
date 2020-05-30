@@ -233,6 +233,9 @@
     </div>
 </main>
 
+@include('design.modals.login')
+@include('design.modals.register')
+@include('design.modals.recovery')
 @include('design.modals.pinfo')
 
 <script>
@@ -243,10 +246,12 @@
 // })
 
 
+
 function store_prescription() {
   is_pres_required = "{{ $pres_required }}";
   shipping = $('#shipping_value').val();
   sub_total = $('#subTotal').data('value');
+  sub_total = $('#sub_total_form').data('value');
 
   console.log('P Req: ' + is_pres_required);
   console.log('Shipping: ' + shipping);
@@ -265,6 +270,7 @@ function(){
         console.log('subTotal:'+ subTotal);
         console.log('Shipping:'+ shipping);
         $('#shipping_value').val(shipping);
+        $('#shippingForm').val(shipping);
         $('#shipping_value').html($('#shipping_value').val());
         total = Number(shipping)+Number(subTotal);
         $('#totalOrder').val(total.toFixed(2));

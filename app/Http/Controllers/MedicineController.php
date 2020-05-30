@@ -19,6 +19,7 @@ use Config;
 use View;
 use Mail;
 use DB;
+use URL;
 // use MP;
 use MercadoPago;
 use App\MedicalProfessional;
@@ -79,6 +80,7 @@ class MedicineController extends BaseController
 				$user_type = Auth::user ()->user_type_id;
 				$customer = Auth::user()->with('customer')->first();
 
+				// dd($_FILES['files']);
 
 				$address = $customer->address;
 
@@ -88,13 +90,14 @@ class MedicineController extends BaseController
 				$shipping_cost = Request::get ('shipping' , 0);
 
 				$path = base_path () . '/public/images/prescription/' . $email . '/';
-				dd( Request::all());
 //				if($is_pres_required)
-				$file_name = "";
 
-				if (Request::hasFile ('file')) {
+				$file_name = "";
+				// dd(Request::all());
+				// dd(Request::hasFile ('files'));
+				if (Request::hasFile ('files')) {
 					$file_name = time ();
-					$ext = Request::file ('file')->getClientOriginalExtension ();
+					$ext = Request::file ('files')[0]->getClientOriginalExtension ();
 					// If Invalid Extension
 					if (!in_array ($ext , ['jpg' , 'jpeg' , 'png'])) {
 						Session::flash ('flash_message' , 'Invalid file uploaded, Please upload jpg or png images');
@@ -102,10 +105,10 @@ class MedicineController extends BaseController
 
 						return Redirect::back ();
 					}
-					$fname = Request::file ('file')->getClientOriginalName ();
+					$fname = Request::file ('files')[0]->getClientOriginalName ();
 					$file_name = time ();
 					$file_name .= $file_name . $fname;
-					Request::file ('file')->move ($path , $file_name);
+					Request::file ('files')[0]->move ($path , $file_name);
 					$newName = "thumb_" . $file_name . $fname;
 
 
@@ -757,6 +760,16 @@ class MedicineController extends BaseController
 									}
 								}
 
+								$medImagen = isset($med['item_code']) ? $med['item_code'].'.png' : 'default.png';
+								$medPath = "/images/products/" . $medImagen;
+
+								;
+								// $path =  URL::to('/') .'public/images/products/' . $medImagen;
+								$path = realpath(public_path('images'));
+								$path .= '/products/' . $medImagen;
+
+								$medPath = (is_file($path)) ? $medPath : "/images/products/default.png";
+
 
 		                    }
 		                    break;
@@ -768,7 +781,7 @@ class MedicineController extends BaseController
 		        $sellprice = ceil($sellprice);
 		        $sellprice = round( $sellprice, -2, PHP_ROUND_HALF_UP);
 
-				$medicineNameArray[$i] = array("id" => $med->id ,'item_code' => $med->item_code,  "name" => $med->item_name , 'mrp' => $sellprice ,'quantity' => $med->quantity, 'lab' => $med->manufacturer , 'composition' => $med->composition, 'image-url' => $med->photo_url, 'is_pres_required' => $med->is_pres_required, 'group' => $med->group);
+				$medicineNameArray[$i] = array("id" => $med->id ,'item_code' => $med->item_code,  "name" => $med->item_name , 'mrp' => $sellprice ,'quantity' => $med->quantity, 'lab' => $med->manufacturer , 'composition' => $med->composition, 'image-url' => $med->photo_url, 'is_pres_required' => $med->is_pres_required, 'group' => $med->group, 'url_img' => $medPath);
 				$i++;
 			}
 			$result = array('result' => array('status' => 'sucess' , 'msg' => $medicineNameArray));
@@ -1900,9 +1913,23 @@ class MedicineController extends BaseController
 		else
 			$medicines = Medicine::select ('id' , 'item_name as name' , 'batch_no' , 'manufacturer as mfg' , 'group'  , 'item_code' , 'selling_price as mrp' , 'composition' , 'is_pres_required')->where ('item_name' , 'LIKE' , $name . "%")->orderBy ('composition' , $order)->where ('is_delete' , '=' , 0)->paginate (30);
 
+
 		foreach ($medicines as $key => $value) {
 			$mrp = $this->getSellingPrice($value['item_code']);
+
+			$medImagen = isset($value['item_code']) ? $value['item_code'].'.png' : 'default.png';
+			$medPath = "/images/products/" . $medImagen;
+
+			;
+			// $path =  URL::to('/') .'public/images/products/' . $medImagen;
+			$path = realpath(public_path('images'));
+			$path .= '/products/' . $medImagen;
+
+			$medPath = (is_file($path)) ? $medPath : "/images/products/default.png";
+
 			$value['mrp'] = $mrp;
+			$value['img_url'] = $medPath;
+
 			Log::info($value['item_name' . ' : $ ' . $mrp]);
 
 		}
