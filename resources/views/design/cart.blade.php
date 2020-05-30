@@ -80,7 +80,7 @@
                                   <input type="text" style="width:40px; border: 1px solid #ABADB3; text-align: center;" item_code="{{ $cart_item->item_code }}" value="{{$cart_item->medicine_count}}" onchange="change_count(this);">
                                 </td>
                                 <td class="text-right col-lg-2 col-md-2 col-sm-2 col-xs-2">
-                                    <p>{{$mrp = number_format($medicine['mrp'],2)}}</p>
+                                    <p>{{$mrp = number_format($cart_item->unit_price,2)}}</p>
                                 </td>
 
                                 <!-- <td class="text-right col-lg-2 col-md-2 col-sm-2 col-xs-2">
