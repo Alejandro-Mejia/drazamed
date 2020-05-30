@@ -103,7 +103,7 @@ class MedicineController extends BaseController
 						Session::flash ('flash_message' , 'Invalid file uploaded, Please upload jpg or png images');
 						Session::flash ('flash_type' , 'alert-danger');
 
-						return Redirect::back ();
+						//return Redirect::back ();
 					}
 					$fname = Request::file ('files')[0]->getClientOriginalName ();
 					$file_name = time ();
@@ -124,7 +124,7 @@ class MedicineController extends BaseController
 					if ($is_pres_required == 1) {
 						Session::flash ('flash_message' , 'Please select a file to upload');
 						Session::flash ('flash_type' , 'alert-danger');
-						return Redirect::back ();
+						//return Redirect::back ();
 					}
 				}
 
@@ -209,13 +209,14 @@ class MedicineController extends BaseController
 				Session::flash ('flash_message' , '<b>Success !</b> Your order has been requested successfully. Please track the status in MY PRESCRIPTIONS.');
 				Session::flash ('flash_type' , 'alert-success');
 
-				return Redirect::back ();
+				return Response::json (['status' => 'SUCCESS' , 'msg' => 'Your order has been requested successfully.']);
 
 
 			} else {
-				Session::flash ('flash_message' , '<b>Sorry !</b> Please login first');
-				Session::flash ('flash_type' , 'alert-danger');
-				return Redirect::back ();
+				// Session::flash ('flash_message' , '<b>Sorry !</b> Please login first');
+				// Session::flash ('flash_type' , 'alert-danger');
+				// return Redirect::back ();
+				return Response::json (['status' => 'FAILURE' , 'msg' => 'Please login first']);
 			}
 
 

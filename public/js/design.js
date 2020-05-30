@@ -686,9 +686,9 @@ function show_detail_modal(data) {
     $.ajax({
         type: "GET",
         url: "/medicine/search-medicine/1",
-        data: "term=" + data.value,
+        data: "term=" + encodeURIComponent(data.value),
         success: function(data) {
-            console.log(data.result.msg);
+            console.log(data.result);
             $("#hidden_medicine_id").val(data.result.msg[0].id);
             $("#hidden_item_code").val(data.result.msg[0].item_code);
             $("#hidden_item_pres_required").val(
