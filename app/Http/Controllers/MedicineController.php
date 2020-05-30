@@ -87,7 +87,7 @@ class MedicineController extends BaseController
 				$is_pres_required = Request::get ('is_pres_required' , 1);
 
 				// Getting shipping_cost
-				$shipping_cost = Request::get ('shipping' , 0);
+				$shipping_cost = Request::get ('shipping_cost' , 0);
 
 				$path = base_path () . '/public/images/prescription/' . $email . '/';
 //				if($is_pres_required)
@@ -155,12 +155,18 @@ class MedicineController extends BaseController
 
 				$current_medicines = SessionsData::select ('medicine_id' , 'medicine_count')->where ('user_id' , '=' , $email)->get ();
 
-				// dd($current_medicines);
+
 				$sub_total = 0;
+				$tax_amount = 0;
 				if (count ($current_medicines) > 0) {
 
 					foreach ($current_medicines as $medicine) {
+
 						$medicine_details = Medicine::medicines ($medicine['medicine_id']);
+						$medicine_details['mrp'] = $this->anyCalculateMRP($medicine['medicine_id']);
+						$base = $medicine_details['mrp'] / ((100+$medicine_details['tax'])/100);
+						$iva = $medicine_details['mrp'] - $base;
+						$tax_amount += $iva;
 						$total_discount = $medicine_details['discount'] * $medicine['medicine_count'];
 						$total_price = ($medicine_details['mrp'] * $medicine['medicine_count']) - $total_discount;
 						$itemList = new ItemList;
@@ -175,7 +181,6 @@ class MedicineController extends BaseController
 						$itemList->created_by = $user_id;
 						$itemList->updated_by = $user_id;
 						$itemList->save ();
-
 						$sub_total += $total_price;
 					}
 
@@ -183,6 +188,7 @@ class MedicineController extends BaseController
 
 				// Update invoice sub_total
 				$invoice->latest()->update(array('sub_total' => $sub_total));
+				$invoice->latest()->update(array('tax_amount' => $tax_amount));
 				$invoice->latest()->update(array('total' => $sub_total + $shipping_cost));
 
 				$data['email'] = $email;
@@ -658,6 +664,84 @@ class MedicineController extends BaseController
 		return Response::json ($result);
 	}
 
+
+	public function anyCalculateMRP($id)
+	{
+		$med = Medicine::where ('id' , '=' , $id)->first ();
+
+		if($med->marked_price == 0) {
+	        switch ($med->tax) {
+	            case '19':
+	                $sellprice = $med->real_price / 0.71;
+	                break;
+	            case '5':
+	                $sellprice = $med->real_price / 0.85;
+	                break;
+	            default:
+	                {
+
+						if(strlen($med['manufacturer']) > 15) {
+
+							$compareLab = substr ($med['manufacturer'],0,15);
+						} else {
+							$compareLab = $med['manufacturer'];
+						}
+
+						$labRule = Pricerule::where('laboratory','LIKE','%' . $compareLab . '%')->get()->toArray();
+
+						if (isset($labRule) && sizeof($labRule) > 0) {
+							if ($labRule[0]['isByProd'] == 1) {
+								// $labRule = Pricerule::with(["prodrule" => function($q) { $q->where('product', 'LIKE', substr ($med['item_name'],0,15);}])->where('laboratory','LIKE',substr ($med['marketed_by'],0,15) . '%')->get();
+								$prod = substr($med['item_name'],0,15);
+
+								$labRule = Pricerule::with(["prodrule"=> function($q) use($prod) {$q->where('product', 'LIKE' , '%' . $prod . '%');}])->where('laboratory','LIKE', '%' . $med['manufacturer'] . '%')->get()->toArray();
+								$labRule[0]['rule_type'] = $labRule[0]['prodrule'][0]['rule_type'];
+								$labRule[0]['rule'] = $labRule[0]['prodrule'][0]['rule'];
+							}
+
+							$sellprice = ($med->real_price*$labRule[0]['isVtaReal'] + $med->current_price*$labRule[0]['isVtaCte']);
+
+							switch ($labRule[0]['rule_type']) {
+								case '0':
+									# code...
+									break;
+								case '1':
+									$sellprice = $sellprice * (1+$labRule[0]['rule']);
+									break;
+								case '2':
+									$sellprice = $sellprice + $labRule[0]['rule'];
+									break;
+								default:
+									# code...
+									break;
+							}
+						}
+
+						$medImagen = isset($med['item_code']) ? $med['item_code'].'.png' : 'default.png';
+						$medPath = "/images/products/" . $medImagen;
+
+						;
+						// $path =  URL::to('/') .'public/images/products/' . $medImagen;
+						$path = realpath(public_path('images'));
+						$path .= '/products/' . $medImagen;
+
+						$medPath = (is_file($path)) ? $medPath : "/images/products/default.png";
+
+
+	                }
+	                break;
+	        }
+	    } else {
+	        $sellprice = $med->marked_price;
+	    }
+
+	    $sellprice = ceil($sellprice);
+	    $sellprice = round( $sellprice, -2, PHP_ROUND_HALF_UP);
+
+	    return($sellprice);
+	}
+
+
 	/**
 	 * Load Medicine List
 	 *
@@ -760,16 +844,6 @@ class MedicineController extends BaseController
 									}
 								}
 
-								$medImagen = isset($med['item_code']) ? $med['item_code'].'.png' : 'default.png';
-								$medPath = "/images/products/" . $medImagen;
-
-								;
-								// $path =  URL::to('/') .'public/images/products/' . $medImagen;
-								$path = realpath(public_path('images'));
-								$path .= '/products/' . $medImagen;
-
-								$medPath = (is_file($path)) ? $medPath : "/images/products/default.png";
-
 
 		                    }
 		                    break;
@@ -777,6 +851,16 @@ class MedicineController extends BaseController
 		        } else {
 		            $sellprice = $med->marked_price;
 		        }
+
+		        $medImagen = isset($med['item_code']) ? $med['item_code'].'.png' : 'default.png';
+				$medPath = "/images/products/" . $medImagen;
+
+
+				// $path =  URL::to('/') .'public/images/products/' . $medImagen;
+				$path = realpath(public_path('images'));
+				$path .= '/products/' . $medImagen;
+
+				$medPath = (is_file($path)) ? $medPath : "/images/products/default.png";
 
 		        $sellprice = ceil($sellprice);
 		        $sellprice = round( $sellprice, -2, PHP_ROUND_HALF_UP);

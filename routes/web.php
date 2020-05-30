@@ -97,6 +97,7 @@ use App\MercadoPago\SDK;
     Route::get('/medicine/medicine-list-from-name', 'MedicineController@getMedicineListFromName');
     Route::get('/medicine/selling-price/{item_code}', 'MedicineController@getSellingPrice');
     Route::any('/medicine/downloading/{file_name}', 'MedicineController@anyDownloading');
+    Route::any('/medicine/calculate-mrp/{id}', 'MedicineController@anyCalculateMRP');
 
     /**
      * Admin routes
