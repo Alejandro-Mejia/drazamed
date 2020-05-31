@@ -1332,6 +1332,7 @@ class MedicineController extends BaseController
 //            if (!$this->isCsrfAccepted()) {
 //                return 0;
 //            }
+//
 
 		$medicine = (Session::get ('medicine') == "") ? Request::get ('medicine') : Session::get ('medicine');
 		$med_quantity = (Session::get ('med_quantity') == "") ? Request::get ('med_quantity') : Session::get ('med_quantity');
@@ -1350,50 +1351,59 @@ class MedicineController extends BaseController
 		Session::put ('item_id' , $item_id);
 		Session::put ('pres_required' , $pres_required);
 		$email = "";
-		if (Auth::check ()) {
-			$email = Session::get ('user_id' , '');
-			$medicine_exist = DB::table ('sessions')->select ('medicine_name')->where ('user_id' , '=' , $email)->where ('medicine_name' , '=' , $medicine)->get ();
-			if (count ($medicine_exist) > 0) {
-				$increment = DB::table ('sessions')->increment ('medicine_count' , $med_quantity);
-				if ($increment) {
-					Session::forget ('medicine');
-					Session::forget ('med_quantity');
-					Session::forget ('med_mrp');
-					Session::forget ('item_code');
-					Session::forget ('item_id');
+		try {
+			if (!Auth::check ())
+					throw new Exception("You are not authorized to do this action" , 401);
+			if (Auth::check ()) {
+				$email = Session::get ('user_id' , '');
+				$medicine_exist = DB::table ('sessions')->select ('medicine_name')->where ('user_id' , '=' , $email)->where ('medicine_name' , '=' , $medicine)->get ();
+				if (count ($medicine_exist) > 0) {
+					$increment = DB::table ('sessions')->increment ('medicine_count' , $med_quantity);
+					if ($increment) {
+						Session::forget ('medicine');
+						Session::forget ('med_quantity');
+						Session::forget ('med_mrp');
+						Session::forget ('item_code');
+						Session::forget ('item_id');
 
-					Session::forget ('pres_required');
-					if ($is_web == 1) {
-						return Redirect::to ("medicine/my-cart");
-					} else {
-						return "updated";
+						Session::forget ('pres_required');
+						if ($is_web == 1) {
+							return Redirect::to ("medicine/my-cart");
+						} else {
+							return "updated";
+						}
+					}
+
+				} else {
+
+					$insert = DB::table ('sessions')->insert (array('medicine_id' => $item_id , 'medicine_name' => $medicine , 'medicine_count' => $med_quantity , 'user_id' => $email , 'unit_price' => $med_mrp , 'item_code' => $item_code , 'is_pres_required' => $pres_required));
+					if ($insert) {
+						//return "updated";
+						Session::forget ('medicine');
+						Session::forget ('med_quantity');
+						Session::forget ('med_mrp');
+						Session::forget ('item_code');
+						Session::forget ('item_id');
+
+						Session::forget ('pres_required');
+						if ($is_web == 1) {
+							return Redirect::to ("my-cart");
+						} else {
+							return "inserted";
+						}
 					}
 				}
+
 
 			} else {
-
-				$insert = DB::table ('sessions')->insert (array('medicine_id' => $item_id , 'medicine_name' => $medicine , 'medicine_count' => $med_quantity , 'user_id' => $email , 'unit_price' => $med_mrp , 'item_code' => $item_code , 'is_pres_required' => $pres_required));
-				if ($insert) {
-					//return "updated";
-					Session::forget ('medicine');
-					Session::forget ('med_quantity');
-					Session::forget ('med_mrp');
-					Session::forget ('item_code');
-					Session::forget ('item_id');
-
-					Session::forget ('pres_required');
-					if ($is_web == 1) {
-						return Redirect::to ("my-cart");
-					} else {
-						return "inserted";
-					}
-				}
+				return 0;
 			}
 
-
-		} else {
-			return 0;
+		} catch (Exception $e) {
+			// $message = $this->catchException ($e);
+			return 'sin_usuario';
 		}
+
 
 	}
 

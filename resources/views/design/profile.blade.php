@@ -184,36 +184,37 @@
 
                                         <!-- Section 1 -->
                                         <!-- Si el estado es sin verificar o verificado! -->
+                                        @if(sizeof($prescription) > 0)
+                                            @if($prescription['payment_status'] == 1 && ($prescription['pres_status'] == 1 || $prescription['pres_status'] == 2))
+                                            <tr id="r{{$prescription['id']}}">
+                                                <td>
+                                                    @foreach($prescription['cart'] as $cart)
 
-                                        @if($prescription['payment_status'] == 1 && ($prescription['pres_status'] == 1 || $prescription['pres_status'] == 2))
-                                        <tr id="r{{$prescription['id']}}">
-                                            <td>
-                                                @foreach($prescription['cart'] as $cart)
+                                                         <p class="text-center text-align-responsive">{{ $cart['item_name'] }}</p>
 
-                                                     <p class="text-center text-align-responsive">{{ $cart['item_name'] }}</p>
+                                                     @endforeach
+                                                </td>
+                                                <td class="col-lg-3 text-center"><span class="date-added"><?php echo $prescription['created_on']; ?></span>
+                                                </td>
 
-                                                 @endforeach
-                                            </td>
-                                            <td class="col-lg-3 text-center"><span class="date-added"><?php echo $prescription['created_on']; ?></span>
-                                            </td>
+                                                <td class="col-lg-3 text-center">{{ __(PrescriptionStatus::statusName($prescription['pres_status'])) }}
+                                                </td>
 
-                                            <td class="col-lg-3 text-center">{{ __(PrescriptionStatus::statusName($prescription['pres_status'])) }}
-                                            </td>
+                                                <td >
+                                                    <i class="fas fa-edit details" data-id={{ $prescription["id"]}}></i>
+                                                    <i class="fas fa-trash-alt presDelete" data-id={{ $prescription["id"]}}></i>
+                                                    <i class="fas fa-shopping-cart"></i>
+                                                </td>
+                                            </tr>
+                                            <?php $i++; ?>
+                                            <?php $hide = ($i < $pres) ? 'none' : 'block'; ?>
+                                            <tr id="pinfo{{$prescription['id']}}" >
+                                                <td colspan=4 class="detailCell">
+                                                   @include('design.detail')
+                                                </td>
 
-                                            <td >
-                                                <i class="fas fa-edit details" data-id={{ $prescription["id"]}}></i>
-                                                <i class="fas fa-trash-alt presDelete" data-id={{ $prescription["id"]}}></i>
-                                                <i class="fas fa-shopping-cart"></i>
-                                            </td>
-                                        </tr>
-                                        <?php $i++; ?>
-                                        <?php $hide = ($i < $pres) ? 'none' : 'block'; ?>
-                                        <tr id="pinfo{{$prescription['id']}}" >
-                                            <td colspan=4 class="detailCell">
-                                               @include('design.detail')
-                                            </td>
-
-                                        </tr>
+                                            </tr>
+                                            @endif
                                         @endif
 
 
