@@ -39,21 +39,21 @@
                                 >
                             </li>
                             <li>
-                                <a href="/"
-                                    ><span class="mr-10 fa fa-user-clock"></span
-                                    >Ordenes Pendientes</a
+                                <a href="#por_pagar"
+                                    ><span class="mr-10 fas fa-credit-card"></span
+                                    >Ordenes Pendientes por Pagar</a
                                 >
                             </li>
                             <li>
-                                <a href="/"
-                                    ><span class="mr-10 fa fa-times"></span
-                                    >Ordenes Canceladas</a
+                                <a href="#pagadas_por_enviar"
+                                    ><span class="mr-10 fas fa-shipping-fast"></span
+                                    >Ordenes por Enviar</a
                                 >
                             </li>
                             <li>
-                                <a href="/"
+                                <a href="#enviadas"
                                     ><span class="mr-10 fa fa-check"></span
-                                    >Ordenes Completadas</a
+                                    >Ordenes Finalizadas</a
                                 >
                             </li>
                             <li>
@@ -150,8 +150,16 @@
                     </div>
                 </div>
 
-                <div class="panel mt-30">
-                    <h2 class="panel-title" id="por_pagar">Ordenes Pendientes de Pago</h2>
+                <style>
+                    .anchor{
+                      display: block;
+
+                      margin-top: -300px; /*same height as header*/
+                      /*visibility: hidden;*/
+                    }
+                </style>
+                <div class="panel mt-30 anchor" id="por_pagar" >
+                    <h2 class="panel-title" >Ordenes Pendientes de Pago</h2>
                     <p>
                         Por favor espere a que verifiquemos su pedido. Una vez
                         lo verifiquemos cambiara su estado a "Verificado". Una
@@ -175,7 +183,9 @@
                                     <?php $sub_total = 0; ?>
 
                                         <!-- Section 1 -->
+                                        <!-- Si el estado es sin verificar o verificado! -->
 
+                                        @if($prescription['payment_status'] == 1 && ($prescription['pres_status'] == 1 || $prescription['pres_status'] == 2))
                                         <tr id="r{{$prescription['id']}}">
                                             <td>
                                                 @foreach($prescription['cart'] as $cart)
@@ -204,6 +214,7 @@
                                             </td>
 
                                         </tr>
+                                        @endif
 
 
                                     @endforeach
@@ -221,42 +232,78 @@
 
 
 
-                <!-- <div class="panel mt-30">
-                    <h2 class="panel-title">Ordenes Pendientes de Envio</h2>
+                <div class="panel mt-30" id="pagadas_por_enviar">
+
+                    <h2 class="panel-title">Ordenes Pagadas por enviar</h2>
                     <p>
-                        Por alguna razón su orden ha sido cancelada, a
-                        continuación le mostramos las observaciones par que
-                        vuelva a crearla nuevamente
+                        Por favor espere a que verifiquemos su pedido. Una vez
+                        lo verifiquemos cambiara su estado a "Verificado". Una
+                        vez su formula medica este verificada, usted puede
+                        proceder al pago haciendo click en el boton COMPRAR
+                        AHORA.
                     </p>
                     <div class="table-responsive">
+                        @if(!empty(count($invoices)))
                         <table class="table">
                             <thead class="table-header">
-                                <th>FORMULA MÉDICA</th>
-                                <th>FECHA</th>
-                                <th>ESTADO</th>
-                                <th>ACCIONES</th>
+                                <tr>
+                                     <th class="text-center text-align-responsive">{{ __('Medicine')}}</th>
+                                     <th class="text-center text-align-responsive">{{ __('Date')}}</th>
+                                     <th class="text-center text-align-responsive">{{ __('Status')}}</th>
+                                     <th class="text-right text-align-responsive">{{ __('Actions')}}</th>
+                                </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>Nombre del Medicamento</td>
-                                    <td>2020-04-25 07:55:10</td>
-                                    <td>Sin Verificar</td>
-                                    <td>
-                                        <i class="fas fa-edit"></i>
-                                        <i class="fas fa-trash-alt"></i>
-                                        <i class="fas fa-shopping-cart"></i>
-                                    </td>
-                                </tr>
+                                @foreach($invoices as $invoice)
+                                <?php
+                                    // Invoice List
+                                    $prescription = $invoice->prescription();
+                                    $cart_list = $invoice->cartList();
+                                ?>
+
+
+                                @if($invoice->payment_status == 2 && $invoice->shipping_status == 1)
+
+                                          <!-- Section 1 -->
+                                    <tr>
+                                        <td>
+                                            @foreach($cart_list as $cart)
+
+                                                 <p class="text-left text-align-responsive">{{ Medicine::medicines($cart->medicine)['item_name'] }}</p>
+
+                                             @endforeach
+                                        </td>
+                                        <td class="col-lg-3 text-center"><span class="date-added"> {{$prescription->created_at  ?? ''}}</span>
+                                        </td>
+
+                                        <td class="col-lg-3 text-center">{{ __(ShippingStatus::statusName($invoice->shipping_status)) }}
+                                        </td>
+
+                                        <td>
+                                            <i class="fas fa-edit"></i>
+                                            <i class="fas fa-trash-alt"></i>
+                                            <i class="fas fa-shopping-cart"></i>
+                                        </td>
+                                    </tr>
+                                @endif
+
+                                @endforeach
                             </tbody>
+
                         </table>
+                        @else
+                            <div class="no-items">
+                                <span>{{ __('No Order Availables Presently')}}.</span>
+                            </div>
+                        @endif
                     </div>
-                </div> -->
+                </div>
 
 
+                <!-- Ordenes completadas -->
+                <div class="panel mt-30" id="enviadas">
 
-                <div class="panel mt-30">
-
-                    <h2 class="panel-title">Ordenes Completadas</h2>
+                    <h2 class="panel-title">Ordenes Finalizadas</h2>
                     <p>
                         Por favor espere a que verifiquemos su pedido. Una vez
                         lo verifiquemos cambiara su estado a "Verificado". Una
@@ -321,38 +368,6 @@
                 </div>
 
 
-                <!-- <div class="panel mt-30">
-                    <h2 class="panel-title">Ordenes Canceladas</h2>
-                    <p>
-                        Por alguna razón su orden ha sido cancelada, a
-                        continuación le mostramos las observaciones par que
-                        vuelva a crearla nuevamente
-                    </p>
-                    <div class="table-responsive">
-                        <table class="table">
-                            <thead class="table-header">
-                                <th>FORMULA MÉDICA</th>
-                                <th>FECHA</th>
-                                <th>ESTADO</th>
-                                <th>ACCIONES</th>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>Nombre del Medicamento</td>
-                                    <td>2020-04-25 07:55:10</td>
-                                    <td>Sin Verificar</td>
-                                    <td>
-                                        <i class="fas fa-edit"></i>
-                                        <i class="fas fa-trash-alt"></i>
-                                        <i class="fas fa-shopping-cart"></i>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div> -->
-
-
 
             </div>
         </div>
@@ -390,12 +405,12 @@
         window.location = "{{URL::to('medicine/make-mercado-pago-payment/')}}/" + invoice;
 
     }
-    function change_list() {
-        //alert($('.category').val());
-        var category = $('.category').val();
+    // function change_list() {
+    //     //alert($('.category').val());
+    //     var category = $('.category').val();
 
-        window.location = "{{URL::to('my-prescription')}}/" + category;
-    }
+    //     window.location = "{{URL::to('my-prescription')}}/" + category;
+    // }
 
     // $('#shipping_method').on('change', function(){
     //     var envio = $("input[name='shipping']:checked").val();

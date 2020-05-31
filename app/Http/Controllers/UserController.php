@@ -534,7 +534,7 @@ class UserController extends BaseController
 		$prescriptions = Prescription::select ('i.*' , 'prescription.status' , 'prescription.path' , 'prescription.id as pres_id' , 'prescription.created_at as date_added')->where ('prescription.user_id' , '=' , $user_id)->where ('is_delete' , '=' , 0)
 			->join ('invoice as i' , 'i.pres_id' , '=' , DB::raw ("prescription.id AND i.payment_status IN (" . PayStatus::PENDING () . ",0) "));
 		$results = $prescriptions->get ();
-		// dd($results);
+
 		foreach ($results as $result) {
 			$items = [];
 			$medicines = Medicine::medicines ();
@@ -572,6 +572,7 @@ class UserController extends BaseController
 				'cart' => $items ,
 				'shipping_status' => (is_null ($result->shipping_status)) ? 0 : $result->shipping_status ,
 				'pres_status' => $result->status ,
+				'payment_status' => $result->payment_status,
 				'invoice_status' => is_null ($result->status_id) ? 0 : $result->status_id ,
 				'path' => $result->path
 			];
