@@ -946,6 +946,7 @@ $(".add_to_cart").click(function() {
                 }
 
                 if (data == "sin_usuario") {
+                    window.location = "/?msg=please_login";
                     console.log("Debe ingresar usuario y contraseña")
                 }
             },
