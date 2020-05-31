@@ -89,6 +89,10 @@ class MedicineController extends BaseController
 				// Getting shipping_cost
 				$shipping_cost = Request::get ('shipping_cost' , 0);
 
+				if(is_null($shipping_cost)) {
+					return Response::json (['status' => 'FAILURE' , 'msg' => 'Antes de colocar su orden debe seleccionar un metodo de entrega']);
+				}
+
 				$path = base_path () . '/public/images/prescription/' . $email . '/';
 //				if($is_pres_required)
 
@@ -100,9 +104,7 @@ class MedicineController extends BaseController
 					$ext = Request::file ('files')[0]->getClientOriginalExtension ();
 					// If Invalid Extension
 					if (!in_array ($ext , ['jpg' , 'jpeg' , 'png'])) {
-						Session::flash ('flash_message' , 'Invalid file uploaded, Please upload jpg or png images');
-						Session::flash ('flash_type' , 'alert-danger');
-
+						return Response::json (['status' => 'FAILURE' , 'msg' => 'Tipo de archivo invalido']);
 						//return Redirect::back ();
 					}
 					$fname = Request::file ('files')[0]->getClientOriginalName ();
@@ -121,11 +123,11 @@ class MedicineController extends BaseController
 					$img->save ($path . '/' . $newName);
 				} else {
 
-					if ($is_pres_required == 1) {
-						Session::flash ('flash_message' , 'Please select a file to upload');
-						Session::flash ('flash_type' , 'alert-danger');
-						//return Redirect::back ();
-					}
+					// Se deshabilita mientras dure la pandemia!!!
+					// if ($is_pres_required == 1) {
+					// 	return Response::json (['status' => 'FAILURE' , 'msg' => 'Este pedido requiere una formula medica']);
+					// 	//return Redirect::back ();
+					// }
 				}
 
 				// Save Prescription
@@ -216,7 +218,7 @@ class MedicineController extends BaseController
 				// Session::flash ('flash_message' , '<b>Sorry !</b> Please login first');
 				// Session::flash ('flash_type' , 'alert-danger');
 				// return Redirect::back ();
-				return Response::json (['status' => 'FAILURE' , 'msg' => 'Please login first']);
+				return Response::json (['status' => 'FAILURE' , 'msg' => 'Debe ingresar con usuario y contraseña antes de poder enviar un pedido']);
 			}
 
 

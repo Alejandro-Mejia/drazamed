@@ -17,7 +17,7 @@
 	{
 		var input		 = form.querySelector( 'input[type="file"]' ),
 			label		 = form.querySelector( 'label' ),
-			errorMsg	 = form.querySelector( '.box__error span' ),
+			errorMsg	 = form.querySelector( '.box__error__msg' ),
 			restart		 = form.querySelectorAll( '.box__restart' ),
 			droppedFiles = false,
 			showFiles	 = function( files )
@@ -100,6 +100,7 @@
 			// preventing the duplicate submissions if the current one is in progress
 			if( form.classList.contains( 'is-uploading' ) ) return false;
 
+
 			form.classList.add( 'is-uploading' );
 			form.classList.remove( 'is-error' );
 
@@ -134,12 +135,19 @@
 					{
 						var data = JSON.parse( ajax.responseText );
 						form.classList.add( data.status == "SUCCESS" ? 'is-success' : 'is-error' );
-						if( !data.success ) errorMsg.textContent = data.error;
 
-						setTimeout(function(){window.location="/account-page/#por_pagar";}, 2000)
+						if( data.status == "FAILURE" ) {
+							errorMsg.textContent = data.msg;
+							setTimeout(function(){location.reload()}, 2000)
+						}
+
+						if (data.status == "SUCCESS") {
+							setTimeout(function(){window.location="/account-page/#por_pagar";}, 2000)
+						}
+
 
 					}
-					else alert( 'Error. Please, contact the webmaster!' );
+					else alert( 'Error. por favor contactese con nosotros!' );
 				};
 
 				ajax.onerror = function()
@@ -147,6 +155,7 @@
 					form.classList.remove( 'is-uploading' );
 					alert( 'Error. Please, try again!' );
 				};
+				console.log(ajaxData);
 
 				ajax.send( ajaxData );
 			}
