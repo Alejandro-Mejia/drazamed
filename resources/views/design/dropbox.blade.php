@@ -11,7 +11,7 @@
 
 <div id="drop-box" class="no-js upload-zone text-center">
 	<form method="post" action="/medicine/store-prescription/1" enctype="multipart/form-data" novalidate class="box" id="dropbox">
-		<input type="" name="shipping_cost" id="shippingForm" value="{{$shipping ?? 0}}" hidden />
+		<input type="" name="shipping_cost" id="shippingForm" value="" hidden required />
 		<input type="" name="is_pres_required" id="is_pres_required" value="{{$pres_required}}" hidden/>
 		<input type="" name="sub_total" id="sub_total_form" value="{{$subtotal}}" hidden/>
 		<span class="dra-color fas fa-cloud-upload-alt"></span>
@@ -27,9 +27,13 @@
 		<button type="submit" class="float-right mt-4 dra-button" data-color="#40E0BC" id="uploadBtn" >{{ __('Place Order')}}</button>
 		</div>
 		<div style="text-align: center;">
-			<div class="box__uploading">Uploading&hellip;</div>
+			<div class="box__uploading">Enviando orden&hellip;</div>
 			<div class="box__success" style="color: green"> <br> Orden enviada! En unos segundos sera redirigido a su perfil para realizar el pago </div>
-			<div class="box__error">Error! <span></span>. <a href="https://css-tricks.com/examples/DragAndDropFileUploading//?" class="box__restart" role="button">Intente de nuevo!</a></div>
+
+			<div class="box__error" style="margin-top:50px;">
+				Error! <br> <span class="box__error__msg"></span>. <br>
+				<a href="https://css-tricks.com/examples/DragAndDropFileUploading//?" class="box__restart" role="button">Intente de nuevo!</a>
+			</div>
 		</div>
 
 	</form>

@@ -2,6 +2,7 @@
 
 @section('custom-css')
   <link rel="stylesheet" href="/css/cart.css" />
+  <link rel="stylesheet" href="/css/pinfo.css" />
 @endsection
 
 @section('content')
