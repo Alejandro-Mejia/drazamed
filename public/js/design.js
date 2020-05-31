@@ -944,6 +944,13 @@ $(".add_to_cart").click(function() {
                         .fadeOut("slow");
                     window.location = "my-cart/";
                 }
+
+                if (data == "sin_usuario") {
+                    console.log("Debe ingresar usuario y contraseña")
+                }
+            },
+            error: function(data) {
+                alert('Atencion: ' . data.msg);
             }
         });
     } else {

@@ -40,7 +40,6 @@
     <body>
         @include('design.layout.header')
         @yield('content')
-        @include('design.layout.footer')
 
         <script src="/js/modal_manager.js"></script>
         <script src="/js/design.js"></script>
