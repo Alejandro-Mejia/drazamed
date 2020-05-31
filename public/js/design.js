@@ -447,7 +447,7 @@ function login() {
         datatype: "json",
         statusCode: {
             403: function(data) {
-                $(".login_msg").html(translate.login_admin);
+                $(".login_msg").html("Debe ingresar por la plataforma de administración. <a href='/admin-login' > Redirigir </a>");
                 $(".login_msg").css({ display: "block" });
                 $(".login_msg")
                     .delay(5000)
@@ -455,9 +455,10 @@ function login() {
             }
         },
         success: function(data) {
+            console.log("Status:" + data);
             var status = data[0].result.status;
             var page = data[0].result.page;
-            console.log("Status:" + data);
+
             if (status == "pending") {
                 var mail = $(".login_mail").val();
 
@@ -506,6 +507,15 @@ function login() {
                 $(".login_msg")
                     .delay(5000)
                     .fadeOut("slow");
+            }
+
+            if (status == "redirect"){
+                $(".login_msg").html( "Debe ingresar por la consola de administracion");
+                $(".login_msg").css({ display: "block" });
+                $(".login_msg")
+                    .delay(5000)
+                    .fadeOut("slow");
+                location.href ="/admin-login";
             }
         }
     });
