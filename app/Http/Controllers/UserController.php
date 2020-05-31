@@ -276,6 +276,13 @@ class UserController extends BaseController
 			if ($isWeb) {
 
 				//$status='active';
+				$user_type_id = DB::table ('users')->select ('user_type_id as type')->where ('email' , '=' , $email)->first ();
+				// Si es un administrador, redirigir al login de adiministracion
+
+				if($user_type_id->type == 1) {
+					return Response::make (['status' => 'FAILURE' , 'msg' => 'Un usuario administrador, debe ingresar por la plataforma de administración. <a> href="/admin-login" > Redirigir </a>'] ,403);
+				}
+
 				$status = DB::table ('users')->select ('user_status as status')->where ('email' , '=' , $email)->first ();
 				if (!empty($status)) {
 					if ($status->status == UserStatus::PENDING ()) {
