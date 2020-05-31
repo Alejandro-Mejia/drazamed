@@ -1,6 +1,10 @@
-@extends('design.layout.app') @section('custom-css')
+@extends('design.layout.app')
+
+@section('custom-css')
   <link rel="stylesheet" href="/css/cart.css" />
-@endsection @section('content')
+@endsection
+
+@section('content')
 
 
 <style type="text/css">
