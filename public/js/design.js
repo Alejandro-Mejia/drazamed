@@ -189,7 +189,7 @@ $(document).ready(function() {
                 // goto_detail_page();
             }
         })
-        .autocomplete("autocomplete")._renderItem = function(ul, item) {
+        .autocomplete("instance")._renderItem = function(ul, item) {
         return $("<li>")
             .append("<div>" + item.label + "</div>")
             .appendTo(ul);
@@ -739,11 +739,12 @@ function show_our_products(cat = null) {
             // $('#med-list').append('<div class="col-lg-12 col-md-12 col-sm12"><h4> Productos Recomendados </h4></div>')
             $.each(data.result.msg, function(i, item) {
                 console.log(item);
+                medicina = item.name;
                 $("#med-list").append(
-                    '<div class="med">' +
+                    '<div class="med cat_product" onclick="thumbClick(`' + medicina + '`)">' +
                         '    <div class="row">' +
                         '        <div class="col-md-4">' +
-                        '            <img class="med-thumbnail" src="/assets/images/dolex.png" alt="">' +
+                        '            <img class="med-thumbnail" src="' + item.url_img + '" alt="">' +
                         "        </div>" +
                         '        <div class="col-md-8">' +
                         '            <h5 class="med-title">' +
@@ -765,7 +766,7 @@ function show_our_products(cat = null) {
 
     $.ajax({
         url: "medicine/search-medicine/1",
-        data: "cat=" + cat,
+        data: "cat=" + cat + "&xlab=icom",
         type: "GET",
         datatype: "JSON",
         success: function(data) {
@@ -775,11 +776,12 @@ function show_our_products(cat = null) {
             // $('#med-list').append('<div class="col-lg-12 col-md-12 col-sm12"><h4> Todos los Productos </h4></div>')
             $.each(data.result.msg, function(i, item) {
                 console.log(item);
+                medicina = item.name;
                 $("#med-list").append(
-                    '<div class="med">' +
+                    '<div class="med cat_product" onclick="thumbClick(`' + medicina + '`)">' +
                         '    <div class="row">' +
                         '        <div class="col-md-4">' +
-                        '            <img class="med-thumbnail" src="/assets/images/dolex.png" alt="">' +
+                        '            <img class="med-thumbnail" src="' + item.url_img + '" alt="">' +
                         "        </div>" +
                         '        <div class="col-md-8">' +
                         '            <h5 class="med-title">' +
@@ -967,12 +969,28 @@ function openProductInfoModal(product) {
     console.log("modal abierto");
 }
 
+function thumbClick(medItem) {
+    // item = $(this).data('med');
+    console.log(medItem);
+    data =  {'value': medItem};
+    show_detail_modal(data);
+}
+
 (function() {
-    //const meds = document.getElementsByClassName("med");
-    $(".med").click(el => {
-        openProductInfoModal(el);
-    });
+    // //const meds = document.getElementsByClassName("med");
+    // $(".cat_product").on('click', function(el){
+
+    //     console.log("itemCode=");
+    //     // goto_detail_page();
+    //     show_detail_modal(ui.item);
+
+
+    //     // console.log(el);
+    //     // openProductInfoModal(el);
+    // });
 })();
+
+
 
 
 

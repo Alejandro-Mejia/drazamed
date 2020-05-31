@@ -716,17 +716,10 @@ class MedicineController extends BaseController
 									# code...
 									break;
 							}
+						} else {
+							$sellprice = $med->real_price;
 						}
 
-						$medImagen = isset($med['item_code']) ? $med['item_code'].'.png' : 'default.png';
-						$medPath = "/images/products/" . $medImagen;
-
-						;
-						// $path =  URL::to('/') .'public/images/products/' . $medImagen;
-						$path = realpath(public_path('images'));
-						$path .= '/products/' . $medImagen;
-
-						$medPath = (is_file($path)) ? $medPath : "/images/products/default.png";
 
 
 	                }
@@ -753,9 +746,11 @@ class MedicineController extends BaseController
 	{
 		header ("Access-Control-Allow-Origin: *");
 		$term = Request::get ('term' , null);
+		$xterm = Request::get ('xterm' , null);
 		$limitResutls = Request::get ('limit' , 10);
 		$category = Request::get ('cat' , null);
 		$lab = Request::get ('lab' , null);
+		$xlab = Request::get ('xlab' , null);
 		$ean = Request::get ('ean' , null);
 		// where(function($query) use ($gender){
   //           if ($gender) {
@@ -768,6 +763,11 @@ class MedicineController extends BaseController
 					$query->where('item_name' , 'LIKE' , $term . '%');
 				}
 			})
+		->where(function($query) use ($xterm){
+				if($xterm) {
+					$query->where('group' , 'NOT LIKE' , $xterm . '%');
+				}
+			})
 		->where(function($query) use ($category){
 				if($category) {
 					$query->where('group' , 'LIKE' , $category . '%');
@@ -776,6 +776,11 @@ class MedicineController extends BaseController
 		->where(function($query) use ($lab){
 				if($lab) {
 					$query->where('manufacturer' , 'LIKE' , $lab . '%');
+				}
+			})
+		->where(function($query) use ($xlab){
+				if($xlab) {
+					$query->where('manufacturer' , 'NOT LIKE' , $xlab . '%');
 				}
 			})
 		->where(function($query) use ($ean){
@@ -796,62 +801,8 @@ class MedicineController extends BaseController
 
 		if (isset($medicine) &&  $medicine->count () > 0) {
 			foreach ($medicine as $med) {
-				Log::info('Proveedor:' . $med['manufacturer']);
-				if($med->marked_price == 0) {
-		            switch ($med->tax) {
-		                case '19':
-		                    $sellprice = $med->real_price / 0.71;
-		                    break;
-		                case '5':
-		                    $sellprice = $med->real_price / 0.85;
-		                    break;
-		                default:
-		                    {
-
-								if(strlen($med['manufacturer']) > 15) {
-
-									$compareLab = substr ($med['manufacturer'],0,15);
-								} else {
-									$compareLab = $med['manufacturer'];
-								}
-
-								$labRule = Pricerule::where('laboratory','LIKE','%' . $compareLab . '%')->get()->toArray();
-
-								if (isset($labRule) && sizeof($labRule) > 0) {
-									if ($labRule[0]['isByProd'] == 1) {
-										// $labRule = Pricerule::with(["prodrule" => function($q) { $q->where('product', 'LIKE', substr ($med['item_name'],0,15);}])->where('laboratory','LIKE',substr ($med['marketed_by'],0,15) . '%')->get();
-										$prod = substr($med['item_name'],0,15);
-
-										$labRule = Pricerule::with(["prodrule"=> function($q) use($prod) {$q->where('product', 'LIKE' , '%' . $prod . '%');}])->where('laboratory','LIKE', '%' . $med['manufacturer'] . '%')->get()->toArray();
-										$labRule[0]['rule_type'] = $labRule[0]['prodrule'][0]['rule_type'];
-										$labRule[0]['rule'] = $labRule[0]['prodrule'][0]['rule'];
-									}
-
-									$sellprice = ($med->real_price*$labRule[0]['isVtaReal'] + $med->current_price*$labRule[0]['isVtaCte']);
-
-									switch ($labRule[0]['rule_type']) {
-										case '0':
-											# code...
-											break;
-										case '1':
-											$sellprice = $sellprice * (1+$labRule[0]['rule']);
-											break;
-										case '2':
-											$sellprice = $sellprice + $labRule[0]['rule'];
-											break;
-										default:
-											# code...
-											break;
-									}
-								}
-
-
-		                    }
-		                    break;
-		            }
-		        } else {
-		            $sellprice = $med->marked_price;
-		        }
+				// dd($med);
+				$sellprice = ($this->anyCalculateMRP($med['id'])) ? $this->anyCalculateMRP($med['id']) : 0;
 
 		        $medImagen = isset($med['item_code']) ? $med['item_code'].'.png' : 'default.png';
 				$medPath = "/images/products/" . $medImagen;
@@ -862,9 +813,6 @@ class MedicineController extends BaseController
 				$path .= '/products/' . $medImagen;
 
 				$medPath = (is_file($path)) ? $medPath : "/images/products/default.png";
-
-		        $sellprice = ceil($sellprice);
-		        $sellprice = round( $sellprice, -2, PHP_ROUND_HALF_UP);
 
 				$medicineNameArray[$i] = array("id" => $med->id ,'item_code' => $med->item_code,  "name" => $med->item_name , 'mrp' => $sellprice ,'quantity' => $med->quantity, 'lab' => $med->manufacturer , 'composition' => $med->composition, 'image-url' => $med->photo_url, 'is_pres_required' => $med->is_pres_required, 'group' => $med->group, 'url_img' => $medPath);
 				$i++;
@@ -1016,7 +964,7 @@ class MedicineController extends BaseController
 		} else {
 			$key = Request::get ('n' , '');
 		}
-		$medicines = Medicine::medicines ();
+		$medicines = Medicine::medicines();
 		if (!empty($key)) {
 			$medicines = array_filter ($medicines , function ($medicine) use ($key) {
 				$medTemp = $this->stringClean ($medicine['item_name']);
@@ -1030,6 +978,8 @@ class MedicineController extends BaseController
 				else
 					return false;
 			});
+			// $medicines->sortBy('show_priority');
+			$medicines = collect($medicines)->sortBy('show_priority')->reverse()->toArray();
 		}
 		if ($isWeb) {
 			$json = [];
