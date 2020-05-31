@@ -53,6 +53,7 @@ class MedicinesImport implements ToModel, WithHeadingRow, WithBatchInserts , Wit
             'composition'   => isset($row['subgrupo']) ? $row['subgrupo'] : "ND",
             'manufacturer'  => isset($row['proveedor']) ? $this->cleanManufacturer($row['proveedor']) : "ND",
             'marketed_by'   => isset($row['proveedor']) ? $row['proveedor'] : "ND",
+            'show_priority' => isset($row['proveedor']) ? setPriority($row['proveedor']) : 0,
             'group'         => isset($row['grupo']) ? $row['grupo'] : "ND",
             'is_pres_required' => isset($row['grupo']) ? (($row['grupo'] == 'ANTIBIOTICOS') ? 1 : 0) : 0,
             'subgroup'      => isset($row['subgrupo']) ? $row['subgrupo'] : "ND",
@@ -108,6 +109,15 @@ class MedicinesImport implements ToModel, WithHeadingRow, WithBatchInserts , Wit
             '*.ean' => 'required|string',
         ];
 
+    }
+
+    public function setPriority($lab)
+    {
+        if(Str::contains($lab,  'ICOM') {
+            return 1;
+        } else {
+            return 0;
+        }
     }
 
     public function ivaImport($value)
@@ -228,6 +238,8 @@ class MedicinesImport implements ToModel, WithHeadingRow, WithBatchInserts , Wit
         // Log::error($e);// Handle the exception how you'd like.
         echo "Error: " . $e;
     }
+
+
 
 
 }
