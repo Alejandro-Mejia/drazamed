@@ -1333,9 +1333,11 @@ class MedicineController extends BaseController
 
 		$medicine = (Session::get ('medicine') == "") ? Request::get ('medicine') : Session::get ('medicine');
 		$med_quantity = (Session::get ('med_quantity') == "") ? Request::get ('med_quantity') : Session::get ('med_quantity');
-		$med_mrp = Request::get ('hidden_selling_price') ;
+		// $med_mrp = Request::get ('hidden_selling_price') ;
+
 		$item_code = (Session::get ('item_code') == "") ? Request::get ('hidden_item_code') : Session::get ('item_code');
 		$item_id = (Session::get ('item_id') == "") ? Request::get ('id') : Session::get ('item_id');
+		$med_mrp = $this->anyCalculateMRP($item_id);
 
 		$pres_required = (Session::get ('pres_required') == "") ? Request::get ('pres_required') : Session::get ('pres_required');
 
