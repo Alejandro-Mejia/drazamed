@@ -285,7 +285,7 @@ Route::get('payment/failure', function () {
 
 // About US Page
 Route::get('/about', function () {
-    return View::make('/users/about');
+    return view('design.about');
 });
 
 // Landing page route
