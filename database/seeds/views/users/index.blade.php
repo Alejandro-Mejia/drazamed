@@ -100,6 +100,8 @@ is available both for iOS and Android platforms.</p>
 <script type="text/javascript">
 
 $(document).ready(function () {
+
+        show_favorites();
         var msg = $('#msg').val();
         if (msg == "success") {
             $('#res-title').css('color','green');
@@ -114,6 +116,8 @@ $(document).ready(function () {
             $('#resultModal').modal({
             });
         }
+
+
     });
 
 var current_item_code="";
@@ -188,5 +192,7 @@ function goto_detail_page()
 
         }
      });
+
+
 
 </script>

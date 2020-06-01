@@ -140,6 +140,11 @@ use App\MercadoPago\SDK;
     Route::get('/pricerules/get-by-lab/{searched_lab}', 'PricerulesController@getLabPriceRule');
 
     /**
+     * Favorites
+     */
+    Route::get('/favorites', 'MedicineController@anyShowFavorites');
+
+    /**
      * Settings routes
      */
     Route::post('/setting/basic', 'SettingController@postBasic');

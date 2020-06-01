@@ -30,6 +30,7 @@ use App\InvoiceStatus;
 use App\Prescription;
 use App\SessionsData;
 use App\NewMedicine;
+use App\Favorite;
 use App\Pricerule;
 use App\Setting;
 use App\ItemList;
@@ -828,6 +829,47 @@ class MedicineController extends BaseController
 
 	}
 
+
+
+	/**
+	 *
+	 */
+	public function anyShowFavorites($value='')
+	{
+		$favorites = Favorite::get();
+		$notfound = [];
+		//dd($favorites);
+		$i=0;
+
+		if(sizeof($favorites) > 0) {
+			foreach ($favorites as $key => $fav) {
+			$meds = Medicine::where('item_code', $fav->item_code)->get();
+			if(sizeof($meds) > 0){
+				$med = $meds[0];
+				$sellprice = ($this->anyCalculateMRP($med['id'])) ? $this->anyCalculateMRP($med['id']) : 0;
+				$medImagen = isset($med['item_code']) ? $med['item_code'].'.png' : 'default.png';
+				$medPath = "/images/products/" . $medImagen;
+				// $path =  URL::to('/') .'public/images/products/' . $medImagen;
+				$path = realpath(public_path('images'));
+				$path .= '/products/' . $medImagen;
+
+				$medPath = (is_file($path)) ? $medPath : "/images/products/default.png";
+				//dd($med);
+				$medicines[$i] = array("id" => $med->id ,'item_code' => $med->item_code,  "name" => $med->item_name , 'mrp' => $sellprice ,'quantity' => $med->quantity, 'lab' => $med->manufacturer , 'composition' => $med->composition, 'is_pres_required' => $med->is_pres_required, 'group' => $med->group, 'url_img' => $medPath);
+				$i++;
+				} else {
+					array_push($notfound, $fav->item_code);
+				}
+
+			}
+			$result = array('result' => array('status' => 'sucess' , 'msg' => $medicines));
+		} else {
+			$result = array('result' => array('status' => 'failure'));
+		}
+
+		return Response::json ($result);
+
+	}
 
 	/**
 	 * Load Medicine List
