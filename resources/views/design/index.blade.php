@@ -85,9 +85,10 @@
                         </form>
                     </div>
 
-                    <div class="dra-box med-categories">
+                    <div class="dra-box med-categories" >
                         <h3 class="mb-4">Categorías</h3>
-                        <ul id="catList">
+                        <ul id="catList" style="max-height: 400px;
+    overflow: auto;">
                         </ul>
                     </div>
                 </div>
@@ -95,7 +96,8 @@
 					<div class="dra-box">
 						<h3 class="mb-4">Nuestros Productos</h3>
 
-						<div class="med-list" id="med-list">
+						<div class="med-list" id="med-list" style="max-height: 500px;
+    overflow: auto;">
 						</div>
 					</div>
 				</div>
@@ -104,9 +106,14 @@
     </div>
 </main>
 
+
+@include('design.modals.msg')
 @include('design.modals.login')
 @include('design.modals.register')
 @include('design.modals.recovery')
 @include('design.modals.pinfo')
 
+
 @endsection
+
+

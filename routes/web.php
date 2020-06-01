@@ -54,6 +54,7 @@ use App\MercadoPago\SDK;
     Route::get('/my-prescription/{option?}', 'MedicineController@getMyPrescription');
     Route::get('/paid-prescription', 'MedicineController@getPaidPrescription');
     Route::get('/my-order', 'MedicineController@getMyOrder');
+    Route::get('/my-orders', 'MedicineController@getMyOrders');
     Route::get('/medicine-detail/{item_code}', 'MedicineController@getMedicineDetail');
     Route::get('/account-page', 'UserController@getAccountPage');
 
@@ -68,6 +69,7 @@ use App\MercadoPago\SDK;
     Route::any('/user/contact-us', 'UserController@anyContactUs');
     Route::any('/user/store-profile-pic', 'UserController@anyStoreProfilePic');
     Route::any('/user/web-activate-account/{code}', 'UserController@anyWebActivateAccount');
+    Route::any('/user/pres-delete/{pres_id}', 'UserController@anyPresDelete');
 
     /**
      * Medicine routes
@@ -94,6 +96,8 @@ use App\MercadoPago\SDK;
     Route::any('/medicine/update-cart', 'MedicineController@anyUpdateCart');
     Route::get('/medicine/medicine-list-from-name', 'MedicineController@getMedicineListFromName');
     Route::get('/medicine/selling-price/{item_code}', 'MedicineController@getSellingPrice');
+    Route::any('/medicine/downloading/{file_name}', 'MedicineController@anyDownloading');
+    Route::any('/medicine/calculate-mrp/{id}', 'MedicineController@anyCalculateMRP');
 
     /**
      * Admin routes
@@ -134,6 +138,11 @@ use App\MercadoPago\SDK;
      * PriceRules
      */
     Route::get('/pricerules/get-by-lab/{searched_lab}', 'PricerulesController@getLabPriceRule');
+
+    /**
+     * Favorites
+     */
+    Route::get('/favorites', 'MedicineController@anyShowFavorites');
 
     /**
      * Settings routes

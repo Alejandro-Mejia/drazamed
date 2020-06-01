@@ -1,12 +1,12 @@
 .profile {
-  margin-top: 90px;
+  margin-top: 50px;
   background-color: #FAFAF8;
   padding: 60px 0;
   font-family: "louis_george_cafe";
 }
 
 .profile .profile-body {
-  width: 80%;
+  width: 90%;
   margin: 0 auto;
 }
 
@@ -94,11 +94,13 @@
 }
 
 .profile .mt-30 {
-  margin-top: 30px;
+  margin-top: 50px;
 }
 
 @media (max-width: 1024px) {
   .profile-panel {
+    max-height: 80%;
+    overflow: auto;
     margin-top: 30px;
   }
 }
