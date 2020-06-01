@@ -1,6 +1,10 @@
-@extends('design.layout.app') @section('custom-css')
+@extends('design.layout.app')
+
+@section('custom-css')
 <link rel="stylesheet" href="/css/about.css" />
-@endsection @section('content')
+@endsection
+
+@section('content')
 <div class="about">
     <div class="wrapper">
         <div class="row">
