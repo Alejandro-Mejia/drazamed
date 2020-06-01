@@ -4,7 +4,7 @@
     background-color: #FAFAF8;
 
     .contact-content {
-        width: 70%;
+        width: 80%;
         margin: 0 auto;
     }
 
@@ -48,5 +48,16 @@
                 resize: none;
             }
         }
+    }
+}
+
+@media (max-width: 1200px) {
+    .contact-content {
+        width: 95% !important;
+    }
+
+    .panel-form {
+        box-shadow: none !important;
+        padding: 0 !important;
     }
 }

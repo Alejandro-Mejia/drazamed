@@ -1,4 +1,43 @@
 .about {
   margin-top: 90px;
+  background-color: #FAFAF8;
+  font-family: "louis_george_cafe";
+}
+
+.about .wrapper {
+  width: 80%;
+  margin: 0 auto;
+  padding: 20px 0;
+}
+
+.about .panel {
+  background-color: #fff;
+  padding: 40px;
+  border-radius: 20px;
+}
+
+.about .panel .title {
+  font-size: 28px;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+.about .panel .icon {
+  width: 50px;
+}
+
+.about .com-title {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+@media (max-width: 1200px) {
+  .wrapper {
+    width: 95% !important;
+  }
+
+  .sm-mt-20 {
+    margin-top: 20px;
+  }
 }
 
