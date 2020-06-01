@@ -1,3 +1,7 @@
+@section('custom-css')
+  <link rel="stylesheet" href="/css/cart.css" />
+@endsection
+
 <div
     class="modal fade"
     id="pinfo-modal"
@@ -61,7 +65,7 @@
 
                         <div class="row mt-2">
                             <div class="col">
-                                <label class="pi-med-composition" for=""
+                                <label class="pi-label" for=""
                                     >Composición:</label
                                 >
                                 <input
@@ -86,11 +90,13 @@
                             </div>
                         </div>
                     </div>
+
                     <div class="col-md-4">
                         <img
                             class="pi-img"
                             id="pi-med-img"
-                            src="/assets/images/dolex.png"
+                            width=240px
+                            src="/images/products/default.png"
                             alt=""
                         />
                     </div>

@@ -81,6 +81,7 @@ $(function()
 	    <th>{{ __('MRP')}}</th>
 	    <th id="sort" style="width:250px">{{ __('Composition')}}</th>
 	    <th id="sort">{{ __('Is Prescription Required')}}</th>
+      <th> Photo </th>
 	    <th>{{ __('Actions')}}</th>
 	  </tr>
 	</thead>
@@ -102,6 +103,15 @@ $(function()
 	   <td nowrap style="text-align: right"><?php echo Setting::currencyFormat($medicines[$i]['mrp']);?></td>
 	   <td><?php echo $medicines[$i]['composition']; ?></td>
 	   <td><?= ($medicines[$i]['is_pres_required'] == 1) ? __('Yes') : __('No') ; ?> </td>
+     <?php
+      $medImagen = isset($medicines[$i]['item_code']) ? $medicines[$i]['item_code'].'.png' : 'default.png';
+      $medPath = "/images/products/" . $medImagen;
+      $medPath = (is_file($medPath)) ? $medPath : "/images/products/default.png";
+     ?>
+
+    <td>
+        <img src={{$medPath}} alt="{{$medicines[$i]['item_code']}}" width="120px">
+    </td>
 	   <td><div class="btn-group">
 	   <button type="button" class="btn btn-sm btn-primary dropdown-toggle" data-toggle="dropdown">
            Actions <span class="caret"></span></button>
@@ -245,8 +255,10 @@ $("#file_upload").click(function(e){
                     $.each(data, function ($key, $med) {
 
                      $status = ($med.is_pres_required == 1) ? 'Yes' : 'No';
+
                      table_con+="<tr><td>"+i+"</td><td>"+$med.name+"</td><td>"+$med.item_code+"</td><td>"+$med.mfg+"</td><td>"+$med.group+"</td><td style='text-align:right' nowrap> $ "+$med.mrp+"</td><td style='width:300px'>"+$med.composition+"</td>" +
                       "<td>"+$status+"</td>" +
+                      "<td> <img src='"+$med.img_url +"' width='120px'> </img></td>" +
                       "<td><div class='btn-group'><button type='button' class='btn btn-sm btn-primary dropdown-toggle' data-toggle='dropdown'>Actions <span class='caret'></span></button>" +
                       "<ul class='dropdown-menu' role='menu'>" +
                       "<li><a target='_blank' href='medicine-edit/"+$med.id+"' >Edit</a></li>" +

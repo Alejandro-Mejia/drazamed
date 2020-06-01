@@ -13,6 +13,12 @@ use App\UserType;
 use App\UserStatus;
 use App\Setting;
 use App\Customer;
+use App\Invoice;
+use App\ItemList;
+use App\Medicine;
+use App\PayStatus;
+use App\Prescription;
+use App\ShippingStatus;
 use App\MedicalProfessional;
 use DB;
 use File;
@@ -166,18 +172,18 @@ class UserController extends BaseController
 					});
 				} else {
 					Mail::send ('emails.register' , array('name' => $full_name , 'user_name' => $email , 'pwd' => $password , 'code' => $randomValue) , function ($message) use ($email) {
-						$message->to ($email)->subject ("{{ __('Activate Account') }}");
+						$message->to ($email)->subject ("{{ __('Activate Account')}}");
 					});
 				}
 
 			}
 			catch (Exception $e) {
-				return Response::make (['status' => 'FAILURE' , 'msg' => '{{ __("Some techinical issues has occured") }}'] , 500);
+				return Response::make (['status' => 'FAILURE' , 'msg' => '{{ __("Error enviando correo, esta configurado el sistema de corr")}}'] , 500);
 			}
 
 
 			//else
-			return Response::json (['status' => 'SUCCESS' , 'msg' => '{{ __("Acccount has been successfully created, Please check mail for the code") }}'] , 201);
+			return Response::json (['status' => 'SUCCESS' , 'msg' => '{{ __("Acccount has been successfully created, Please check mail for the code")}}'] , 201);
 		}
 		catch (Exception $e) {
 			return Response::make (['status' => 'FAILURE' , 'msg' => $e->getMessage()] , 409);
@@ -270,6 +276,13 @@ class UserController extends BaseController
 			if ($isWeb) {
 
 				//$status='active';
+				$user_type_id = DB::table ('users')->select ('user_type_id as type')->where ('email' , '=' , $email)->first ();
+				// Si es un administrador, redirigir al login de adiministracion
+
+				if($user_type_id->type == 1) {
+					return Response::make (['status' => 'FAILURE' , 'msg' => 'Un usuario administrador, debe ingresar por la plataforma de administración. <a> href="/admin-login" > Redirigir </a>'] ,403);
+				}
+
 				$status = DB::table ('users')->select ('user_status as status')->where ('email' , '=' , $email)->first ();
 				if (!empty($status)) {
 					if ($status->status == UserStatus::PENDING ()) {
@@ -339,7 +352,7 @@ class UserController extends BaseController
 				$pass = Session::get ('user_password');
 				Auth::attempt (array('email' => $email , 'password' => $pass));
 				Session::put ('user_id' , $email);
-				$result = ['status' => 'SUCCESS' , 'msg' => '{{ __("Your account has been successfully activated !") }}'];
+				$result = ['status' => 'SUCCESS' , 'msg' => '{{ __("Your account has been successfully activated !")}}'];
 			} else {
 				throw new Exception('Invalid activation code' , 400);
 			}
@@ -516,23 +529,78 @@ class UserController extends BaseController
 	 */
 	public function getAccountPage ()
 	{
-		$user_type = Auth::user()->user_type_id;
+		$user_type = Auth::user ()->user_type_id;
+
+		$email = Session::get ('user_id');
+		$path = 'URL' . '/public/images/prescription/' . $email . '/';
+		$user_id = Auth::user ()->id;
+		$invoices = Invoice::where ('user_id' , '=' , $user_id)->where ('shipping_status' , '=' , ShippingStatus::SHIPPED ())->get ();
+
+		$user_id = Auth::user ()->id;
+		$invoices = Invoice::where ('user_id' , '=' , $user_id)->get ();
+		$prescriptions = Prescription::select ('i.*' , 'prescription.status' , 'prescription.path' , 'prescription.id as pres_id' , 'prescription.created_at as date_added')->where ('prescription.user_id' , '=' , $user_id)->where ('is_delete' , '=' , 0)
+			->join ('invoice as i' , 'i.pres_id' , '=' , DB::raw ("prescription.id AND i.payment_status IN (" . PayStatus::PENDING () . ",0) "));
+		$results = $prescriptions->get ();
+
+		$responses[] = [];
+
+		foreach ($results as $result) {
+			$items = [];
+			$medicines = Medicine::medicines ();
+			if (!is_null ($result->id) || !empty($result->id)) {
+				$carts = ItemList::where ('invoice_id' , '=' , $result->id)->get ();
+
+
+				$taxTotal = 0;
+				foreach ($carts as $cart) {
+					// dd($cart, $medicines, $results);
+					$tax = $cart->unit_price - ceil(($cart->unit_price / (1+($medicines[$cart->medicine]['tax']/100))));
+					$items[] = ['id' => $cart->id ,
+						'item_id' => $cart->medicine ,
+						'item_code' => $medicines[$cart->medicine]['item_code'] ,
+						'item_name' => $medicines[$cart->medicine]['item_name'] ,
+						'unit_price' => $cart->unit_price ,
+						'discount_percent' => $cart->discount_percentage ,
+						'discount' => $cart->discount ,
+						'tax' => $tax,
+						'quantity' => $cart->quantity ,
+						'total_price' => $cart->total_price
+					];
+					$taxTotal += $tax;
+				}
+			}
+			$details = [
+				'id' => (is_null ($result->id)) ? 0 : $result->id ,
+				'invoice' => (is_null ($result->invoice)) ? 0 : $result->invoice ,
+				'sub_total' => (is_null ($result->sub_total)) ? 0 : $result->sub_total ,
+				'discount' => (is_null ($result->discount)) ? 0 : $result->discount ,
+				'tax' => (is_null ($taxTotal)) ? 0 : $taxTotal ,
+				'shipping' => (is_null ($result->shipping)) ? 0 : $result->shipping ,
+				'total' => (is_null ($result->total)) ? 0 : $result->total ,
+				'created_on' => (is_null ($result->date_added)) ? 0 : $result->date_added ,
+				'cart' => $items ,
+				'shipping_status' => (is_null ($result->shipping_status)) ? 0 : $result->shipping_status ,
+				'pres_status' => $result->status ,
+				'payment_status' => $result->payment_status,
+				'invoice_status' => is_null ($result->status_id) ? 0 : $result->status_id ,
+				'path' => $result->path
+			];
+			$responses[] = $details;
+		}
+
+		$payment_mode = Setting::select ('value')->where ('group' , '=' , 'payment')->where ('key' , '=' , 'mode')->first ();
+		// return json_encode($invoices);
+
 		switch ($user_type) {
-			case UserType::ADMIN():
-				$user_type_name = "Administrador";
+			case (UserType::MEDICAL_PROFESSIONAL ()):  //for medical professionals
+				return View::make ('users.account_page' , array('user_data' => Auth::user()->professional));
 				break;
-			case UserType::CUSTOMER():
-				$user_type_name = "Cliente";
-				break;
-			case UserType::MEDICAL_PROFESSIONAL():
-				$user_type_name = "Profesional Médico";
+			case (UserType::CUSTOMER ()):  //for customers
+
+				return View::make ('design.profile' , array('user_data' => Auth::user()->customer, 'invoices' => $invoices, 'prescriptions' => $responses, 'payment_mode' => $payment_mode->value, 'default_img' => url ('/') . "/assets/images/no_pres_square.png"));
 				break;
 		}
 
-		return View::make ('design.profile' , [
-			'user_type_name' => $user_type_name,
-			'user_data' => Auth::user()->customer
-		]);
 	}
 
 	/**
@@ -717,5 +785,27 @@ class UserController extends BaseController
 			throw new Exception('INTERNAL SERVER ERROR:' . $e->getMessage () , 500);
 		}
 	}
+
+	/**
+	 * Delete a particular prescription
+	 *
+	 * @param $pres_id
+	 */
+	public function anyPresDelete ($pres_id)
+	{
+		try {
+			if (!Auth::check ())
+				throw new Exception('UNAUTHORISED : User not logged in ' , 401);
+			$pay_success2 = DB::table ('prescription')->where ('id' , '=' , $pres_id)->update (array('is_delete' => 1 , 'updated_at' => date ('Y-m-d H:i:s')));
+			// If Save is Success
+			if ($pay_success2)
+				return Response::json (['status' => 'SUCCESS' , 'msg' => 'Prescription Deleted Successfully'] , 200);
+
+		}
+		catch (Exception $e) {
+			return Response::json (['status' => 'FAILURE' , 'msg' => $e->getMessage ()] , $e->getCode ());
+		}
+	}
+
 
 }

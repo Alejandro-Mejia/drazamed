@@ -1,6 +1,8 @@
 var current_item_code = "";
 var categories = [];
 var ulclick;
+var element;
+var archivos = false;
 
 var translate = {
     activate_account: "@lang('Please activate your account')",
@@ -51,6 +53,7 @@ $(document).ready(function() {
     var token = $("#security_token").val();
 
     getCategories();
+    show_favorites();
 
     if (token != "" || token != 0) {
         $("#myModal_change_password").modal({});
@@ -194,6 +197,9 @@ $(document).ready(function() {
     };
 });
 
+
+
+
 /**
  * Registro de un nuevo usuario
  *
@@ -322,7 +328,10 @@ function user_register() {
             $(".success_msg")
                 .delay(10000)
                 .fadeOut("slow");
-            location.reload();
+
+            window.location.href = window.location.href + "?msg=activate";
+
+            //location.reload();
         },
         error: function(jqXHR, textStatus, errorThrown) {
             console.log(textStatus + ": " + jqXHR.status + " " + errorThrown);
@@ -439,7 +448,7 @@ function login() {
         datatype: "json",
         statusCode: {
             403: function(data) {
-                $(".login_msg").html(translate.login_admin);
+                $(".login_msg").html("Debe ingresar por la plataforma de administración. <a href='/admin-login' > Redirigir </a>");
                 $(".login_msg").css({ display: "block" });
                 $(".login_msg")
                     .delay(5000)
@@ -447,9 +456,10 @@ function login() {
             }
         },
         success: function(data) {
+            console.log("Status:" + data);
             var status = data[0].result.status;
             var page = data[0].result.page;
-            console.log("Status:" + data);
+
             if (status == "pending") {
                 var mail = $(".login_mail").val();
 
@@ -498,6 +508,15 @@ function login() {
                 $(".login_msg")
                     .delay(5000)
                     .fadeOut("slow");
+            }
+
+            if (status == "redirect"){
+                $(".login_msg").html( "Debe ingresar por la consola de administracion");
+                $(".login_msg").css({ display: "block" });
+                $(".login_msg")
+                    .delay(5000)
+                    .fadeOut("slow");
+                location.href ="/admin-login";
             }
         }
     });
@@ -678,9 +697,9 @@ function show_detail_modal(data) {
     $.ajax({
         type: "GET",
         url: "/medicine/search-medicine/1",
-        data: "term=" + data.value,
+        data: "term=" + encodeURIComponent(data.value),
         success: function(data) {
-            console.log(data.result.msg[0]);
+            console.log(data.result);
             $("#hidden_medicine_id").val(data.result.msg[0].id);
             $("#hidden_item_code").val(data.result.msg[0].item_code);
             $("#hidden_item_pres_required").val(
@@ -693,6 +712,9 @@ function show_detail_modal(data) {
             $("#pi-med-description")
                 .empty()
                 .append(data.result.msg[0].composition);
+            $("#pi-med-img")
+                .empty()
+                .attr('src', data.result.msg[0].url_img);
             $("#pi-med-composition").val(data.result.msg[0].composition);
             $("#pi-med-comby").val(data.result.msg[0].lab);
             $("#pi-med-form").val(
@@ -728,11 +750,12 @@ function show_our_products(cat = null) {
             // $('#med-list').append('<div class="col-lg-12 col-md-12 col-sm12"><h4> Productos Recomendados </h4></div>')
             $.each(data.result.msg, function(i, item) {
                 console.log(item);
+                medicina = item.name;
                 $("#med-list").append(
-                    '<div class="med">' +
+                    '<div class="med cat_product" onclick="thumbClick(`' + medicina + '`)">' +
                         '    <div class="row">' +
                         '        <div class="col-md-4">' +
-                        '            <img class="med-thumbnail" src="/assets/images/dolex.png" alt="">' +
+                        '            <img class="med-thumbnail" src="' + item.url_img + '" alt="">' +
                         "        </div>" +
                         '        <div class="col-md-8">' +
                         '            <h5 class="med-title">' +
@@ -754,7 +777,7 @@ function show_our_products(cat = null) {
 
     $.ajax({
         url: "medicine/search-medicine/1",
-        data: "cat=" + cat,
+        data: "cat=" + cat + "&xlab=icom",
         type: "GET",
         datatype: "JSON",
         success: function(data) {
@@ -764,11 +787,51 @@ function show_our_products(cat = null) {
             // $('#med-list').append('<div class="col-lg-12 col-md-12 col-sm12"><h4> Todos los Productos </h4></div>')
             $.each(data.result.msg, function(i, item) {
                 console.log(item);
+                medicina = item.name;
                 $("#med-list").append(
-                    '<div class="med">' +
+                    '<div class="med cat_product" onclick="thumbClick(`' + medicina + '`)">' +
                         '    <div class="row">' +
                         '        <div class="col-md-4">' +
-                        '            <img class="med-thumbnail" src="/assets/images/dolex.png" alt="">' +
+                        '            <img class="med-thumbnail" src="' + item.url_img + '" alt="">' +
+                        "        </div>" +
+                        '        <div class="col-md-8">' +
+                        '            <h5 class="med-title">' +
+                        item.name +
+                        "</h5>" +
+                        '            <p class="med-description"> ' +
+                        item.composition +
+                        " </p>" +
+                        '            <p class="med-mrp" style="text-align:right; font-size:2e; color:green">  $' +
+                        item.mrp +
+                        " </p>" +
+                        "        </div>" +
+                        "    </div>" +
+                        "</div>"
+                );
+            });
+        }
+    });
+}
+
+function show_favorites() {
+    $.ajax({
+        url: "favorites",
+        type: "GET",
+        async: false,
+        datatype: "JSON",
+        success: function(data) {
+            console.log("Productos:");
+            console.log(data);
+            $("#med-list").empty();
+            // $('#med-list').append('<div class="col-lg-12 col-md-12 col-sm12"><h4> Productos Recomendados </h4></div>')
+            $.each(data.result.msg, function(i, item) {
+                console.log(item);
+                medicina = item.name;
+                $("#med-list").append(
+                    '<div class="med cat_product" onclick="thumbClick(`' + medicina + '`)">' +
+                        '    <div class="row">' +
+                        '        <div class="col-md-4">' +
+                        '            <img class="med-thumbnail" src="' + item.url_img + '" alt="">' +
                         "        </div>" +
                         '        <div class="col-md-8">' +
                         '            <h5 class="med-title">' +
@@ -799,6 +862,63 @@ $("#catList").on("click", "li", function(e) {
 $(".btn-profile").on("click", function() {
     window.location = "account-page/";
 });
+
+
+$(".presDelete").on("click", function() {
+    console.log($(this).data('id'));
+    id = $(this).data('id');
+    url = '/user/pres-delete/' + $(this).data('id')
+    var r = confirm("Esta seguro de querer borrar esta orden?");
+    if (r == true) {
+        $.ajax({
+        type: "GET",
+        url: url,
+        success: function(data) {
+            // console.log(data);
+            alert('Se ha borrado su orden');
+            rowId = 'r' + id;
+            rowInfo = 'pinfo' + id;
+            console.log("Row Name: " + rowId);
+            element = document.getElementById(rowId);
+            rowIndex = element.rowIndex;
+            document.getElementById('ordenes_pendientes').deleteRow(rowIndex);
+            element = document.getElementById(rowInfo);
+            rowIndex = element.rowIndex;
+            document.getElementById('ordenes_pendientes').deleteRow(rowIndex);
+        }
+    });
+    } else {
+
+    }
+
+    //window.location = "account-page/";
+});
+
+// Muestra el detalle de la compra seleccionada
+$('.details').on('click', function(){
+        $('.detail').hide();
+        let detailId = "d" + $(this).data('id');
+        element = document.getElementById(detailId);
+        console.log($(detailId));
+        console.log(element.style.display);
+
+        show(detailId);
+        // element.toggle()    //$(this).closest('div').hasClass('detail').toggle();
+    })
+
+function show(detailId) {
+    if (document.getElementById(detailId).style.display = "none")
+        {
+            document.getElementById(detailId).style.display = "block";
+            // $test="visible"
+        }
+    else
+    {
+        document.getElementById(detailId).style.display = "none";
+    // $test="hidden"
+    }
+}
+
 
 function getCategories() {
     $.ajax({
@@ -874,6 +994,14 @@ $(".add_to_cart").click(function() {
                         .fadeOut("slow");
                     window.location = "my-cart/";
                 }
+
+                if (data == "sin_usuario") {
+                    window.location = "/?msg=please_login";
+                    console.log("Debe ingresar usuario y contraseña")
+                }
+            },
+            error: function(data) {
+                alert('Atencion: ' . data.msg);
             }
         });
     } else {
@@ -899,9 +1027,28 @@ function openProductInfoModal(product) {
     console.log("modal abierto");
 }
 
+function thumbClick(medItem) {
+    // item = $(this).data('med');
+    console.log(medItem);
+    data =  {'value': medItem};
+    show_detail_modal(data);
+}
+
 (function() {
-    //const meds = document.getElementsByClassName("med");
-    $(".med").click(el => {
-        openProductInfoModal(el);
-    });
+    // //const meds = document.getElementsByClassName("med");
+    // $(".cat_product").on('click', function(el){
+
+    //     console.log("itemCode=");
+    //     // goto_detail_page();
+    //     show_detail_modal(ui.item);
+
+
+    //     // console.log(el);
+    //     // openProductInfoModal(el);
+    // });
 })();
+
+
+
+
+
