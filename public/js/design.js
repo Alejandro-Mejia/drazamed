@@ -53,7 +53,7 @@ $(document).ready(function() {
     var token = $("#security_token").val();
 
     getCategories();
-    show_favorites();
+    //show_favorites();
 
     if (token != "" || token != 0) {
         $("#myModal_change_password").modal({});
@@ -1048,6 +1048,9 @@ function thumbClick(medItem) {
     // });
 })();
 
+window.onload = function(){
+   setTimeout(show_favorites(), 1000)
+}
 
 
 

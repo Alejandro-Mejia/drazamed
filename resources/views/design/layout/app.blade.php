@@ -35,6 +35,17 @@
         <link rel="stylesheet" href="/css/fonts.css">
         <link rel="stylesheet" href="/css/drazamed.css">
 
+        <!-- Google Analytics -->
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-C32TYXD8C1"></script>
+        <script>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+
+          gtag('config', 'G-C32TYXD8C1');
+        </script>
+
         @yield('custom-css')
     </head>
     <body>
@@ -45,7 +56,7 @@
         <script src="/js/design.js"></script>
         <script src="/js/mobile_menu.js"></script>
 
-
+        @include('design.layout.footer')
         @yield('custom-js')
     </body>
 </html>
