@@ -728,6 +728,13 @@ function show_detail_modal(data) {
                         .toString()
                         .replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1.")
             );
+            if(data.result.msg[0].quantity > 50) {
+                $("#pi-med-avail").html('<span style="color:green"> Disponible </span>');
+                $(".add_to_cart").prop('disabled', false);
+            } else {
+                $("#pi-med-avail").html('<span style="color:red"> No Disponible </span>');
+                $(".add_to_cart").prop('disabled', true);
+            }
 
             $("#pinfo-modal").modal("show");
         }

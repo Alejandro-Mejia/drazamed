@@ -112,7 +112,7 @@
 @include('design.modals.register')
 @include('design.modals.recovery')
 @include('design.modals.pinfo')
-
+@include('cookieConsent::index')
 
 @endsection
 

@@ -294,7 +294,7 @@
     </style>
   </head>
   <body class="">
-    <span class="preheader">This is preheader text. Some clients will show this text as a preview.</span>
+    <span class="preheader">Droguerias Drazamed tiene una información importante para ti.</span>
     <table role="presentation" border="0" cellpadding="0" cellspacing="0" class="body">
       <tr>
         <td>&nbsp;</td>
@@ -310,7 +310,7 @@
                   <table role="presentation" border="0" cellpadding="0" cellspacing="0">
                     <tr>
                       <td>
-                        <p>Hi there,</p>
+                        <p>Este es un correo de prueba,</p>
                       </td>
                     </tr>
                   </table>
@@ -326,14 +326,12 @@
               <table role="presentation" border="0" cellpadding="0" cellspacing="0">
                 <tr>
                   <td class="content-block">
-                    <span class="apple-link">Company Inc, 3 Abbey Road, San Francisco CA 94102</span>
-                    <br> Don't like these emails? <a href="http://i.imgur.com/CScmqnj.gif">Unsubscribe</a>.
+                    <span class="apple-link">Droguerias Mini Farma S.A.S</span>
+                    <br> No quiere recibir mas de estos correos? <a href="http://drazamed.com/unsubscribe">Unsubscribe</a>.
                   </td>
                 </tr>
                 <tr>
-                  <td class="content-block powered-by">
-                    Powered by <a href="http://htmlemail.io">HTMLemail</a>.
-                  </td>
+
                 </tr>
               </table>
             </div>
