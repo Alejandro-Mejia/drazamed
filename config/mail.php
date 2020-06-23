@@ -76,8 +76,8 @@ return [
     */
 
     'from' => [
-        'address' => env('MAIL_FROM_ADDRESS', 'info@aulalibre.org'),
-        'name' => env('MAIL_FROM_NAME', 'Desarrollo Drazamed'),
+        'address' => env('MAIL_FROM_ADDRESS', 'info@drazamed.org'),
+        'name' => env('MAIL_FROM_NAME', 'Droguerias Drazamed'),
     ],
 
     /*
