@@ -56,7 +56,10 @@
         <script src="/js/design.js"></script>
         <script src="/js/mobile_menu.js"></script>
 
-        @include('design.layout.footer')
+
         @yield('custom-js')
     </body>
+    <footer>
+        @include('design.layout.footer')
+    </footer>
 </html>

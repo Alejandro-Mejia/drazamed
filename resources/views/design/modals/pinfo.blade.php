@@ -24,10 +24,9 @@
                             Dolex 500mg 20 tabletas
                         </h3>
                         <p id="pi-med-description">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing
-                            elit, sed do eiusmod tempor incididunt ut labore et
-                            dolore magna aliqua.
+                            Descripcion
                         </p>
+                        <p id="pi-med-avail"> </p>
 
                         <!-- Hidden inputs for special data -->
                         <input type="hidden" id="hidden_selling_price" value="">
