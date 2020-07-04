@@ -1,7 +1,7 @@
 <header>
     <div class="header-content">
         <a href="/">
-            <img src="/assets/images/logo.png" alt="" />
+            <img src="/assets/images/logo.png" alt="" width="300px"/>
         </a>
         <nav>
             <a href="/">Inicio</a>
