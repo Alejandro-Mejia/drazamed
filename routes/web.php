@@ -39,13 +39,13 @@ use App\MercadoPago\SDK;
 //
 //
 
-    Route::get('testEmail/{tipo}/{email}', function ($tipo, $email) {
+    Route::get('testEmail/{tipo}/{email}/{nombre}', function ($tipo, $email, $nombre) {
         // Mail::to('alejomejia1@gmail.com')->send(new TestAmazonSes("It works!"));
         // $message = "Hola";
         // $email = "alejomejia1@gmail.com";
 
         if($tipo == "activar") {
-            Mail::send ('emails.register' , array('name' => "Alejandro Mejia" , 'user_name' => $email , 'pwd' => "pwd" , 'code' => "1234") , function ($message) use ($email) {
+            Mail::send ('emails.register' , array('name' => $nombre , 'user_name' => $email , 'pwd' => "pwd" , 'code' => "1234") , function ($message) use ($email) {
                         $message->to ($email)->subject ("Activa tu cuenta en Drazamed.com");
                     });
             echo "Enviado correo de activacion";
