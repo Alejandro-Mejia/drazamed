@@ -297,7 +297,7 @@
                             />
                         </div> -->
                         <div class="col-lg-12">
-                            <h4 class="com-title">Aviso de privacidad:</h4>
+                            <h4 class="com-title"><a href="#aviso">Aviso de privacidad:</a></h4>
                         </div>
                     </div>
 
@@ -310,7 +310,7 @@
                             />
                         </div> -->
                         <div class="col-lg-12">
-                            <h4 class="com-title">Términos y Condiciones:</h4>
+                            <h4 class="com-title"><a href="#terminos">Términos y Condiciones:</a></h4>
                         </div>
                     </div>
 
@@ -323,7 +323,7 @@
                             />
                         </div> -->
                         <div class="col-lg-12">
-                            <h4 class="com-title">Política de Garantías</h4>
+                            <h4 class="com-title"><a href="#garantias">Política de Garantías</a></h4>
                         </div>
                     </div>
 
@@ -336,7 +336,7 @@
                             />
                         </div> -->
                         <div class="col-lg-12">
-                            <h4 class="com-title">Política de Devoluciones</h4>
+                            <h4 class="com-title"><a href="#devoluciones">Política de Devoluciones</a></h4>
                         </div>
                     </div>
 
@@ -349,7 +349,7 @@
                             />
                         </div> -->
                         <div class="col-lg-12">
-                            <h4 class="com-title">Política de Retracto y Reversión</h4>
+                            <h4 class="com-title"><a href="#retracto">Política de Retracto y Reversión</a></h4>
                         </div>
                     </div>
 
@@ -362,7 +362,7 @@
                             />
                         </div> -->
                         <div class="col-lg-12">
-                            <h4 class="com-title">Manejo de datos Personales</h4>
+                            <h4 class="com-title"><a href="#datos_personales">Manejo de datos Personales</a></h4>
                         </div>
                     </div>
 
