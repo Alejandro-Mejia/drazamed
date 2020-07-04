@@ -172,7 +172,7 @@ class UserController extends BaseController
 					});
 				} else {
 					Mail::send ('emails.register' , array('name' => $full_name , 'user_name' => $email , 'pwd' => $password , 'code' => $randomValue) , function ($message) use ($email) {
-						$message->to ($email)->subject ("{{ __('Activate Account')}}");
+						$message->to ($email)->subject ("Activa tu cuenta en Drazamed.com");
 					});
 				}
 

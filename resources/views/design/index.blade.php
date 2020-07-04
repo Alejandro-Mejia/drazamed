@@ -13,18 +13,16 @@
 </style>
 <main>
     <div class="preload">
-        <img src="/assets/images/logo.png" alt="" />
+        <img src="/assets/images/logo2.png" alt="" width="300px"/>
     </div>
 
     <div class="cover">
         <div class="wrapper">
             <h1>
-                ¡Compra medicinas en linea, es muy fácil!
+                Pide Medicamentos Online en la Sabana. ¡Es muy Fácil!
             </h1>
             <p class="text-center">
-                Comprar medicamentos, nunca fue tan fácil. Quedate en la
-                comodidad de tu casa y recibe tus pedidos en la puerta.
-                Aprovecha nuestros descuentos
+                Entregamos en Guaymaral, Cota, Chía, Cajicá, Tabio, Briceño, Sopo y Tocancipá
             </p>
             <form action="" class="cover-search form-search-med">
                 <div
@@ -33,7 +31,7 @@
                     <input
                         type="text"
                         class="form-control search_medicine"
-                        placeholder="Busca un medicamento por nombre"
+                        placeholder="Busca cualquier producto de droguería"
                         aria-label="Busca un medicamento por nombre"
                         aria-describedby="basic-addon2"
                         id="search_medicine"
@@ -49,6 +47,9 @@
                         ></span>
                     </div>
                 </div>
+                 <p class="text-center">
+                    Si lo prefieres llámanos (1) 879-3999
+                </p>
             </form>
         </div>
     </div>
