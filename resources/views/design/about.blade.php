@@ -42,7 +42,7 @@
                         </div>
                         <div class="col-lg-10">
                             <h4 class="com-title">Teléfonos de Contacto:</h4>
-                            <p>+571 012 3456</p>
+                            <p>(1) 879-3999 </p>
                         </div>
                     </div>
 

@@ -45,8 +45,7 @@
                 Hola <span style="color:#404040; font-weight: bold; "><?php echo $name; ?></span></h2>
 
             <p style="font-family: 'Open Sans', sans-serif;  color:#272727; font-weight: 100; margin: 0;  font-size:14px; line-height: 1.6; margin-bottom: 25px; ">
-                Gracias por registrarte a <a href="<?php echo Setting::param('site', 'app_name')['value']; ?>"> <?php echo Setting::param('site', 'app_name')['value']; ?></a>
-                . Queremos acompañarte en tus tratamientos siempre.</p>
+                Gracias por registrarte a <?php echo Setting::param('site', 'app_name')['value'];?>. Queremos acompañarte en tus tratamientos siempre.</p>
 
             <p> Abajo encontrarás tus datos de ingreso.</p>
 
