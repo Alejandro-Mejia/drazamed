@@ -309,6 +309,10 @@ Route::get('/about', function () {
     return view('design.about');
 });
 
+Route::get('/terminos', function () {
+    return view('design.terminos');
+});
+
 // Landing page route
 Route::get('/', function () {
     Setting::settings();
