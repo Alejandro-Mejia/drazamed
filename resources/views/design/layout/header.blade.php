@@ -5,7 +5,7 @@
         </a>
         <nav>
             <a href="/">Inicio</a>
-            <a href="/about">Quienes somos</a>
+            <a href="/about">Quiénes Somos</a>
             <a href="/contact">Contacto</a>
             @if (Auth::check() )
                     <button

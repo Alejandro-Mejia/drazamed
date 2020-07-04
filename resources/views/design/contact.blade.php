@@ -14,12 +14,7 @@
                         Complete el siguiente formulario y estaremos atentos
                         para resolver sus dudas
                     </h2>
-                    <p>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                        sed do eiusmod tempor incididunt ut labore et dolore
-                        magna aliqua. Ut enim ad minim veniam, quis nostrud
-                        exercitation
-                    </p>
+
 
                     <form class="panel-form mt-5">
                         <div class="row">
@@ -82,13 +77,15 @@
             </div>
             <div class="col-md-12 col-lg-4">
                 <div class="panel md-mt-20">
+
                     <h2 class="panel-title">Canales de comunicación</h2>
-                    <p>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                        sed do eiusmod tempor incididunt ut labore et dolore
-                        magna aliqua. Ut enim ad minim veniam, quis nostrud
-                        exercitation
-                    </p>
+                    <div style="text-align: center">
+                        <p> ¡Nos encantan las preguntas! <br>
+                    No dudes en contactarnos </p>
+                    </div>
+
+
+                    <br>
 
                     <div class="row middle-xs">
                         <div class="col-lg-2">
@@ -96,7 +93,7 @@
                         </div>
                         <div class="col-lg-10">
                             <h4 class="panel-title">Teléfonos de Contacto:</h4>
-                            <p>+571 012 3456</p>
+                            <p>(1) 879-3999</p>
                         </div>
                     </div>
 
