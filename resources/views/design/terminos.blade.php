@@ -16,7 +16,7 @@
     <div class="wrapper">
         <div class="row">
             <div class="col-lg-8 col-sm-12">
-                <div class="panel" style="height: 50%; overflow:scroll">
+                <div class="panel">
                     <h1 class="title" id="aviso">Aviso de privacidad</h1>
                     <p>
                         Con el propósito de poner a disposición del titular las políticas de tratamiento de los datos personales, se informa por este medio la existencia de las POLÍTICAS DE TRATAMIENTO DE DATOS PERSONALES- DROGUERIAS MINIFARMA S.A.S. y la forma de acceder a estas, en cumplimiento de la normativa vigente frente al tema.
@@ -59,7 +59,7 @@
                 </div>
 
 
-                <div class="panel" style="height: 50%; overflow:scroll">
+                <div class="panel">
                     <h1 class="title" id="aviso">Términos y condiciones portales DRAZAMED.</h1>
                     <p>
                         Este acuerdo de voluntades describe los términos y condiciones generales (en adelante los "Términos y Condiciones ") aplicables a la venta de productos farmacéuticos, cosméticos, medicinales, artículos de tocador, entre otros ofrecidos por DROGUERIAS MINIFARMA S.A.S. por intermedio del sitio web o de la aplicación (en adelante "<b>DRAZAMED APP</b>" o los portales). Las personas naturales o jurídicas que pretendan acceder a y/o adquirir los productos mediante los portales, podrán hacerlo en la medida en que acepten de manera expresa y consciente los Términos y Condiciones, junto con las políticas vigentes y futuras que se establezcan durante la vigencia del presente acuerdo.
