@@ -5,7 +5,7 @@
 				<img src="/assets/images/logo_white.png" alt="Drazamed logo" />
 				<p class="text-justify text-white">
 					Droguerias Mini Farma S.A.S. <br>
-					Nit : 901.279.253-3 <br>
+					Nit : 901.166.732-4 <br>
 					Dirección: CARRERA 6 1 22, Cajica, Cundinamarca <br>
 					Telfono :
 				</p>

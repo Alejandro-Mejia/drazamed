@@ -30,12 +30,7 @@
             <div class="col-lg-4 col-sm-12 sm-mt-20">
                 <div class="panel">
                     <h1 class="title">Canales de comunicación</h1>
-                    <p>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                        sed do eiusmod tempor incididunt ut labore et dolore
-                        magna aliqua. Ut enim ad minim veniam, quis nostrud
-                        exercitation
-                    </p>
+
 
                     <div class="row middle-xs">
                         <div class="col-lg-2">
