@@ -5,6 +5,7 @@
 @endsection
 
 @section('content')
+<script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
 <section class="contact-section">
     <div class="contact-content">
         <div class="row">
@@ -16,7 +17,8 @@
                     </h2>
 
 
-                    <form class="panel-form mt-5">
+                    <form class="panel-form mt-5 contact-form" role="form" action="<?php echo 'URL'; ?>/user/contact-us" method="POST">
+                        <input type="hidden" name="_token" id="_token" value="<?php echo csrf_token(); ?>">
                         <div class="row">
                             <div class="col-md-12">
                                 <label class="panel-label" for="txt-name">Nombre Completo</label>
@@ -69,7 +71,9 @@
                                     rows="10"
                                     placeholder="Escribe tu mensaje aquí..."
                                 ></textarea>
-                                <button type="button" class="mt-4 dra-button">Enviar</button>
+                                <button type="submit" class="mt-4 dra-button">Enviar</button>
+                                <!-- <button type="submit" class="btn btn-primary save-btn ripple mail_btn" data-color="#40E0BC">&nbsp;{{ __('Send')}}&nbsp;</button> -->
+                                <img class="mail_loader" style="display: none;" src="./assets/images/loader1.gif">
                             </div>
                         </div>
                     </form>
@@ -121,4 +125,54 @@
         </div>
     </div>
 </section>
+
+<script type="text/javascript">
+    $(document).on({
+       ajaxStart: function() {
+                    $('.mail_loader').css('display', 'inline' );
+                    // $(".mail_btn").disabled =true;
+                    //  document.getElementById('.mail_btn').disabled = true;
+                  },
+       ajaxStop: function() {
+                    $('.mail_loader').css('display', 'none' );
+                    $('.mail_alert').css('display', 'block' );
+                    $(".mail_alert").delay(10000).fadeOut("slow");
+                    //document.getElementById('.mail_btn').disabled = false;
+                    //$(".mail_btn").disabled =false;
+                  }
+    });
+        $(document).ready(function(e) {
+
+            $('.contact-form').validate({
+
+                 submitHandler: function(form) {
+                        var edname = $('#txt-name').val();
+                        var edemail = $('#txt-email').val();
+                        var edmsg = $('#msg').val();
+                        var token = $('#_token').val();
+
+
+                        $.ajax({
+                            url:'user/contact-us',
+                            type:'POST',
+                            data:{name:edname,email:edemail,msg:edmsg,submits:1,_token:token},
+                            success: function(alerts){
+
+                                    $('.form-result3').html(alerts).fadeOut(8000);
+
+                                        $('.contact-form')[0].reset();
+                                    if(alerts==0)
+                                        {
+                                        $('.mail_alert').html("Failed to send your mail! Please send again ");
+                                        }
+
+                                    }
+                        });
+
+                    }
+            });
+        });
+    </script>
+
+
 @endsection

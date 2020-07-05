@@ -27,7 +27,6 @@
 						<li>
 							<a href="/contact">Preguntas, Solicitudes, Quejas y Reclamos</a>
 						</li>
-						<li><a href="/ayuda">Ayuda</a></li>
 					</ul>
 				</nav>
 			</div>
