@@ -4,11 +4,11 @@ $client_mail=Request::get('email');
 $client_msg=Request::get('msg');
 
 
-echo "Name : ".$client_name;
+echo "Nombre : ".$client_name;
 echo "<br>";
 echo "Email : ".$client_mail;
 echo "<br>";
-echo "Message : ".$client_msg;
+echo "Mensaje : ".$client_msg;
 
 
 ?>
