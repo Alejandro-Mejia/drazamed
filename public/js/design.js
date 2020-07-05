@@ -52,7 +52,7 @@ function trans(key, replace = {}) {
 $(document).ready(function() {
     var token = $("#security_token").val();
 
-    getCategories();
+    //getCategories();
     //show_favorites();
 
     if (token != "" || token != 0) {
@@ -1055,9 +1055,6 @@ function thumbClick(medItem) {
     // });
 })();
 
-window.onload = function(){
-   setTimeout(show_favorites(), 1000)
-}
 
 
 

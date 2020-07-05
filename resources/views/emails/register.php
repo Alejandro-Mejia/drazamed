@@ -61,7 +61,7 @@
 
 
             <p style="font-family: 'Open Sans', sans-serif;  color:#272727; font-weight: 100; margin: 0;  font-size:14px; line-height: 1.6; margin-bottom:0px; ">
-                Tienes preguntas? escribenos a   <?php echo Setting::param('site', 'mail')['value']; ?>.</p>
+                ¿Tienes preguntas? Escríbenos a <?php echo Setting::param('site', 'mail')['value']; ?>.</p>
 
             <p style="font-family: 'Open Sans', sans-serif;  color:#272727; font-weight: 100; margin: 0;  font-size:14px; line-height: 1.6; margin-bottom:0px; ">
                 ¡Nuevamente gracias por registrarte!</p>

@@ -12,29 +12,6 @@
 			</div>
 
 			<div class="col-sm">
-				<!-- <h3 class="footer-menu-title">Mi Cuenta</h3>
-				<nav class="footer-menu">
-					<ul>
-						<li>
-							<a href="#">Mi Perfil</a>
-						</li>
-						<li>
-							<a href="#">Mis Ordenes</a>
-						</li>
-						<li>
-							<a href="#">Pedidos Pendientes</a>
-						</li>
-						<li>
-							<a href="#">Pedidos Completados</a>
-						</li>
-						<li>
-							<a href="#">Olvidé Mi Contraseña</a>
-						</li>
-						<li>
-							<a href="#">Cerrar Sesión</a>
-						</li>
-					</ul>
-				</nav> -->
 			</div>
 
 
@@ -48,7 +25,7 @@
 							<a href="/datos_personales">Política de Tratamiento de Datos Personales</a>
 						</li>
 						<li>
-							<a href="/pqr">Preguntas, Solicitudes, Quejas y Reclamos</a>
+							<a href="/contact">Preguntas, Solicitudes, Quejas y Reclamos</a>
 						</li>
 						<li><a href="/ayuda">Ayuda</a></li>
 					</ul>
