@@ -25,8 +25,8 @@
                                 <label class="panel-label" for="txt-name">Nombre Completo</label>
                                 <input
                                     type="text"
-                                    id="txt-name"
-                                    name="txt-name"
+                                    id="name"
+                                    name="name"
                                     class="panel-input"
                                     placeholder="John Doe"
                                     required
@@ -53,8 +53,8 @@
                                 >
                                 <input
                                     type="email"
-                                    id="txt-email"
-                                    name="txt-email"
+                                    id="email"
+                                    name="email"
                                     class="panel-input"
                                     placeholder="ejemplo@dominio.com"
                                     required
@@ -65,8 +65,8 @@
                             <div class="col-md-12">
                                 <label for="txt-message">Mensaje</label>
                                 <textarea
-                                    name="txt-message"
-                                    id="txt-message"
+                                    name="msg"
+                                    id="msg"
                                     class="panel-textarea panel-input"
                                     cols="30"
                                     rows="10"
@@ -150,9 +150,9 @@
             $('.contact-form').validate({
 
                  submitHandler: function(form) {
-                        var edname = $('#txt-name').val();
-                        var edemail = $('#txt-email').val();
-                        var edmsg = $('#txt-message').val();
+                        var edname = $('#name').val();
+                        var edemail = $('#email').val();
+                        var edmsg = $('#msg').val();
                         var token = $('#_token').val();
 
 
