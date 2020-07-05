@@ -675,12 +675,18 @@ class UserController extends BaseController
 		$client_msg = Request::get ('msg');
 		$mail_id = Setting::param ('site' , 'mail')['value'];
 
+		Mail::send ('emails.customer_query' , array('client_name' => $client_name , 'client_mail' => $client_mail , 'client_msg' => $client_msg) , function ($message) use ($client_mail) {
+			$message->to($client_mail)->subject ('A enviado un mensaje por Contactenos de Drazamed');
+		});
+		$client_name = Request::get ('name');
+		$client_mail = Request::get ('email');
+		$client_msg = Request::get ('msg');
+		$mail_id = Setting::param ('site' , 'mail')['value'];
+
 		Mail::send ('emails.customer_query' , array('client_name' => $client_name , 'client_mail' => $client_mail , 'client_msg' => $client_msg) , function ($message) use ($mail_id) {
 			$message->to ($mail_id)->subject ('A recibido un mensaje de un cliente');
 		});
-		Mail::send ('emails.customer_query' , array('client_name' => $client_name , 'client_mail' => $client_mail , 'client_msg' => $client_msg) , function ($message) use ($mail_id) {
-			$message->to ($client_mail)->subject ('A enviado un mensaje por Contactenos de Drazamed');
-		});
+
 		if (count (Mail::failures ()) > 0) {
 			$errors = 0; //Failed to send email, please try again
 			return $errors;
