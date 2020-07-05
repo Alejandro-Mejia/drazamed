@@ -679,7 +679,7 @@ class UserController extends BaseController
 			$message->to ($mail_id)->subject ('A recibido un mensaje de un cliente');
 		});
 		Mail::send ('emails.customer_query' , array('client_name' => $client_name , 'client_mail' => $client_mail , 'client_msg' => $client_msg) , function ($message) use ($mail_id) {
-			$message->to ($client_msg)->subject ('A enviado un mensaje por Contactenos');
+			$message->to ($client_msg)->subject ('A enviado un mensaje por Contactenos de Drazamed');
 		});
 		if (count (Mail::failures ()) > 0) {
 			$errors = 0; //Failed to send email, please try again
