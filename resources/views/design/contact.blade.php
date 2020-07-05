@@ -16,7 +16,8 @@
                         para resolver sus dudas
                     </h2>
 
-
+                    <!-- <h2 class="contact-h2">{{ __('Get in touch with us')}}</h2> -->
+                    <p>{{ __('Please feel free to reach out to us')}}. {{ __('We will be more than happy to help')}}.</p>
                     <form class="panel-form mt-5 contact-form" role="form" action="<?php echo 'URL'; ?>/user/contact-us" method="POST">
                         <input type="hidden" name="_token" id="_token" value="<?php echo csrf_token(); ?>">
                         <div class="row">
@@ -71,6 +72,9 @@
                                     rows="10"
                                     placeholder="Escribe tu mensaje aquí..."
                                 ></textarea>
+                                <div class="alert alert-success mail_alert" style="display: none;" role="alert"> {{ __('Your enquiry has been submitted successfully')}}. {{ __('We will get back to you shortly')}}
+                                </div>
+                                <div class="form-result3" style="position: absolute;top: 45px;left: 795px;color: #4F8A10;font-size: 14px;"></div>
                                 <button type="submit" class="mt-4 dra-button">Enviar</button>
                                 <!-- <button type="submit" class="btn btn-primary save-btn ripple mail_btn" data-color="#40E0BC">&nbsp;{{ __('Send')}}&nbsp;</button> -->
                                 <img class="mail_loader" style="display: none;" src="./assets/images/loader1.gif">
@@ -159,11 +163,10 @@
                             success: function(alerts){
 
                                     $('.form-result3').html(alerts).fadeOut(8000);
-
-                                        $('.contact-form')[0].reset();
+                                    $('.contact-form')[0].reset();
                                     if(alerts==0)
                                         {
-                                        $('.mail_alert').html("Failed to send your mail! Please send again ");
+                                        $('.mail_alert').html("No hemos podido enviar su mensaje, por favor intente de nuevo ");
                                         }
 
                                     }
