@@ -18,7 +18,7 @@
 
                     <!-- <h2 class="contact-h2">{{ __('Get in touch with us')}}</h2> -->
                     <p>{{ __('Please feel free to reach out to us')}}. {{ __('We will be more than happy to help')}}.</p>
-                    <form class="panel-form mt-5 contact-form" role="form" action="<?php echo 'URL'; ?>/user/contact-us" method="POST">
+                    <form class="panel-form mt-5 contact-form" role="form" action="/user/contact-us" method="POST">
                         <input type="hidden" name="_token" id="_token" value="<?php echo csrf_token(); ?>">
                         <div class="row">
                             <div class="col-md-12">
