@@ -18,6 +18,9 @@
             <div class="col-lg-8 col-sm-12" style="font-size: 85%">
                 <div class="panel" id="aviso">
                     <h1 class="title" >Aviso de privacidad</h1>
+                    <br>
+                    Podra descargar una version en PDF de este documento <a href="/assets/pdf/aviso.pdf"> aqui </a> <br>
+
                     <p>
                         Con el propósito de poner a disposición del titular las políticas de tratamiento de los datos personales, se informa por este medio la existencia de las POLÍTICAS DE TRATAMIENTO DE DATOS PERSONALES- DROGUERIAS MINIFARMA S.A.S. y la forma de acceder a estas, en cumplimiento de la normativa vigente frente al tema.
                     </p>
@@ -86,7 +89,7 @@
                             />
                         </div> -->
                         <div class="col-lg-12">
-                            <h4 class="com-title"><a href="./terminos">Términos y Condiciones:</a></h4>
+                            <h4 class="com-title"><a href="/terminos">Términos y Condiciones:</a></h4>
                         </div>
                     </div>
 
@@ -99,7 +102,7 @@
                             />
                         </div> -->
                         <div class="col-lg-12">
-                            <h4 class="com-title"><a href="#garantias">Política de Garantías</a></h4>
+                            <h4 class="com-title"><a href="/garantias">Política de Garantías</a></h4>
                         </div>
                     </div>
 
@@ -112,7 +115,7 @@
                             />
                         </div> -->
                         <div class="col-lg-12">
-                            <h4 class="com-title"><a href="#devoluciones">Política de Devoluciones</a></h4>
+                            <h4 class="com-title"><a href="/devoluciones">Política de Devoluciones</a></h4>
                         </div>
                     </div>
 
@@ -125,7 +128,7 @@
                             />
                         </div> -->
                         <div class="col-lg-12">
-                            <h4 class="com-title"><a href="#retracto">Política de Retracto y Reversión</a></h4>
+                            <h4 class="com-title"><a href="/retracto">Política de Retracto y Reversión</a></h4>
                         </div>
                     </div>
 
@@ -138,7 +141,7 @@
                             />
                         </div> -->
                         <div class="col-lg-12">
-                            <h4 class="com-title"><a href="#datos_personales">Manejo de datos Personales</a></h4>
+                            <h4 class="com-title"><a href="/datos_personales">Manejo de datos Personales</a></h4>
                         </div>
                     </div>
 

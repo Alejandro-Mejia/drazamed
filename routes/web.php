@@ -317,6 +317,22 @@ Route::get('/terminos', function () {
     return view('design.terminos');
 });
 
+Route::get('/garantias', function () {
+    return view('design.garantias');
+});
+
+Route::get('/devoluciones', function () {
+    return view('design.devoluciones');
+});
+
+Route::get('/retracto', function () {
+    return view('design.retracto');
+});
+
+Route::get('/datos_personales', function () {
+    return view('design.datos_personales');
+});
+
 // Landing page route
 Route::get('/', function () {
     Setting::settings();

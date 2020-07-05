@@ -18,6 +18,9 @@
             <div class="col-lg-8 col-sm-12" style="font-size: 85%">
                 <div class="panel" id="terminos">
                     <h1 class="title">Términos y condiciones portales DRAZAMED.</h1>
+                    <br>
+                    Podra descargar una version en PDF de este documento <a href="/assets/pdf/terminos.pdf"> aqui </a> <br>
+
                     <p>
                         Este acuerdo de voluntades describe los términos y condiciones generales (en adelante los "Términos y Condiciones ") aplicables a la venta de productos farmacéuticos, cosméticos, medicinales, artículos de tocador, entre otros ofrecidos por DROGUERIAS MINIFARMA S.A.S. por intermedio del sitio web o de la aplicación (en adelante "<b>DRAZAMED APP</b>" o los portales). Las personas naturales o jurídicas que pretendan acceder a y/o adquirir los productos mediante los portales, podrán hacerlo en la medida en que acepten de manera expresa y consciente los Términos y Condiciones, junto con las políticas vigentes y futuras que se establezcan durante la vigencia del presente acuerdo.
                     </p>
@@ -237,8 +240,445 @@
 
                     </p>
 
-                </div>
+                    <h2> Uso de los portales. </h2>
 
+                    <p>
+                        El consumidor entiende que DROGUERIAS MINIFARMA S.A S. se reserva la posibilidad de introducir de manera unilateral mejoras, eliminar características y demás modificaciones al contenido y funcionalidades de los portales, sin previo aviso, respetando los compromisos de confidencialidad y tratamiento de la información de carácter personal.
+                        <br>
+                        Tomando en consideración que las obligaciones asumidas por DROGUERIASMINIFARMA S.A S. de cara al funcionamiento del portal son de medio y no de resultado, los consumidores de los portales  aceptan desde ya que el servicio se provee sin ningún tipo de garantía explicita ni implícita, incluyendo y sin limitación alguna de cualquier garantía relacionada con el rendimiento, la continuidad de los portales, calidad, disponibilidad y demás yerros que se puedan llegar a generar dentro de la navegación en los portales.
+                        <br>
+                        Al utilizar los servicios de los portales, eventualmente se pueden causar gastos de datos o mensajes de texto los cuales deberán ser asumidos por el consumidor quien desde ya entiende y asume que, con el uso de los portales, estos gastos pueden llegar a ocasionarse y que DROGUERIAS MINIFARMA S.A S. no asumirá por ningún motivo el pago de estos.
+                        <br>
+                        Los portales requieren de una serie de características específicas tanto del hardware como del software del equipo por intermedio del cual se acceda; en vista de lo anterior, DROGUERIAS MINIFARMA S.A.S. no asumirá responsabilidad alguna en los casos en donde la carencia de cualquiera de estos requerimientos de carácter técnico, impidan el disfrute efectivo de la experiencia de usuario propuesta.
+                        <br>
+                        DROGUERIAS MINIFARMA S.A S. no será responsable por cualquier perjuicio sufrido a partir de los siguientes escenarios que se pueden ocasionar en las siguientes circunstancias:
+
+                    </p>
+
+                    <p>
+                        <ol>
+                            <li>
+                                Acciones, declaraciones y demás manifestaciones realizadas por terceros emitidas dentro o fuera de los portales.
+
+                                Daños en software o hardware producidos directa o indirectamente por el uso de los portales.
+                            </li>
+                            <li>
+                                Intervención de terceros (Hackers) en la funcionalidad de los portales que generen pérdidas o alteración de información o datos personales, daños emergentes, lucros cesantes o demás dificultades que afecten a los consumidores.
+                            </li>
+                            <li>
+                                Por accesos no autorizados a las cuentas de los consumidores, ocasionados por intromisiones que afecten las medidas de seguridad dispuestas en los portales, por ingeniería social, la simple pérdida de las claves o eventos similares.
+                            </li>
+                            <li>
+                                Por los problemas, daños emergentes y lucros cesantes que se puedan sufrir al acceder a enlaces profundos o enlaces marco que se encuentren en los portales y que no sean propiedad o administrados por DROGUERIAS MINIFARMA S.A S.
+                            </li>
+                            <li>
+                                Por inconsistencias o errores en la celebración de los contratos de compraventa o en los datos necesarios para las entregas, que se relacionen con la información brindada por el consumidor para estos efectos.
+                            </li>
+                            <li>
+                                Por la falta de cumplimiento adecuado de los tratamientos médicos registrados dentro de los portales, los cuales son de entera responsabilidad de cada uno de los consumidores.
+                            </li>
+                            <li>
+                                Por la terminación unilateral del contrato cuando se detecte que el beneficiario es un menor de edad.
+                            </li>
+                            <li>
+                                Por la calidad e idoneidad de la información dispuesta en los productos y en las campañas publicitarias de quienes producen los artículos que se comercializan salvo las circunstancias en las que la responsabilidad esta prevista por ley.
+                            </li>
+                            <li>
+                                Por los usos indebidos que se hagan de los productos que se venden por conducto de los portales.
+                            </li>
+                            <li>
+                                Por las fallas ocasionadas en las plataformas de pago previstas en los portales, que deriven en perjuicios de carácter material o económico.
+                            </li>
+                            <li>
+                                Por eventos de caso fortuito o fuerza mayor que impidan poner en funcionamiento los portales dispuestos para la venta de los productos aquí identificados.
+                            </li>
+                            <li>
+                                Por eventos de caso fortuito o fuerza mayor que impidan realizar las entregas de los productos que se adquieran por medio de los portales.
+                            </li>
+                            <li>
+                                Por el éxito del tratamiento fundamentado en los medicamentos que adquiera por intermedio de los portales.
+                            </li>
+                            <li>
+                                Por falta de revisión y comparación por parte del consumidor del producto recibido con el prescrito en la formula médica o solicitado mediante cualquiera de los portales.
+                            </li>
+                        </ol>
+                    </p>
+
+                    <h2> Protección de Propiedad Intelectual. </h2>
+                    <p>
+                        Los portales se encuentran protegidos por las leyes de orden nacional y mundial que regulan la propiedad Industrial, en este sentido se advierte a los consumidores que están en la obligación de proteger los derechos de Propiedad Industrial que tiene sobre los contenidos que se encuentran en los portales propiedad de DROGUERIAS MINIFARMA S.A.S., lo cual incluye pero no se limita, a sus marcas, enseñas, códigos fuentes, dominios, imágenes, textos y demás aspectos que se relacionen directamente con estos aspectos.
+                        <br>
+                        Con ocasión de lo anterior, se entiende que queda prohibido para cualquier consumidor realizar actividades tales como, pero sin limitarse a ingeniería inversa, modificaciones a los códigos de la aplicación y demás modificaciones que de alguna manera alteren o transgredan las características de los portales.
+                        <br>
+                        DROGUERIAS MINIFARMA S.A.S de manera expresa prohíbe que sus portales sean vinculados por medio de enlaces (entiéndase enlaces profundos, enlaces marco, etc.) de cualquier tipo a otros sitios web sin su consentimiento previo y escrito, de tal manera que al consumidor de los portales le estará prohibido realizar cualquier tipo de enlaces de sus portales a sitios web de terceros.
+                        <br>
+                        Al mismo tiempo DROGUERIAS MINIFARMA S.A.S. no autoriza que sitios web de terceros tengan enlaces dentro de sus portales. En virtud de lo anterior DROGUERIAS MINIFARMA S.A.S. no tiene control sobre los sitios web de terceros que se lleguen a vincular a sus portales sin su consentimiento, por lo cual no podrá ser responsable por los contenidos, materiales, productos y/o servicios prestados por los mismos, ni por los daños o perjuicios generados por el uso de los mismos, sean estos causados directa o indirectamente.
+                        <br>
+                        El hecho de que estos enlaces a otros sitios web o aplicaciones se encuentren dentro de DRAZAMED APP o el sitio web de esta aplicación, no implica la existencia de un contrato de sociedad, Agencia comercial, Joint Venture, relación, aprobación o respaldo a dichos sitios y sus contenidos.
+                    </p>
+
+                    <h2> Obligaciones de los Consumidores. </h2>
+
+                    <p>
+                        Los Consumidores tienen las siguientes obligaciones:
+
+                        <ol>
+                            <li>
+                                Suministrar información personal y de otro tipo dentro de los portales, de manera clara, expresa y fidedigna.
+                            </li>
+                            <li>
+                                Mantener su información personal actualizada dentro de la aplicación para cualquier uso que haga dentro de la misma.
+                            </li>
+                            <li>
+                                Abstenerse de suplantar a personas dentro de las plataformas.
+                            </li>
+                            <li>
+                                Hacer uso de la aplicación sólo en caso de ser mayor de edad.
+                            </li>
+                            <li>
+                                Cuando los medicamentos requieran fórmula médica para su venta, registrarlas dentro de los portales y presentarlas al momento en que se vaya a realizar la entrega.
+                            </li>
+                            <li>
+                                No alterar y/o falsificar fórmulas médicas para efectos de obtener medicamentos por conducto de los portales.
+                            </li>
+                            <li>
+                                Hacer uso de la aplicación de conformidad con los lineamientos contenidos en los términos y condiciones de uso.
+                            </li>
+                            <li>
+                                Obedecer las instrucciones médicas de uso y las contraindicaciones previstas en los medicamentos y demás productos que se adquieran por conducto de los portales.
+                            </li>
+                            <li>
+                                Abstenerse de hacer daños a las personas o a los bienes de terceros, en el momento en que se haga uso de las plataformas.
+                            </li>
+                            <li>
+                                Abstenerse de interferir en el normal funcionamiento de los portales, por intermedio de la manipulación fraudulenta de las características técnicas de los mismos.
+                            </li>
+                            <li>
+                                Abstenerse de cometer actividades delictuales o ilegales por conducto de los portales.
+                            </li>
+                            <li>
+                                Abstenerse de violar derechos de Propiedad Intelectual por cualquier medio.
+                            </li>
+                            <li>
+                                Cumplir con las demás normas aplicables al momento de utilizar los portales y con las demás prohibiciones que se encuentren estipuladas dentro de los presentes términos.
+                            </li>
+
+                        </ol>
+                    </p>
+
+                    <h2> Vulneración a los sistemas de las plataformas. </h2>
+
+                    <p>
+                        Se encuentra prohibido el uso de cualquier dispositivo, sistema, software o cualquier otro instrumento dirigido a la alteración del normal funcionamiento de los portales, lo cual incluye la modificación de la información en general contenida en las bases de datos de los portales, los códigos que componen la misma y demás características internas y externas de la misma. Cualquier tipo de acceso o intromisión dentro de los sistemas de los portales, que contraríe lo dispuesto dentro de los presentes términos y las leyes aplicables, dará motivo suficiente para el cierre de la cuenta del consumidor por parte de DROGUERIASMINIFARMA S.A.S. y simultáneamente lo hará responsable por todos los perjuicios que se lleguen a generar.
+                    </p>
+
+                    <h2> Clausura de la cuenta del consumidor. </h2>
+
+                    <p>
+                        DROGUERIASMINIFARMA S.A S. podrá terminar unilateralmente los contratos de compraventa que se estén llevando a cabo y clausurar las cuentas de los consumidores en cualquier momento cuando este incurra en alguno de los siguientes eventos:
+
+                        <ol type="a">
+                            <li>
+                                Si a criterio de DROGUERIAS MINIFARMA S.A S. se determina que por intermedio de la aplicación el consumidor vulnere la normativa aplicable, los presentes términos y condiciones y las demás políticas aplicables al uso de los portales.
+                            </li>
+                            <li>
+                                Si a criterio de DROGUERIAS MINIFARMA S.A.S. la información consignada dentro de la aplicación no es fidedigna y/o a partir de la misma no se puede identificar de manera certera al consumidor.
+                            </li>
+                            <li>
+                                Si el consumidor ha realizado algún tipo de manipulación indebida de las características internas o externas de los portales de conformidad con lo estipulado dentro de los presentes términos.
+                            </li>
+                            <li>
+                                Si se determina que el consumidor no tiene la capacidad legal para poder hacer uso de la aplicación o para recibir el producto, de conformidad con los presentes términos y condiciones y la normativa legal aplicable.
+                            </li>
+                            <li>
+                                Por la falta de pago del consumidor una vez haya realizado pedidos por intermedio de las plataformas de DRAZAMED.
+                            </li>
+                            <li>
+                                Cuando se detecte que el consumidor ha presentado prescripciones médicas falsas o haya intentado de cualquier manera inducir en error al personal de DROGUERIAS MINIFARMA S.A.S para obtener cualquier tipo de productos y/o con cualquier otro fin delictuoso.
+                            </li>
+                            <li>
+                                En caso de que una autoridad de carácter público lo llegue a solicitar.
+                            </li>
+                            <li>
+                                En los casos en que el consumidor solicite la eliminación y/o revoque la autorización para el uso de sus Datos Personales.
+                            </li>
+                            <li>
+                                Por la liquidación y terminación de DROGUERIAS MINIFARMA S.A S.
+                            </li>
+                            <li>
+                                En el caso en que por cualquier fuente DROGUERIAS MINIFARMA S.A.S. llegue al conocimiento de que el consumidor ha fallecido.
+                            </li>
+                            <li>
+                                En el caso en el que el consumidor llegue a ser vinculado a listas nacionales o internacionales de lavados de activos o apoyo al terrorismo tal como, pero sin limitarse a la lista OFAC, entre otras.
+                            </li>
+                            <li>
+                                Por decisión unilateral de DROGUERIAS MINIFARMA S.A S. sin que haya una motivación que justifique tal decisión.
+                            </li>
+                        </ol>
+                    </p>
+
+                    <h2> Alcance de los contratos celebrados con los consumidores. </h2>
+
+                    <p>
+                        El presente acuerdo no genera ningún tipo de negocio distinto al que se está celebrando, por lo tanto, los relacionamientos que sostenga el consumidor con terceros con los que llegue hacer cualquier tipo de contacto por intermedio de las plataformas serán de su entera responsabilidad. El consumidor reconoce que DROGUERIAS MINIFARMA S.A.S. no asume ningún tipo de responsabilidad por los eventos que se señalarán a continuación y como tal exime desde ya a la mentada sociedad por cualquier perjuicio que llegue a sufrir:
+
+                        <ol>
+                            <li>
+                                Por motivo de los negocios que celebre con terceros que lo lleguen a contactar por conducto de la aplicación, lo cual incluye, pero no se encuentra limitado a garantías relacionadas con productos y servicios ofrecidos en los portales, veracidad e idoneidad en las promociones, publicidades y demás información que llegue a ser presentada por intermedio de los portales por parte de terceros. El consumidor reconoce y acepta que DROGUERIAS MINIFARMA S.A.S no produce, ofrece o distribuye productos y/o servicios distintos al enunciado en los presentes términos, en virtud de lo anterior DROGUERIAS MINIFARMA S.A.S. no asumirá ningún tipo de responsabilidad relacionada con los contratos o cualquier otro tipo de relacionamiento que sostenga con terceros.
+                            </li>
+                            <li>
+                                El consumidor entiende y acepta desde ya, que DROGUERIAS MINIFARMA S.A.S. no celebra contratos de suministro, cuentas en participación, Joint Venture, sociedad o cualquier otro contrato distinto al de compraventa con cada usuario.
+                            </li>
+                            <li>
+                                El consumidor entiende y acepta, que el sistema de recordatorios no hace responsable a DROGUERIAS MINIFARMA S.A.S. por cualquier consecuencia adversa a la salud y bienes del consumidor que se quiera atribuir.
+                            </li>
+                            <li>
+                                DROGUERIAS MINIFARMA S.A.S. no podrá ser responsable por errores durante el tratamiento que afecten al consumidor, tales como, pero sin limitarse y a manera de ejemplo, errores en la cantidad y periodicidad de suministro de las dosis, en las características intrínsecas del producto, en los yerros relacionados con la identidad y características del producto atribuibles al consumidor etc.
+                            </li>
+                        </ol>
+                    </p>
+
+                    <h2> Fallas en el sistema </h2>
+
+                    <p>
+                        DROGUERIAS MINIFARMA S.A.S. no podrá hacerse responsable por los daños derivados, ocasionados por fallas en el sistema o en el servicio de acceso a Internet. Así mismo DROGUERIAS MINIFARMA S.A.S. no tendrá ningún tipo de responsabilidad por cualquier virus que pudiera afectar al equipo del consumidor como consecuencia del acceso, uso o examen de la aplicación o su sitio web o a con ocasión de cualquier transferencia de datos, archivos, imágenes, textos, o audio contenidos en el mismo.
+                        <br>
+                        DROGUERIAS MINIFARMA S.A.S no garantiza el acceso y uso continuado o ininterrumpido de a las plataformas. Eventualmente el sistema puede no estar disponible debido a dificultades técnicas o fallas de Internet ajenas a DROGUERIAS MINIFARMA S.A.S. En dichas circunstancias se procurará realizar los esfuerzos respectivos para restablecerlo en la mayor brevedad posible sin que por esta situación pueda predicarse algún tipo de responsabilidad.
+
+                    </p>
+
+                    <h2> Plataforma de pagos- Pagos de servicios directamente en los establecimientos. </h2>
+
+                    <p>
+                        La aplicación DRAZAMED APP en ciertas ocasiones podrá remitir a los consumidores hacia la pasarela denominada MERCADO PAGO, para efectos de que los consumidores realicen el pago de productos y/o servicios ofrecidos por las sociedades o personas naturales que tengan convenio suscrito con DROGUERIAS MINIFARMA S.A.S.  En vista de que DROGUERIAS MINIFARMA S.A.S. no presta directamente ningún servicio, DROGUERIAS MINIFARMA S.A.S no asumirá ninguna responsabilidad de cara a los aspectos relacionados con el pago tales como, pero sin limitarse a los aspectos de seguridad.
+                        <br>
+                        Para más información puede consultar los términos y condiciones de la plataforma de pago en el siguiente Link: <a href="https://www.mercadopago.com.co/ayuda/terminos-y-condiciones_299">https://www.mercadopago.com.co/ayuda/terminos-y-condiciones_299</a>.
+                    </p>
+
+                    <h2> Peticiones, Quejas, Reclamaciones y Felicitaciones.</h2>
+
+                    <p>
+                        En el caso en que el consumidor desee comunicar a la administración de DROGUERIAS MINIFARMA S.A.S cualquier petición, queja, reclamación o felicitación que se relacione directamente con las actividades negociales desarrolladas mediante los portales, las deberá dirigir mediante los siguientes medios:
+
+                        <ol type="a">
+                            <li>
+                                Remitiendo un mensaje al correo electrónico:  <a href="mailto:info@drazamed.com"> info@drazamed.com </a>
+                            </li>
+                            <li>
+                                Dejando un mensaje en el apartado de PQR´S de cualquiera de los portales.
+                            </li>
+
+                        </ol>
+                        <br>
+                        La respuesta se dará dentro de los quince (15) días siguientes a su recepción y la misma se dará al correo electrónico entregado al momento de registrarse como usuario dentro de las plataformas.
+
+                    </p>
+
+                    <h2> Indemnidad. </h2>
+
+                    <p>
+                        El consumidor indemnizará y mantendrá indemne a DROGUERIAS MINIFARMA S.A S., sus filiales, empresas controladas y/o controlantes, directivos, administradores, representantes y empleados, por cualquier reclamo o demanda de parte de terceros por sus actividades en los portales o por su incumplimiento de los Términos y Condiciones y demás políticas que se entienden incorporadas al presente o por la violación de leyes o derechos de terceros.
+                    </p>
+
+                    <h2> Cookies </h2>
+
+                    <p>
+                        Las cookies o librerías son elementos instalados que almacenan cierta información para poder contar con ciertos datos necesarios para la navegación y la experiencia de usuario, así como para los usos previstos en la política de Datos Personales. Los datos que se captarán para estos propósitos son los siguientes:
+                    </p>
+
+                    <table class=MsoNormalTable border=1 cellspacing=0 cellpadding=0 align=left
+                    width=640 style='width:254.9pt;border-collapse:collapse;border:none;
+                    margin-left:4.8pt;margin-right:4.8pt'>
+                        <tr style='height:26.0pt'>
+                        <td width=160 nowrap style='width:63.55pt;border:solid windowtext 1.0pt;
+                        padding:0cm 3.5pt 0cm 3.5pt;height:26.0pt'>
+                        <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
+                        normal'><b><span style='font-size:10.0pt;font-family:"Arial Narrow",sans-serif;
+                        color:black'>Aplicación</span></b></p>
+                        </td>
+                        <td width=120 nowrap style='width:50.3pt;border:solid windowtext 1.0pt;
+                        border-left:none;padding:0cm 3.5pt 0cm 3.5pt;height:26.0pt'>
+                        <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
+                        normal'><b><span style='font-size:10.0pt;font-family:"Arial Narrow",sans-serif;
+                        color:black'>Tecnologia</span></b></p>
+                        </td>
+                        <td width=160 nowrap style='width:63.1pt;border:solid windowtext 1.0pt;
+                        border-left:none;padding:0cm 3.5pt 0cm 3.5pt;height:26.0pt'>
+                        <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
+                        normal'><b><span style='font-size:10.0pt;font-family:"Arial Narrow",sans-serif;
+                        color:black'>Tipo </span></b></p>
+                        </td>
+                        <td width=200 nowrap style='width:77.95pt;border:solid windowtext 1.0pt;
+                        border-left:none;padding:0cm 3.5pt 0cm 3.5pt;height:26.0pt'>
+                        <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
+                        normal'><b><span style='font-size:10.0pt;font-family:"Arial Narrow",sans-serif;
+                        color:black'>Datos</span></b></p>
+                        </td>
+                        </tr>
+                        <tr style='height:15.5pt'>
+                        <td width=160 nowrap valign=bottom style='width:63.55pt;border:solid windowtext 1.0pt;
+                        border-top:none;padding:0cm 3.5pt 0cm 3.5pt;height:15.5pt'>
+                        <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
+                        normal'><span style='font-size:10.0pt;font-family:"Arial Narrow",sans-serif;
+                        color:black'>Pagina principal</span></p>
+                        </td>
+                        <td width=120 nowrap valign=bottom style='width:50.3pt;border-top:none;
+                        border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+                        padding:0cm 3.5pt 0cm 3.5pt;height:15.5pt'>
+                        <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
+                        normal'><span style='font-size:10.0pt;font-family:"Arial Narrow",sans-serif;
+                        color:black'>WordPress</span></p>
+                        </td>
+                        <td width=160 nowrap valign=bottom style='width:63.1pt;border-top:none;
+                        border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+                        padding:0cm 3.5pt 0cm 3.5pt;height:15.5pt'>
+                        <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
+                        normal'><span style='font-size:10.0pt;font-family:"Arial Narrow",sans-serif;
+                        color:black'>Pagina Web</span></p>
+                        </td>
+                        <td width=200 nowrap valign=bottom style='width:77.95pt;border-top:none;
+                        border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+                        padding:0cm 3.5pt 0cm 3.5pt;height:15.5pt'></td>
+                        </tr>
+                        <tr style='height:46.5pt'>
+                        <td width=160 nowrap valign=bottom style='width:63.55pt;border:solid windowtext 1.0pt;
+                        border-top:none;padding:0cm 3.5pt 0cm 3.5pt;height:46.5pt'>
+                        <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
+                        normal'><span style='font-size:10.0pt;font-family:"Arial Narrow",sans-serif;
+                        color:black'>Portal Web</span></p>
+                        </td>
+                        <td width=120 nowrap valign=bottom style='width:50.3pt;border-top:none;
+                        border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+                        padding:0cm 3.5pt 0cm 3.5pt;height:46.5pt'>
+                        <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
+                        normal'><span style='font-size:10.0pt;font-family:"Arial Narrow",sans-serif;
+                        color:black'>Laravel Framework (PHP)</span></p>
+                        </td>
+                        <td width=160 nowrap valign=bottom style='width:63.1pt;border-top:none;
+                        border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+                        padding:0cm 3.5pt 0cm 3.5pt;height:46.5pt'>
+                        <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
+                        normal'><span style='font-size:10.0pt;font-family:"Arial Narrow",sans-serif;
+                        color:black'>Aplicación Web</span></p>
+                        </td>
+                        <td width=200 valign=bottom style='width:77.95pt;border-top:none;border-left:
+                        none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+                        padding:0cm 3.5pt 0cm 3.5pt;height:46.5pt'>
+                        <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
+                        normal'><span style='font-size:10.0pt;font-family:"Arial Narrow",sans-serif;
+                        color:black'>Datos de Usuario y Contraseña<br>
+                        Datos de Navegacion (Google Analytics)</span></p>
+                        </td>
+                        </tr>
+                        <tr style='height:46.5pt'>
+                        <td width=160 nowrap valign=bottom style='width:63.55pt;border:solid windowtext 1.0pt;
+                        border-top:none;padding:0cm 3.5pt 0cm 3.5pt;height:46.5pt'>
+                        <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
+                        normal'><span style='font-size:10.0pt;font-family:"Arial Narrow",sans-serif;
+                        color:black'>App IOS</span></p>
+                        </td>
+                        <td width=120 nowrap valign=bottom style='width:50.3pt;border-top:none;
+                        border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+                        padding:0cm 3.5pt 0cm 3.5pt;height:46.5pt'>
+                        <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
+                        normal'><span style='font-size:10.0pt;font-family:"Arial Narrow",sans-serif;
+                        color:black'>IONIC</span></p>
+                        </td>
+                        <td width=160 valign=bottom style='width:63.1pt;border-top:none;border-left:
+                        none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+                        padding:0cm 3.5pt 0cm 3.5pt;height:46.5pt'>
+                        <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
+                        normal'><span style='font-size:10.0pt;font-family:"Arial Narrow",sans-serif;
+                        color:black'>Aplicación Nativa<br>
+                        Sobre Ionic y Apache Cordova </span></p>
+                        </td>
+                        <td width=200 valign=bottom style='width:77.95pt;border-top:none;border-left:
+                        none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+                        padding:0cm 3.5pt 0cm 3.5pt;height:46.5pt'>
+                        <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
+                        normal'><span style='font-size:10.0pt;font-family:"Arial Narrow",sans-serif;
+                        color:black'>Datos de Usuario y Contraseña<br>
+                        Datos de Navegacion (Google Analytics)</span></p>
+                        </td>
+                        </tr>
+                        <tr style='height:50.75pt'>
+                        <td width=160 nowrap valign=bottom style='width:63.55pt;border:solid windowtext 1.0pt;
+                        border-top:none;padding:0cm 3.5pt 0cm 3.5pt;height:50.75pt'>
+                        <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
+                        normal'><span style='font-size:10.0pt;font-family:"Arial Narrow",sans-serif;
+                        color:black'>Android OS</span></p>
+                        </td>
+                        <td width=120 nowrap valign=bottom style='width:50.3pt;border-top:none;
+                        border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+                        padding:0cm 3.5pt 0cm 3.5pt;height:50.75pt'>
+                        <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
+                        normal'><span style='font-size:10.0pt;font-family:"Arial Narrow",sans-serif;
+                        color:black'>IONIC</span></p>
+                        </td>
+                        <td width=160 valign=bottom style='width:63.1pt;border-top:none;border-left:
+                        none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+                        padding:0cm 3.5pt 0cm 3.5pt;height:50.75pt'>
+                        <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
+                        normal'><span style='font-size:10.0pt;font-family:"Arial Narrow",sans-serif;
+                        color:black'>Aplicación Nativa<br>
+                        Sobre Ionic y Apache Cordova </span></p>
+                        </td>
+                        <td width=200 valign=bottom style='width:77.95pt;border-top:none;border-left:
+                        none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+                        padding:0cm 3.5pt 0cm 3.5pt;height:50.75pt'>
+                        <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
+                        normal'><span style='font-size:10.0pt;font-family:"Arial Narrow",sans-serif;
+                        color:black'>Datos de Usuario y Contraseña<br>
+                        Datos de Navegacion (Google Analytics)</span></p>
+                        </td>
+                        </tr>
+                    </table>
+
+                    <p>
+                        Si bien muchos de los proveedores de servicios sobre los que se soportan los portales preguntan al usuario previamente su utilización, con la aceptación expresa de estos términos y condiciones se entiende desde ya que el consumidor otorga su autorización para que esta información sea administrada por DROGUERIAS MINIFARMA S.A.S para los usos dispuestos con la funcionalidad de los portales y con los usos reseñados en las políticas de Datos Personales la cual hace parte integrante de estos términos y condiciones.
+                    </p>
+
+                    <h2> Anexos </h2>
+
+                    <p>
+                        Forman parte integral e inseparable de los Términos y Condiciones Generales, los siguientes documentos y/o secciones de referencia, donde se detallan políticas y/o Términos y Condiciones de diferentes servicios ofrecidos en el sitio. Los mismos se podrán consultar e imprimir dentro del sitio mediante el enlace abajo provisto o accediendo directamente a las páginas correspondientes:
+
+                        <ol>
+                            <li>
+                                <a href="/retracto">POLÍTICA DE RETRACTO Y REVERSIÓN DRAZAMED</a>
+                            </li>
+                            <li>
+                                <a href="/devoluciones">POLÍTICAS DE DEVOLUCIONES O CAMBIOS DRAZAMED</a>
+                            </li>
+                            <li>
+                                <a href="tratamiento_datos">POLÍTICAS DE TRATAMIENTO DE DATOS PERSONALES- DROGUERIAS MINIFARMA S.A.S.</a>
+                            </li>
+                            <li>
+                                <a href="garantia">POLÍTICA DE GARANTÍA Y DEVOLUCIONES DRAZAMED.</a>
+                            </li>
+                            <li>
+                                <a href="">AVISO DE PRIVACIDAD.</a>
+                            </li>
+                        </ol>
+                    </p>
+
+                    <h2> Jurisdicción y ley Aplicable </h2>
+
+                    <p>
+                        Este acuerdo estará regido en todas sus partes por las leyes vigentes en la República de Colombia.
+                        <br>
+                        Cualquier controversia derivada del presente acuerdo, su existencia, validez, interpretación, alcance o cumplimiento, será sometida a las leyes aplicables y a los Tribunales competentes del circuito de la Ciudad de Bogotá D.C. y los procedimientos se llevarán a cabo en idioma castellano.
+                    </p>
+
+                    <h2> Domicilio </h2>
+
+                    <p>
+                        Se fija como domicilio de DROGUERIAS MINIFARMA S.A.S.  la Carrera 6 N° 1-20, Cajicá- Cundinamarca, Colombia.
+                        <br>
+                        Si se tiene alguna duda sobre los Términos y Condiciones Generales o demás políticas aplicables por favor consultar la siguiente página web: <a href="https://www.drazamed.com">www.drazamed.com</a> o al siguiente correo electrónico: <a href="mailto:info@drazamed.com">info@drazamed.com</a>
+
+                    </p>
+                </div>
 
             </div>
             <div class="col-lg-4 col-sm-12 sm-mt-20">
@@ -280,7 +720,7 @@
                             />
                         </div> -->
                         <div class="col-lg-12">
-                            <h4 class="com-title"><a href="#garantias">Política de Garantías</a></h4>
+                            <h4 class="com-title"><a href="/garantias">Política de Garantías</a></h4>
                         </div>
                     </div>
 
@@ -293,7 +733,7 @@
                             />
                         </div> -->
                         <div class="col-lg-12">
-                            <h4 class="com-title"><a href="#devoluciones">Política de Devoluciones</a></h4>
+                            <h4 class="com-title"><a href="/devoluciones">Política de Devoluciones</a></h4>
                         </div>
                     </div>
 
@@ -306,7 +746,7 @@
                             />
                         </div> -->
                         <div class="col-lg-12">
-                            <h4 class="com-title"><a href="#retracto">Política de Retracto y Reversión</a></h4>
+                            <h4 class="com-title"><a href="/retracto">Política de Retracto y Reversión</a></h4>
                         </div>
                     </div>
 
@@ -319,7 +759,7 @@
                             />
                         </div> -->
                         <div class="col-lg-12">
-                            <h4 class="com-title"><a href="#datos_personales">Manejo de datos Personales</a></h4>
+                            <h4 class="com-title"><a href="/datos_personales">Manejo de datos Personales</a></h4>
                         </div>
                     </div>
 

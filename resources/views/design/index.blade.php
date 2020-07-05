@@ -106,6 +106,9 @@
         </div>
     </div>
 </main>
+<footer>
+    @include('design.layout.footer')
+</footer>
 
 
 @include('design.modals.msg')
@@ -114,6 +117,7 @@
 @include('design.modals.recovery')
 @include('design.modals.pinfo')
 @include('cookieConsent::index')
+
 
 @endsection
 
