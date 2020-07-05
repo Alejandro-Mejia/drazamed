@@ -184,12 +184,12 @@
                     <p>
                         <ol type="a">
                             <li>
-                                a)  Cuando el usuario se disponga a finalizar la compra de su producto, el sistema del portal le enviará un mensaje, en el cual mencionará lo siguiente:
+                                Cuando el usuario se disponga a finalizar la compra de su producto, el sistema del portal le enviará un mensaje, en el cual mencionará lo siguiente:
                                 <br>
                                 “Mientras esperas puedes programar alertas para recordar cuándo tomar tus medicinas.”
                             </li>
                             <li>
-                                Una vez el consumidor programe el recordatorio, con doce (12) horas de antelación a la(s) fecha(s) que se indique(n), llegará un mensaje al correo electrónico y al celular registrados al inicio, en donde se compartirá un Link mediante el cual el consumidor podrá revisar toda la información prevista en esta política sobre la compra en particular.
+                                Una vez el consumidor programe el recordatorio, con cuarenta y ocho (48) horas de antelación a la(s) fecha(s) que se indique(n), llegará un mensaje al correo electrónico y al celular registrados al inicio, en donde se compartirá un Link mediante el cual el consumidor podrá revisar toda la información prevista en esta política sobre la compra en particular.
                             </li>
                             <li>
                                 Una vez realizado el clic en el botón de compra respectivo DROGUERIAS MINIFARMA S.A.S. enviará hasta el día siguiente de haberse realizado la transacción, un reporte en el que se confirmará la recepción de la solicitud y a su vez se informará el rango de tiempo en el que se estima llegará el pedido. Sumado a lo anterior, se confirmará el precio, los gastos de mensajería y la forma en que se deberá realizar el pago.

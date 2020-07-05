@@ -148,7 +148,7 @@
                  submitHandler: function(form) {
                         var edname = $('#txt-name').val();
                         var edemail = $('#txt-email').val();
-                        var edmsg = $('#msg').val();
+                        var edmsg = $('#txt-message').val();
                         var token = $('#_token').val();
 
 
