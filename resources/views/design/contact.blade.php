@@ -5,7 +5,7 @@
 @endsection
 
 @section('content')
-<script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
+<script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
 <section class="contact-section">
     <div class="contact-content">
         <div class="row">
