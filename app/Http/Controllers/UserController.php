@@ -311,12 +311,20 @@ class UserController extends BaseController
 				if (Auth::attempt (array('email' => $email , 'password' => $password))) {
 					$status = User::where ('email' , '=' , $email)->join ('user_status as us' , 'us.id' , '=' , 'user_status')->first ()->name;
 					Session::put ('user_id' , $email);
+					Log::info('Email: '.$email);
+					Log::info('Passwd: '.$password);
+					Log::info('Status: '.$status);
 					$pres_status = PrescriptionStatus::status ();
 					$invoice_status = InvoiceStatus::status ();
 					$payment_status = PayStatus::status ();
 					$shipping_status = ShippingStatus::status ();
+					Log::info('Status: '.$pres_status);
+					Log::info('Invoice: '.$invoice_status);
+					Log::info('Payment: '.$payment_status);
+					Log::info('Shipping: '.$shipping_status);
 					$result = ['status' => 'SUCCESS' , 'msg' => 'User Logged In' , 'data' => ['status' => $status , 'pres_status' => $pres_status ,
 						'invoice_status' => $invoice_status , 'payment_status' => $payment_status , 'shipping_status' => $shipping_status]];
+					Log::info('result: '.$result);
 				} else {
 					throw new Exception('Invalid Login Credientials' , 401);
 				}
