@@ -48,8 +48,9 @@
                     </div>
                 </div>
                  <p class="text-center">
-                    Si lo prefieres llámanos (1) 879-3999 o escribenos al <a href="https://api.whatsapp.com/send?phone=573208671998&texto=Quisiera%20consultar%20sobre%20la%20venta%20de%20productos%20de%20%drogueria`">Whatsapp (320) 867-1998</a>
+                    Si lo prefieres llámanos (1) 879-3999
                 </p>
+                <p class="text-center"> <a href="https://api.whatsapp.com/send?phone=573208671998&texto=Quisiera%20consultar%20sobre%20la%20venta%20de%20productos%20de%20%drogueria`"> <img src="/images/whatsapp-icon.png" width="36px" > (320) 867-1998 </a> </p>
             </form>
         </div>
     </div>
