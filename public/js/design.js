@@ -52,8 +52,8 @@ function trans(key, replace = {}) {
 $(document).ready(function() {
     var token = $("#security_token").val();
 
-    //getCategories();
-    //show_favorites();
+    getCategories();
+    show_favorites();
 
     if (token != "" || token != 0) {
         $("#myModal_change_password").modal({});
@@ -824,7 +824,7 @@ function show_favorites() {
     $.ajax({
         url: "favorites",
         type: "GET",
-        async: false,
+        async: true,
         datatype: "JSON",
         success: function(data) {
             console.log("Productos:");

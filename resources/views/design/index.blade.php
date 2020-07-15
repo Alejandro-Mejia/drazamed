@@ -22,7 +22,7 @@
                 Pide Medicamentos Online en la Sabana. ¡Es muy Fácil!
             </h1>
             <p class="text-center">
-                Entregamos en Guaymaral, Cota, Chía, Cajicá, Tabio, Briceño, Sopo y Tocancipá
+                Entregamos en Guaymaral, Cota, Chía, Cajicá, Tabio, Briceño, Sopó y Tocancipá
             </p>
             <form action="" class="cover-search form-search-med">
                 <div
