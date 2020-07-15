@@ -11,7 +11,9 @@
 				</p>
 			</div>
 
-			<div class="col-sm">
+			<div class="col-sm" style="text-align: center">
+
+
 			</div>
 
 
@@ -26,6 +28,10 @@
 						</li>
 						<li>
 							<a href="/contact">Preguntas, Solicitudes, Quejas y Reclamos</a>
+						</li>
+						<li>
+							<a href="https://www.invima.gov.co" target="_blank"><img src="images/LOGO-INVIMA-blanco.png" width="100px;"></a> &nbsp;
+							<a href="https://www.sic.gov.co" target="_blank"><img src="images/sic_transparente.png" width="150px;"></a>
 						</li>
 					</ul>
 				</nav>
