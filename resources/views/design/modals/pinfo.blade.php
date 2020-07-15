@@ -69,11 +69,11 @@
                             </div>
                         </div>
 
-                        <div class="row mt-2">
-                            <div class="col">
+                        <div class="row mt-4">
+                            <!-- <div class="col">
                                 <label class="pi-label" for=""
                                     >Composición:</label
-                                >
+                                ><br>
                                 <input
                                     type="text"
                                     id="pi-med-composition"
@@ -81,17 +81,18 @@
                                     value=""
                                     readonly
                                 />
-                            </div>
+                            </div> -->
                             <div class="col">
                                 <label class="pi-label" for=""
                                     >Tipo Medicamento:</label
-                                >
+                                > <br>
                                 <input
                                     type="text"
                                     id="pi-med-typm"
                                     class="pi-input"
                                     value="ANALGESICOS"
                                     readonly
+                                    style="width:400px"
                                 />
                             </div>
                         </div>
