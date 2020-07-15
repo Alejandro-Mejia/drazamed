@@ -74,7 +74,7 @@
                                 ></textarea>
                                 <div class="alert alert-success mail_alert" style="display: none;" role="alert"> {{ __('Your enquiry has been submitted successfully')}}. {{ __('We will get back to you shortly')}}
                                 </div>
-                                <div class="form-result3" style="position: absolute;top: 45px;left: 795px;color: #4F8A10;font-size: 14px;"></div>
+                                <div class="form-result3" style="position: absolute;top: 45px;left: 795px;color: #4F8A10;font-size: 14px;display: none" ></div>
                                 <button type="submit" class="mt-4 dra-button">Enviar</button>
                                 <!-- <button type="submit" class="btn btn-primary save-btn ripple mail_btn" data-color="#40E0BC">&nbsp;{{ __('Send')}}&nbsp;</button> -->
                                 <img class="mail_loader" style="display: none;" src="./assets/images/loader1.gif">
@@ -86,7 +86,7 @@
             <div class="col-md-12 col-lg-4">
                 <div class="panel md-mt-20">
 
-                    <h2 class="panel-title">Canales de comunicación</h2>
+                    <h2 class="panel-title" style="text-align: center;">Canales de comunicación</h2>
                     <div style="text-align: center">
                         <p> ¡Nos encantan las preguntas! <br>
                     No dudes en contactarnos </p>
@@ -140,23 +140,23 @@
        ajaxStop: function() {
                     $('.mail_loader').css('display', 'none' );
                     $('.mail_alert').css('display', 'block' );
-                    $(".mail_alert").delay(10000).fadeOut("slow");
+                    $(".mail_alert").delay(5000).fadeOut("slow");
                     //document.getElementById('.mail_btn').disabled = false;
                     //$(".mail_btn").disabled =false;
                   }
     });
-        $(document).ready(function(e) {
+    $(document).ready(function(e) {
 
-            $('.contact-form').validate({
+        $('.contact-form').validate({
 
-                 submitHandler: function(form) {
-                        var edname = $('#name').val();
-                        var edemail = $('#email').val();
-                        var edmsg = $('#msg').val();
-                        var token = $('#_token').val();
+             submitHandler: function(form) {
+                    var edname = $('#name').val();
+                    var edemail = $('#email').val();
+                    var edmsg = $('#msg').val();
+                    var token = $('#_token').val();
 
-
-                        $.ajax({
+                    if( edname != "" && edemail != "" && edmsg != "") {
+                       $.ajax({
                             url:'user/contact-us',
                             type:'POST',
                             data:{name:edname,email:edemail,msg:edmsg,submits:1,_token:token},
@@ -171,11 +171,13 @@
 
                                     }
                         });
-
                     }
-            });
+
+
+                }
         });
-    </script>
+    });
+</script>
 
 
 @endsection
