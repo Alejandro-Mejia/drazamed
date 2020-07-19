@@ -1,7 +1,3 @@
-<script>
-    window.translations = {!! Cache::get('translations') !!};
-</script>
-
 <div
     class="modal fade"
     id="login-modal"
