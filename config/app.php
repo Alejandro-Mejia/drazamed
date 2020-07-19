@@ -52,7 +52,7 @@ return [
     |
     */
 
-    'url' => env('APP_URL', 'http://aulal.org/drazamed'),
+    'url' => env('APP_URL', 'http://drazamed.test'),
 
     'asset_url' => env('ASSET_URL', null),
 

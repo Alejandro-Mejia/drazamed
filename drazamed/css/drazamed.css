@@ -1,0 +1,93 @@
+.drazamed-link {
+  cursor: pointer;
+  transition: 0.15s ease-in-out;
+  text-decoration: none;
+  color: #121416;
+}
+
+.dra-color {
+  color: #00a1db;
+}
+
+.drazamed-link:hover {
+  color: #00a1db !important;
+}
+
+.modal-content {
+  border-radius: 20px;
+  padding: 30px;
+}
+
+.dra-box {
+  background-color: #fff;
+  border-radius: 20px;
+  padding: 30px 20px;
+}
+
+.dra-box h3 {
+  color: #00a1db;
+  font-size: 22px;
+}
+
+.dra-button {
+  color: #fff;
+  border-radius: 20px;
+  background-color: #00a1db;
+  border: 2px solid #00a1db;
+  padding: 10px 20px;
+  font-weight: bold;
+  transition: 0.15s ease-in-out;
+}
+
+.dra-button:hover {
+  color: #000;
+  background-color: #fff;
+}
+
+.dra-divider {
+  width: 100%;
+  height: 1px;
+  border-bottom: 1px solid #dddddd;
+}
+
+.med {
+  width: 250px;
+  border-radius: 20px;
+  box-shadow: 2px 2px 5px 0px #c9c9c9;
+  word-wrap: break-words;
+  padding: 20px;
+  margin-bottom: 20px;
+  cursor: pointer;
+}
+
+.med .med-thumbnail {
+  display: block;
+  width: 70px;
+  margin: 0 auto;
+}
+
+.med .med-title {
+  font-size: 18px;
+  color: #00a1db;
+  word-break: break-word;
+}
+
+.med .med-description {
+  font-size: 14px;
+  word-break: break-word;
+}
+
+.med:hover {
+  box-shadow: 2px 2px 5px 0px #7e7e7e;
+}
+
+.md-mt-20 {
+  margin-top: 0;
+}
+
+@media (max-width: 1199px) {
+  .md-mt-20 {
+    margin-top: 20px;
+  }
+}
+
