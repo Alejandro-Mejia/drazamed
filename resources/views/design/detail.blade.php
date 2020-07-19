@@ -80,7 +80,7 @@
                              <p style="color:rgb(255, 0, 0);">{{__('Net Payable')}}</p>
                          </div>
                          <div class="col-lg-2 col-md-2 col-sm-2 col-xs-4 text-right text-align-responsive">
-                             <?php $netPay =  (empty($prescription['total']) ? $sub_total : $prescription['total']) + $prescription['shipping']; ?>
+                             <?php $netPay =  (empty($prescription['total']) ? $sub_total : $prescription['total']); ?>
                              <p >{{ Setting::currencyFormat($netPay) }}</p>
                          </div>
                     </div>
