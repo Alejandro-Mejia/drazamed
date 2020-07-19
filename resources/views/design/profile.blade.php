@@ -207,7 +207,7 @@
                                                 </td>
                                             </tr>
                                             <?php $i++; ?>
-                                            <?php $hide = ($i < $pres) ? 'none' : 'block'; ?>
+                                            <?php $hide = ($i < $pres) ? 'block' : 'block'; ?>
                                             <tr id="pinfo{{$prescription['id']}}" >
                                                 <td colspan=4 class="detailCell">
                                                    @include('design.detail')
