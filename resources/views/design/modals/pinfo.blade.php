@@ -118,6 +118,8 @@
                                     min="1"
                                     value="1"
                                     type="number"
+                                    style="text-align: center"
+                                    onchange="change_count_pinfo(this);"
                                 />
                             </div>
                             <div class="col" hidden>
@@ -136,6 +138,7 @@
                                     id="pi-med-price"
                                     class="pi-input-border"
                                     type="text"
+                                    style="text-align: center"
                                 />
                             </div>
                             <div class="col">
@@ -198,4 +201,27 @@
     $("#close_pinfo").on('click', function(){
         $()
     })
+
+    function change_count_pinfo(obj) {
+        var new_qty=parseInt($(obj).val());
+        console.log(new_qty);
+        if(new_qty <= 0 || isNaN(new_qty)){
+            $('.quantity-alert').addClass('show').removeClass('hide');
+        setTimeout(function(){
+            $('.quantity-alert').addClass('hide').removeClass('show');
+        },2000);
+            return false;
+        }
+
+        valUnit = $("#pi-med-price-unit").val();
+        valTotal = valUnit * new_qty;
+        console.log(valTotal);
+
+        $("#pi-med-price").val(convertToMoney(valTotal.toString()))
+
+    }
+
+    function convertToMoney(text) {
+        return '$ ' + text.replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1.");
+    }
 </script>
