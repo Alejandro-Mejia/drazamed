@@ -166,7 +166,7 @@
                                 <h4 class="text-right" id="totalOrder" value={{$subtotal+$shipping}}>{{ number_format($subtotal+$shipping,2)}}</h4>
                               </td>
                             </tr>
-
+                            
                             @if($pres_required == 1)
                               <tr>
 
@@ -175,20 +175,25 @@
                                   {{ __('Alternatively, you may even upload a prescription without adding any medicine to cart')}}. {{ __('We will identify the medicines and process the order further')}}.</p>
                                 </td>
                               </tr>
+
+                              @include('design.dropbox')
+                            @else
+                            <button  class="float-right mt-4 dra-button" data-color="#40E0BC" id="uploadBtn" >{{ __('Place Order')}}</button>
                             @endif
+
                         <!-- Si el carrito esta vacio -->
                         @else
                           <?php $pres_required = 1; ?>
                           <h4 style="color: red;" align="center">{{ __('Cart is empty')}}</h4>
                         @endif
-
+                        
                         </tbody>
 
                     </table>
                     <!-- {{ Form::open(array('url'=>'medicine/store-prescription/1','files'=>true,'id'=>'upload_form')) }} -->
 
                     <!-- Envio de formulas medicas mediante drag & drop -->
-                    @include('design.dropbox')
+                    
 
 
 
