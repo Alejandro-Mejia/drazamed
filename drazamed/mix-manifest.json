@@ -1,0 +1,15 @@
+{
+    "/js/app.js": "/js/app.js",
+    "/css/app.css": "/css/app.css",
+    "/css/header.css": "/css/header.css",
+    "/css/index.css": "/css/index.css",
+    "/css/footer.css": "/css/footer.css",
+    "/css/login.css": "/css/login.css",
+    "/css/drazamed.css": "/css/drazamed.css",
+    "/css/search-form.css": "/css/search-form.css",
+    "/css/pinfo.css": "/css/pinfo.css",
+    "/css/cart.css": "/css/cart.css",
+    "/css/contact.css": "/css/contact.css",
+    "/css/profile.css": "/css/profile.css",
+    "/css/about.css": "/css/about.css"
+}

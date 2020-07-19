@@ -1634,7 +1634,7 @@ class MedicineController extends BaseController
 
 		$allowedPaymentMethods = config('payment-methods.enabled');
 
-		$access_token = config('mercadopago.mp_pub_key_sb');
+		$access_token = config('mercadopago.mp_pub_key_pr');
 		// $access_token = env("MP_APP_ACCESS_TOKEN", null);
 
 
@@ -1680,7 +1680,7 @@ class MedicineController extends BaseController
 
 			if($access_token != null)
 			{
-				$access_token = config('mercadopago.mp_app_access_token_sb');
+				$access_token = config('mercadopago.mp_app_access_token_pr');
 				Log::info('Access_Token:'.$access_token);
 				// dd($access_token);
 
@@ -1754,7 +1754,7 @@ class MedicineController extends BaseController
 		$data['email'] = $email;
 		$data['phone'] = $phone;
 		$data['firstname'] = $fname;
-		$data['lname'] = $lname;
+		$data['lastname'] = $lname;
 		$data['address'] = $address;
 		$data['invoice'] = $invoiceDetails->invoice;
 		$data['id'] = $invoice;
