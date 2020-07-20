@@ -229,6 +229,84 @@
         $('#search_medicine').val("")
     });
 
+    $(".add_to_cart").click(function() {
+        console.log("Adicionando articulo al carrito de compras");
+        var hidden_medicine = $("#pi-med-name").html();
+        var med_quantity = $("#pi-med-quantity").val();
+        var hidden_item_code = $("#hidden_item_code").val();
+        var hidden_selling_price = $("#hidden_selling_price").val();
+        var hidden_pres_item = $("#hidden_item_pres_required").val();
+        var _token = $("#_token").val();
+
+        var id = $("#hidden_medicine_id").val();
+
+        console.log("SellingPrice:" + $("#hidden_selling_price").val());
+
+        if (med_quantity.length > 0 && med_quantity > 0) {
+            $.ajax({
+                type: "GET",
+                url: "medicine/add-cart/0",
+                data:
+                    "id=" +
+                    id +
+                    "&medicine=" +
+                    hidden_medicine +
+                    "&med_quantity=" +
+                    med_quantity +
+                    "&hidden_item_code=" +
+                    hidden_item_code +
+                    "&hidden_selling_price=" +
+                    hidden_selling_price +
+                    "&_token=" +
+                    _token +
+                    "&pres_required=" +
+                    hidden_pres_item,
+                datatype: "json",
+                complete: function(data) {},
+                success: function(data) {
+                    if (data == 0) {
+                        $("#loginModal").click();
+                    }
+                    if (data == "updated") {
+                        $(".med_detailes_alert").css("display", "block");
+                        $(".med_detailes_alert").html(
+                            "Your cart has been successfully updated."
+                        );
+                        $(".med_detailes_alert")
+                            .delay(5000)
+                            .fadeOut("slow");
+
+                        // alert("your order is updated");
+                    }
+                    if (data == "inserted") {
+                        $(".med_detailes_alert").css("display", "block");
+                        $(".med_detailes_alert").html(
+                            "Your cart has been successfully updated."
+                        );
+                        $(".med_detailes_alert")
+                            .delay(5000)
+                            .fadeOut("slow");
+                        window.location = "my-cart/";
+                    }
+
+                    if (data == "sin_usuario") {
+                        window.location = "/?msg=please_login";
+                        console.log("Debe ingresar usuario y contraseña")
+                    }
+                },
+                error: function(data) {
+                    alert('Atencion: ' . data.msg);
+                }
+            });
+        } else {
+            $(".w_med_detailes_alert").css("display", "block");
+            $(".w_med_detailes_alert").html("Please Fill quantity field");
+            $(".w_med_detailes_alert")
+                .delay(3000)
+                .fadeOut("slow");
+        }
+    });
+
     // $('#pinfo-modal').on('hidden.bs.modal', function () {
     //   window.alert('hidden event fired!');
     // });

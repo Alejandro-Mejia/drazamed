@@ -130,14 +130,14 @@ class MedicineController extends BaseController
 					// 	//return Redirect::back ();
 					// }
 				}
-
+				// ($is_pres_required == 1) ? 1 : 2;
 				// Save Prescription
 				$prescription = new Prescription;
 				$user_id = Auth::user ()->id;
 				$prescription->path = $file_name;
 				$prescription->created_at = date ('Y-m-d H:i:s');
 				$prescription->user_id = $user_id;
-				$prescription->status = ($is_pres_required == 1) ? 1 : 2;
+				$prescription->status = 1;
 				$prescription->created_by = $user_id;
 				$prescription->updated_by = $user_id;
 				$prescription->save ();
