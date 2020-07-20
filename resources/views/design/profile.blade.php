@@ -161,48 +161,70 @@
                 <div class="panel mt-30 anchor" id="por_pagar" >
                     <h2 class="panel-title" >Ordenes Pendientes de Pago</h2>
                     <p>
-                        Por favor espere a que verifiquemos su pedido. Una vez
-                        lo verifiquemos cambiara su estado a "Verificado". Una
-                        vez su formula medica este verificada, usted puede
-                        proceder al pago haciendo click en el boton COMPRAR
+                        Por favor espera a que verifiquemos tu pedido. Una vez
+                        lo verifiquemos cambiara su estado a "Verificado" y podrás
+                        proceder al pago haciendo click en el botón COMPRAR
                         AHORA.
                     </p>
                     <div class="table-responsive">
                         @if(!empty(count($prescriptions)))
                             <table class="table" id="ordenes_pendientes">
-                                <thead class="table-header">
-                                    <th>FORMULA MÉDICA</th>
-                                    <th>FECHA</th>
-                                    <th>ESTADO</th>
-                                    <th>ACCIONES</th>
-                                </thead>
+                                
                                 <tbody>
                                     <?php $i=0; $pres = sizeof($prescriptions); ?>
 
                                     @foreach($prescriptions as $prescription)
                                     <?php $sub_total = 0; ?>
-
+                                        
                                         <!-- Section 1 -->
                                         <!-- Si el estado es sin verificar o verificado! -->
                                         @if(sizeof($prescription) > 0)
+                                            <thead class="table-header">
+                                                {{-- <th>FÓRMULA MÉDICA</th> --}}
+                                                <th style="text-align:center">FECHA</th>
+                                                <th  style="text-align:center">ESTADO</th>
+                                                <th ></th>
+                                                <th style="text-align:right">ACCIONES</th>
+                                            </thead>
                                             @if($prescription['payment_status'] == 1 && ($prescription['pres_status'] == 1 || $prescription['pres_status'] == 2))
                                             <tr id="r{{$prescription['id']}}">
-                                                <td>
+                                                {{-- <td>
                                                     @foreach($prescription['cart'] as $cart)
 
                                                          <p class="text-center text-align-responsive">{{ $cart['item_name'] }}</p>
 
                                                      @endforeach
-                                                </td>
-                                                <td class="col-lg-3 text-center"><span class="date-added"><?php echo $prescription['created_on']; ?></span>
-                                                </td>
-
-                                                <td class="col-lg-3 text-center">{{ __(PrescriptionStatus::statusName($prescription['pres_status'])) }}
+                                                </td> --}}
+                                                <td class="text-center"><span class="date-added"><?php echo $prescription['created_on']; ?></span>
                                                 </td>
 
-                                                <td >
-                                                    <i class="fas fa-edit details" data-id={{ $prescription["id"]}}></i>
-                                                    <i class="fas fa-trash-alt presDelete" data-id={{ $prescription["id"]}}></i>
+                                                @php 
+                                                    $status  = $prescription['pres_status']; 
+                                                    switch ($status) {
+                                                        case '1':
+                                                            $statusColor = "orange";
+                                                            break;
+                                                        case '2':
+                                                            $statusColor = "green";
+                                                            break;
+                                                        case '3':
+                                                            $statusColor = "red";
+                                                            break;
+                                                        
+                                                        default:
+                                                            $statusColor = "red";
+                                                            break;
+                                                    }
+                                               
+                                               
+                                                @endphp
+
+                                                <td class="text-center" style="color:{{ $statusColor }}">{{ __(PrescriptionStatus::statusName($prescription['pres_status'])) }}
+                                                </td>
+                                                <td></td>
+                                                <td style="text-align:right">
+                                                    {{-- <i class="fas fa-edit details" data-id={{ $prescription["id"]}}></i> --}}
+                                                    <i style="color:red" class="fas fa-trash-alt presDelete" data-id={{ $prescription["id"]}}></i>
                                                     <i class="fas fa-shopping-cart"></i>
                                                 </td>
                                             </tr>

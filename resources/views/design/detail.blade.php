@@ -4,7 +4,7 @@
                 <table class="table">
                     <thead>
                         <tr>
-                            <th class="text-left  text-align-responsive">{{ __('Medicine')}}</th>
+                            <th class="text-left  text-align-responsive">{{ __('Article')}}</th>
                             <th class="text-right text-align-responsive">{{ __('Unit Price')}}</th>
                             <th class="text-right text-align-responsive">{{ __('Quantity')}}</th>
                             <th class="text-right text-align-responsive">{{ __('Sub Total')}}</th>
@@ -77,7 +77,7 @@
                     <div class="row">
                          <div class="col-lg-8 col-md-8 col-sm-8 col-xs-6"></div>
                          <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-                             <p style="color:rgb(255, 0, 0);">{{__('Net Payable')}}</p>
+                             <p style="color:green">{{__('Net Payable')}}</p>
                          </div>
                          <div class="col-lg-2 col-md-2 col-sm-2 col-xs-4 text-right text-align-responsive">
                              <?php $netPay =  (empty($prescription['total']) ? $sub_total : $prescription['total']); ?>
