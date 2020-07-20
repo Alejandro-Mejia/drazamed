@@ -217,13 +217,13 @@
         valTotal = valUnit * new_qty;
         console.log(valTotal);
 
-        $("#pi-med-price").val(convertToMoney(valTotal.toString()))
+        $("#pi-med-price").val('$ ' +convertToMoney(valTotal.toString()))
 
     }
 
-    function convertToMoney(text) {
-            return '$ ' + text.replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1.");
-    }
+    // function convertToMoney(text) {
+    //         return '$ ' + text.replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1.");
+    // }
 
     $("#pinfo-modal").on("hidden.bs.modal", function(){
         $('#search_medicine').val("")

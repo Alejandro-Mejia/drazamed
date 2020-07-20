@@ -11,6 +11,7 @@ use URL;
 use MP;
 use View;
 use Cache;
+use Session;
 use Artisan;
 use App\Mail\TestAmazonSes;
 use App\Mail\AulalExample;
@@ -285,6 +286,7 @@ Route::get('/cache', function () {
 });
 // Logout
 Route::any('/logout', function () {
+    Session::flush();
     Auth::logout();
     return Redirect::to('/');
 });

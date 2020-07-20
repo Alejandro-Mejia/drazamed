@@ -112,13 +112,6 @@
 </footer>
 
 
-@include('design.modals.msg')
-@include('design.modals.login')
-@include('design.modals.register')
-@include('design.modals.recovery')
-@include('design.modals.pinfo')
-@include('cookieConsent::index')
-
 
 @endsection
 
