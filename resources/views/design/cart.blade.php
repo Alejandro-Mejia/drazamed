@@ -1,5 +1,7 @@
 @extends('design.layout.app')
 
+<?php setlocale(LC_MONETARY, 'es_CO'); ?>
+
 @section('custom-css')
   <link rel="stylesheet" href="/css/cart.css" />
   <link rel="stylesheet" href="/css/pinfo.css" />
@@ -82,21 +84,21 @@
                                    <div>
                                 </td>
                                 <td>
-                                  <input type="text" style="width:40px; border: 1px solid #ABADB3; text-align: center;" item_code="{{ $cart_item->item_code }}" value="{{$cart_item->medicine_count}}" onchange="change_count(this);">
+                                  <input type="number" style="width:40px; border: 1px solid #ABADB3; text-align: center;" item_code="{{ $cart_item->item_code }}" value="{{$cart_item->medicine_count}}" onchange="change_count(this);">
                                 </td>
                                 <td class="text-right col-lg-2 col-md-2 col-sm-2 col-xs-2">
-                                    <p>{{$mrp = number_format($cart_item->unit_price,2)}}</p>
+                                    <p>{{ '$' . $mrp = number_format($cart_item->unit_price,0, ',', '.')}}</p>
                                 </td>
 
                                 <!-- <td class="text-right col-lg-2 col-md-2 col-sm-2 col-xs-2">
-                                    <p>{{$discount = number_format($medicine['discount'],2)}}</p>
+                                    <p>{{ '$' . $discount = number_format($medicine['discount'],0, ',', '.')}}</p>
                                 </td> -->
 
 
                                 <?php  // $total = ((int)$cart_item->unit_price * (int)$cart_item->medicine_count); ?>
                                 <?php $total=$cart_item->unit_price * $cart_item->medicine_count ?>
                                 <td class="text-right col-lg-2 col-md-2 col-sm-2 col-xs-2">
-                                  {{ number_format($total,2) }}
+                                  {{ '$' . number_format($total, 0, ',', '.')  }}
                                 </td>
 
                                 <?php $subtotal += $total;  ?>
@@ -109,7 +111,8 @@
                                 <h4 style="padding-right: 40px;">Sub-Total <span style="font-size: 12px"></span> : </h4>
                               </td>
                               <td>
-                                <h4 id="subTotal" data-value={{$subtotal}} >{{ number_format($subtotal,2)}}</h4>
+                                <h4 id="subTotal" data-value={{$subtotal}} >{{ '$' . number_format($subtotal, 0, ',', '.')  }}</h4>
+                                {{--   money_format("%.2n", $subtotal)--}}
                               </td>
                             </tr>
 
@@ -146,7 +149,7 @@
                                         <input type="radio" class="radio" name="shipping" value=0 id="farmacia"> Recoger en la farmacia (Gratis)
                                       </label>
                                       <label for="mensajero">
-                                        <input type="radio" class="radio"  name="shipping" value=1000 id="mensajero"> Mensajero ($ 1.000)
+                                        <input type="radio" class="radio"  name="shipping" value=2000 id="mensajero"> Domicilio ($ 2.000)
                                       </label>
                                     </div>
 
@@ -154,7 +157,7 @@
                                 </div>
                               </td>
                               <td class="text-right">
-                                <h5 id="shipping_value" value={{$shipping}}>{{ number_format($shipping,2)}}</h5>
+                                <h5 id="shipping_value" value={{$shipping}}>{{ '$' . number_format($shipping,0, ',', '.')}}</h5>
                               </td>
 
                             </tr>
@@ -162,8 +165,10 @@
                               <td class="text-right" style="text-align:right" colspan="3">
                                 <h4 style="padding-right: 40px;">Total <span style="font-size: 12px">({{ __('this is an approximate total, price may change')}})</span> : </h4>
                               </td>
-                              <td>
-                                <h4 class="text-right" id="totalOrder" value={{$subtotal+$shipping}}>{{ number_format($subtotal+$shipping,2)}}</h4>
+                              <td nowrap>
+                                <h4 class="text-right" id="totalOrder" value={{$subtotal+$shipping}}>{{ '$' . number_format($subtotal+$shipping, 0, ',', '.')   }}</h4>
+                                {{-- number_format($subtotal+$shipping,2)--}}
+
                               </td>
                             </tr>
                             
@@ -188,18 +193,20 @@
                                     <input type="" name="is_pres_required" id="is_pres_required" value="{{$pres_required}}" hidden/>
                                     <input type="" name="sub_total" id="sub_total_form" value="{{$subtotal}}" hidden/>
                               
-                                    <!-- <button type="submit" class="box__button">Upload</button> -->
-                                      <button type="submit" class="float-right mt-4 dra-button" data-color="#40E0BC" id="uploadBtnNF" style="margin-top:-20px;">{{ __('Place Order')}}</button>
-            
                                     <div style="text-align: center;">
                                       <div class="box__uploading">Enviando orden&hellip;</div>
                                       <div class="box__success" style="color: green"> <br> Orden enviada! En unos segundos sera redirigido a su perfil para realizar el pago </div>
 
-                                      <div class="box__error" style="margin-top:50px;">
-                                        Error! <br> <span class="box__error__msg"></span>. <br>
-                                        <a href="https://css-tricks.com/examples/DragAndDropFileUploading//?" class="box__restart" role="button">Intente de nuevo!</a>
+                                      <div class="box__error" style="margin-top:50px;" id="errorMsg" style="display:none">
+                                      <span class="box__error__msg" id ="box__error__msg" style="color:red"></span>. <br>
+                                        {{-- <a href="https://css-tricks.com/examples/DragAndDropFileUploading//?" class="box__restart" role="button">Intente de nuevo!</a> --}}
                                       </div>
                                     </div>
+
+                                    <!-- <button type="submit" class="box__button">Upload</button> -->
+                                    <button  type="submit" class="float-right mt-4 dra-button" data-color="#40E0BC" id="uploadBtnNF" style="margin-top:-20px;">{{ __('Place Order')}}</button>
+            
+                                    
 
                                   </form>
                                 </div>
@@ -247,8 +254,8 @@
                             <input
                                 type="text"
                                 class="form-control search_medicine"
-                                placeholder="Busca un medicamento por nombre"
-                                aria-label="Busca un medicamento por nombre"
+                                placeholder="¿Te gustaría agregar otro producto?"
+                                aria-label="¿Te gustaría agregar otro producto?"
                                 aria-describedby="basic-addon2"
                                 id="search_medicine"
                             />
@@ -281,9 +288,60 @@
 
 <script>
 
-$('#uploadBtnNoFormula').on('click', function(){
-  console.log('Uploading order...')
-  store_prescription();
+var formulario;
+
+$("#noformula").on('submit', function(event){
+  event.preventDefault();
+  
+  var form = $(this);
+  console.log("Method");
+  var method = form.attr( 'method' );
+  console.log(method);
+  console.log("Action");
+  var url = form.attr('action');
+  console.log(url);
+  
+  formulario = form;
+
+  $.ajax({
+        url:url,
+        type: method,
+        data: form.serialize(),
+        cache: false,
+        statusCode:{
+            400:function(data){
+            console.log(data);
+                $('.alert-danger').html(data.responseJSON.msg).removeClass('hide');
+            },
+            403:function(data){
+                $('.alert-danger').html(data.responseJSON.msg).removeClass('hide');
+            }
+        },
+        success:function(responseText){
+          
+          console.log(responseText);
+          // var data = JSON.parse( responseText );
+          var data = responseText;
+
+          if( data.status == "FAILURE" ) {
+            $("#errorMsg").show();
+            $("#box__error__msg").html(data.msg);
+            setTimeout(function(){location.reload()}, 2000)
+          }
+
+          if (data.status == "SUCCESS") {
+            setTimeout(function(){window.location="/account-page/#por_pagar";}, 2000)
+          }
+
+        },
+        error: function (error) {
+            alert('error; ' + eval(error));
+        }
+  })
+
+  
+
+
 })
 
 
@@ -296,12 +354,12 @@ function(){
         subTotal = $('#subTotal').data('value');
         console.log('subTotal:'+ subTotal);
         console.log('Shipping:'+ shipping);
-        $('#shipping_value').val(shipping);
+        $('#shipping_value').val(convertToMoney(shipping));
         $('#shippingForm').val(shipping);
-        $('#shipping_value').html($('#shipping_value').val());
+        $('#shipping_value').html('$ ' + $('#shipping_value').val());
         total = Number(shipping)+Number(subTotal);
-        $('#totalOrder').val(total.toFixed(2));
-        $('#totalOrder').html($('#totalOrder').val());
+        $('#totalOrder').val(convertToMoney(total));
+        $('#totalOrder').html('$ ' + $('#totalOrder').val());
     }
 });
 // $('#upload').on('click', function(){
@@ -309,7 +367,9 @@ function(){
 //   $('#upload_form').submit();
 // });
 
-
+function convertToMoney(text) {
+    return '$ ' + text.replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1.");
+}
 
 
 // $(".search_medicine").autocomplete({

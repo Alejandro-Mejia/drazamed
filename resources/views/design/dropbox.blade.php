@@ -4,8 +4,17 @@
 @endsection
 
 @if($pres_required == 1)
+	
+	<div class="alert alert-success" role="alert">
+	  Si tienes una fórmula médica que no entiendes, envíanosla y nosotros la revisaremos y crearemos el pedido por ti
+	</div>
+	<div class="alert alert-danger" role="alert">
+	  Ten en cuenta que algunos medicamentos requieren fórmula médica. No te automediques.
+	</div>
 
-		<p style="padding: 10px;font-size: 14px;color: red;">Tenga en cuenta que algunos medicamentos requieren formula médica. No se automedique.</p>
+		{{-- <p style="padding: 10px;font-size: 14px;color: red;" > </p>
+
+		<p style="padding: 10px;font-size: 14px;color: green;"> </p> --}}
 
 @endif
 
