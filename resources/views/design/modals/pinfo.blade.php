@@ -222,7 +222,7 @@
     }
 
     function convertToMoney(text) {
-        return '$ ' + text.replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1.");
+            return '$ ' + text.replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1.");
     }
 
     $("#pinfo-modal").on("hidden.bs.modal", function(){
