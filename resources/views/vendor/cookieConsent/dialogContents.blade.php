@@ -4,7 +4,7 @@
         {!! trans('cookieConsent::texts.message') !!}
     </span>
 
-    <button class="js-cookie-consent-agree cookie-consent__agree">
+    <button class="js-cookie-consent-agree cookie-consent__agree dra-button">
         {{ trans('cookieConsent::texts.agree') }}
     </button>
 
