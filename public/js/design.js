@@ -1045,19 +1045,6 @@ function convertToMoney(text) {
     return text.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1.");
 }
 
-(function() {
-    // //const meds = document.getElementsByClassName("med");
-    // $(".cat_product").on('click', function(el){
-
-    //     console.log("itemCode=");
-    //     // goto_detail_page();
-    //     show_detail_modal(ui.item);
-
-
-    //     // console.log(el);
-    //     // openProductInfoModal(el);
-    // });
-})();
 
 
 
