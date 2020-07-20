@@ -724,9 +724,7 @@ function show_detail_modal(data) {
             $("#pi-med-price-unit").val(data.result.msg[0].mrp);
             $("#pi-med-price").val(
                 "$ " +
-                    (data.result.msg[0].mrp * $("#pi-med-quantity").val())
-                        .toString()
-                        .replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1.")
+                    convertToMoney((data.result.msg[0].mrp * $("#pi-med-quantity").val()))
             );
             if(data.result.msg[0].quantity > 50) {
                 $("#pi-med-avail").html('<span style="color:green"> Disponible </span>');
@@ -772,7 +770,7 @@ function show_our_products(cat = null) {
                         item.composition +
                         " </p>" +
                         '            <p class="med-mrp" style="text-align:right; font-size:2e; color:green">  $' +
-                        item.mrp +
+                        convertToMoney(item.mrp) +
                         " </p>" +
                         "        </div>" +
                         "    </div>" +
@@ -809,7 +807,7 @@ function show_our_products(cat = null) {
                         item.composition +
                         " </p>" +
                         '            <p class="med-mrp" style="text-align:right; font-size:2e; color:green">  $' +
-                        item.mrp +
+                        convertToMoney(item.mrp) +
                         " </p>" +
                         "        </div>" +
                         "    </div>" +
@@ -848,7 +846,7 @@ function show_favorites() {
                         item.composition +
                         " </p>" +
                         '            <p class="med-mrp" style="text-align:right; font-size:2e; color:green">  $' +
-                        item.mrp +
+                        convertToMoney(item.mrp) +
                         " </p>" +
                         "        </div>" +
                         "    </div>" +
@@ -1040,6 +1038,13 @@ function thumbClick(medItem) {
     data =  {'value': medItem};
     show_detail_modal(data);
 }
+
+
+function convertToMoney(text) {
+    return '$ ' + text.replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1.");
+}
+
+
 
 (function() {
     // //const meds = document.getElementsByClassName("med");

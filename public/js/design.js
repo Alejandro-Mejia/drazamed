@@ -772,7 +772,7 @@ function show_our_products(cat = null) {
                         item.composition +
                         " </p>" +
                         '            <p class="med-mrp" style="text-align:right; font-size:2e; color:green">  $' +
-                        item.mrp +
+                        convertToMoney(item.mrp) +
                         " </p>" +
                         "        </div>" +
                         "    </div>" +
@@ -809,7 +809,7 @@ function show_our_products(cat = null) {
                         item.composition +
                         " </p>" +
                         '            <p class="med-mrp" style="text-align:right; font-size:2e; color:green">  $' +
-                        item.mrp +
+                        convertToMoney(item.mrp) +
                         " </p>" +
                         "        </div>" +
                         "    </div>" +
@@ -848,7 +848,7 @@ function show_favorites() {
                         item.composition +
                         " </p>" +
                         '            <p class="med-mrp" style="text-align:right; font-size:2e; color:green">  $' +
-                        item.mrp +
+                        convertToMoney(item.mrp) +
                         " </p>" +
                         "        </div>" +
                         "    </div>" +
@@ -1039,6 +1039,10 @@ function thumbClick(medItem) {
     console.log(medItem);
     data =  {'value': medItem};
     show_detail_modal(data);
+}
+
+function convertToMoney(text) {
+    return text.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1.");
 }
 
 (function() {
