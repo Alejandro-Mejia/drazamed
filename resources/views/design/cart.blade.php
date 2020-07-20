@@ -37,12 +37,12 @@
                         Carrito de Compras
                     </h3>
                     <p class="text-justify">
-                        Si termino de adicionar medicamentos a su carro de
+                       {{--  Si termino de adicionar medicamentos a su carro de
                         compras, por favor busque y cargue la formula medica en
                         el espacio de abajo. Usted tambien puede subir una
                         formula medica, sin agregar medicamentos a su carrito.
                         Nosotros identificaremos los medicamentos y procesaremos
-                        su orden.
+                        su orden. --}}
                     </p>
 
                     <table class="table my-4">
@@ -167,19 +167,7 @@
                               </td>
                             </tr>
                             
-                            @if($pres_required == 1)
-                              <tr>
-
-                                <td colspan="4"><p class="text-center">
-                                  {{ __('If you are done with adding medicines to cart')}}, {{ __('please browse and upload the prescription from the link below')}}. <br>
-                                  {{ __('Alternatively, you may even upload a prescription without adding any medicine to cart')}}. {{ __('We will identify the medicines and process the order further')}}.</p>
-                                </td>
-                              </tr>
-
-                              @include('design.dropbox')
-                            @else
-                            <button  class="float-right mt-4 dra-button" data-color="#40E0BC" id="uploadBtn" >{{ __('Place Order')}}</button>
-                            @endif
+                        
 
                         <!-- Si el carrito esta vacio -->
                         @else
@@ -188,12 +176,55 @@
                         @endif
                         
                         </tbody>
+                        @if($pres_required != 1)
+                    
+                          <tfoot>
+                            <tr>
+                              <td colspan=4>
 
+                                <div id="send_formula" class="">
+                                  <form method="post" action="/medicine/store-prescription/1" enctype="multipart/form-data" novalidate class="" id="noformula">
+                                    <input type="" name="shipping_cost" id="shippingForm" value="" hidden required />
+                                    <input type="" name="is_pres_required" id="is_pres_required" value="{{$pres_required}}" hidden/>
+                                    <input type="" name="sub_total" id="sub_total_form" value="{{$subtotal}}" hidden/>
+                              
+                                    <!-- <button type="submit" class="box__button">Upload</button> -->
+                                      <button type="submit" class="float-right mt-4 dra-button" data-color="#40E0BC" id="uploadBtnNF" style="margin-top:-20px;">{{ __('Place Order')}}</button>
+            
+                                    <div style="text-align: center;">
+                                      <div class="box__uploading">Enviando orden&hellip;</div>
+                                      <div class="box__success" style="color: green"> <br> Orden enviada! En unos segundos sera redirigido a su perfil para realizar el pago </div>
+
+                                      <div class="box__error" style="margin-top:50px;">
+                                        Error! <br> <span class="box__error__msg"></span>. <br>
+                                        <a href="https://css-tricks.com/examples/DragAndDropFileUploading//?" class="box__restart" role="button">Intente de nuevo!</a>
+                                      </div>
+                                    </div>
+
+                                  </form>
+                                </div>
+
+                             
+                              {{-- <button class="float-right mt-4 dra-button" data-color="#40E0BC" id="uploadBtnNoFormula" >{{ __('Place Order')}}</button> --}}
+                            
+                              </td>
+                            </tr>
+                          </tfoot>
+
+                        @endif
+                        
                     </table>
-                    <!-- {{ Form::open(array('url'=>'medicine/store-prescription/1','files'=>true,'id'=>'upload_form')) }} -->
+
+                    {{-- {{ Form::open(array('url'=>'medicine/store-prescription/1','files'=>true,'id'=>'upload_form')) }}  --}}
+  
+                    
 
                     <!-- Envio de formulas medicas mediante drag & drop -->
+                    @if($pres_required == 1)
                     
+                      @include('design.dropbox')  
+
+                    @endif
 
 
 
@@ -250,10 +281,10 @@
 
 <script>
 
-// $('#uploadBtn').on('click', function(){
-//   console.log('Uploading order...')
-//   store_prescription();
-// })
+$('#uploadBtnNoFormula').on('click', function(){
+  console.log('Uploading order...')
+  store_prescription();
+})
 
 
 // Cambio en el metodo de envio
