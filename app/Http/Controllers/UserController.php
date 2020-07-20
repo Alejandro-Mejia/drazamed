@@ -608,7 +608,7 @@ class UserController extends BaseController
 				break;
 			case (UserType::CUSTOMER ()):  //for customers
 
-				return View::make ('design.profile' , array('user_data' => Auth::user()->customer, 'invoices' => $invoices, 'prescriptions' => $responses, 'payment_mode' => $payment_mode->value, 'default_img' => url ('/') . "/assets/images/no_pres_square.png"));
+				return View::make ('design.profile' , array('user_data' => Auth::user()->customer, 'user_type_name' => 'Cliente' , 'invoices' => $invoices, 'prescriptions' => $responses, 'payment_mode' => $payment_mode->value, 'default_img' => url ('/') . "/assets/images/no_pres_square.png"));
 				break;
 		}
 
