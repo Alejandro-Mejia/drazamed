@@ -221,7 +221,7 @@
                             />
                         </div> -->
                         <div class="col-lg-12">
-                            <h4 class="com-title"><a href="./aviso">Aviso de privacidad:</a></h4>
+                            <h4 class="com-title"><a href="./aviso">Aviso de privacidad</a></h4>
                         </div>
                     </div>
 
@@ -234,7 +234,7 @@
                             />
                         </div> -->
                         <div class="col-lg-12">
-                            <h4 class="com-title"><a href="./terminos">Términos y Condiciones:</a></h4>
+                            <h4 class="com-title"><a href="./terminos">Términos y Condiciones</a></h4>
                         </div>
                     </div>
 
