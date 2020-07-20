@@ -54,7 +54,7 @@
                         </div>
                     </div>
                     <div class="alert alert-danger login_msg" style="display: none; text-align: center"></div>
-                    <button type="button" class="mt-5 login-btn" onclick='login()'>
+                    <button type="button" class="mt-5 login-btn" id="loginButton" onclick='login()'>
                         Iniciar Sesión
                     </button>
                 </form>
@@ -83,3 +83,19 @@
         </div>
     </div>
 </div>
+
+<script>
+
+    var input = document.getElementById("pwd-input");
+    // Execute a function when the user releases a key on the keyboard
+    input.addEventListener("keyup", function(event) {
+      // Number 13 is the "Enter" key on the keyboard
+      if (event.keyCode === 13) {
+        // Cancel the default action, if needed
+        event.preventDefault();
+        // Trigger the button element with a click
+        document.getElementById("loginButton").click();
+      }
+    });
+
+</script>
