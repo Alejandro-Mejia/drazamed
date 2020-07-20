@@ -224,4 +224,14 @@
     function convertToMoney(text) {
         return '$ ' + text.replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1.");
     }
+
+    $("#pinfo-modal").on("hidden.bs.modal", function(){
+        $('#search_medicine').val("")
+    });
+
+    // $('#pinfo-modal').on('hidden.bs.modal', function () {
+    //   window.alert('hidden event fired!');
+    // });
+
+
 </script>
