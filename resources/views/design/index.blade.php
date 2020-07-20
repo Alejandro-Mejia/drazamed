@@ -107,9 +107,6 @@
         </div>
     </div>
 </main>
-<footer>
-    @include('design.layout.footer')
-</footer>
 
 
 
