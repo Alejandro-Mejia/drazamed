@@ -108,6 +108,43 @@
     </div>
 </main>
 
+<script>
+    /**
+     * Busqueda de categorias
+     */
+    $("#search_medicine2")
+        .autocomplete({
+            search: function(event, ui) {
+                $(".med_search_loader").css("display", "block");
+            },
+            open: function(event, ui) {
+                $(".med_search_loader").css("display", "none");
+            },
+            source: "/medicine/search-categories/1",
+            minLength: 2,
+            delay: 0,
+            max: 10,
+
+            response: function(event, ui) {
+                $(".med_search_loader").css("display", "none");
+            },
+
+            select: function(event, ui) {
+                console.log("itemCat=" + ui.item.value);
+                cat_value = ui.item.value;
+                show_our_products(cat_value);
+                // current_item_code=item_code;
+                // goto_detail_page();
+            }
+        })
+        .autocomplete("instance")._renderItem = function(ul, item) {
+        return $("<li>")
+            .append("<div>" + item.label + "</div>")
+            .appendTo(ul);
+        };
+
+    
+</script>
 
 
 @endsection
