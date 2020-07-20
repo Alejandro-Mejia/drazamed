@@ -47,6 +47,17 @@
         </script>
 
         @yield('custom-css')
+
+        <style>
+            .cookie-consent {
+                background-color: #015670;
+                color: white;
+                text-align: center;
+                padding: 10px;
+            }
+
+
+        </style>
     </head>
     <body>
         @include('design.layout.header')
