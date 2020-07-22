@@ -54,7 +54,7 @@
                             <li>
                                 <a href="#pagadas_por_enviar"
                                     ><span class="mr-10 fas fa-shipping-fast"></span
-                                    >Ordenes por Enviar</a
+                                    >Ordenes en proceso de entrega</a
                                 >
                             </li>
                             <li>
@@ -264,23 +264,19 @@
 
                 <div class="panel mt-30" id="pagadas_por_enviar">
 
-                    <h2 class="panel-title">Ordenes Pagadas por enviar</h2>
+                    <h2 class="panel-title">Ordenes en proceso de entrega</h2>
                     <p>
-                        Por favor espere a que verifiquemos su pedido. Una vez
-                        lo verifiquemos cambiara su estado a "Verificado". Una
-                        vez su formula medica este verificada, usted puede
-                        proceder al pago haciendo click en el boton COMPRAR
-                        AHORA.
+                        Tu pedido será entregado lo antes posible.
                     </p>
                     <div class="table-responsive">
                         @if(!empty(count($invoices)))
                         <table class="table">
                             <thead class="table-header">
                                 <tr>
-                                     <th class="text-center text-align-responsive">{{ __('Medicine')}}</th>
-                                     <th class="text-center text-align-responsive">{{ __('Date')}}</th>
-                                     <th class="text-center text-align-responsive">{{ __('Status')}}</th>
-                                     <th class="text-right text-align-responsive">{{ __('Actions')}}</th>
+                                     <th class="text-center text-align-responsive" width="25%"> No. Pedido</th>
+                                     <th class="text-center text-align-responsive" width="25%">Fecha</th>
+                                     <th class="text-center text-align-responsive" width="25%">Total</th>
+                                     <th class="text-right text-align-responsive" width="25%">{{ __('Actions')}}</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -296,20 +292,16 @@
 
                                           <!-- Section 1 -->
                                     <tr>
-                                        <td>
-                                            @foreach($cart_list as $cart)
-
-                                                 <p class="text-left text-align-responsive">{{ Medicine::medicines($cart->medicine)['item_name'] }}</p>
-
-                                             @endforeach
+                                        <td class="text-center">
+                                            {{ $invoice->id }}
                                         </td>
-                                        <td class="col-lg-3 text-center"><span class="date-added"> {{$prescription->created_at  ?? ''}}</span>
+                                        <td class="text-center"><span class="date-added"> {{ $invoice->created_at  ?? ''}}</span>
                                         </td>
 
-                                        <td class="col-lg-3 text-center">{{ __(ShippingStatus::statusName($invoice->shipping_status)) }}
+                                        <td class="text-center">{{ Setting::currencyFormat($invoice->total) }}
                                         </td>
 
-                                        <td>
+                                        <td class="text-right">
                                             <i class="fas fa-edit"></i>
                                             <i class="fas fa-trash-alt"></i>
                                             <i class="fas fa-shopping-cart"></i>
@@ -334,22 +326,15 @@
                 <div class="panel mt-30" id="enviadas">
 
                     <h2 class="panel-title">Ordenes Finalizadas</h2>
-                    <p>
-                        Por favor espere a que verifiquemos su pedido. Una vez
-                        lo verifiquemos cambiara su estado a "Verificado". Una
-                        vez su formula medica este verificada, usted puede
-                        proceder al pago haciendo click en el boton COMPRAR
-                        AHORA.
-                    </p>
                     <div class="table-responsive">
                         @if(!empty(count($invoices)))
                         <table class="table">
                             <thead class="table-header">
                                 <tr>
-                                     <th class="text-center text-align-responsive">{{ __('Medicine')}}</th>
-                                     <th class="text-center text-align-responsive">{{ __('Date')}}</th>
-                                     <th class="text-center text-align-responsive">{{ __('Status')}}</th>
-                                     <th class="text-right text-align-responsive">{{ __('Actions')}}</th>
+                                     <th class="text-center text-align-responsive" width="25%"> No. Pedido</th>
+                                     <th class="text-center text-align-responsive" width="25%">Fecha</th>
+                                     <th class="text-center text-align-responsive" width="25%">Total</th>
+                                     <th class="text-right text-align-responsive" width="25%">{{ __('Actions')}}</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -364,20 +349,16 @@
 
                                           <!-- Section 1 -->
                                     <tr>
-                                        <td>
-                                            @foreach($cart_list as $cart)
-
-                                                 <p class="text-left text-align-responsive">{{ Medicine::medicines($cart->medicine)['item_name'] }}</p>
-
-                                             @endforeach
+                                        <td class="text-center">
+                                            {{ $invoice->id }}
                                         </td>
-                                        <td class="col-lg-3 text-center"><span class="date-added"> {{$prescription->created_at  ?? ''}}</span>
+                                        <td class="text-center"><span class="date-added"> {{ $invoice->created_at  ?? ''}}</span>
                                         </td>
 
-                                        <td class="col-lg-3 text-center">{{ __(ShippingStatus::statusName($invoice->shipping_status)) }}
+                                        <td class="text-center">{{ Setting::currencyFormat($invoice->total) }}
                                         </td>
 
-                                        <td>
+                                        <td class="text-right">
                                             <i class="fas fa-edit"></i>
                                             <i class="fas fa-trash-alt"></i>
                                             <i class="fas fa-shopping-cart"></i>
