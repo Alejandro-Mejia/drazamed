@@ -68,8 +68,8 @@
                                 <input
                                     type="text"
                                     class="form-control search_medicine"
-                                    placeholder="Busca por categoria"
-                                    aria-label="Busca por categoria"
+                                    placeholder="Busca por categoría"
+                                    aria-label="Busca por categoría"
                                     aria-describedby="basic-addon2"
                                     id="search_medicine2"
                                 />

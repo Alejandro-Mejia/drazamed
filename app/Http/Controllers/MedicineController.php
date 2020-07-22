@@ -91,7 +91,7 @@ class MedicineController extends BaseController
 				$shipping_cost = Request::get ('shipping_cost' , 0);
 
 				if(is_null($shipping_cost)) {
-					return Response::json (['status' => 'FAILURE' , 'msg' => 'Antes de colocar su orden debe seleccionar un metodo de entrega']);
+					return Response::json (['status' => 'FAILURE' , 'msg' => 'Antes de colocar su orden debe seleccionar un método de entrega']);
 				}
 
 				$path = base_path () . '/public/images/prescription/' . $email . '/';

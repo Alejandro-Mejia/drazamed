@@ -232,7 +232,7 @@
                                                 <td style="text-align:right">
                                                     {{-- <i class="fas fa-edit details" data-id={{ $prescription["id"]}}></i> --}}
                                                     <i style="color:red" class="fas fa-trash-alt presDelete" data-toggle="modal" data-target="#confirmDelete" data-id={{ $prescription["id"]}} ></i>
-                                                    <i class="fas fa-shopping-cart"></i>
+                                                    <a href="/my-cart"><i class="fas fa-shopping-cart"></i></a>
                                                 </td>
                                             </tr>
                                             <?php $i++; ?>
@@ -276,7 +276,7 @@
                                      <th class="text-center text-align-responsive" width="25%"> No. Pedido</th>
                                      <th class="text-center text-align-responsive" width="25%">Fecha</th>
                                      <th class="text-center text-align-responsive" width="25%">Total</th>
-                                     <th class="text-right text-align-responsive" width="25%">{{ __('Actions')}}</th>
+                                    
                                 </tr>
                             </thead>
                             <tbody>
@@ -301,11 +301,7 @@
                                         <td class="text-center">{{ Setting::currencyFormat($invoice->total) }}
                                         </td>
 
-                                        <td class="text-right">
-                                            <i class="fas fa-edit"></i>
-                                            <i class="fas fa-trash-alt"></i>
-                                            <i class="fas fa-shopping-cart"></i>
-                                        </td>
+            
                                     </tr>
                                 @endif
 
@@ -359,7 +355,6 @@
                                         </td>
 
                                         <td class="text-right">
-                                            <i class="fas fa-edit"></i>
                                             <i class="fas fa-trash-alt"></i>
                                             <i class="fas fa-shopping-cart"></i>
                                         </td>
