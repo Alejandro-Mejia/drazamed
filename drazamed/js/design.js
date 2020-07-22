@@ -127,74 +127,7 @@ $(document).ready(function() {
         }
     });
 
-    /**
-     * Busqueda de Medicamentos por nombre
-     * @param cat= Categoria lab= Laboratorio term= Nombre Medicamento limit= #resultados max
-     */
-    $("#search_medicine")
-        .autocomplete({
-            search: function(event, ui) {
-                $(".med_search_loader").css("display", "block");
-            },
-            open: function(event, ui) {
-                $(".med_search_loader").css("display", "none");
-            },
-            source: "/medicine/load-medicine-web/1",
-            minLength: 2,
-            delay: 0,
-            max: 10,
-
-            response: function(event, ui) {
-                $(".med_search_loader").css("display", "none");
-            },
-
-            select: function(event, ui) {
-                console.log("itemCode=" + ui.item.item_code);
-                item_code = ui.item.item_code;
-                current_item_code = item_code;
-                // goto_detail_page();
-                show_detail_modal(ui.item);
-            }
-        })
-        .autocomplete("instance")._renderItem = function(ul, item) {
-        return $("<li>")
-            .append("<div>" + item.label + "</div>")
-            .appendTo(ul);
-    };
-
-    /**
-     * Busqueda de categorias
-     */
-    $("#search_medicine2")
-        .autocomplete({
-            search: function(event, ui) {
-                $(".med_search_loader").css("display", "block");
-            },
-            open: function(event, ui) {
-                $(".med_search_loader").css("display", "none");
-            },
-            source: "/medicine/search-categories/1",
-            minLength: 2,
-            delay: 0,
-            max: 10,
-
-            response: function(event, ui) {
-                $(".med_search_loader").css("display", "none");
-            },
-
-            select: function(event, ui) {
-                console.log("itemCat=" + ui.item.value);
-                cat_value = ui.item.value;
-                show_our_products(cat_value);
-                // current_item_code=item_code;
-                // goto_detail_page();
-            }
-        })
-        .autocomplete("instance")._renderItem = function(ul, item) {
-        return $("<li>")
-            .append("<div>" + item.label + "</div>")
-            .appendTo(ul);
-    };
+    
 });
 
 
@@ -873,7 +806,7 @@ $(".presDelete").on("click", function() {
     console.log($(this).data('id'));
     id = $(this).data('id');
     url = '/user/pres-delete/' + $(this).data('id')
-    var r = confirm("Esta seguro de querer borrar esta orden?");
+    var r = ConfirmDialog("Esta seguro de querer borrar esta ordennnnnn?");
     if (r == true) {
         $.ajax({
         type: "GET",
@@ -887,6 +820,8 @@ $(".presDelete").on("click", function() {
             element = document.getElementById(rowId);
             rowIndex = element.rowIndex;
             document.getElementById('ordenes_pendientes').deleteRow(rowIndex);
+            document.getElementById('ordenes_pendientes').deleteRow(rowIndex-1);
+            document.getElementById('ordenes_pendientes').deleteRow(rowIndex-2);
             element = document.getElementById(rowInfo);
             rowIndex = element.rowIndex;
             document.getElementById('ordenes_pendientes').deleteRow(rowIndex);
@@ -898,6 +833,33 @@ $(".presDelete").on("click", function() {
 
     //window.location = "account-page/";
 });
+
+
+// function ConfirmDialog(message) {
+//       $('<div></div>').appendTo('body')
+//         .html('<div><h6>' + message + '?</h6></div>')
+//         .dialog({
+//           modal: true,
+//           title: 'Borrar orden',
+//           zIndex: 10000,
+//           autoOpen: true,
+//           width: 'auto',
+//           resizable: false,
+//           buttons: {
+//             Yes: function() {
+//               $(this).dialog("close");
+//               return true ;
+//             },
+//             No: function() {
+//               $(this).dialog("close");
+//               return true ;
+//             }
+//           },
+//           close: function(event, ui) {
+//             $(this).remove();
+//           }
+//         });
+//     };
 
 // Muestra el detalle de la compra seleccionada
 $('.details').on('click', function(){

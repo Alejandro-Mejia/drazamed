@@ -1,31 +1,5 @@
 
-$(".presDelete").on("click", function() {
-    console.log($(this).data('id'));
-    id = $(this).data('id');
-    url = '/user/pres-delete/' + $(this).data('id')
-    var r = confirm("Esta seguro de querer borrar esta orden?");
-    if (r == true) {
-        $.ajax({
-        type: "GET",
-        url: url,
-        success: function(data) {
-            // console.log(data);
-            alert('Se ha borrado su orden');
-            rowId = 'r' + id;
-            console.log("Row Name: " + rowId);
-            element = document.getElementById(rowId);
-            rowIndex = element.rowIndex;
-            document.getElementById('ordenes_pendientes').deleteRow(rowIndex);
-            document.getElementById('ordenes_pendientes').deleteRow(rowIndex+1);
-            console.log(element);
-        }
-    });
-    } else {
 
-    }
-
-    //window.location = "account-page/";
-});
 
 // Muestra el detalle de la compra seleccionada
 $('.details').on('click', function(){

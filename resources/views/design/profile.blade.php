@@ -2,6 +2,10 @@
 
 @section('custom-css')
 <link rel="stylesheet" href="/css/profile.css" />
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap3-dialog/1.34.5/css/bootstrap-dialog.min.css">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap3-dialog/1.34.5/js/bootstrap-dialog.min.js"></script>
+
 @endsection
 
 @section('content')
@@ -12,6 +16,9 @@
         position:absolute;
     }
 </style>
+
+
+
 <section class="profile">
     <div class="profile-body">
         <div class="row">
@@ -224,7 +231,7 @@
                                                 <td></td>
                                                 <td style="text-align:right">
                                                     {{-- <i class="fas fa-edit details" data-id={{ $prescription["id"]}}></i> --}}
-                                                    <i style="color:red" class="fas fa-trash-alt presDelete" data-id={{ $prescription["id"]}}></i>
+                                                    <i style="color:red" class="fas fa-trash-alt presDelete" data-toggle="modal" data-target="#confirmDelete" data-id={{ $prescription["id"]}} ></i>
                                                     <i class="fas fa-shopping-cart"></i>
                                                 </td>
                                             </tr>
@@ -396,12 +403,64 @@
         </div>
     </div>
 </section>
+
+
+<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" id="confirmDelete">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h4 class="modal-title" id="myModalLabel">Confirmar</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        </div>
+        <div class="modal-body">
+            <p id="msgConfirm"></p>
+        </div>
+        
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default" id="modal-btn-si">Si</button>
+            <button type="button" class="btn btn-primary" id="modal-btn-no">No</button>
+        </div>
+    </div>
+  </div>
+</div>
+
+
 @endsection
 
 
 
-<script type="">
+<script>
+    window.onload = function () {
+        $(".presDelete").on("click", function() {
+            console.log($(this).data('id'));
+            id = $(this).data('id');
+            url = '/user/pres-delete/' + $(this).data('id')
+            var r = ConfirmDialog("Esta seguro de querer borrar esta orden?");
+            if (r == true) {
+                $.ajax({
+                    type: "GET",
+                    url: url,
+                    success: function(data) {
+                        // console.log(data);
+                        alert('Se ha borrado su orden');
+                        rowId = 'r' + id;
+                        rowInfo = 'pinfo' + id;
+                        console.log("Row Name: " + rowId);
+                        element = document.getElementById(rowId);
+                        rowIndex = element.rowIndex;
+                        document.getElementById('ordenes_pendientes').deleteRow(rowIndex);
 
+                        element = document.getElementById(rowInfo);
+                        rowIndex = element.rowIndex;
+                        document.getElementById('ordenes_pendientes').deleteRow(rowIndex);
+                    }
+                });
+            } else {
+
+            }
+            //window.location = "account-page/";
+        });
+    }
     // Funciones para el pago de ordenes
 
     function goto_detail_page() {
@@ -428,6 +487,50 @@
         window.location = "{{URL::to('medicine/make-mercado-pago-payment/')}}/" + invoice;
 
     }
+
+    function ConfirmDialog(message) {
+        // BootstrapDialog.show({
+        //     title: 'Say-hello dialog',
+        //     message: 'Hi Apple!'
+        // });
+        
+ 
+        // $('#confirmDialog').show()
+        // $('#msgConfirm').html(message)
+        // // .html('<div class="modal-header"><h6 class="modal-tittle">' + message + '?</h6></div>')
+        // $('#confirmDialog').dialog({
+        //   modal: true,
+        //   title: 'Borrar orden',
+        //   zIndex: 10000,
+        //   autoOpen: true,
+        //   width: 'auto',
+        //   resizable: false,
+        //   buttons: {
+        //     Yes: function() {
+        //       $(this).dialog("close");
+        //       return true ;
+        //     },
+        //     No: function() {
+        //       $(this).dialog("close");
+        //       return true ;
+        //     }
+        //   },
+        //   close: function(event, ui) {
+        //     $(this).remove();
+        //   }
+        // });
+    };
+
+    // <div class="modal-content">
+    //    <div class="modal-header">
+    //     <h4 class="modal-title" id="res-title"></h4>
+    //      <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+    //    </div>
+    //    <div class="modal-body" style="font-size: 18px; text-align: center" id="res-content">  </div>
+
+    //  </div>
+
     // function change_list() {
     //     //alert($('.category').val());
     //     var category = $('.category').val();

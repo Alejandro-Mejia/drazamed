@@ -451,6 +451,41 @@ function get_medicine_data(id)
   }
   });
 }
+
+/**
+ * Busqueda de Medicamentos por nombre
+ * @param cat= Categoria lab= Laboratorio term= Nombre Medicamento limit= #resultados max
+ */
+$("#search_medicine")
+    .autocomplete({
+        search: function(event, ui) {
+            $(".med_search_loader").css("display", "block");
+        },
+        open: function(event, ui) {
+            $(".med_search_loader").css("display", "none");
+        },
+        source: "/medicine/load-medicine-web/1",
+        minLength: 2,
+        delay: 0,
+        max: 10,
+
+        response: function(event, ui) {
+            $(".med_search_loader").css("display", "none");
+        },
+
+        select: function(event, ui) {
+            console.log("itemCode=" + ui.item.item_code);
+            item_code = ui.item.item_code;
+            current_item_code = item_code;
+            // goto_detail_page();
+            show_detail_modal(ui.item);
+        }
+    })
+    .autocomplete("instance")._renderItem = function(ul, item) {
+    return $("<li>")
+        .append("<div>" + item.label + "</div>")
+        .appendTo(ul);
+    };
 </script>
 
 @endsection
