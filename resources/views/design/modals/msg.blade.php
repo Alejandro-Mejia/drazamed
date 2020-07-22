@@ -57,7 +57,7 @@
           }else if(msg == "please_login") {
               $('#res-title').css('color','blue');
               $('#res-title').html('Por favor ingresa');
-              $('#res-content').html('Para comprar en nuestra drogueria en linea debes tener una cuenta y haber ingresado a ella.');
+              $('#res-content').html('Para comprar en nuestra droguería en línea debes tener una cuenta y haber ingresado a ella.');
               $('#resultModal').modal({
               });
           }
