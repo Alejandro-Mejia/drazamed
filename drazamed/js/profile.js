@@ -1,9 +1,8 @@
-
 $(".presDelete").on("click", function() {
     console.log($(this).data('id'));
     id = $(this).data('id');
     url = '/user/pres-delete/' + $(this).data('id')
-    var r = confirm("Esta seguro de querer borrar esta orden?");
+    var r = ConfirmDialog("Esta seguro de querer borrar esta ordennnnnn?");
     if (r == true) {
         $.ajax({
         type: "GET",
@@ -12,12 +11,16 @@ $(".presDelete").on("click", function() {
             // console.log(data);
             alert('Se ha borrado su orden');
             rowId = 'r' + id;
+            rowInfo = 'pinfo' + id;
             console.log("Row Name: " + rowId);
             element = document.getElementById(rowId);
             rowIndex = element.rowIndex;
             document.getElementById('ordenes_pendientes').deleteRow(rowIndex);
-            document.getElementById('ordenes_pendientes').deleteRow(rowIndex+1);
-            console.log(element);
+            document.getElementById('ordenes_pendientes').deleteRow(rowIndex-1);
+            document.getElementById('ordenes_pendientes').deleteRow(rowIndex-2);
+            element = document.getElementById(rowInfo);
+            rowIndex = element.rowIndex;
+            document.getElementById('ordenes_pendientes').deleteRow(rowIndex);
         }
     });
     } else {
@@ -26,6 +29,33 @@ $(".presDelete").on("click", function() {
 
     //window.location = "account-page/";
 });
+
+
+function ConfirmDialog(message) {
+      $('<div></div>').appendTo('body')
+        .html('<div><h6>' + message + '?</h6></div>')
+        .dialog({
+          modal: true,
+          title: 'Borrar orden',
+          zIndex: 10000,
+          autoOpen: true,
+          width: 'auto',
+          resizable: false,
+          buttons: {
+            Yes: function() {
+              $(this).dialog("close");
+              return true ;
+            },
+            No: function() {
+              $(this).dialog("close");
+              return true ;
+            }
+          },
+          close: function(event, ui) {
+            $(this).remove();
+          }
+        });
+    };
 
 // Muestra el detalle de la compra seleccionada
 $('.details').on('click', function(){

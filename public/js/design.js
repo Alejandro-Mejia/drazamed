@@ -127,40 +127,40 @@ $(document).ready(function() {
         }
     });
 
-    /**
-     * Busqueda de Medicamentos por nombre
-     * @param cat= Categoria lab= Laboratorio term= Nombre Medicamento limit= #resultados max
-     */
-    $("#search_medicine")
-        .autocomplete({
-            search: function(event, ui) {
-                $(".med_search_loader").css("display", "block");
-            },
-            open: function(event, ui) {
-                $(".med_search_loader").css("display", "none");
-            },
-            source: "/medicine/load-medicine-web/1",
-            minLength: 2,
-            delay: 0,
-            max: 10,
+    // /**
+    //  * Busqueda de Medicamentos por nombre
+    //  * @param cat= Categoria lab= Laboratorio term= Nombre Medicamento limit= #resultados max
+    //  */
+    // $("#search_medicine")
+    //     .autocomplete({
+    //         search: function(event, ui) {
+    //             $(".med_search_loader").css("display", "block");
+    //         },
+    //         open: function(event, ui) {
+    //             $(".med_search_loader").css("display", "none");
+    //         },
+    //         source: "/medicine/load-medicine-web/1",
+    //         minLength: 2,
+    //         delay: 0,
+    //         max: 10,
 
-            response: function(event, ui) {
-                $(".med_search_loader").css("display", "none");
-            },
+    //         response: function(event, ui) {
+    //             $(".med_search_loader").css("display", "none");
+    //         },
 
-            select: function(event, ui) {
-                console.log("itemCode=" + ui.item.item_code);
-                item_code = ui.item.item_code;
-                current_item_code = item_code;
-                // goto_detail_page();
-                show_detail_modal(ui.item);
-            }
-        })
-        .autocomplete("instance")._renderItem = function(ul, item) {
-        return $("<li>")
-            .append("<div>" + item.label + "</div>")
-            .appendTo(ul);
-    };
+    //         select: function(event, ui) {
+    //             console.log("itemCode=" + ui.item.item_code);
+    //             item_code = ui.item.item_code;
+    //             current_item_code = item_code;
+    //             // goto_detail_page();
+    //             show_detail_modal(ui.item);
+    //         }
+    //     })
+    //     .autocomplete("instance")._renderItem = function(ul, item) {
+    //     return $("<li>")
+    //         .append("<div>" + item.label + "</div>")
+    //         .appendTo(ul);
+    //     };
 
     
 });
@@ -839,37 +839,6 @@ $(".btn-profile").on("click", function() {
 });
 
 
-$(".presDelete").on("click", function() {
-    console.log($(this).data('id'));
-    id = $(this).data('id');
-    url = '/user/pres-delete/' + $(this).data('id')
-    var r = confirm("Esta seguro de querer borrar esta orden?");
-    if (r == true) {
-        $.ajax({
-        type: "GET",
-        url: url,
-        success: function(data) {
-            // console.log(data);
-            alert('Se ha borrado su orden');
-            rowId = 'r' + id;
-            rowInfo = 'pinfo' + id;
-            console.log("Row Name: " + rowId);
-            element = document.getElementById(rowId);
-            rowIndex = element.rowIndex;
-            document.getElementById('ordenes_pendientes').deleteRow(rowIndex);
-            document.getElementById('ordenes_pendientes').deleteRow(rowIndex-1);
-            document.getElementById('ordenes_pendientes').deleteRow(rowIndex-2);
-            element = document.getElementById(rowInfo);
-            rowIndex = element.rowIndex;
-            document.getElementById('ordenes_pendientes').deleteRow(rowIndex);
-        }
-    });
-    } else {
-
-    }
-
-    //window.location = "account-page/";
-});
 
 // Muestra el detalle de la compra seleccionada
 $('.details').on('click', function(){

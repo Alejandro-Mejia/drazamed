@@ -420,11 +420,12 @@ li{
 
 .btn_payment .btn{
 	background-color: #00a1db !important;
-	font-size: 20px !important;
+	font-size: 15px !important;
 	font-weight: 700 !important;
 	color: #fff !important;
 	border-radius: 30px;
-	padding: 10px 30px;
+	min-width: 200px;
+	padding: 10px 10px;
 }
 
 .items_payments{

@@ -5,11 +5,12 @@ $_SESSION['amount']=$posted['amount'];
 $_SESSION['first_name']=$posted['firstname'];
 $_SESSION['item_name']=$posted['amount'];
 $_SESSION['invoice']=$posted['invoice'];
+$_SESSION['is_pres_required']=$posted['is_pres_required'];
 
 ?>
 
 @section('custom-css')
-<link rel="stylesheet" href="/css/payment.css" />
+
 @endsection
 
 <div id="overlay">
@@ -17,6 +18,7 @@ $_SESSION['invoice']=$posted['invoice'];
      Loading...
 </div>
 <!-- style="min-height: 760px" -->
+<link rel="stylesheet" href="/css/payment.css" />
 <div class="contact-container" >
     <div class="container-fluid bg_color_grey section_custom">
         <div class="container">
@@ -53,27 +55,45 @@ $_SESSION['invoice']=$posted['invoice'];
                                         <label for="">Información del Producto</label>
                                         <textarea name="" id="" cols="30" rows="6" class="form-control" readonly="readonly" name="productinfo1" class="form-control"> <?php echo (empty($posted['productinfo'])) ? '' : $posted['productinfo'] ?> </textarea>
                                     </div>
-                                    <div class="checkboxes_section">
-                                        <div class="form-group form-check">
-                                            <input type="checkbox" class="form-check-input" id="">
-                                            <label class="form-check-label" for="">He validado con mi médico todas las indicaciones y contraindicaciones antes de realizar la compra de este medicamento</label>
+                                    
+                                    <div class="btn_payment">
+                                        <form action="{{ action('MedicineController@anyMakeMercadoPagoPayment', [$posted['invoice_id']]) }}" method="POST" id="mercadopagoForm">
+
+                                        <div class="checkboxes_section" style ="text-align: left">
+
+                                            {{-- {{$_SESSION }} --}}
+                                            <input type="hidden" value={{$posted['is_pres_required']}} id="is_pres_req">
+
+                                            @if($posted['is_pres_required'] == 1)
+                                                <div class="form-group form-check">
+                                                    <input type="checkbox" class="form-check-input" id="val_medico" value=false>
+                                                    <label class="form-check-label" for="">He validado con mi médico todas las indicaciones y contraindicaciones antes de realizar la compra de este medicamento</label>
+                                                </div>
+
+                                                <div class="form-group form-check">
+                                                    <input type="checkbox" class="form-check-input" id="val_edad">
+                                                    <label class="form-check-label" for="">Al realizar la compra usted declara ser mayor de edad y que cuenta con la capacidad para realizar esta transacción</label>
+                                                </div>
+                                            @endif
+                                            <div class="form-group form-check">
+                                                <input type="checkbox" class="form-check-input" id="val_terminos">
+                                                <label class="form-check-label" for="">Conozco y acepto los <a>Términos y Condiciones</a> y <a>Pólitica de Manejo de Datos Personales</a></label>
+                                            </div>
                                         </div>
-                                        <div class="form-group form-check">
-                                            <input type="checkbox" class="form-check-input" id="">
-                                            <label class="form-check-label" for="">Al realizar la compra usted declara ser mayor de edad y que cuenta con la capacidad para realizar esta transacción</label>
+                                        <div style="display: none">
+                                            <script
+                                                src="https://www.mercadopago.com.co/integrations/v1/web-tokenize-checkout.js"
+                                                data-public-key={{$posted['access_token']}}
+                                                data-transaction-amount={{$posted['amount']}}>
+                                            </script>
                                         </div>
-                                        <div class="form-group form-check">
-                                            <input type="checkbox" class="form-check-input" id="">
-                                            <label class="form-check-label" for="">Conozco y acepto los <a>Términos y Condiciones</a> y <a>Pólitica de Manejo de Datos Personales</a></label>
+                                       
+                                        <div style="display: block">
+                                            <button class="dra-button btn_payment btn" title="Debe aceptar las condiciones para poder pagar" id="alertbox" data-toggle="modal" data-target="#myModal"> PAGAR </button>
                                         </div>
-                                    </div>
-                                    <div class="btn_payment btn">
-                                        <form action="{{ action('MedicineController@anyMakeMercadoPagoPayment', [$posted['invoice_id']]) }}" method="POST">
-                                          <script
-                                            src="https://www.mercadopago.com.co/integrations/v1/web-tokenize-checkout.js"
-                                            data-public-key={{$posted['access_token']}}
-                                            data-transaction-amount={{$posted['amount']}}>
-                                          </script>
+                                        
+
+                                    
                                         </form>
                                        
                                     </div>
@@ -130,14 +150,69 @@ $_SESSION['invoice']=$posted['invoice'];
     </div>
 </div>
 
+<!-- Modal -->
+<div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Modal Header</h4>
+        </div>
+        <div class="modal-body">
+          <p id="error"></p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+      
+    </div>
+</div>
+
 <footer>
 <div class="container innerBtm">
 
-
 <script type="">
+$('#alertbox').on('click', function(event){
+    event.preventDefault();
+    // Leo los valores de los checkbox
+    isPresReq = $("#is_pres_req").val();
+    valMedico = $("#val_medico").is(":checked");
+    valTerminos = $("#val_terminos").is(":checked");
+    valEdad = $("#val_edad").is(":checked");
+
+    console.log(valMedico, valTerminos, valEdad)
+    console.log (isPresReq);
+
+    if(isPresReq == 1) {
+        if ( !valMedico || !valTerminos || !valEdad) {
+            // $('#myModal').modal({}); 
+            alert("Debe aceptar los terminos y condiciones antes de pagar")
+        } else {
+            $('.mercadopago-button').click(); 
+        }
+    }
+    else {
+        if (!valTerminos) {
+            // $('#myModal').modal({});
+            alert("Debe aceptar los terminos y condiciones antes de pagar")
+        } else {
+            $('.mercadopago-button').click();
+        }
+    }
+   
+});
+
+
+
 $(window).load(function(){
-   // PAGE IS FULLY LOADED
-   // FADE OUT YOUR OVERLAYING DIV
-   $('#overlay').fadeOut();
+    // PAGE IS FULLY LOADED
+    // FADE OUT YOUR OVERLAYING DIV
+    var d = document.getElementsByClassName("mercadopago-button")[0];
+    d.className += " btn btn_payment";
+
+    $('#overlay').fadeOut();
 });
 </script>

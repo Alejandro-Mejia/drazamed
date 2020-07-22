@@ -1629,6 +1629,7 @@ class MedicineController extends BaseController
 		$user = Auth::user ();
 		$type = $user->user_type_id;
 
+
 		// Agrega credenciales
 		// MercadoPago\SDK::setAccessToken('APP_USR-2009643657185989-050901-f80d5fbf89c8c43f650efb2167d51d1b-544483632');
 
@@ -1649,10 +1650,16 @@ class MedicineController extends BaseController
 		$item_name = "";
 		$i = 0;
 		$total = 0;
+		$pres_required = 0;
+
 		foreach ($invoiceDetails->cartList() as $cart) {
 			$item_name .= Medicine::medicines ($cart->medicine)['item_name'];
 			$item_name .= " ,";
 			$total += $cart->total_price;
+
+			if (Medicine::medicines($cart->medicine)['is_pres_required']) {
+				$pres_required = 1;
+			}
 		}
 
 
@@ -1759,6 +1766,7 @@ class MedicineController extends BaseController
 		$data['invoice'] = $invoiceDetails->invoice;
 		$data['id'] = $invoice;
 		$data['productinfo'] = $item_name;
+		$data['is_pres_required'] = $pres_required;
 		$data['access_token'] = $access_token;
 	    // //$this->notify($order);
 	    // $url = $this->generatePaymentGateway(
