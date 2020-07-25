@@ -75,7 +75,7 @@
                             data-toggle="modal"
                             data-target="#register-modal"
                             onclick="hideLoginModal()"
-                            >¿No tienes una cuenta? Registrate</a
+                            >¿No tienes una cuenta? Regístrate</a
                         >
                     </div>
                 </div>
