@@ -27,6 +27,8 @@ use App\PrescriptionStatus;
 use App\Exceptions\Handler;
 use App\ShippingStatus;
 use App\InvoiceStatus;
+use App\PresRulesCats;
+use App\PresRulesProd;
 use App\Prescription;
 use App\SessionsData;
 use App\NewMedicine;
@@ -692,6 +694,7 @@ class MedicineController extends BaseController
 						}
 
 						$labRule = Pricerule::where('laboratory','LIKE','%' . $compareLab . '%')->get()->toArray();
+			
 
 						if (isset($labRule) && sizeof($labRule) > 0) {
 							if ($labRule[0]['isByProd'] == 1) {
@@ -736,6 +739,18 @@ class MedicineController extends BaseController
 	    $sellprice = round( $sellprice, -2, PHP_ROUND_HALF_UP);
 
 	    return($sellprice);
+	}
+
+
+	public function anyCheckIsPresRequired($id)
+	{
+		$med = Medicine::where ('id' , '=' , $id)->first ();
+
+	
+		//$labRule = Pricerule::where('laboratory','LIKE','%' . $compareLab . '%')->get()->toArray();
+
+		
+		return $is_pres_required;
 	}
 
 
@@ -807,6 +822,34 @@ class MedicineController extends BaseController
 				// dd($med);
 				$sellprice = ($this->anyCalculateMRP($med['id'])) ? $this->anyCalculateMRP($med['id']) : 0;
 
+				$presRule = PresRulesCats::Where('category',  'LIKE', '%' . $med->group . '%')->get()->first()->toArray();
+				$pres_required = false;
+
+				
+	
+
+				if ($presRule['is_pres_required'] == true) {
+					if($presRule['is_by_product'] == true) {
+						$presRuleProd = PresRulesProd::Where('item_code',  'LIKE', '%' . $med->item_code . '%')->first()->toArray();
+						if(sizeof($presRuleProd) > 0) {
+							if ($presRuleProd['is_pres_required'] == true) {
+								$pres_required = 1;
+							} else {
+								$pres_required = 0;
+							}
+						} else {
+							$pres_required = 0;
+						}
+						
+					} else {
+						$pres_required = 1;
+					}
+				} else {
+					$pres_required = 0;
+				}
+
+				// dd($pres_required);
+
 		        $medImagen = isset($med['item_code']) ? $med['item_code'].'.png' : 'default.png';
 				$medPath = "/images/products/" . $medImagen;
 
@@ -817,7 +860,7 @@ class MedicineController extends BaseController
 
 				$medPath = (is_file($path)) ? $medPath : "/images/products/default.png";
 
-				$medicineNameArray[$i] = array("id" => $med->id ,'item_code' => $med->item_code,  "name" => $med->item_name , 'mrp' => $sellprice ,'quantity' => $med->quantity, 'lab' => $med->manufacturer , 'composition' => $med->composition, 'image-url' => $med->photo_url, 'is_pres_required' => $med->is_pres_required, 'group' => $med->group, 'url_img' => $medPath);
+				$medicineNameArray[$i] = array("id" => $med->id ,'item_code' => $med->item_code,  "name" => $med->item_name , 'mrp' => $sellprice ,'quantity' => $med->quantity, 'lab' => $med->manufacturer , 'composition' => $med->composition, 'image-url' => $med->photo_url, 'is_pres_required' => $pres_required, 'group' => $med->group, 'url_img' => $medPath);
 				$i++;
 			}
 			$result = array('result' => array('status' => 'sucess' , 'msg' => $medicineNameArray));
@@ -828,9 +871,6 @@ class MedicineController extends BaseController
 		return Response::json ($result);
 
 	}
-
-
-
 	/**
 	 *
 	 */
