@@ -34,6 +34,7 @@ use App\SessionsData;
 use App\NewMedicine;
 use App\Favorite;
 use App\Pricerule;
+use App\Prodrule;
 use App\Setting;
 use App\ItemList;
 use App\PayStatus;
@@ -678,7 +679,11 @@ class MedicineController extends BaseController
 		if($med->marked_price == 0) {
 	        switch ($med->tax) {
 	            case '19':
-	                $sellprice = $med->real_price / 0.71;
+	            	if($med['manufacturer'] != "ICOM") {
+	            		$sellprice = $med->real_price / 0.71;
+	            	} else {
+	            		$sellprice = $med->current_price;
+	            	}
 	                break;
 	            case '5':
 	                $sellprice = $med->real_price / 0.85;
@@ -693,30 +698,37 @@ class MedicineController extends BaseController
 							$compareLab = $med['manufacturer'];
 						}
 
-						$labRule = Pricerule::where('laboratory','LIKE','%' . $compareLab . '%')->get()->toArray();
+						$labRule = Pricerule::where('laboratory','LIKE','%' . $compareLab . '%')->first();
+						// dd($labRule)
 			
 
-						if (isset($labRule) && sizeof($labRule) > 0) {
-							if ($labRule[0]['isByProd'] == 1) {
+						if (isset($labRule) && $labRule != null) {
+							if ($labRule->isByProd == 1) {
 								// $labRule = Pricerule::with(["prodrule" => function($q) { $q->where('product', 'LIKE', substr ($med['item_name'],0,15);}])->where('laboratory','LIKE',substr ($med['marketed_by'],0,15) . '%')->get();
 								$prod = substr($med['item_name'],0,15);
+								$prodrule = Prodrule::where('product', 'LIKE' , '%' . $prod . '%')->first();
 
-								$labRule = Pricerule::with(["prodrule"=> function($q) use($prod) {$q->where('product', 'LIKE' , '%' . $prod . '%');}])->where('laboratory','LIKE', '%' . $med['manufacturer'] . '%')->get()->toArray();
-								$labRule[0]['rule_type'] = $labRule[0]['prodrule'][0]['rule_type'];
-								$labRule[0]['rule'] = $labRule[0]['prodrule'][0]['rule'];
+								
+
+								// $labRule = Pricerule::with(["prodrule"=> function($q) use($prod) {$q->where('product', 'LIKE' , '%' . $prod . '%')->first();}])->where('laboratory','LIKE', '%' . $med['manufacturer'] . '%')->first();
+								
+
+								// dd($labRule);
+								$labRule->rule_type = $prodrule->rule_type;
+								$labRule->rule = $prodrule->rule;
 							}
 
-							$sellprice = ($med->real_price*$labRule[0]['isVtaReal'] + $med->current_price*$labRule[0]['isVtaCte']);
+							$sellprice = ($med->real_price*$labRule->isVtaReal + $med->current_price*$labRule->isVtaCte);
 
-							switch ($labRule[0]['rule_type']) {
+							switch ($labRule->rule_type) {
 								case '0':
 									# code...
 									break;
 								case '1':
-									$sellprice = $sellprice * (1+$labRule[0]['rule']);
+									$sellprice = $sellprice * (1+$labRule->rule);
 									break;
 								case '2':
-									$sellprice = $sellprice + $labRule[0]['rule'];
+									$sellprice = $sellprice + $labRule->rule;
 									break;
 								default:
 									# code...
@@ -735,23 +747,13 @@ class MedicineController extends BaseController
 	        $sellprice = $med->marked_price;
 	    }
 
-	    $sellprice = ceil($sellprice);
-	    $sellprice = round( $sellprice, -2, PHP_ROUND_HALF_UP);
+	    
+	    $sellprice = ceil( $sellprice / 100 ) * 100;
+	    // $sellprice = round( $sellprice, -2, PHP_ROUND_HALF_UP);
 
 	    return($sellprice);
 	}
 
-
-	public function anyCheckIsPresRequired($id)
-	{
-		$med = Medicine::where ('id' , '=' , $id)->first ();
-
-	
-		//$labRule = Pricerule::where('laboratory','LIKE','%' . $compareLab . '%')->get()->toArray();
-
-		
-		return $is_pres_required;
-	}
 
 
 	/**
@@ -823,6 +825,7 @@ class MedicineController extends BaseController
 				$sellprice = ($this->anyCalculateMRP($med['id'])) ? $this->anyCalculateMRP($med['id']) : 0;
 
 				$presRule = PresRulesCats::Where('category',  'LIKE', '%' . $med->group . '%')->get()->first()->toArray();
+
 				$pres_required = false;
 
 				
@@ -830,9 +833,9 @@ class MedicineController extends BaseController
 
 				if ($presRule['is_pres_required'] == true) {
 					if($presRule['is_by_product'] == true) {
-						$presRuleProd = PresRulesProd::Where('item_code',  'LIKE', '%' . $med->item_code . '%')->first()->toArray();
-						if(sizeof($presRuleProd) > 0) {
-							if ($presRuleProd['is_pres_required'] == true) {
+						$presRuleProd = PresRulesProd::Where('item_code',  'LIKE', '%' . $med->item_code . '%')->first();
+						if($presRuleProd != null) {
+							if ($presRuleProd->is_pres_required == true) {
 								$pres_required = 1;
 							} else {
 								$pres_required = 0;
