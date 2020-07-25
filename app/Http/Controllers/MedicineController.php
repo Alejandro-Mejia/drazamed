@@ -777,10 +777,13 @@ class MedicineController extends BaseController
   //               $query->where('gender', '=', $gender);
   //           }
   //           })->get();
+  //           
+  //     query = User::where('name', 'LIKE', "%$term%");
+		 //			dd($query->toSql(), $query->getBindings());
 		// dd($category, $lab, $ean);
 		$medicine = Medicine::where (function($query) use ($term){
 				if($term) {
-					$query->where('item_name' , 'LIKE' , '%' . $term . '%');
+					$query->where('item_name' , 'LIKE' , '%$term%');
 				}
 			})
 		->where(function($query) use ($xterm){
@@ -1056,9 +1059,9 @@ class MedicineController extends BaseController
 			$medicines = array_filter ($medicines , function ($medicine) use ($key) {
 				$medTemp = $this->stringClean ($medicine['item_name']);
 				$keyTemp = $this->stringClean ($key);
-				if ((strpos (strtolower ($medicine['item_name']) , strtolower ($key)) === 0
-						|| strpos (strtolower ($medTemp) , strtolower ($key)) === 0
-						|| strpos (strtolower ($medTemp) , strtolower ($keyTemp)) === 0
+				if ((stripos ($medicine['item_name'] , $key)
+						|| stripos ($medTemp , $key)
+						|| stripos ($medTemp , $keyTemp) 
 					) && $medicine['is_delete'] == 0
 				)
 					return true;
