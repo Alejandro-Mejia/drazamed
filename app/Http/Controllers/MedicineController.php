@@ -1061,7 +1061,7 @@ class MedicineController extends BaseController
 				$keyTemp = $this->stringClean ($key);
 				if ((stripos ($medicine['item_name'] , $key)
 						|| stripos ($medTemp , $key)
-						|| stripos ($medTemp , $keyTemp) 
+						|| stripos ($medTemp , $keyTemp) === 0
 					) && $medicine['is_delete'] == 0
 				)
 					return true;
