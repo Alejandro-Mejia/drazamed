@@ -783,7 +783,7 @@ class MedicineController extends BaseController
 		// dd($category, $lab, $ean);
 		$medicine = Medicine::where (function($query) use ($term){
 				if($term) {
-					$query->where('item_name' , 'LIKE' , '$term%');
+					$query->where('item_name' , 'LIKE' , $term . '%');
 				}
 			})
 		->where(function($query) use ($xterm){
