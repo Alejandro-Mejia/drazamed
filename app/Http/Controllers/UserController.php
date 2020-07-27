@@ -549,10 +549,10 @@ class UserController extends BaseController
 
 		$user_id = Auth::user ()->id;
 		$invoices = Invoice::where ('user_id' , '=' , $user_id)->get ();
-		$prescriptions = Prescription::select ('i.*' , 'prescription.status' , 'prescription.path' , 'prescription.id as pres_id' , 'prescription.created_at as date_added')->where ('prescription.user_id' , '=' , $user_id)->where ('is_delete' , '=' , 0)
+		$prescriptions = Prescription::select ('i.*' , 'prescription.status' , 'prescription.path' , 'prescription.id as pres_id' , 'prescription.created_at as date_added', 'prescription.is_delete')->where ('prescription.user_id' , '=' , $user_id)->where ('prescription.is_delete' , '=' , 0)
 			->join ('invoice as i' , 'i.pres_id' , '=' , DB::raw ("prescription.id AND i.payment_status IN (" . PayStatus::PENDING () . ",0) "));
 		$results = $prescriptions->get ();
-
+		// dd($results);
 		$responses[] = [];
 
 		foreach ($results as $result) {
@@ -817,6 +817,7 @@ class UserController extends BaseController
 		try {
 			if (!Auth::check ())
 				throw new Exception('UNAUTHORISED : User not logged in ' , 401);
+			
 			$pay_success2 = DB::table ('prescription')->where ('id' , '=' , $pres_id)->update (array('is_delete' => 1 , 'updated_at' => date ('Y-m-d H:i:s')));
 			// If Save is Success
 			if ($pay_success2)

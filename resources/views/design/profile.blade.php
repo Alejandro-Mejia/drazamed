@@ -231,7 +231,7 @@
                                                 <td></td>
                                                 <td style="text-align:right">
                                                     {{-- <i class="fas fa-edit details" data-id={{ $prescription["id"]}}></i> --}}
-                                                    <i style="color:red" class="fas fa-trash-alt presDelete" data-toggle="modal" data-target="#confirmDelete" data-id={{ $prescription["id"]}} ></i>
+                                                    <i style="color:red" class="fas fa-trash-alt presDelete"  data-id={{ $prescription["id"]}} ></i>
                                                     <a href="/my-cart"><i class="fas fa-shopping-cart"></i></a>
                                                 </td>
                                             </tr>
@@ -408,33 +408,45 @@
 <script>
     window.onload = function () {
         $(".presDelete").on("click", function() {
-            console.log($(this).data('id'));
             id = $(this).data('id');
             url = '/user/pres-delete/' + $(this).data('id')
-            var r = ConfirmDialog("Esta seguro de querer borrar esta orden?");
-            if (r == true) {
-                $.ajax({
-                    type: "GET",
-                    url: url,
-                    success: function(data) {
-                        // console.log(data);
-                        alert('Se ha borrado su orden');
-                        rowId = 'r' + id;
-                        rowInfo = 'pinfo' + id;
-                        console.log("Row Name: " + rowId);
-                        element = document.getElementById(rowId);
-                        rowIndex = element.rowIndex;
-                        document.getElementById('ordenes_pendientes').deleteRow(rowIndex);
-
-                        element = document.getElementById(rowInfo);
-                        rowIndex = element.rowIndex;
-                        document.getElementById('ordenes_pendientes').deleteRow(rowIndex);
+            bootbox.confirm({
+                message: "¿Estás seguro de querer borrar esta orden?",
+                buttons: {
+                    confirm: {
+                        label: 'Si',
+                        className: 'btn-success'
+                    },
+                    cancel: {
+                        label: 'No',
+                        className: 'btn-danger'
                     }
-                });
-            } else {
+                },
+                callback: function (result) {
+                    console.log('This was logged in the callback: ' + result);
+                    if (result == true) {
+                        $.ajax({
+                            type: "GET",
+                            url: url,
+                            success: function(data) {
+                                // console.log(data);
+                                // alert('Se ha borrado su orden');
+                                rowId = 'r' + id;
+                                rowInfo = 'pinfo' + id;
+                                console.log("Row Name: " + rowId);
+                                element = document.getElementById(rowId);
+                                rowIndex = element.rowIndex;
+                                document.getElementById('ordenes_pendientes').deleteRow(rowIndex);
 
-            }
-            //window.location = "account-page/";
+                                element = document.getElementById(rowInfo);
+                                rowIndex = element.rowIndex;
+                                document.getElementById('ordenes_pendientes').deleteRow(rowIndex);
+                            }
+                        });
+                    } 
+                }
+            });
+
         });
     }
     // Funciones para el pago de ordenes

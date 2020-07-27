@@ -247,7 +247,7 @@
             <div class="col-md-4">
                 <div class="dra-box">
                     <h3 class="mb-4">Buscar</h3>
-                    <form action="" class="form-search-med">
+                    <form action="" class="cover-search  form-search-med">
                         <div
                             class="input-group mb-3 back_ground_loader row-search ui-widget"
                         >

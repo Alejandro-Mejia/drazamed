@@ -32,7 +32,7 @@
                         type="text"
                         class="form-control search_medicine"
                         placeholder="Busca cualquier producto de droguería"
-                        aria-label="Busca un medicamento por nombre"
+                        aria-label="Busca un producto por nombre"
                         aria-describedby="basic-addon2"
                         id="search_medicine"
                     />
