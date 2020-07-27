@@ -1,4 +1,20 @@
 @include('...header')
+
+<style>
+  .ui-autocomplete {
+    max-height: 100px !important;
+    overflow-y: auto;
+    /* prevent horizontal scrollbar */
+    overflow-x: hidden;
+  }
+  /* IE 6 doesn't support max-height
+   * we use height instead, but this forces the menu to always be this tall
+   */
+  * html .ui-autocomplete {
+    height: 100px;
+  }
+  </style>
+
     <div class="contact-container">
         <div class="prescription-inner container">
                   @if($errors->any())
@@ -268,7 +284,7 @@ $(".search_medicine").autocomplete({
         $('.search_medicine').removeClass('search_medicine_my_cart my_cart_search' );
     },
     source: '{{ URL::to('medicine/load-medicine-web/1' )}}',
-    minLength: 0,
+    minLength: 3,
     select: function (event, ui) {
             item_code = ui.item.item_code;
            current_item_code=item_code;

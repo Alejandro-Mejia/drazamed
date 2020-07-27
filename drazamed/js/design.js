@@ -753,7 +753,7 @@ function show_our_products(cat = null) {
 
 function show_favorites() {
     $.ajax({
-        url: "favorites",
+        url: "/favorites",
         type: "GET",
         async: true,
         datatype: "JSON",
