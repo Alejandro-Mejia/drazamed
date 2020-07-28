@@ -122,10 +122,10 @@ $(document).ready(function() {
     });
 
     $("#email_input_reg").blur(function() {
-        if (($("element").data("bs.modal") || {})._isShown) {
-            CheckUsername(this.value);
-        }
-    });
+            if (($("element").data("bs.modal") || {})._isShown) {
+                CheckUsername(this.value);
+            }
+        });
 
     // /**
     //  * Busqueda de Medicamentos por nombre
