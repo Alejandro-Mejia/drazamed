@@ -19,6 +19,7 @@
 
 
 
+
 <section class="profile">
     <div class="profile-body">
         <div class="row">
@@ -78,6 +79,8 @@
                                     ></span
                                     >Cerrar sesión</a
                                 >
+
+
                             </li>
                         </ul>
                     </nav>
@@ -409,6 +412,7 @@
     window.onload = function () {
         $(".presDelete").on("click", function() {
             id = $(this).data('id');
+            console.log("Id formula" +  id);
             url = '/user/pres-delete/' + $(this).data('id')
             bootbox.confirm({
                 message: "¿Estás seguro de querer borrar esta orden?",
@@ -476,38 +480,7 @@
 
     }
 
-    function ConfirmDialog(message) {
-        // BootstrapDialog.show({
-        //     title: 'Say-hello dialog',
-        //     message: 'Hi Apple!'
-        // });
-        
- 
-        // $('#confirmDialog').show()
-        // $('#msgConfirm').html(message)
-        // // .html('<div class="modal-header"><h6 class="modal-tittle">' + message + '?</h6></div>')
-        // $('#confirmDialog').dialog({
-        //   modal: true,
-        //   title: 'Borrar orden',
-        //   zIndex: 10000,
-        //   autoOpen: true,
-        //   width: 'auto',
-        //   resizable: false,
-        //   buttons: {
-        //     Yes: function() {
-        //       $(this).dialog("close");
-        //       return true ;
-        //     },
-        //     No: function() {
-        //       $(this).dialog("close");
-        //       return true ;
-        //     }
-        //   },
-        //   close: function(event, ui) {
-        //     $(this).remove();
-        //   }
-        // });
-    };
+    
 
     // <div class="modal-content">
     //    <div class="modal-header">

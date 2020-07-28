@@ -26,6 +26,7 @@
         "mercadopago/dx-php": "2.0.0",
         "mews/captcha": "^3.1",
         "rodggall/mercadopago": "@dev",
+        "sentry/sentry-laravel": "^1.8",
         "spatie/laravel-cookie-consent": "^2.12",
         "spatie/laravel-sitemap": "^5.7"
     },
@@ -33,6 +34,7 @@
         "barryvdh/laravel-debugbar": "^3.2",
         "facade/ignition": "^2.0",
         "fzaninotto/faker": "^1.9.1",
+        "kint-php/kint": "^3.3",
         "laravel/ui": "^2.0",
         "mockery/mockery": "^1.3.1",
         "nunomaduro/collision": "^4.1",

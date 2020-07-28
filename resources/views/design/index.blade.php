@@ -177,6 +177,12 @@
             .appendTo(ul);
         };
 
+        $("#email_input_reg").blur(function() {
+            if (($("element").data("bs.modal") || {})._isShown) {
+                CheckUsername(this.value);
+            }
+        });
+
 
 </script>
 
