@@ -68,4 +68,11 @@
 
 			return empty($key) ? $medicines : $medicines[$key];
 		}
+
+		public function carts () {
+			return $this->hasMany('App\ItemList','medicine','id');
+		}
+
+
 	}
+		
