@@ -55,7 +55,7 @@
                             <li>
                                 <a href="#pagadas_por_enviar"
                                     ><span class="mr-10 fas fa-shipping-fast"></span
-                                    >Ordenes en proceso de entrega</a
+                                    >Ordenes en Proceso de Entrega</a
                                 >
                             </li>
                             <li>
@@ -267,7 +267,7 @@
 
                 <div class="panel mt-30" id="pagadas_por_enviar">
 
-                    <h2 class="panel-title">Ordenes en proceso de entrega</h2>
+                    <h2 class="panel-title">Ordenes en Proceso de Entrega</h2>
                     <p>
                         Tu pedido será entregado lo antes posible.
                     </p>
@@ -417,14 +417,15 @@
             bootbox.confirm({
                 message: "¿Estás seguro de querer borrar esta orden?",
                 buttons: {
-                    confirm: {
-                        label: 'Si',
-                        className: 'btn-success'
-                    },
                     cancel: {
-                        label: 'No',
-                        className: 'btn-danger'
+                        label: 'CANCELAR',
+                        className: 'dra-button-blue1'
+                    },
+                    confirm: {
+                        label: 'BORRAR',
+                        className: 'dra-button'
                     }
+                    
                 },
                 callback: function (result) {
                     console.log('This was logged in the callback: ' + result);

@@ -8,6 +8,6 @@
 
         public function medicine_details()
         {
-            return $this->hasOne('Medicine', 'item_code', 'item_code')->select('item_code', 'item_name')->first();
+            return $this->hasOne('Medicine', 'id','medicine')->select('item_code', 'item_name')->first();
         }
     }
