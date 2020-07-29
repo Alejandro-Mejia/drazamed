@@ -68,6 +68,7 @@
                                 if(!empty($items)){
 
                                 foreach($items as $item){ ?>
+                                <?php var_dump($item); ?>
                                 <div class="row col-lg-12">
                                     <div class="col-lg-3">
                                         @if($i == 1)<h5>{{ __('Medicine Name')}}</h5> @endif
@@ -110,7 +111,7 @@
                                         @if($i == 1)<h5>Mrp</h5>@endif
                                         <input type="text" id="pricee{{ $i }}" name="pricee{{ $i }}" onChange="calculate(this.id)" class="form-control"
                                                                                        placeholder="Mrp"
-                                                                                       valtem['unit_price']) ? $item['unit_price'] : ''); ?>>
+                                                                                       value = <?php (isset($item['unit_price'])) ? $item['unit_price'] : ); ?>>
                                     </div>
                                     <div class="col-lg-1">
                                         @if($i == 1)<h5>S Total</h5>@endif
@@ -142,6 +143,7 @@
                                         value=<?php
                                         if(empty($item['discount'])){
                                             echo $total_discount = $discount * $quantity;
+        
                                             $is_system_discount = true;
                                         }else{
                                             echo  $item['discount'];
