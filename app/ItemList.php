@@ -8,6 +8,11 @@
 
         public function medicine_details()
         {
-            return $this->hasOne('Medicine', 'id','medicine')->select('item_code', 'item_name')->first();
+            return $this->hasOne('App\Medicine', 'medicine')->select('item_code', 'item_name')->first();
+        }
+
+        public function medicine()
+        {
+            return $this->belongsTo('App\Medicine', 'item_code', 'item_code')->select('item_code', 'item_name')->first();
         }
     }
