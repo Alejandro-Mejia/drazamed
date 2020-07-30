@@ -781,7 +781,7 @@ class AdminController extends BaseController
 		if (!is_null ($invoice) && ($invoice->status_id == InvoiceStatus::PAID () && $status == PrescriptionStatus::UNVERIFIED ())) {
 			return Redirect::to ('admin/pres-edit/' . $pres_id . '/0');
 		}
-		$shipping = 0;
+		//$shipping = 0;
 		$medicines = Medicine::medicines ();
 		$setting = Setting::param ('site' , 'discount')['value'];
 		$discounts = floatval (Setting::param ('site' , 'discount')['value']);
@@ -793,14 +793,14 @@ class AdminController extends BaseController
 			$items = [];
 			foreach ($items_list as $item) {
 				$items[] = [
-					'cart_id' => $item->id ,
-					'item_id' => $item->medicine ,
-					'item_name' => $item->medicine_details ()->item_name ,
-					'unit_price' => $item->unit_price ,
-					'discount' => $item->discount ,
-					'unit_disc' => $item->discount_percentage ,
-					'total_price' => $item->total_price ,
-					'quantity' => $item->quantity ,
+					'cart_id' => $item->id,
+					'item_id' => $item->medicine,
+					'item_name' => $item->medicine_details()->item_name,
+					'unit_price' => $item->unit_price,
+					'discount' => $item->discount,
+					'unit_disc' => $item->discount_percentage,
+					'total_price' => $item->total_price,
+					'quantity' => $item->quantity,
 					'item_code' => $item->medicine_details ()->item_code
 				];
 			}
