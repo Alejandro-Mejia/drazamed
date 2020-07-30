@@ -68,7 +68,7 @@
                                 if(!empty($items)){
 
                                 foreach($items as $item){ ?>
-                                <?php var_dump($item); ?>
+                                
                                 <div class="row col-lg-12">
                                     <div class="col-lg-3">
                                         @if($i == 1)<h5>{{ __('Medicine Name')}}</h5> @endif
@@ -108,13 +108,13 @@
                                     </div>
 
                                      <div class="col-lg-1">
-                                        @if($i == 1)<h5>Mrp</h5>@endif
+                                        @if($i == 1)<h5>P.Unit.</h5>@endif
                                         <input type="text" id="pricee{{ $i }}" name="pricee{{ $i }}" onChange="calculate(this.id)" class="form-control"
                                                                                        placeholder="Mrp"
-                                                                                       value = <?php (isset($item['unit_price'])) ? $item['unit_price'] : ); ?>>
+                                                                                       value = {{$item['unit_price']}} >
                                     </div>
                                     <div class="col-lg-1">
-                                        @if($i == 1)<h5>S Total</h5>@endif
+                                        @if($i == 1) <h5>S Total</h5> @endif
                                         <input type="text" id="price{{ $i }}" name="sub_total{{ $i }}" class="form-control" placeholder="Sub Total"
                                                value=<?php
                                             if (!empty($item)) {
@@ -133,12 +133,12 @@
 
                                     </div>
                                     <div class='col-lg-1'>
-						                @if($i == 1)<h5>Disc</h5>@endif
+						                @if($i == 1)<h5>Desc.</h5>@endif
                                         <input type='text' id='discount1{{ $i }}' name="unit_discount{{ $i }}" class='form-control' placeholder='Discount'
                                         value=<?php echo empty($item['unit_disc']) ? $discount : $item['unit_disc']; ?> readonly>
                                     </div>
                                     <div class='col-lg-2'>
-						                @if($i == 1)<h5>Total Disc</h5>@endif
+						                @if($i == 1)<h5>Desc. Total</h5>@endif
 						                <input type='text' id='discount{{ $i }}' readonly  onChange="calculate(this.id)" name='discount{{ $i }}' class='form-control' placeholder='Discount'
                                         value=<?php
                                         if(empty($item['discount'])){
