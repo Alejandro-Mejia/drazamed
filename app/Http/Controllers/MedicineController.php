@@ -81,6 +81,7 @@ class MedicineController extends BaseController
 
 			if (Auth::check ()) {
 				$email = Session::get ('user_id');
+				//$quantity = Session::get('medicine_count');
 				$user_type = Auth::user ()->user_type_id;
 				$customer = Auth::user()->with('customer')->first();
 
@@ -193,9 +194,9 @@ class MedicineController extends BaseController
 				}
 
 				// Update invoice sub_total
-				$invoice->latest()->update(array('sub_total' => $sub_total));
-				$invoice->latest()->update(array('tax_amount' => $tax_amount));
-				$invoice->latest()->update(array('total' => $sub_total + $shipping_cost));
+				$invoice->latest()->first()->update(array('sub_total' => $sub_total));
+				$invoice->latest()->first()->update(array('tax_amount' => $tax_amount));
+				$invoice->latest()->first()->update(array('total' => $sub_total + $shipping_cost));
 
 				$data['email'] = $email;
 				$name = "";

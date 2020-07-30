@@ -7,6 +7,12 @@
         protected $table = 'invoice';
         public $timestamps = false;
 
+        protected $fillable = [
+            'sub_total',
+            'tax_amount',
+            'total'
+        ];
+
         /**
          * Prescriptions
          */
