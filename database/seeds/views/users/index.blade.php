@@ -101,7 +101,7 @@ is available both for iOS and Android platforms.</p>
 
 $(document).ready(function () {
 
-        show_favorites();
+        //show_favorites();
         var msg = $('#msg').val();
         if (msg == "success") {
             $('#res-title').css('color','green');
