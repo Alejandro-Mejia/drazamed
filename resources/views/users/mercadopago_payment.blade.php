@@ -81,6 +81,8 @@ $_SESSION['is_pres_required']=$posted['is_pres_required'];
                                             </div>
                                         </div>
                                         <div style="display: none">
+                                            {{var_dump($posted['access_token'])}}
+                                            {{var_dump($posted['amount'])}}
                                             <script
                                                 src="https://www.mercadopago.com.co/integrations/v1/web-tokenize-checkout.js"
                                                 data-public-key={{$posted['access_token']}}

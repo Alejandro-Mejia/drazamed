@@ -151,66 +151,66 @@
                                         }
                                         ?>  />
                                     </div>
-
+                                    {{-- <?php //var_dump($item) ?> --}}
                                     <div class='col-lg-2'>
 						                @if($i == 1)<h5>Total</h5>@endif
 						                <input type='text' id='total_price{{ $i }}' name='total_price{{ $i }}' class='form-control' placeholder=''
-                                        value=<?php echo(isset($item['total_price']) ? $item['total_price'] - (($is_system_discount) ? $total_discount : 0)  : 0); ?>  >
+                                        value=<?php echo(isset($item['total_price']) ? $item['total_price'] + $shipping - (($is_system_discount) ? $total_discount : 0)  : 0); ?>  >
                                     </div>
                             </div>
                             <?php
                                 $i++;
                             } }else{ ?>
 
-                                                            <div class="row col-lg-12">
-                                                                <div class="col-lg-3">
-                                                                    <h5>Medicine Name</h5>
-                                                                    <input type="text" id="autocomplete1" name="autocomplete1"
-                                                                           class="form-control auto-input" name="mytext[]"
-                                                                           placeholder="Type Medicine name"
-                                                                           value="" />
+                                    <div class="row col-lg-12">
+                                        <div class="col-lg-3">
+                                            <h5>Medicine Name</h5>
+                                            <input type="text" id="autocomplete1" name="autocomplete1"
+                                                    class="form-control auto-input" name="mytext[]"
+                                                    placeholder="Type Medicine name"
+                                                    value="" />
 
-                                                                    <input id="itemS" name="itemS" type="hidden" value="1" />
-                                                                    <input name="invoice_id" type="hidden" value=<?php echo $invoice_id; ?> />
-                                                                    <input name="pres_id" type="hidden" value=<?php echo $pres_id; ?>>
-                                                                    <input id="todelete" name="todelete" type="hidden">
-                                                                </div>
-                                                                <div class="col-lg-1">
-                                                                    <h5>Qty</h5>
-                                                                    <input type="number" min="1" value="1" id="qty1" name="qty1" onChange="calculate(this.id)" autocomplete="off"
-                                                                           class="form-control" placeholder="Qty.">
-                                                                </div>
+                                            <input id="itemS" name="itemS" type="hidden" value="1" />
+                                            <input name="invoice_id" type="hidden" value=<?php echo $invoice_id; ?> />
+                                            <input name="pres_id" type="hidden" value=<?php echo $pres_id; ?>>
+                                            <input id="todelete" name="todelete" type="hidden">
+                                        </div>
+                                        <div class="col-lg-1">
+                                            <h5>Qty</h5>
+                                            <input type="number" min="1" value="1" id="qty1" name="qty1" onChange="calculate(this.id)" autocomplete="off"
+                                                    class="form-control" placeholder="Qty.">
+                                        </div>
 
-                                                                 <div class="col-lg-1">
-                                                         <h5>Mrp</h5>
-                                                                    <input type="text" id="pricee1" name="pricee1" class="form-control"
-                                                                                                                   placeholder="Mrp"onChange="calculate(this.id)"
-                                                                                                                   value="" />
-                                                                </div>
-                                                                <div class="col-lg-1">
-                                                                   <h5>S Total</h5>
-                                                                    <input type="text" id="price1" name="sub_total1" class="form-control"  placeholder="Sub Total"
-                                                                           value="" />
-                                                                    <input id="item_code1" name="item_code1" type="hidden" value="" />
+                                            <div class="col-lg-1">
+                                        <h5>P. Unitario</h5>
+                                            <input type="text" id="pricee1" name="pricee1" class="form-control"
+                                                                                            placeholder="Mrp"onChange="calculate(this.id)"
+                                                                                            value="" />
+                                        </div>
+                                        <div class="col-lg-1">
+                                            <h5>S Total</h5>
+                                            <input type="text" id="price1" name="sub_total1" class="form-control"  placeholder="Sub Total"
+                                                    value="" />
+                                            <input id="item_code1" name="item_code1" type="hidden" value="" />
 
-                                                                </div>
-                                                                <div class='col-lg-1'>
-                            						                <h5>Disc</h5>
-                                                                    <input type='text' id='discount11' name="unit_discount1" class='form-control'  placeholder='Discount' onChange="calculate(this.id)"
-                                                                    value="" readonly>
-                                                                </div>
-                                                                <div class='col-lg-2'>
-                            						             <h5>Total Disc</h5>
-                            						                <input type='text' id='discount1' name='discount1' class='form-control' placeholder='Discount' onChange="calculate(this.id)"
-                                                                    value="" />
-                                                                </div>
+                                        </div>
+                                        <div class='col-lg-1'>
+                                            <h5>Disc</h5>
+                                            <input type='text' id='discount11' name="unit_discount1" class='form-control'  placeholder='Discount' onChange="calculate(this.id)"
+                                            value="" readonly>
+                                        </div>
+                                        <div class='col-lg-2'>
+                                            <h5>Total Disc</h5>
+                                            <input type='text' id='discount1' name='discount1' class='form-control' placeholder='Discount' onChange="calculate(this.id)"
+                                            value="" />
+                                        </div>
 
-                                                                <div class='col-lg-2'>
-                            						                <h5>Total</h5>
-                            						                <input type='text' id='total_price1' name='total_price1' class='form-control' placeholder=''
-                                                                    value="" />
-                                                                </div>
-                                                        </div>
+                                        <div class='col-lg-2'>
+                                            <h5>Total</h5>
+                                            <input type='text' id='total_price1' name='total_price1' class='form-control' placeholder=''
+                                            value="" />
+                                        </div>
+                                </div>
 
                             <?php }  ?>
                         </div>
