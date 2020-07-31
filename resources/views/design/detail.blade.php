@@ -99,6 +99,8 @@
                             <button type="button"class="btn btn-info buynow-btn ripple" invoice="<?php if (!empty($prescription['id'])) { echo $prescription['id']; }?>" onclick="purchase_paypal(this)">{{__('BUY NOW')}}</button>
                         @elseif($payment_mode==2)
                             <button type="button"class="btn btn-info buynow-btn ripple" invoice="<?php if (!empty($prescription['id'])) { echo $prescription['id']; }?>" onclick="purchase_mercadopago(this)">{{__('BUY NOW')}}</button>
+
+                            
                         @endif
 
                     @endif

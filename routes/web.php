@@ -3,6 +3,7 @@
 namespace App;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use App\Http\Requests;
 use App\Setting;
 use Redirect;
@@ -19,6 +20,9 @@ use App\Mail\NewMail;
 use Elasticquent\ElasticquentTrait;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Sitemap\SitemapGenerator;
+
+
+use App\MercadoPago;
 use App\MercadoPago\SDK;
 
 /*
@@ -342,3 +346,84 @@ Route::get('/', function () {
 });
 
 Route::get('/sitemap.xml', 'SiteMapController@index');
+
+Route::get('/pago-aceptado', function () {
+    echo "Pago Aceptado";
+});
+
+Route::get('/pago-cancelado', function () {
+    echo "Pago Cancelado";
+});
+
+Route::get('/testMP', function() {
+
+    $sandBoxMode = config('payment-methods.use_sandbox');
+    Log::info('Use Sandobox  '.print_r($sandBoxMode, true));
+        
+    if ($sandBoxMode) {
+        $access_token = config('mercadopago.mp_app_access_token_sb');
+        Log::info('Sandbox Pub Key '.$access_token);
+        // MercadoPago\SDK::setAccessToken("APP_USR-2009643657185989-050901-f80d5fbf89c8c43f650efb2167d51d1b-544483632");
+    } else {
+        $access_token = config('mercadopago.mp_app_access_token_pr');
+        Log::info('Production  App Access Token '.$access_token);
+        // MercadoPago\SDK::setAccessToken("APP_USR-2009643657185989-050901-f80d5fbf89c8c43f650efb2167d51d1b-544483632");
+    }
+
+    // MercadoPago\SDK::setAccessToken($access_token);
+
+    Log::info('Access_Token etapa 2:'.$access_token);
+
+
+
+    // Crea un objeto de preferencia
+    $preference = new MercadoPago\Preference();
+    # Crea ítems en la preferencia
+    $item1 = new MercadoPago\Item;
+    $item1->title = "Item de Prueba 1";
+    $item1->quantity = 2;
+    $item1->unit_price = 11.96;
+
+    $item2= new MercadoPago\Item;
+    $item2->title = "Item de Prueba 2";
+    $item2->quantity = 1;
+    $item2->unit_price = 11.96;
+
+    $preference->items = array($item1,$item2);
+    
+    $payer = new MercadoPago\Payer();
+    $payer->name = "Charles";
+    $payer->surname = "Luevano";
+    $payer->email = "charles@hotmail.com";
+    $payer->date_created = "2018-06-02T12:58:41.425-04:00";
+    $payer->phone = array(
+        "area_code" => "",
+        "number" => "949 128 866"
+    );
+    
+    $payer->identification = array(
+        "type" => "DNI",
+        "number" => "12345678"
+    );
+    
+    $payer->address = array(
+        "street_name" => "Cuesta Miguel Armendáriz",
+        "street_number" => 1004,
+        "zip_code" => "11020"
+    );
+
+
+    # Guardar y postear la preferencia
+    $preference->save();
+
+    var_dump($preference);
+
+    echo "<form action='/procesar-pago' method='POST'>
+        <script
+            src='https://www.mercadopago.com.ar/integrations/v1/web-payment-checkout.js'
+            data-preference-id='<?php echo $preference->id; ?>'>
+        </script>
+    </form>";
+    // Redireccionar al usuario a la página de pago en modo sandbox
+    //header("Location: " . $preference['response']['sandbox_init_point']);
+});

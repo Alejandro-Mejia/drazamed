@@ -1681,10 +1681,21 @@ class MedicineController extends BaseController
 		// MercadoPago\SDK::setAccessToken('APP_USR-2009643657185989-050901-f80d5fbf89c8c43f650efb2167d51d1b-544483632');
 
 		$allowedPaymentMethods = config('payment-methods.enabled');
+		Log::info('Allowed Methods '.print_r($allowedPaymentMethods, true));
 
-		$access_token = config('mercadopago.mp_pub_key_pr');
+		$sandBoxMode = config('payment-methods.use_sandbox');
+		Log::info('Use Sandobox  '.print_r($sandBoxMode, true));
+
+		if ($sandBoxMode) {
+			$access_token = config('mercadopago.mp_pub_key_sb');
+			Log::info('Sandbox Pub Key '.$access_token);
+		} else {
+			$access_token = config('mercadopago.mp_pub_key_pr');
+			Log::info('Production  Pub Key '.$access_token);
+		}
+		
 		// $access_token = env("MP_APP_ACCESS_TOKEN", null);
-
+		MercadoPago\SDK::setAccessToken($access_token);
 
 
 		$token= '';
@@ -1734,11 +1745,26 @@ class MedicineController extends BaseController
 
 			if($access_token != null)
 			{
-				$access_token = config('mercadopago.mp_app_access_token_pr');
-				Log::info('Access_Token:'.$access_token);
-				// dd($access_token);
+				if ($sandBoxMode) {
+					$access_token = config('mercadopago.mp_app_access_token_sb');
+					Log::info('Sandbox Pub Key '.$access_token);
+					// MercadoPago\SDK::setAccessToken("APP_USR-2009643657185989-050901-f80d5fbf89c8c43f650efb2167d51d1b-544483632");
+				} else {
+					$access_token = config('mercadopago.mp_app_access_token_pr');
+					Log::info('Production  App Access Token '.$access_token);
+					// MercadoPago\SDK::setAccessToken("APP_USR-2009643657185989-050901-f80d5fbf89c8c43f650efb2167d51d1b-544483632");
+				}
 
-				MercadoPago\SDK::setAccessToken("TEST-2009643657185989-050901-fca361ac1da29db05fd762e38448d574-544483632");
+				MercadoPago\SDK::setAccessToken($access_token);
+
+				Log::info('Access_Token etapa 2:'.$access_token);
+
+
+				// $access_token = config('mercadopago.mp_app_access_token_pr');
+				// Log::info('Access_Token:'.$access_token);
+				// // dd($access_token);
+
+				
 
 				// $email = "test_user_44639121@testuser.com";
 				$payment = new MercadoPago\Payment();
@@ -2189,7 +2215,9 @@ class MedicineController extends BaseController
 	    $url = $this->generatePaymentGateway(
 	             $request->get('payment_method'),
 	             $order
-	         );
+			 );
+			 
+		Log::info('Auto Url '.print_r($allowedPaymentMethods, true));
 	    return redirect()->to($url);
 	}
 
@@ -2197,7 +2225,9 @@ class MedicineController extends BaseController
 	{
 	    $method = new \App\PaymentMethods\MercadoPago;
 
-	    return $method->setupPaymentAndGetRedirectURL($order);
+		$return = $method->setupPaymentAndGetRedirectURL($order);
+		Log::info('Return from setupPayment redirect Url '.print_r($allowedPaymentMethods, true));
+	    return $return;
 	}
 
 }
