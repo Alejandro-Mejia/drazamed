@@ -105,6 +105,7 @@ use MercadoPago;
     Route::any('/medicine/make-paypal-payment/{invoice}', 'MedicineController@anyMakePaypalPayment');
     Route::any('/medicine/make-mercado-pago-payment/{invoice}/{is_mobile}', 'MedicineController@anyMakeMercadoPagoPayment');
     Route::any('/medicine/make-mercado-pago-payment/{invoice}', 'MedicineController@anyMakeMercadoPagoPayment');
+    Route::any('/procesar-pago', 'MedicineController@anyProcessMercadopagoResponse');
     Route::any('/medicine/admin-pay-success/{invoice}', 'MedicineController@anyAdminPaySuccess');
     Route::any('/medicine/create-order/{invoice}/{request}', 'MedicineController@anyCreateOrder');
     Route::any('/medicine/audit-database', 'MedicineController@anyAuditDatabase');
@@ -344,10 +345,6 @@ Route::get('/', function () {
 });
 
 Route::get('/sitemap.xml', 'SiteMapController@index');
-
-Route::post('/procesar-pago', function () {
-    echo "Procesando Pago";
-});
 
 Route::get('/pago-aceptado', function () {
     echo "Pago Aceptado";

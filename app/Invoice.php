@@ -10,7 +10,11 @@
         protected $fillable = [
             'sub_total',
             'tax_amount',
-            'total'
+            'total',
+            'status_id',
+            'payment_status',
+            'transaction_id',
+            
         ];
 
         /**
