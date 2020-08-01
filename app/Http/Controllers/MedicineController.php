@@ -1770,6 +1770,7 @@ class MedicineController extends BaseController
 
 		$preference->payer = $payer;
 		$preference->shipments = $shipments;
+		$preference->external_reference = $invoice->id;
 
 
 		Log::info('Preference items: ' . print_r($preference, true)); 
@@ -1790,10 +1791,41 @@ class MedicineController extends BaseController
 		$data['access_token'] = $access_token;
 		
 		if ($isMobile)
-			return View::make ('/users/mobile_paypal_payment' , array('posted' => $data, 'preference' => $preference));
+			return View::make ('/users/mobile_paypal_payment' , array('posted' => $data, 'preference' => $preference, 'invoice' => $invoice));
 		else
-			return View::make ('/users/mercadopago_payment' , array('posted' => $data, 'preference' => $preference));
+			return View::make ('/users/mercadopago_payment' , array('posted' => $data, 'preference' => $preference, 'invoice' => $invoice));
 		
+	}
+
+
+	public function anyProcessMercadopagoResponse() {
+		$preference_id = Request::get ('preference_id' , '');
+		$payment_id = Request::get ('payment_id' , '');
+		$payment_status = Request::get ('payment_status' , '');
+		$payment_status_detail = Request::get ('payment_status_detail' , '');
+		$merchant_order_id = Request::get ('merchant_order_id' , '');
+		$merchant_account_id = Request::get ('merchant_account_id' , '');
+		$processing_mode = Request::get ('processing_mode' , '');
+		$invoice_id = Request::get ('external_reference' , '');
+		
+
+		if($payment_status == "approved") {
+			// Obtiene la informacion de la factura
+			$invoice = Invoice::find ($invoice_id);
+			$this->anyPaySuccess ($invoice, $payment_id);
+		}
+
+		$data = array();
+		$data['preference_id'] = $preference_id;
+		$data['payment_id'] = $payment_id;
+		$data['payment_status'] = $payment_status;
+		$data['payment_status_detail'] = $payment_status_detail;
+		$data['merchant_order_id'] = $merchant_order_id;
+		$data['merchant_account_id'] = $merchant_account_id;
+		$data['processing_mode'] = $processing_mode;
+
+
+		return View::make ('mp.process_response' , array('posted' => $data));
 	}
 
 	/**	
@@ -2023,11 +2055,11 @@ class MedicineController extends BaseController
 	 */
 
 	public
-	function anyPaySuccess ($invoice)
+	function anyPaySuccess ($invoice, $transaction_id)
 	{
-		$transaction_id = Request::get ('payuMoneyId' , '');             // Save Return Transaction Id of Payment Gateway
+		// $transaction_id = Request::get ('payuMoneyId' , '');             // Save Return Transaction Id of Payment Gateway
 		// Update Invoice
-		$invoice = Invoice::find ($invoice);
+		//$invoice = Invoice::find ($invoice);
 		$invoice->status_id = InvoiceStatus::PAID ();
 		$invoice->payment_status = PayStatus::SUCCESS ();
 		$invoice->transaction_id = $transaction_id;

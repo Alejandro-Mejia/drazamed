@@ -57,8 +57,8 @@ $_SESSION['is_pres_required']=$posted['is_pres_required'];
                                     </div>
                                     
                                     <div class="btn_payment">
-                                        {{-- <form action="{{ action('MedicineController@anyMakeMercadoPagoPayment', [$posted['invoice_id']]) }}" method="POST" id="mercadopagoForm"> --}}
-                                        <form action="/procesar-pago" method="POST">
+                                        <form action="{{ action('MedicineController@anyProcessMercadopagoResponse', [$posted['invoice_id']]) }}" method="POST" id="mercadopagoForm">
+                                        {{-- <form action="/procesar-pago" method="POST"> --}}
                                         <div class="checkboxes_section" style ="text-align: left">
 
                                             {{-- {{$_SESSION }} --}}
@@ -154,29 +154,8 @@ $_SESSION['is_pres_required']=$posted['is_pres_required'];
     </div>
 </div>
 
-<!-- Modal -->
-<div class="modal fade" id="myModal" role="dialog">
-    <div class="modal-dialog">
-    
-      <!-- Modal content-->
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Modal Header</h4>
-        </div>
-        <div class="modal-body">
-          <p id="error"></p>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        </div>
-      </div>
-      
-    </div>
-</div>
 
-<footer>
-<div class="container innerBtm">
+@include('...footer')
 
 <script type="">
 $('#alertbox').on('click', function(event){
