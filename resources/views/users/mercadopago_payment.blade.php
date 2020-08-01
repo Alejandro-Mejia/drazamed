@@ -26,7 +26,7 @@ $_SESSION['is_pres_required']=$posted['is_pres_required'];
                 <div class="col-md-12">
                     <div class="inside_section mb--20">
                         <h2 class="black">Detalles de Pago</h2>
-                        <form action="">
+                        {{-- <form action=""> --}}
                             <div class="row">
                                 <div class="col-md-6 col-sm-12">
                                     <div class="form-group">
@@ -57,8 +57,8 @@ $_SESSION['is_pres_required']=$posted['is_pres_required'];
                                     </div>
                                     
                                     <div class="btn_payment">
-                                        <form action="{{ action('MedicineController@anyMakeMercadoPagoPayment', [$posted['invoice_id']]) }}" method="POST" id="mercadopagoForm">
-
+                                        {{-- <form action="{{ action('MedicineController@anyMakeMercadoPagoPayment', [$posted['invoice_id']]) }}" method="POST" id="mercadopagoForm"> --}}
+                                        <form action="/procesar-pago" method="POST">
                                         <div class="checkboxes_section" style ="text-align: left">
 
                                             {{-- {{$_SESSION }} --}}
@@ -80,100 +80,23 @@ $_SESSION['is_pres_required']=$posted['is_pres_required'];
                                                 <label class="form-check-label" for="">Conozco y acepto los <a>Términos y Condiciones</a> y <a>Pólitica de Manejo de Datos Personales</a></label>
                                             </div>
                                         </div>
-                                        <div style="display: none">
-                                            {{ Log::info('tokenize data access_token ' . print_r($posted['access_token'], true)) }}
-                                            {{ Log::info('tokenize amount '.print_r($posted['amount'], true)) }}
-                                            <script
-                                                @php
-                                                    var $preference =  {
-                                                        "items": [
-                                                            {
-                                                                "id": "item-ID-1234",
-                                                                "title": "Title of what you are paying for. It will be displayed in the payment process.",
-                                                                "currency_id": "CLP",
-                                                                "picture_url": "https://www.mercadopago.com/org-img/MP3/home/logomp3.gif",
-                                                                "description": "Item description",
-                                                                "category_id": "art", // Available categories at https://api.mercadopago.com/item_categories
-                                                                "quantity": 1,
-                                                                "unit_price": 100
-                                                            }
-                                                        ],
-                                                        "payer": {
-                                                            "name": "user-name",
-                                                            "surname": "user-surname",
-                                                            "email": "user@email.com",
-                                                            "date_created": "2015-06-02T12:58:41.425-04:00",
-                                                            "phone": {
-                                                                "area_code": "11",
-                                                                "number": "4444-4444"
-                                                            },
-                                                            "identification": {
-                                                                "type": "RUT", // Available ID types at https://api.mercadopago.com/v1/identification_types
-                                                                "number": "12345678"
-                                                            },
-                                                            "address": {
-                                                                "street_name": "Street",
-                                                                "street_number": 123,
-                                                                "zip_code": "5700"
-                                                            }
-                                                        },
-                                                        "back_urls": {
-                                                            "success": "https://www.success.com",
-                                                            "failure": "http://www.failure.com",
-                                                            "pending": "http://www.pending.com"
-                                                        },
-                                                        "auto_return": "approved",
-                                                        "payment_methods": {
-                                                            "excluded_payment_methods": [
-                                                                {
-                                                                    "id": "master"
-                                                                }
-                                                            ],
-                                                            "excluded_payment_types": [
-                                                                {
-                                                                    "id": "ticket"
-                                                                }
-                                                            ],
-                                                            "installments": 12,
-                                                            "default_payment_method_id": null,
-                                                            "default_installments": null
-                                                        },
-                                                        "shipments": {
-                                                            "receiver_address": {
-                                                                "zip_code": "5700",
-                                                                "street_number": 123,
-                                                                "street_name": "Street",
-                                                                "floor": 4,
-                                                                "apartment": "C"
-                                                            }
-                                                        },
-                                                        "notification_url": "https://www.your-site.com/ipn",
-                                                        "external_reference": "Reference_1234",
-                                                        "expires": true,
-                                                        "expiration_date_from": "2016-02-01T12:00:00.000-04:00",
-                                                        "expiration_date_to": "2016-02-28T12:00:00.000-04:00",
-                                                        "taxes": [
-                                                            {
-                                                                "type": "IVA",
-                                                                "value": 16
-                                                            }
-                                                        ]
-                                                    }
-                                                @endphp
-                                               
-                                                src="https://www.mercadopago.com.co/integrations/v1/web-payment-checkout.js"
-                                                data-preference-id="<?php echo $preference->id; ?>">
-                                                
-                                                
-                                                //src="https://www.mercadopago.com.co/integrations/v1/web-tokenize-checkout.js
-                                            </script>
+                                        <div style="display: block">
+                                            {{-- <script
+                                            src="https://www.mercadopago.com.co/integrations/v1/web-payment-checkout.js"
+                                            data-preference-id="<?php echo $preference->id; ?>">
+                                            </script> --}}
                                         </div>
                                        
-                                        <div style="display: block">
+                                        {{-- <div style="display: block">
                                             <button class="dra-button btn_payment btn" title="Debe aceptar las condiciones para poder pagar" id="alertbox" data-toggle="modal" data-target="#myModal"> PAGAR </button>
-                                        </div>
+                                        </div> --}}
                                         
-
+                                        {{-- <form action="/procesar-pago" method="POST"> --}}
+                                            <script
+                                            src="https://www.mercadopago.com.co/integrations/v1/web-payment-checkout.js"
+                                            data-preference-id="<?php echo $preference->id; ?>">
+                                            </script>
+                                        {{-- </form> --}}
                                     
                                         </form>
                                        
