@@ -7,7 +7,7 @@
                             <th class="text-left  text-align-responsive">{{ __('Article')}}</th>
                             <th class="text-right text-align-responsive">{{ __('Unit Price')}}</th>
                             <th class="text-right text-align-responsive">{{ __('Quantity')}}</th>
-                            <th class="text-right text-align-responsive">{{ __('Sub Total')}}</th>
+                            {{-- <th class="text-right text-align-responsive">{{ __('Sub Total')}}</th> --}}
                             <th class="text-right text-align-responsive">{{ __('Total Price')}}</th>
                         </tr>
                     </thead>
@@ -18,15 +18,15 @@
                             <td class="text-left text-align-responsive"> {{ $cart['item_name'] }} </td>
                             <td class="text-right text-align-responsive" nowrap> {{ number_format($cart['unit_price'],2)}} </td>
                             <td class="text-right text-align-responsive"> {{ $cart['quantity'] }}</td>
+                            {{-- <td class="text-right text-align-responsive" nowrap>
+                                {{ Setting::currencyFormat($cart['unit_price']* $cart['quantity'])}}
+                            </td> --}}
                             <td class="text-right text-align-responsive" nowrap>
                                 {{ Setting::currencyFormat($cart['unit_price']* $cart['quantity'])}}
                             </td>
-                            <td class="text-right text-align-responsive" nowrap>
-                                {{ Setting::currencyFormat($cart['total_price'])}}
-                            </td>
                         </tr>
                             <?php
-                                $sub_total += $cart['total_price'];
+                                $sub_total += $cart['unit_price'] * $cart['quantity'];
                             ?>
                         @endforeach
                     </tbody>
@@ -39,7 +39,7 @@
                             <p style="color:rgb(55, 213, 218);">Sub Total</p>
                         </div>
                         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-4 text-right text-align-responsive">
-                            <p >{{ empty($prescription['total']) ? Setting::currencyFormat($sub_total) : Setting::currencyFormat($prescription['sub_total'])}}</p>
+                            <p >{{ Setting::currencyFormat($sub_total) }}</p>
                         </div>
                     </div>
                     <div class="row">
