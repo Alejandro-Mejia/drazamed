@@ -23,9 +23,9 @@
         "laravelcollective/html": "^6.1",
         "maatwebsite/excel": "^3.1",
         "mariuzzo/laravel-js-localization": "^1.6",
-        "mercadopago/dx-php": "2.0.0",
+        "mercadopago/dx-php": "2.1.0",
         "mews/captcha": "^3.1",
-        "rodggall/mercadopago": "@dev",
+        "patosmack/mercado-pago": "^1.0@beta",
         "sentry/sentry-laravel": "^1.8",
         "spatie/laravel-cookie-consent": "^2.12",
         "spatie/laravel-sitemap": "^5.7"

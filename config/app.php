@@ -185,7 +185,7 @@ return [
         Collective\Html\HtmlServiceProvider::class,
 
         // Mercado Pago
-        MercadoPagoLaravel\Providers\MercadoPagoServiceProvider::class,
+        //Patosmack\MercadoPago\Providers\MercadoPagoServiceProvider::Class,
 
         // JS translations
         Mariuzzo\LaravelJsLocalization\LaravelJsLocalizationServiceProvider::class,
@@ -259,7 +259,7 @@ return [
         'Debugbar' => Barryvdh\Debugbar\Facade::class,
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
         // Mercadopago
-        'MP' => MercadoPagoLaravel\Facades\MP::class,
+        //'MP' => Patosmack\MercadoPago\Facades\MP::Class,
 
     ],
 

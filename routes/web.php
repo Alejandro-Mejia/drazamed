@@ -9,7 +9,6 @@ use App\Setting;
 use Redirect;
 use Mail;
 use URL;
-use MP;
 use View;
 use Cache;
 use Session;
@@ -21,9 +20,8 @@ use Elasticquent\ElasticquentTrait;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Sitemap\SitemapGenerator;
 
-
-use App\MercadoPago;
-use App\MercadoPago\SDK;
+// use App\MercadoPago\SDK;
+use MercadoPago;
 
 /*
 |--------------------------------------------------------------------------
@@ -347,6 +345,10 @@ Route::get('/', function () {
 
 Route::get('/sitemap.xml', 'SiteMapController@index');
 
+Route::post('/procesar-pago', function () {
+    echo "Procesando Pago";
+});
+
 Route::get('/pago-aceptado', function () {
     echo "Pago Aceptado";
 });
@@ -370,60 +372,29 @@ Route::get('/testMP', function() {
         // MercadoPago\SDK::setAccessToken("APP_USR-2009643657185989-050901-f80d5fbf89c8c43f650efb2167d51d1b-544483632");
     }
 
-    // MercadoPago\SDK::setAccessToken($access_token);
-
-    Log::info('Access_Token etapa 2:'.$access_token);
-
-
+    MercadoPago\SDK::setAccessToken($access_token);
 
     // Crea un objeto de preferencia
     $preference = new MercadoPago\Preference();
-    # Crea ítems en la preferencia
-    $item1 = new MercadoPago\Item;
-    $item1->title = "Item de Prueba 1";
-    $item1->quantity = 2;
-    $item1->unit_price = 11.96;
 
-    $item2= new MercadoPago\Item;
-    $item2->title = "Item de Prueba 2";
-    $item2->quantity = 1;
-    $item2->unit_price = 11.96;
+    Log::info('Preference : ' . print_r($preference, true));
 
-    $preference->items = array($item1,$item2);
-    
-    $payer = new MercadoPago\Payer();
-    $payer->name = "Charles";
-    $payer->surname = "Luevano";
-    $payer->email = "charles@hotmail.com";
-    $payer->date_created = "2018-06-02T12:58:41.425-04:00";
-    $payer->phone = array(
-        "area_code" => "",
-        "number" => "949 128 866"
-    );
-    
-    $payer->identification = array(
-        "type" => "DNI",
-        "number" => "12345678"
-    );
-    
-    $payer->address = array(
-        "street_name" => "Cuesta Miguel Armendáriz",
-        "street_number" => 1004,
-        "zip_code" => "11020"
-    );
+    // Crea un ítem en la preferencia
+    $item = new MercadoPago\Item();
+    $item->title = 'Mi producto';
+    $item->quantity = 1;
+    $item->unit_price = 5000;
+    $item->currency_id = 'COP';
+    $item->id = 1;
 
+    Log::info('Item : ' . print_r($preference, true));
 
-    # Guardar y postear la preferencia
+    $preference->items = array($item);
+
+    Log::info('Preference items: ' . print_r($preference, true)); 
     $preference->save();
-
-    var_dump($preference);
-
-    echo "<form action='/procesar-pago' method='POST'>
-        <script
-            src='https://www.mercadopago.com.ar/integrations/v1/web-payment-checkout.js'
-            data-preference-id='<?php echo $preference->id; ?>'>
-        </script>
-    </form>";
-    // Redireccionar al usuario a la página de pago en modo sandbox
-    //header("Location: " . $preference['response']['sandbox_init_point']);
+    
+    return View::make('testMP')->with('preference', $preference);
+    
+    
 });

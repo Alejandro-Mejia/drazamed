@@ -5,9 +5,6 @@ use Illuminate\Routing\Controller as BaseController;
 use Intervention\Image\ImageManagerStatic as Image;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
-// use MercadoPagoLaravel\Facades\MP;
-// use Illuminate\Http\Request;
-// use Illuminate\Mail\Mailer;
 
 use Exception;
 use Session;
@@ -20,8 +17,8 @@ use View;
 use Mail;
 use DB;
 use URL;
-// use MP;
-use MercadoPago;
+
+
 use App\MedicalProfessional;
 use App\PrescriptionStatus;
 use App\Exceptions\Handler;
@@ -47,6 +44,9 @@ use App\Cache;
 use Maatwebsite\Excel\Facades\Excel;
 use Maatwebsite\Excel\HeadingRowImport;
 use App\Imports\MedicinesImport;
+
+// Clase de MercadoPago
+use MercadoPago;
 
 define ('CACHE_PARAM_MEDICINE' , 'medicines');
 define ('CURRENCY_BEFORE' , 'BEFORE');
@@ -1660,157 +1660,43 @@ class MedicineController extends BaseController
 
 	}
 
-	public function anyMakeMercadoPagoPayment($invoice, $isMobile = 0)
-	{
-		\Debugbar::enable();
-		if (!Auth::check ())
-			return Redirect::to ('/');
-		// Get Invoice
-		$invoiceDetails = Invoice::find ($invoice);
-		// If Invoice Is Not Present
-		if (is_null ($invoice))
-			return Redirect::to ('/paid-prescription');
+	public function anyMakeMercadoPagoPayment($invoice_id, $isMobile = 0) {
 
-		$data = array();
+		// Datos del usuario
 		$email = Session::get ('user_id');
 		$user = Auth::user ();
 		$type = $user->user_type_id;
 
-
-		// Agrega credenciales
-		// MercadoPago\SDK::setAccessToken('APP_USR-2009643657185989-050901-f80d5fbf89c8c43f650efb2167d51d1b-544483632');
-
-		$allowedPaymentMethods = config('payment-methods.enabled');
-		Log::info('Allowed Methods '.print_r($allowedPaymentMethods, true));
-
-		$sandBoxMode = config('payment-methods.use_sandbox');
-		Log::info('Use Sandobox  '.print_r($sandBoxMode, true));
-
-		if ($sandBoxMode) {
-			$access_token = config('mercadopago.mp_pub_key_sb');
-			Log::info('Sandbox Pub Key '.$access_token);
-		} else {
-			$access_token = config('mercadopago.mp_pub_key_pr');
-			Log::info('Production  Pub Key '.$access_token);
-		}
-		
-		// $access_token = env("MP_APP_ACCESS_TOKEN", null);
-		MercadoPago\SDK::setAccessToken($access_token);
-
-
-		$token= '';
-		$payment_method_id = '';
-		$installments = '';
-		$issuer_id = '';
-		$payment = [];
-
+		// Inicializacion de variables para post
 		$data = array();
 		$item_name = "";
 		$i = 0;
 		$total = 0;
 		$pres_required = 0;
 
-		foreach ($invoiceDetails->cartList() as $cart) {
-			$item_name .= Medicine::medicines ($cart->medicine)['item_name'];
-			$item_name .= " ,";
-			$total += $cart->total_price;
+		// Obtiene la informacion de la factura
+		$invoice = Invoice::find ($invoice_id);
 
-			if (Medicine::medicines($cart->medicine)['is_pres_required']) {
-				$pres_required = 1;
-			}
+		Log::info('Invoice : ' . print_r($invoice, true));
+
+
+		// Determina el modo de trabajo de MP y establece el token de acuerdo a eso
+		$sandBoxMode = config('payment-methods.use_sandbox');
+		Log::info('Use Sandobox  '.print_r($sandBoxMode, true));
+			
+		if ($sandBoxMode) {
+			$access_token = config('mercadopago.mp_app_access_token_sb');
+			Log::info('Sandbox Pub Key '.$access_token);
+			// MercadoPago\SDK::setAccessToken("APP_USR-2009643657185989-050901-f80d5fbf89c8c43f650efb2167d51d1b-544483632");
+		} else {
+			$access_token = config('mercadopago.mp_app_access_token_pr');
+			Log::info('Production  App Access Token '.$access_token);
+			// MercadoPago\SDK::setAccessToken("APP_USR-2009643657185989-050901-f80d5fbf89c8c43f650efb2167d51d1b-544483632");
 		}
 
+		MercadoPago\SDK::setAccessToken($access_token);
 
-
-		if (Request::isMethod('post'))
-		{
-			/**
-			 * Recibe los datos de la tokenizacion de Mercadopago
-			 */
-		   	$token = $name = Request::input('token');
-			$payment_method_id = Request::input("payment_method_id");
-			$installments = Request::input("installments");
-			$issuer_id = Request::input("issuer_id");
-
-			Log::info('Returned token: '.$token);
-			Log::info('Returned Payment Method: '.$payment_method_id);
-			Log::info('Returned installments: '.$installments);
-			Log::info('Returned issuer_id: '.$issuer_id);
-
-			/**
-			 * Realiza el pago
-			 */
-			// Establecemos el access token
-
-
-			if($access_token != null)
-			{
-				if ($sandBoxMode) {
-					$access_token = config('mercadopago.mp_app_access_token_sb');
-					Log::info('Sandbox Pub Key '.$access_token);
-					// MercadoPago\SDK::setAccessToken("APP_USR-2009643657185989-050901-f80d5fbf89c8c43f650efb2167d51d1b-544483632");
-				} else {
-					$access_token = config('mercadopago.mp_app_access_token_pr');
-					Log::info('Production  App Access Token '.$access_token);
-					// MercadoPago\SDK::setAccessToken("APP_USR-2009643657185989-050901-f80d5fbf89c8c43f650efb2167d51d1b-544483632");
-				}
-
-				MercadoPago\SDK::setAccessToken($access_token);
-
-				Log::info('Access_Token etapa 2:'.$access_token);
-
-
-				// $access_token = config('mercadopago.mp_app_access_token_pr');
-				// Log::info('Access_Token:'.$access_token);
-				// // dd($access_token);
-
-				
-
-				// $email = "test_user_44639121@testuser.com";
-				$payment = new MercadoPago\Payment();
-			    $payment->transaction_amount = $total;
-			    $payment->token = $token;
-			    $payment->description = "Compra medicamentos Drazamed";
-			    $payment->installments = $installments;
-			    $payment->payment_method_id = $payment_method_id;
-			    $payment->issuer_id = $issuer_id;
-			    $payment->payer = array(
-			    	"email" => $email
-			    );
-			    // Guarda y postea el pago
-			    $payment->save();
-			    Log::info(print_r($payment, true));
-			    //...
-			    // Imprime el estado del pago
-			    // echo '<pre>'; print_r($payment); echo '</pre>';
-			    // echo $payment->status;
-			    if($payment->status == 'approved') {
-			    	$invoiceDetails->status_id = InvoiceStatus::PAID ();
-			    	$invoiceDetails->sub_total = $total;
-			    	$invoiceDetails->shipping = 10000;
-			    	$invoiceDetails->total = $invoiceDetails->shipping + $invoiceDetails->sub_total;
-					$invoiceDetails->payment_status = PayStatus::SUCCESS ();
-					$invoiceDetails->transaction_id = $payment->id;
-					$invoiceDetails->updated_at = date ('Y-m-d H:i:s');
-					$invoiceDetails->updated_by = Auth::user ()->id;
-					$invoiceDetails->save ();
-
-
-					return Redirect::to ('/payment/success');
-			    } else {
-			    	return Redirect::to ('/payment/failure');
-			    }
-			} else {
-				return Redirect::to ('/payment/failure');
-			}
-
-		}
-
-	    // $order = $this->anySetUpOrder($invoice);
-	    // If User Authenticated
-
-
-
+		// Obtiene los datos de cliente, dependiendo del tipo de cliente
 		if ($type == UserType::CUSTOMER ()) {
 			$user_info = Customer::find ($user->user_id);
 			$phone = $user_info->phone;
@@ -1825,33 +1711,305 @@ class MedicineController extends BaseController
 			$address = $user_info->prof_address;
 		}
 
+		$payer = new MercadoPago\Payer();
+		$payer->email = $email;
+		$payer->name = $fname;
+		$payer->surname = $lname;
+		$payer->address = array(
+			"street_name" => $address
+		);
 
 
+		// Crea un objeto de preferencia
+		$preference = new MercadoPago\Preference();
+		Log::info('Preference : ' . print_r($preference, true));
 
-		// $total = $invoiceDetails->total;
-		$data['invoice_id'] = $invoiceDetails->id;
-		$data['amount'] = $invoiceDetails->sub_total + $invoiceDetails->shipping;
+		foreach ($invoice->cartList() as $cart) {
+			
+			$item_name .= Medicine::medicines ($cart->medicine)['item_name'];
+			$item_name .= " ,";
+			$total += $cart->unit_price;
+
+			if (Medicine::medicines($cart->medicine)['is_pres_required']) {
+				$pres_required = 1;
+			}
+			//dd($cart->unit_price * 10);
+			// Crea un ítem en la preferencia
+			$item = new MercadoPago\Item();
+			$item->title = Medicine::medicines ($cart->medicine)['item_name'];;
+			$item->quantity = 1;
+			$item->ptcture_url = 'https://drazamed.com/images/products/' . Medicine::medicines ($cart->medicine)['item_code'] . '.png';
+			$item->unit_price = $cart->unit_price;
+			$item->currency_id = 'COP';
+			$item->id = 1;
+		
+			Log::info('Item : ' . print_r($item, true));
+		
+			$preference->items = array($item);
+		}
+
+		// Crea un ítem en la preferencia
+		// $item = new MercadoPago\Item();
+		// $item->title = 'Mi producto';
+		// $item->quantity = 1;
+		// $item->unit_price = 5000;
+		// $item->currency_id = 'COP';
+		// $item->id = 1;
+
+		Log::info('Item : ' . print_r($preference, true));
+
+		$preference->items = array($item);
+
+		$shipments = new MercadoPago\Shipments();
+		$shipments->receiver_address = array(
+			"cost" => $invoice->shipping,
+			"mode" => "custom"
+		);
+
+		Log::info('Preference items: ' . print_r($preference, true)); 
+		$preference->save();
+
+		// Crea el arreglo de datos que se va a enviar a la vista para despliegue
+		$data['invoice_id'] = $invoice->id;
+		$data['amount'] = $invoice->sub_total + $invoice->shipping;
 		$data['email'] = $email;
 		$data['phone'] = $phone;
 		$data['firstname'] = $fname;
 		$data['lastname'] = $lname;
 		$data['address'] = $address;
-		$data['invoice'] = $invoiceDetails->invoice;
-		$data['id'] = $invoice;
+		$data['invoice'] = $invoice;
+		$data['id'] = $invoice->id;
 		$data['productinfo'] = $item_name;
 		$data['is_pres_required'] = $pres_required;
 		$data['access_token'] = $access_token;
-	    // //$this->notify($order);
-	    // $url = $this->generatePaymentGateway(
-	    //          $request->get('payment_method'),
-	    //          $order
-	    //      );
-	    // return redirect()->to($url);
-	    if ($isMobile)
-			return View::make ('/users/mobile_paypal_payment' , array('posted' => $data));
+		
+		if ($isMobile)
+			return View::make ('/users/mobile_paypal_payment' , array('posted' => $data, 'preference' => $preference));
 		else
-			return View::make ('/users/mercadopago_payment' , array('posted' => $data));
+			return View::make ('/users/mercadopago_payment' , array('posted' => $data, 'preference' => $preference));
+		
 	}
+
+	/**	
+	 * nueva funcion payment MercadoPago con integracion de redirect
+	 */
+	
+
+
+	// public function anyMakeMercadoPagoPayment($invoice, $isMobile = 0)
+	// {
+	// 	\Debugbar::enable();
+	// 	if (!Auth::check ())
+	// 		return Redirect::to ('/');
+	// 	// Get Invoice
+	// 	$invoiceDetails = Invoice::find ($invoice);
+	// 	// If Invoice Is Not Present
+	// 	if (is_null ($invoice))
+	// 		return Redirect::to ('/paid-prescription');
+
+	// 	$data = array();
+	// 	$email = Session::get ('user_id');
+	// 	$user = Auth::user ();
+	// 	$type = $user->user_type_id;
+
+
+	// 	// Agrega credenciales
+	// 	// MercadoPago\SDK::setAccessToken('APP_USR-2009643657185989-050901-f80d5fbf89c8c43f650efb2167d51d1b-544483632');
+
+	// 	$allowedPaymentMethods = config('payment-methods.enabled');
+	// 	Log::info('Allowed Methods '.print_r($allowedPaymentMethods, true));
+
+	// 	$sandBoxMode = config('payment-methods.use_sandbox');
+	// 	Log::info('Use Sandobox  '.print_r($sandBoxMode, true));
+
+	// 	if ($sandBoxMode) {
+	// 		$access_token = config('mercadopago.mp_app_access_token_sb');
+	// 		Log::info('Sandbox Pub Key '.$access_token);
+	// 	} else {
+	// 		$access_token = config('mercadopago.mp_app_access_token_pr');
+	// 		Log::info('Production  Pub Key '.$access_token);
+	// 	}
+		
+	// 	// $access_token = env("MP_APP_ACCESS_TOKEN", null);
+	// 	MercadoPago\SDK::setAccessToken($access_token);
+
+	// 	// Crea un objeto de preferencia
+	// 	$preference = new MercadoPago\Preference();
+	// 	Log::info('Preference : ' . print_r($preference, true));
+
+
+	// 	$token= '';
+	// 	$payment_method_id = '';
+	// 	$installments = '';
+	// 	$issuer_id = '';
+	// 	$payment = [];
+
+	// 	$data = array();
+	// 	$item_name = "";
+	// 	$i = 0;
+	// 	$total = 0;
+	// 	$pres_required = 0;
+
+	// 	foreach ($invoiceDetails->cartList() as $cart) {
+
+			
+			
+	// 		$item_name .= Medicine::medicines ($cart->medicine)['item_name'];
+	// 		$item_name .= " ,";
+	// 		$total += $cart->unit_price;
+
+	// 		if (Medicine::medicines($cart->medicine)['is_pres_required']) {
+	// 			$pres_required = 1;
+	// 		}
+	// 		//dd($cart->unit_price * 10);
+	// 		// Crea un ítem en la preferencia
+	// 		$item = new MercadoPago\Item();
+	// 		$item->title = Medicine::medicines ($cart->medicine)['item_name'];;
+	// 		$item->quantity = 1;
+	// 		$item->unit_price = $cart->unit_price;
+	// 		$item->currency_id = 'COP';
+	// 		$item->id = 1;
+		
+	// 		Log::info('Item : ' . print_r($item, true));
+		
+	// 		$preference->items = array($item);
+	// 	}
+
+		
+	// 	$preference->save();
+	// 	Log::info('Preference : ' . print_r($preference, true));
+
+
+	// 	if (Request::isMethod('post'))
+	// 	{
+	// 		/**
+	// 		 * Recibe los datos de la tokenizacion de Mercadopago
+	// 		 */
+	// 	   	$token = $name = Request::input('token');
+	// 		$payment_method_id = Request::input("payment_method_id");
+	// 		$installments = Request::input("installments");
+	// 		$issuer_id = Request::input("issuer_id");
+
+	// 		Log::info('Returned token: '.$token);
+	// 		Log::info('Returned Payment Method: '.$payment_method_id);
+	// 		Log::info('Returned installments: '.$installments);
+	// 		Log::info('Returned issuer_id: '.$issuer_id);
+
+	// 		/**
+	// 		 * Realiza el pago
+	// 		 */
+	// 		// Establecemos el access token
+
+
+	// 		if($access_token != null)
+	// 		{
+	// 			if ($sandBoxMode) {
+	// 				$access_token = config('mercadopago.mp_app_access_token_sb');
+	// 				Log::info('Sandbox Pub Key '.$access_token);
+	// 				// MercadoPago\SDK::setAccessToken("APP_USR-2009643657185989-050901-f80d5fbf89c8c43f650efb2167d51d1b-544483632");
+	// 			} else {
+	// 				$access_token = config('mercadopago.mp_app_access_token_pr');
+	// 				Log::info('Production  App Access Token '.$access_token);
+	// 				// MercadoPago\SDK::setAccessToken("APP_USR-2009643657185989-050901-f80d5fbf89c8c43f650efb2167d51d1b-544483632");
+	// 			}
+
+	// 			MercadoPago\SDK::setAccessToken($access_token);
+	// 			Log::info('Access_Token etapa 2:'.$access_token);
+
+
+	// 			// $access_token = config('mercadopago.mp_app_access_token_pr');
+	// 			// Log::info('Access_Token:'.$access_token);
+	// 			// // dd($access_token);
+
+				
+
+	// 			// $email = "test_user_44639121@testuser.com";
+	// 			$payment = new MercadoPago\Payment();
+	// 		    $payment->transaction_amount = $total;
+	// 		    $payment->token = $token;
+	// 		    $payment->description = "Compra medicamentos Drazamed";
+	// 		    $payment->installments = $installments;
+	// 		    $payment->payment_method_id = $payment_method_id;
+	// 		    $payment->issuer_id = $issuer_id;
+	// 		    $payment->payer = array(
+	// 		    	"email" => $email
+	// 		    );
+	// 		    // Guarda y postea el pago
+	// 		    $payment->save();
+	// 		    Log::info(print_r($payment, true));
+	// 		    //...
+	// 		    // Imprime el estado del pago
+	// 		    // echo '<pre>'; print_r($payment); echo '</pre>';
+	// 		    // echo $payment->status;
+	// 		    if($payment->status == 'approved') {
+	// 		    	$invoiceDetails->status_id = InvoiceStatus::PAID ();
+	// 		    	$invoiceDetails->sub_total = $total;
+	// 		    	$invoiceDetails->shipping = 10000;
+	// 		    	$invoiceDetails->total = $invoiceDetails->shipping + $invoiceDetails->sub_total;
+	// 				$invoiceDetails->payment_status = PayStatus::SUCCESS ();
+	// 				$invoiceDetails->transaction_id = $payment->id;
+	// 				$invoiceDetails->updated_at = date ('Y-m-d H:i:s');
+	// 				$invoiceDetails->updated_by = Auth::user ()->id;
+	// 				$invoiceDetails->save ();
+
+
+	// 				return Redirect::to ('/payment/success');
+	// 		    } else {
+	// 		    	return Redirect::to ('/payment/failure');
+	// 		    }
+	// 		} else {
+	// 			return Redirect::to ('/payment/failure');
+	// 		}
+
+	// 	}
+
+	//     // $order = $this->anySetUpOrder($invoice);
+	//     // If User Authenticated
+
+
+
+	// 	if ($type == UserType::CUSTOMER ()) {
+	// 		$user_info = Customer::find ($user->user_id);
+	// 		$phone = $user_info->phone;
+	// 		$fname = $user_info->first_name;
+	// 		$lname = $user_info->last_name;
+	// 		$address = $user_info->address;
+	// 	} elseif ($type == UserType::MEDICAL_PROFESSIONAL ()) {
+	// 		$user_info = MedicalProfessional::find ($user->user_id);
+	// 		$phone = $user_info->prof_phone;
+	// 		$fname = $user_info->prof_first_name;
+	// 		$lname = $user_info->prof_last_name;
+	// 		$address = $user_info->prof_address;
+	// 	}
+
+
+
+
+	// 	// $total = $invoiceDetails->total;
+	// 	$data['invoice_id'] = $invoiceDetails->id;
+	// 	$data['amount'] = $invoiceDetails->sub_total + $invoiceDetails->shipping;
+	// 	$data['email'] = $email;
+	// 	$data['phone'] = $phone;
+	// 	$data['firstname'] = $fname;
+	// 	$data['lastname'] = $lname;
+	// 	$data['address'] = $address;
+	// 	$data['invoice'] = $invoiceDetails->invoice;
+	// 	$data['id'] = $invoice;
+	// 	$data['productinfo'] = $item_name;
+	// 	$data['is_pres_required'] = $pres_required;
+	// 	$data['access_token'] = $access_token;
+	//     // //$this->notify($order);
+	//     // $url = $this->generatePaymentGateway(
+	//     //          $request->get('payment_method'),
+	//     //          $order
+	//     //      );
+	//     // return redirect()->to($url);
+	//     if ($isMobile)
+	// 		return View::make ('/users/mobile_paypal_payment' , array('posted' => $data, 'preference' => $preference));
+	// 	else
+	// 		return View::make ('/users/mercadopago_payment' , array('posted' => $data, 'preference' => $preference));
+	// }
+
 	/**
 	 * URL for success payment
 	 *
