@@ -1711,6 +1711,12 @@ class MedicineController extends BaseController
 			$address = $user_info->prof_address;
 		}
 
+
+
+		// Crea un objeto de preferencia
+		$preference = new MercadoPago\Preference();
+		Log::info('Preference : ' . print_r($preference, true));
+
 		$payer = new MercadoPago\Payer();
 		$payer->email = $email;
 		$payer->name = $fname;
@@ -1719,13 +1725,10 @@ class MedicineController extends BaseController
 			"street_name" => $address
 		);
 
-
-		// Crea un objeto de preferencia
-		$preference = new MercadoPago\Preference();
-		Log::info('Preference : ' . print_r($preference, true));
-
 		foreach ($invoice->cartList() as $cart) {
 			
+			Log::info('Cart item : ' . print_r($cart, true));
+
 			$item_name .= Medicine::medicines ($cart->medicine)['item_name'];
 			$item_name .= " ,";
 			$total += $cart->unit_price;
@@ -1737,7 +1740,7 @@ class MedicineController extends BaseController
 			// Crea un ítem en la preferencia
 			$item = new MercadoPago\Item();
 			$item->title = Medicine::medicines ($cart->medicine)['item_name'];;
-			$item->quantity = 1;
+			$item->quantity = $cart->quantity;
 			$item->ptcture_url = 'https://drazamed.com/images/products/' . Medicine::medicines ($cart->medicine)['item_code'] . '.png';
 			$item->unit_price = $cart->unit_price;
 			$item->currency_id = 'COP';
@@ -1746,6 +1749,7 @@ class MedicineController extends BaseController
 			Log::info('Item : ' . print_r($item, true));
 		
 			$preference->items = array($item);
+			
 		}
 
 		// Crea un ítem en la preferencia
@@ -1761,10 +1765,12 @@ class MedicineController extends BaseController
 		$preference->items = array($item);
 
 		$shipments = new MercadoPago\Shipments();
-		$shipments->receiver_address = array(
-			"cost" => $invoice->shipping,
-			"mode" => "custom"
-		);
+		$shipments->cost = $invoice->shipping;
+		$shipments->mode = "custom";
+
+		$preference->payer = $payer;
+		$preference->shipments = $shipments;
+
 
 		Log::info('Preference items: ' . print_r($preference, true)); 
 		$preference->save();
