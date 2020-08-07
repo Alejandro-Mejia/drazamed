@@ -810,6 +810,42 @@ class AdminController extends BaseController
 		return View::make ("admin.presedit" , array("shipping" => $shipping , "pres_id" => $pres_id , "email" => $pres->getUser->email , "path" => $pres->path , 'items' => $items , 'invoice_id' => $invoice_id , 'discount' => $discounts , 'status' => $status));
 	}
 
+	public function getPresItems($pres_id) {
+		$pres = Prescription::find ($pres_id);
+		$invoice = $pres->getInvoice;
+		// if (!is_null ($invoice) && ($invoice->status_id == InvoiceStatus::PAID () )) {
+		// 	return json_encode(array('status'=>'empty', 'items'=>[], 'shipping'=>''));
+		// }
+
+		//$shipping = 0;
+		$medicines = Medicine::medicines ();
+		$setting = Setting::param ('site' , 'discount')['value'];
+		$discounts = floatval (Setting::param ('site' , 'discount')['value']);
+		$items = [];
+		$invoice_id = 0;
+		if (!is_null ($invoice)) {
+			$invoice_id = $invoice->id;
+			$items_list = ItemList::where ('invoice_id' , '=' , $invoice_id)->where ('is_removed' , '=' , 0)->get ();
+			$items = [];
+			foreach ($items_list as $item) {
+				$items[] = [
+					'cart_id' => $item->id,
+					'item_id' => $item->medicine,
+					'item_name' => $item->medicine_details()->item_name,
+					'unit_price' => $item->unit_price,
+					'discount' => $item->discount,
+					'unit_disc' => $item->discount_percentage,
+					'total_price' => $item->total_price,
+					'quantity' => $item->quantity,
+					'item_code' => $item->medicine_details ()->item_code
+				];
+			}
+			$shipping = $invoice->shipping;
+		}
+
+		return json_encode(array('data'=>$items));
+	}
+
 	/**
 	 * Update Invoice
 	 *
@@ -826,15 +862,15 @@ class AdminController extends BaseController
 		$type = $prescription->getUser->user_type_id;
 		$user_id = $prescription->getUser->id;
 		// Check if Cart Is Not Empty
-		if (empty($got['item_code1'])) {
-			return Redirect::back ()->withErrors (['No items added to the cart']);
-		}
+		// if (empty($got['item_code1'])) {
+		// 	return Redirect::back ()->withErrors (['No items added to the cart']);
+		// }
 		if (!empty($got['invoice_id'])) {       // If Invoice Already Exists
 			$i = 1;
 			$items = ItemList::where ('invoice_id' , '=' , $got['invoice_id'])->get ();
 			while ($i <= $got['itemS']) {
-				$discount += $got['discount' . $i];
-				$sub_total += $got['total_price' . $i];
+				//$discount += $got['discount' . $i];
+				//$sub_total += $got['total_price' . $i];
 				$alreadyIn = 0;
 				foreach ($items as $item) {     // Update already Existings Cart
 					if ($got['item_code' . $i] == $item->medicine) {
@@ -886,8 +922,11 @@ class AdminController extends BaseController
 			$invoice = new Invoice;
 			$invoice->pres_id = $got['pres_id'];
 			$invoice->user_id = $user_id;
+			$invoice->shipping = $shipping;
+			$invoice->shipping_mode = 1;
 			$invoice->created_at = date ("Y-m-d H:i:s");
 			$invoice->created_by = Auth::user ()->id;
+			$invoice->updated_by = Auth::user ()->id;
 			$invoice->save ();
 			while ($i <= $got['itemS']) {
 				// Calculate Prices
