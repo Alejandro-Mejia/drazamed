@@ -120,7 +120,7 @@ use MercadoPago;
      */
 
     Route::get('/admin/import', 'MedicineController@import');
-
+    Route::get('/admin/get-pres-items/{pres_id}', 'AdminController@getPresItems');
     Route::any('/admin/login', 'AdminController@anyLogin');
     Route::get('/admin/dashboard', 'AdminController@getDashboard');
     Route::get('/admin/load-invoice/{id}', 'AdminController@getLoadInvoice');

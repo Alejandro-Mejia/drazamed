@@ -26,21 +26,21 @@
                     case 'approved':
                         echo (
                             '<div class="alert alert-success" role="alert" style="text-align: center">
-                                El pago se ha realizado con exito! Pronto nos comunicaremos contigo para coordinar la entrega.
+                                El pago se ha realizado con exito! Tu orden ahora se encuentra en proceso de entrega.
                             </div>'
                         );
                         break;
                     case 'pending':
                         echo (
                             '<div class="alert alert-warning" role="alert" style="text-align: center">
-                                Su pago se encuentra en estado Pendiente, por favor consulte con su banco!
+                                Tu pago se encuentra en estado Pendiente, por favor consulta con tu banco!
                             </div>'
                         );
                         break;
                     case 'rejected':
                         echo (
                             '<div class="alert alert-danger" role="alert" style="text-align: center">
-                                Su pago ha sido rechazado. Por favor comuniquese con su entidad o intente de nuevo con otro medio de pago.
+                                Tu pago ha sido rechazado. Por favor comunicate con tu entidad o intenta de nuevo con otro medio de pago.
                             </div>'
                         );
                         break;
@@ -69,26 +69,26 @@
                     </p>
                     <div class="col-auto">
                         <div class="row middle-xs">
-                            <div class="col-lg-10">
+                            <div class="col-lg-8">
                                 Identificador de la transaccion Mercado Pago
                             </div>
-                            <div class="col-lg-2">
+                            <div class="col-lg-4">
                             <h4 class="com-title">{{$posted['payment_id']}}</h4>
                             </div>
                         </div>
                         <div class="row middle-xs">
-                            <div class="col-lg-10">
+                            <div class="col-lg-8">
                                 Resultado de la transaccion Mercado Pago
                             </div>
-                            <div class="col-lg-2">
+                            <div class="col-lg-4">
                             <h4 class="com-title">{{$posted['payment_status']}}</h4>
                             </div>
                         </div>
                         <div class="row middle-xs">
-                            <div class="col-lg-10">
+                            <div class="col-lg-8">
                                 Estado de la transaccion Mercado Pago
                             </div>
-                            <div class="col-lg-2">
+                            <div class="col-lg-4">
                             <h4 class="com-title">{{$posted['payment_status_detail']}}</h4>
                             </div>
                         </div>

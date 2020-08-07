@@ -205,18 +205,20 @@ class MedicineController extends BaseController
 				} elseif ($user_type == UserType::MEDICAL_PROFESSIONAL ()) {
 					$name = Auth::user ()->professional->prof_first_name;
 				}
-				Mail::send ('emails.prescription_upload' , array('name' => $name) , function ($message) use ($data) {
-					$message->to ($data['email'])->subject ('New order has been submitted to ' . Setting::param ('site' , 'app_name')['value']);
-				});
+
+				// Mail::send ('emails.prescription_upload' , array('name' => $name) , function ($message) use ($data) {
+				// 	$message->to ($data['email'])->subject ('New order has been submitted to ' . Setting::param ('site' , 'app_name')['value']);
+				// });
 
 				Mail::send ('emails.admin_prescription_upload' , array('name' => $name) , function ($message) use ($data) {
-					$message->to (Setting::param ('site' , 'mail')['value'])->subject ('New prescription uploaded to ' . Setting::param ('site' , 'app_name')['value']);
+					$message->to (Setting::param ('site' , 'mail')['value'])->subject ('Una nueva orden de compra!! ' . Setting::param ('site' , 'app_name')['value']);
 				});
+				
 				DB::table ('sessions')->where ('user_id' , '=' , $email)->delete ();
-				Session::flash ('flash_message' , '<b>Success !</b> Your order has been requested successfully. Please track the status in MY PRESCRIPTIONS.');
+				Session::flash ('flash_message' , '<b>Exitoso !</b> tu orden ha sido enviada correctamente. Por favor haz seguimiento en tu perfil.');
 				Session::flash ('flash_type' , 'alert-success');
 
-				return Response::json (['status' => 'SUCCESS' , 'msg' => 'Your order has been requested successfully.']);
+				return Response::json (['status' => 'SUCCESS' , 'msg' => 'Tu orden ha sido colocada correctamente.']);
 
 
 			} else {
@@ -230,7 +232,7 @@ class MedicineController extends BaseController
 		} else {
 			try {
 				if (!Auth::check ())
-					throw new Exception("You are not authorized to do this action" , 401);
+					throw new Exception("No esta autorizado para esta acción" , 401);
 
 				$email = Auth::user ()->email;
 
@@ -242,7 +244,7 @@ class MedicineController extends BaseController
 
 
 				if ($is_pres_required && empty($prescription))
-					throw new Exception('Prescription is required for this order' , 412);
+					throw new Exception('Se requiere formula médica para esta orden' , 412);
 
 				$path = base_path () . '/public/images/prescription/' . $email . '/';
 				$date = new DateTime();
