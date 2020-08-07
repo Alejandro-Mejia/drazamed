@@ -184,7 +184,7 @@ class UserController extends BaseController
 
 
 			//else
-			return Response::json (['status' => 'SUCCESS' , 'msg' => '{{ __("Acccount has been successfully created, Please check mail for the code")}}'] , 201);
+			return Response::json (['status' => 'SUCCESS' , 'msg' => '{{ __("La cuenta ha sido creada con exito, por favor verifica el código de activación en tu correo")}}'] , 201);
 		}
 		catch (Exception $e) {
 			return Response::make (['status' => 'FAILURE' , 'msg' => $e->getMessage()] , 409);
@@ -656,7 +656,7 @@ class UserController extends BaseController
 				$updt = Auth::user ()->save ();
 				if ($updt) {
 					Mail::send ('emails.change_password' , array('name' => $name) , function ($message) {
-						$message->to (Auth::user ()->email)->subject ('Your ' . Setting::param ('site' , 'app_name')['value'] . ' password has been changed');
+						$message->to (Auth::user ()->email)->subject ('Tu contraseña ha sido cambiada con exito ' . Setting::param ('site' , 'app_name')['value']);
 					});
 
 					return 1;  ///password updated
@@ -710,7 +710,7 @@ class UserController extends BaseController
 		$mail_id = Setting::param ('site' , 'mail')['value'];
 
 		Mail::send ('emails.customer_query' , array('client_name' => $client_name , 'client_mail' => $client_mail , 'client_msg' => $client_msg) , function ($message) use ($client_mail) {
-			$message->to($client_mail)->subject ('A enviado un mensaje por Contactenos de Drazamed');
+			$message->to($client_mail)->subject ('Has enviado un mensaje por Contactenos de Drazamed');
 		});
 		$client_name = Request::get ('name');
 		$client_mail = Request::get ('email');
@@ -718,7 +718,7 @@ class UserController extends BaseController
 		$mail_id = Setting::param ('site' , 'mail')['value'];
 
 		Mail::send ('emails.customer_query' , array('client_name' => $client_name , 'client_mail' => $client_mail , 'client_msg' => $client_msg) , function ($message) use ($mail_id) {
-			$message->to ($mail_id)->subject ('A recibido un mensaje de un cliente');
+			$message->to ($mail_id)->subject ('Ha recibido un mensaje de un cliente');
 		});
 
 		if (count (Mail::failures ()) > 0) {

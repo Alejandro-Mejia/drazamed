@@ -320,10 +320,10 @@ class MedicineController extends BaseController
 //				$name_array = DB::table ('customer')->select ('first_name')->where ('mail' , '=' , $email)->first ();
 //				$name = $name_array->first_name;
 				Mail::send ('emails.admin_prescription_upload' , array('name' => '') , function ($message) use ($data) {
-					$message->to (Setting::param ('site' , 'mail')['value'])->subject ('New prescription uploaded to ' . Setting::param ('site' , 'app_name')['value']);
+					$message->to (Setting::param ('site' , 'mail')['value'])->subject ('Nueva orden enviada a ' . Setting::param ('site' , 'app_name')['value']);
 				});
 
-				return Response::json (['status' => 'SUCCESS' , 'msg' => 'Your order has been requested successfully ']);
+				return Response::json (['status' => 'SUCCESS' , 'msg' => 'Tu orden ha sido enviada correctamente ']);
 			}
 			catch (Exception $e) {
 				$message = $this->catchException ($e);
@@ -2082,7 +2082,7 @@ class MedicineController extends BaseController
 			$user_name = $user->first_name;
 		}
 		Mail::send ('emails.paid' , array('name' => $user_name) , function ($message) use ($user_email) {
-			$message->to ($user_email)->subject ('Your payment received at ' . Setting::param ('site' , 'app_name')['value']);
+			$message->to ($user_email)->subject ('Hemos recibido tu pago en  ' . Setting::param ('site' , 'app_name')['value']);
 		});
 
 		return Redirect::to ('/payment/success');
@@ -2128,7 +2128,7 @@ class MedicineController extends BaseController
 			$user_name = $user->first_name;
 		}
 		Mail::send ('emails.paid' , array('name' => $user_name) , function ($message) use ($user_email) {
-			$message->to ($user_email)->subject ('Your payment received at ' . Setting::param ('site' , 'app_name')['value']);
+			$message->to ($user_email)->subject ('Hemos recibido tu pago en  ' . Setting::param ('site' , 'app_name')['value']);
 		});
 
 //		return View::make ('/users/payment_success');
@@ -2174,7 +2174,7 @@ class MedicineController extends BaseController
 			$user_name = $user->first_name;
 		}
 		Mail::send ('emails.paid' , array('name' => $user_name) , function ($message) use ($user_email) {
-			$message->to ($user_email)->subject ('Your payment received at ' . Setting::param ('site' , 'app_name')['value']);
+			$message->to ($user_email)->subject ('Hemos recibido tu pago en  ' . Setting::param ('site' , 'app_name')['value']);
 		});
 
 //		return View::make ('/users/payment_success');
@@ -2211,7 +2211,7 @@ class MedicineController extends BaseController
 			$user_name = $user->first_name;
 		}
 		Mail::send ('emails.paid' , array('name' => $user_name) , function ($message) use ($user_email) {
-			$message->to ($user_email)->subject ('Your payment received at ' . Setting::param ('site' , 'app_name')['value']);
+			$message->to ($user_email)->subject ('Hemos recibido tu pago en  ' . Setting::param ('site' , 'app_name')['value']);
 		});
 
 		return Redirect::to ('/admin/load-active-prescription');
