@@ -41,12 +41,14 @@
             <h2 style="font-family: 'Open Sans', sans-serif;  color:#272727; font-weight: 100; margin: 0;  font-size:14px; margin-bottom: 28px; ">
             Hola <span style="color:#404040; font-weight: bold; "><?php echo $name; ?></span></h2>
 
-            <p> Queremos informarle que hemos recibido el pago de su orden  <?php echo Setting::param('site', 'app_name')['value']; ?>. Prepararemos su orden y le informaremos tan pronto sea despachada de nuestras instalaciones</p>
+            <p> Queremos informarte que hemos recibido el pago de tu orden  <?php echo Setting::param('site', 'app_name')['value']; ?>. 
+            Prepararemos tu orden y la enviaremos pronto. Recuerda que si tu orden requería Fórmula Médica y no la adjuntaste,
+            deberás mostrarla a nuestro domiciliario.</p>
 
 
-            <p>Las ordenes pagadas y que se encuentren en estado de preparacion de envio, las encontrara en "Ordenes esperando envio"</p>
+            <p>Las ordenes pagadas y que se encuentren en estado de preparación de envío, las encontraras en "Ordenes en proceso de entrega"</p>
 
-            <p>Preguntas? escribanos un correo a  <?php echo Setting::param('site', 'mail')['value']; ?>.</p>
+            <p>Preguntas? escribenos un correo a  <?php echo Setting::param('site', 'mail')['value']; ?>.</p>
 
             <p style="font-family: 'Open Sans', sans-serif;  color:#272727; font-weight: 100; margin: 0;  font-size:14px; line-height: 1.6; margin-bottom:0px; ">
                 Gracias.</p>

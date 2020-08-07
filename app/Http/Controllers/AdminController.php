@@ -558,7 +558,7 @@ class AdminController extends BaseController
 		$email = $detail['mail'];
 		try {
 			Mail::send ('emails.invoice' , array("id" => 'EZ' . (1000000 + $id) , 'date' => $inv['date_created'] , 'details' => $detail , 'orderDate' => $findTo->path , 'invID' => $id , 'tbody' => $tbody) , function ($message) use ($email) {
-				$message->to ($email)->subject ('Invoice');
+				$message->to ($email)->subject ('Factura ');
 			});
 
 		}
@@ -981,7 +981,7 @@ class AdminController extends BaseController
 		$status = $prescription->save ();
 		// Send Mail
 		Mail::send ('emails.verify' , array('name' => $user_name) , function ($message) use ($user_email) {
-			$message->to ($user_email)->subject ('Your prescription verified by ' . Setting::param ('site' , 'app_name')['value']);
+			$message->to ($user_email)->subject ('Tu orden ha sido verificada ' . Setting::param ('site' , 'app_name')['value']);
 		});
 
 		return Redirect::to ("/admin/load-all-prescription");
@@ -1314,9 +1314,9 @@ class AdminController extends BaseController
 			$user_email = $user->prof_mail;
 			$user_name = $user->prof_first_name;
 		}
-		Mail::send ('emails.shipped' , array('name' => $user_name) , function ($message) use ($user_email) {
-			$message->to ($user_email)->subject ('Your item shipped from ' . Setting::param ('site' , 'app_name')['value']);
-		});
+		// Mail::send ('emails.shipped' , array('name' => $user_name) , function ($message) use ($user_email) {
+		// 	$message->to ($user_email)->subject ('Your item shipped from ' . Setting::param ('site' , 'app_name')['value']);
+		// });
 
 		return Redirect::to ('admin/load-paid-prescription');
 	}
@@ -1349,9 +1349,9 @@ class AdminController extends BaseController
 			$user_email = $user->prof_mail;
 			$user_name = $user->prof_first_name;
 		}
-		Mail::send ('emails.shipped' , array('name' => $user_name) , function ($message) use ($user_email) {
-			$message->to ($user_email)->subject ('Your item delivered from ' . Setting::param ('site' , 'app_name')['value']);
-		});
+		// Mail::send ('emails.shipped' , array('name' => $user_name) , function ($message) use ($user_email) {
+		// 	$message->to ($user_email)->subject ('Your item delivered from ' . Setting::param ('site' , 'app_name')['value']);
+		// });
 
 		return Redirect::to ('admin/load-shipped-prescription');
 	}

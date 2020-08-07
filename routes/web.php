@@ -51,7 +51,7 @@ use MercadoPago;
             Mail::send ('emails.register' , array('name' => $nombre , 'user_name' => $email , 'pwd' => "pwd" , 'code' => "1234") , function ($message) use ($email) {
                         $message->to ($email)->subject ("Activa tu cuenta en Drazamed.com");
                     });
-            echo "Enviado correo de activacion";
+            echo "Enviado correo de activación";
         }
 
 

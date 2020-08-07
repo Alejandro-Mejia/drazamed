@@ -41,9 +41,9 @@
             <h2 style="font-family: 'Open Sans', sans-serif;  color:#272727; font-weight: 100; margin: 0;  font-size:14px; margin-bottom: 28px; ">
                 Hola <span style="color:#404040; font-weight: bold; "><?php echo $name; ?></span></h2>
 
-            <p>Queremos informarle que  <?php echo Setting::param('site', 'app_name')['value']; ?> Ha revisado y verificado su formula medica. Por favor revise en "Mis formulas Médicas"  el nuevo estado de su formula.</p>
+            <p>Queremos informarte que  <?php echo Setting::param('site', 'app_name')['value']; ?> ha revisado y verificado tu fórmula médica. Por favor revisa en "Ordenes pendientes de pago"  el nuevo estado de tu fórmula.</p>
 
-            <p> cuando su formula médica este verificada, por favor haga click en COMPRAR AHORA. Le notificaremos cuando recibamos el comprobante de pago y enviaremos su orden en muy poco tiempo</p>
+            <p> cuando tu fórmula médica este verificada, por favor haz click en COMPRAR AHORA. Te notificaremos cuando recibamos el comprobante de pago y enviaremos tu orden en muy poco tiempo</p>
 
             <p>Preguntas? envienos un email a  <?php echo Setting::param('site', 'website')['value']; ?>.</p>
 
@@ -62,7 +62,7 @@
         </p>
 
         <p style=" float:right; color:#8b8b8b; font-family: 'Open Sans', sans-serif; font-weight: 100; margin: 0px; font-size:11px; line-height: 1.6; margin-top: 20px; ">
-            Unsubscribe</p>
+            Eliminar subscripción</p>
     </div>
     <!--container ends here-->
 </div>
