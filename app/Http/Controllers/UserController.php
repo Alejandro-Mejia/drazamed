@@ -597,7 +597,7 @@ class UserController extends BaseController
 				}
 				
 				$details = [
-					'id' => (is_null ($result->id)) ? 0 : $result->id ,
+					'id' => (is_null ($result->pres_id)) ? 0 : $result->pres_id ,
 					'invoice' => (is_null ($result->invoice)) ? 0 : $result->invoice ,
 					'sub_total' => (is_null ($result->sub_total)) ? 0 : $result->sub_total ,
 					'discount' => (is_null ($result->discount)) ? 0 : $result->discount ,

@@ -189,7 +189,7 @@
                                         <!-- Section 1 -->
                                         <!-- Si el estado es sin verificar o verificado! -->
                                         @if(sizeof($prescription) > 0)
-                                    
+
                                             <thead class="table-header" id="th{{$prescription['id']}}">
                                                 {{-- <th>FÓRMULA MÉDICA</th> --}}
                                                 <th style="text-align:center">FECHA</th>
@@ -198,56 +198,60 @@
                                                 <th style="text-align:right">ACCIONES</th>
                                             </thead>
                                             @if($prescription['payment_status'] == 1 && ($prescription['pres_status'] == 1 || $prescription['pres_status'] == 2))
-                                            <tr id="r{{$prescription['id']}}">
-                                                {{-- <td>
-                                                    @foreach($prescription['cart'] as $cart)
+                                                <tr id="r{{$prescription['id']}}">
+                                                    {{-- <td>
+                                                        @foreach($prescription['cart'] as $cart)
 
-                                                         <p class="text-center text-align-responsive">{{ $cart['item_name'] }}</p>
+                                                            <p class="text-center text-align-responsive">{{ $cart['item_name'] }}</p>
 
-                                                     @endforeach
-                                                </td> --}}
-                                                <td class="text-center"><span class="date-added"><?php echo $prescription['created_on']; ?></span>
-                                                </td>
+                                                        @endforeach
+                                                    </td> --}}
+                                                    <td class="text-center"><span class="date-added"><?php echo $prescription['created_on']; ?></span>
+                                                    </td>
 
-                                                @php 
-                                                    $status  = $prescription['pres_status']; 
-                                                    switch ($status) {
-                                                        case '1':
-                                                            $statusColor = "orange";
-                                                            break;
-                                                        case '2':
-                                                            $statusColor = "green";
-                                                            break;
-                                                        case '3':
-                                                            $statusColor = "red";
-                                                            break;
-                                                        
-                                                        default:
-                                                            $statusColor = "red";
-                                                            break;
-                                                    }
-                                               
-                                               
-                                                @endphp
+                                                    @php 
+                                                        $status  = $prescription['pres_status']; 
+                                                        switch ($status) {
+                                                            case '1':
+                                                                $statusColor = "orange";
+                                                                break;
+                                                            case '2':
+                                                                $statusColor = "green";
+                                                                break;
+                                                            case '3':
+                                                                $statusColor = "red";
+                                                                break;
+                                                            
+                                                            default:
+                                                                $statusColor = "red";
+                                                                break;
+                                                        }
+                                                
+                                                
+                                                    @endphp
 
-                                                <td class="text-center" style="color:{{ $statusColor }}">{{ __(PrescriptionStatus::statusName($prescription['pres_status'])) }}
-                                                </td>
-                                                <td></td>
-                                                <td style="text-align:right">
-                                                    {{-- <i class="fas fa-edit details" data-id={{ $prescription["id"]}}></i> --}}
-                                                    <i style="color:red" class="fas fa-trash-alt presDelete"  data-id={{ $prescription["id"]}} ></i>
-                                                    <a href="/my-cart"><i class="fas fa-shopping-cart"></i></a>
-                                                </td>
-                                            </tr>
-                                            <?php $i++; ?>
-                                            <?php $hide = ($i < $pres) ? 'block' : 'block'; ?>
-                                            <tr id="pinfo{{$prescription['id']}}" >
-                                                <td colspan=4 class="detailCell">
-                                                   @include('design.detail')
-                                                </td>
+                                                    <td class="text-center" style="color:{{ $statusColor }}">{{ __(PrescriptionStatus::statusName($prescription['pres_status'])) }}
+                                                    </td>
+                                                    <td></td>
+                                                    <td style="text-align:right">
+                                                        {{-- <i class="fas fa-edit details" data-id={{ $prescription["id"]}}></i> --}}
+                                                        <i style="color:red" class="fas fa-trash-alt presDelete"  data-id={{ $prescription["id"]}} ></i>
+                                                        <a href="/my-cart"><i class="fas fa-shopping-cart"></i></a>
+                                                    </td>
+                                                </tr>
+                                                <?php $i++; ?>
+                                                <?php $hide = ($i < $pres) ? 'block' : 'block'; ?>
+                                                <tr id="pinfo{{$prescription['id']}}" >
+                                                    <td colspan=4 class="detailCell">
+                                                    @include('design.detail')
+                                                    </td>
 
-                                            </tr>
+                                                </tr>
                                             @endif
+                                        @else
+                                            <div class="no-items">
+                                                <span>{{ __('No Order Availables Presently')}}.</span>
+                                            </div>
                                         @endif
 
 
@@ -274,45 +278,45 @@
                     </p>
                     <div class="table-responsive">
                         @if(!empty(count($invoices)))
-                        <table class="table">
-                            <thead class="table-header">
-                                <tr>
-                                     <th class="text-center text-align-responsive" width="25%"> No. Pedido</th>
-                                     <th class="text-center text-align-responsive" width="25%">Fecha</th>
-                                     <th class="text-center text-align-responsive" width="25%">Total</th>
-                                    
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach($invoices as $invoice)
-                                <?php
-                                    // Invoice List
-                                    $prescription = $invoice->prescription();
-                                    $cart_list = $invoice->cartList();
-                                ?>
-
-
-                                @if($invoice->payment_status == 2 && $invoice->shipping_status == 1)
-
-                                          <!-- Section 1 -->
+                            <table class="table">
+                                <thead class="table-header">
                                     <tr>
-                                        <td class="text-center">
-                                            {{ $invoice->id }}
-                                        </td>
-                                        <td class="text-center"><span class="date-added"> {{ $invoice->created_at  ?? ''}}</span>
-                                        </td>
-
-                                        <td class="text-center">{{ Setting::currencyFormat($invoice->total) }}
-                                        </td>
-
-            
+                                        <th class="text-center text-align-responsive" width="25%"> No. Pedido</th>
+                                        <th class="text-center text-align-responsive" width="25%">Fecha</th>
+                                        <th class="text-center text-align-responsive" width="25%">Total</th>
+                                        
                                     </tr>
-                                @endif
+                                </thead>
+                                <tbody>
+                                    @foreach($invoices as $invoice)
+                                    <?php
+                                        // Invoice List
+                                        $prescription = $invoice->prescription();
+                                        $cart_list = $invoice->cartList();
+                                    ?>
 
-                                @endforeach
-                            </tbody>
 
-                        </table>
+                                    @if($invoice->payment_status == 2 && $invoice->shipping_status == 1)
+
+                                            <!-- Section 1 -->
+                                        <tr>
+                                            <td class="text-center">
+                                                {{ $invoice->id }}
+                                            </td>
+                                            <td class="text-center"><span class="date-added"> {{ $invoice->created_at  ?? ''}}</span>
+                                            </td>
+
+                                            <td class="text-center">{{ Setting::currencyFormat($invoice->total) }}
+                                            </td>
+
+                
+                                        </tr>
+                                    @endif
+
+                                    @endforeach
+                                </tbody>
+
+                            </table>
                         @else
                             <div class="no-items">
                                 <span>{{ __('No Order Availables Presently')}}.</span>
@@ -328,47 +332,47 @@
                     <h2 class="panel-title">Ordenes Finalizadas</h2>
                     <div class="table-responsive">
                         @if(!empty(count($invoices)))
-                        <table class="table">
-                            <thead class="table-header">
-                                <tr>
-                                     <th class="text-center text-align-responsive" width="25%"> No. Pedido</th>
-                                     <th class="text-center text-align-responsive" width="25%">Fecha</th>
-                                     <th class="text-center text-align-responsive" width="25%">Total</th>
-                                     <th class="text-right text-align-responsive" width="25%">{{ __('Actions')}}</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach($invoices as $invoice)
-                                <?php
-                                    // Invoice List
-                                    $prescription = $invoice->prescription();
-                                    $cart_list = $invoice->cartList();
-                                ?>
-
-                                @if(__(ShippingStatus::statusName($invoice->shipping_status)) == 'Enviado')
-
-                                          <!-- Section 1 -->
+                            <table class="table">
+                                <thead class="table-header">
                                     <tr>
-                                        <td class="text-center">
-                                            {{ $invoice->id }}
-                                        </td>
-                                        <td class="text-center"><span class="date-added"> {{ $invoice->created_at  ?? ''}}</span>
-                                        </td>
-
-                                        <td class="text-center">{{ Setting::currencyFormat($invoice->total) }}
-                                        </td>
-
-                                        <td class="text-right">
-                                            <i class="fas fa-trash-alt"></i>
-                                            <i class="fas fa-shopping-cart"></i>
-                                        </td>
+                                        <th class="text-center text-align-responsive" width="25%"> No. Pedido</th>
+                                        <th class="text-center text-align-responsive" width="25%">Fecha</th>
+                                        <th class="text-center text-align-responsive" width="25%">Total</th>
+                                        <th class="text-right text-align-responsive" width="25%">{{ __('Actions')}}</th>
                                     </tr>
-                                @endif
+                                </thead>
+                                <tbody>
+                                    @foreach($invoices as $invoice)
+                                    <?php
+                                        // Invoice List
+                                        $prescription = $invoice->prescription();
+                                        $cart_list = $invoice->cartList();
+                                    ?>
 
-                                @endforeach
-                            </tbody>
+                                    @if(__(ShippingStatus::statusName($invoice->shipping_status)) == 'Enviado')
 
-                        </table>
+                                            <!-- Section 1 -->
+                                        <tr>
+                                            <td class="text-center">
+                                                {{ $invoice->id }}
+                                            </td>
+                                            <td class="text-center"><span class="date-added"> {{ $invoice->created_at  ?? ''}}</span>
+                                            </td>
+
+                                            <td class="text-center">{{ Setting::currencyFormat($invoice->total) }}
+                                            </td>
+
+                                            <td class="text-right">
+                                                <i class="fas fa-trash-alt"></i>
+                                                <i class="fas fa-shopping-cart"></i>
+                                            </td>
+                                        </tr>
+                                    @endif
+
+                                    @endforeach
+                                </tbody>
+
+                            </table>
                         @else
                             <div class="no-items">
                                 <span>{{ __('No Order Availables Presently')}}.</span>
