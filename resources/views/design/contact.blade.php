@@ -139,8 +139,7 @@
                   },
        ajaxStop: function() {
                     $('.mail_loader').css('display', 'none' );
-                    $('.mail_alert').css('display', 'block' );
-                    $(".mail_alert").delay(5000).fadeOut("slow");
+                    
                     //document.getElementById('.mail_btn').disabled = false;
                     //$(".mail_btn").disabled =false;
                   }
@@ -165,10 +164,11 @@
                                     $('.form-result3').html(alerts).fadeOut(8000);
                                     $('.contact-form')[0].reset();
                                     if(alerts==0)
-                                        {
+                                    {
                                         $('.mail_alert').html("No hemos podido enviar su mensaje, por favor intente de nuevo ");
-                                        }
-
+                                    }
+                                    $('.mail_alert').css('display', 'block' );
+                                        $(".mail_alert").delay(5000).fadeOut("slow");
                                     }
                         });
                     }
