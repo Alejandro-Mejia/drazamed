@@ -106,6 +106,7 @@
                             name="email"
                             placeholder="Ingrese su correo electrónico"
                             onblur= "CheckUsername(this.value)"
+                            autocomplete="false"
                         />
                     </div>
                     <p style="display: none;" id="user_mail_error"></p>
@@ -120,6 +121,7 @@
                                     id="pwd_input_reg"
                                     name="password"
                                     placeholder="Ingrese su contraseña"
+                                    autocomplete="false"
                                 />
                             </div>
                             <p style="display: none;" id="user_pass_error"></p>
@@ -133,6 +135,7 @@
                                     id="pwdconf_input_reg"
                                     name="confirm_password"
                                     placeholder="Confirme su contraseña"
+                                    autocomplete="false"
                                 />
                             </div>
                             <p style="display: none;" id="user_passcnf_error"></p>

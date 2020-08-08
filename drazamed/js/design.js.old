@@ -52,8 +52,8 @@ function trans(key, replace = {}) {
 $(document).ready(function() {
     var token = $("#security_token").val();
 
-    getCategories();
-    show_favorites();
+    //getCategories();
+    //show_favorites();
 
     if (token != "" || token != 0) {
         $("#myModal_change_password").modal({});
@@ -1007,20 +1007,18 @@ function convertToMoney(text) {
 }
 
 
-
-(function() {
-    // //const meds = document.getElementsByClassName("med");
-    // $(".cat_product").on('click', function(el){
-
-    //     console.log("itemCode=");
-    //     // goto_detail_page();
-    //     show_detail_modal(ui.item);
-
-
-    //     // console.log(el);
-    //     // openProductInfoModal(el);
-    // });
-})();
+(function ($, undefined) {
+    $.ajaxSetup({
+        beforeSend:function (xhr, settings) {
+            if (settings.context != undefined && settings.context.hasClass('btn')) {
+                settings.context.button('loading');
+            }
+        },
+        complete:function () {
+            this.button('reset');
+        }
+    });
+})(jQuery);
 
 
 
