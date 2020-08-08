@@ -189,7 +189,8 @@
                                         <!-- Section 1 -->
                                         <!-- Si el estado es sin verificar o verificado! -->
                                         @if(sizeof($prescription) > 0)
-                                            <thead class="table-header">
+                                    
+                                            <thead class="table-header" id="th{{$prescription['id']}}">
                                                 {{-- <th>FÓRMULA MÉDICA</th> --}}
                                                 <th style="text-align:center">FECHA</th>
                                                 <th  style="text-align:center">ESTADO</th>
@@ -438,6 +439,7 @@
                                 // alert('Se ha borrado su orden');
                                 rowId = 'r' + id;
                                 rowInfo = 'pinfo' + id;
+                                rowHeader = 'th' + id;
                                 console.log("Row Name: " + rowId);
                                 element = document.getElementById(rowId);
                                 rowIndex = element.rowIndex;
@@ -446,6 +448,10 @@
                                 element = document.getElementById(rowInfo);
                                 rowIndex = element.rowIndex;
                                 document.getElementById('ordenes_pendientes').deleteRow(rowIndex);
+
+                                element = document.getElementById(rowHeader);
+                                element.remove();
+                                
                             }
                         });
                     } 

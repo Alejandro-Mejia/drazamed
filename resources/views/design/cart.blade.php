@@ -199,11 +199,11 @@
                                     
                                   
                                     <!-- <button type="submit" class="box__button">Upload</button> -->
-                                    <button  type="submit" class="float-right mt-4 dra-button btn" data-color="#40E0BC" id="uploadBtnNF" style="margin-top:-20px;" data-loading-text="<i class='fa fa-spinner fa-spin '></i> Procesando tu orden">{{ __('Place Order')}}</button>
+                                    <button  type="submit" class="float-right mt-4 dra-button btn" data-color="#40E0BC" id="uploadBtnNF" style="margin-top:-20px;" data-loading-text="<i class='fa fa-spinner fa-spin '></i> Procesando tu orden"> <img class="mail_loader" style="display: none;" src="./assets/images/loader1.gif"> {{ __('Place Order')}}</button>
             
                                     <div style="text-align: center;">
-                                      <div class="box__uploading">Enviando orden&hellip;</div>
-                                      <div class="box__success" style="color: green"> <br> Orden enviada! En unos segundos seras redirigido a tu perfil, una vez la verifiquemos, cambiara su estado a "verificado" y podrás realizar el pago </div>
+                                      <div class="box__uploading" style="color: green; font-weigth:bold">Enviando orden&hellip; <br>En unos segundos seras redirigido a tu perfil, una vez la verifiquemos, cambiara su estado a "verificado" y podrás realizar el pago </div>
+                                      <div class="box__success" style="color: green"> <br> Orden enviada!  </div>
     
                                       <div class="box__error" style="margin-top:50px;" id="errorMsg" style="display:none">
                                       <span class="box__error__msg" id ="box__error__msg" style="color:red"></span>. <br>
@@ -304,12 +304,29 @@
 @include('design.modals.pinfo') --}}
 
 <script>
+$(document).on({
+    ajaxStart: function() {
+                $('.cart_loader').css('display', 'inline' );
+                // $(".mail_btn").disabled =true;
+                //  document.getElementById('.mail_btn').disabled = true;
+              },
+    ajaxStop: function() {
+                $('.cart_loader').css('display', 'none' );
+                
+                //document.getElementById('.mail_btn').disabled = false;
+                //$(".mail_btn").disabled =false;
+              }
+});
+
 
 var formulario;
 
 $("#noformula").on('submit', function(event){
   event.preventDefault();
   $('.box__uploading').fadeIn("slow");
+
+  $('#uploadBtnNF').prop('disabled', true);
+
   var form = $(this);
   console.log("Method");
   var method = form.attr( 'method' );
