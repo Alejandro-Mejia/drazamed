@@ -100,20 +100,20 @@
                     </div>
                     <div class="row">
                         <div class="col-md-6">
-                            <label for="txt-name">Nombre</label>
+                            <label for="txt-fname">Nombre</label>
                             <input
                                 type="text"
                                 value="{{ $user_data->first_name }}"
-                                id="txt-name"
+                                id="txt-fname"
                                 readonly
                             />
                         </div>
                         <div class="col-md-6">
-                            <label for="txt-name">Apellidos</label>
+                            <label for="txt-lname">Apellidos</label>
                             <input
                                 type="text"
                                 value="{{ $user_data->last_name }}"
-                                id="txt-name"
+                                id="txt-lname"
                                 readonly
                             />
                         </div>

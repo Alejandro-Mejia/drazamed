@@ -20,6 +20,7 @@
                             id="email-input"
                             name="email"
                             placeholder="Ingrese su correo electrónico"
+                            autocomplete="false"
                         />
                         @error('email')
                             <span class="invalid-feedback" role="alert">
@@ -35,6 +36,7 @@
                             id="pwd-input"
                             name="password"
                             placeholder="Ingrese su contraseña"
+                            autocomplete="false"
                         />
                         @error('password')
                             <span class="invalid-feedback" role="alert">

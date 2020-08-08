@@ -99,26 +99,28 @@ is available both for iOS and Android platforms.</p>
  </div>
 <script type="text/javascript">
 
+//show_favorites();
+
 $(document).ready(function () {
 
-        //show_favorites();
-        var msg = $('#msg').val();
-        if (msg == "success") {
-            $('#res-title').css('color','green');
-            $('#res-title').html('Success');
-            $('#res-content').html('Your account is activated successfully. You can login now.');
-            $('#resultModal').modal({
-            });
-        }else if(msg == "failed"){
-            $('#res-title').css('color','red');
-            $('#res-title').html('Failed');
-            $('#res-content').html('Something went wroing. Please try again later.');
-            $('#resultModal').modal({
-            });
-        }
+    
+    var msg = $('#msg').val();
+    if (msg == "success") {
+        $('#res-title').css('color','green');
+        $('#res-title').html('Success');
+        $('#res-content').html('Your account is activated successfully. You can login now.');
+        $('#resultModal').modal({
+        });
+    }else if(msg == "failed"){
+        $('#res-title').css('color','red');
+        $('#res-title').html('Failed');
+        $('#res-content').html('Something went wroing. Please try again later.');
+        $('#resultModal').modal({
+        });
+    }
 
 
-    });
+});
 
 var current_item_code="";
 
@@ -140,6 +142,8 @@ $(".search_medicine").autocomplete({
          $('.med_search_loader').css('display','none' );
         }
 })
+
+
 
 function goto_detail_page()
      {

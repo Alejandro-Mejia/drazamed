@@ -39,12 +39,12 @@
                         Carrito de Compras
                     </h3>
                     <p class="text-justify">
-                       {{--  Si termino de adicionar medicamentos a su carro de
-                        compras, por favor busque y cargue la formula medica en
-                        el espacio de abajo. Usted tambien puede subir una
-                        formula medica, sin agregar medicamentos a su carrito.
+                       {{--  Si terminaste de adicionar medicamentos a tu carro de
+                        compras, por favor busca y carga la fórmula médica en
+                        el espacio de abajo. Tambien podras subir una
+                        fórmula médica, sin agregar medicamentos a tu carrito.
                         Nosotros identificaremos los medicamentos y procesaremos
-                        su orden. --}}
+                        tu orden. --}}
                     </p>
 
                     <table class="table my-4">
@@ -186,6 +186,7 @@
                           <tfoot>
                             <tr>
                               <td colspan=4>
+                                
 
                                 <div id="send_formula" class="">
                                   <form method="post" action="/medicine/store-prescription/1" enctype="multipart/form-data" novalidate class="" id="noformula">
@@ -193,24 +194,40 @@
                                     <input type="" name="is_pres_required" id="is_pres_required" value="{{$pres_required}}" hidden/>
                                     <input type="" name="sub_total" id="sub_total_form" value="{{$subtotal}}" hidden/>
                               
+                                    <!-- Flexbox container for aligning the toasts -->
+                                    
+                                    
+                                  
+                                    <!-- <button type="submit" class="box__button">Upload</button> -->
+                                    <button  type="submit" class="float-right mt-4 dra-button btn" data-color="#40E0BC" id="uploadBtnNF" style="margin-top:-20px;" data-loading-text="<i class='fa fa-spinner fa-spin '></i> Procesando tu orden">{{ __('Place Order')}}</button>
+            
                                     <div style="text-align: center;">
                                       <div class="box__uploading">Enviando orden&hellip;</div>
-                                      <div class="box__success" style="color: green"> <br> Orden enviada! En unos segundos sera redirigido a su perfil para realizar el pago </div>
-
+                                      <div class="box__success" style="color: green"> <br> Orden enviada! En unos segundos seras redirigido a tu perfil, una vez la verifiquemos, cambiara su estado a "verificado" y podrás realizar el pago </div>
+    
                                       <div class="box__error" style="margin-top:50px;" id="errorMsg" style="display:none">
                                       <span class="box__error__msg" id ="box__error__msg" style="color:red"></span>. <br>
                                         {{-- <a href="https://css-tricks.com/examples/DragAndDropFileUploading//?" class="box__restart" role="button">Intente de nuevo!</a> --}}
                                       </div>
                                     </div>
 
-                                    <!-- <button type="submit" class="box__button">Upload</button> -->
-                                    <button  type="submit" class="float-right mt-4 dra-button" data-color="#40E0BC" id="uploadBtnNF" style="margin-top:-20px;">{{ __('Place Order')}}</button>
-            
-                                    
-
                                   </form>
                                 </div>
-
+                                <div aria-live="polite" aria-atomic="true" class="d-flex justify-content-center align-items-center" style="min-height: 200px;">
+                                  <div class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+                                    <div class="toast-header">
+                                      {{-- <img src="..." class="rounded mr-2" alt="..."> --}}
+                                      <strong class="mr-auto">Drazamed</strong>
+                                      <small class="text-muted">Ahora</small>
+                                      <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+                                      <span aria-hidden="true">&times;</span>
+                                      </button>
+                                    </div>
+                                    <div class="toast-body">
+                                      Orden enviada! En unos segundos sera redirigido a su perfil para realizar el pago
+                                    </div>
+                                  </div>
+                                </div>
                              
                               {{-- <button class="float-right mt-4 dra-button" data-color="#40E0BC" id="uploadBtnNoFormula" >{{ __('Place Order')}}</button> --}}
                             
@@ -281,10 +298,10 @@
     </div>
 </main>
 
-@include('design.modals.login')
+{{-- @include('design.modals.login')
 @include('design.modals.register')
 @include('design.modals.recovery')
-@include('design.modals.pinfo')
+@include('design.modals.pinfo') --}}
 
 <script>
 
@@ -292,7 +309,7 @@ var formulario;
 
 $("#noformula").on('submit', function(event){
   event.preventDefault();
-  
+  $('.box__uploading').fadeIn("slow");
   var form = $(this);
   console.log("Method");
   var method = form.attr( 'method' );
@@ -301,6 +318,8 @@ $("#noformula").on('submit', function(event){
   var url = form.attr('action');
   console.log(url);
   
+  $().toast('show');
+
   formulario = form;
 
   $.ajax({
@@ -486,6 +505,8 @@ $("#search_medicine")
         .append("<div>" + item.label + "</div>")
         .appendTo(ul);
     };
+
+    
 </script>
 
 @endsection

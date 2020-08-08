@@ -18,7 +18,7 @@
 
 @endif
 
-<div id="drop-box" class="no-js upload-zone text-center">
+<div id="drop-box" class="no-js upload-zone text-center" style="margin-top: 100px">
 	<form method="post" action="/medicine/store-prescription/1" enctype="multipart/form-data" novalidate class="box" id="dropbox">
 		<input type="" name="shipping_cost" id="shippingForm" value="" hidden required />
 		<input type="" name="is_pres_required" id="is_pres_required" value="{{$pres_required}}" hidden/>
@@ -33,8 +33,25 @@
 		<input type="file" name="files[]" id="file" class="box__file" data-multiple-caption="{count} files selected" />
 		<label for="file"><strong>Escoja un archivo</strong><span class="box__dragndrop"> o sueltelo acá</span>.</label>
 		<!-- <button type="submit" class="box__button">Upload</button> -->
-			<button type="submit" class="float-right dra-button" data-color="#40E0BC" id="uploadBtn" style="margin-top:-20px;">{{ __('Place Order')}}</button>
+			<button type="submit" class="float-right dra-button" data-color="#40E0BC" id="uploadBtn" style="margin-top:-380px;" data-loading-text="<i class='fa fa-spinner fa-spin '></i> Procesando orden">{{ __('Place Order')}}</button>
 		</div>
+		<!-- Flexbox container for aligning the toasts -->
+		<div aria-live="polite" aria-atomic="true" class="d-flex justify-content-center align-items-center" style="min-height: 200px;">
+			<div class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+				<div class="toast-header">
+					{{-- <img src="..." class="rounded mr-2" alt="..."> --}}
+					<strong class="mr-auto">Drazamed</strong>
+					<small class="text-muted">Ahora</small>
+					<button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="toast-body">
+					Orden enviada! En unos segundos sera redirigido a su perfil para realizar el pago
+				</div>
+			</div>
+		</div>
+
 		<div style="text-align: center;">
 			<div class="box__uploading">Enviando orden&hellip;</div>
 			<div class="box__success" style="color: green"> <br> Orden enviada! En unos segundos sera redirigido a su perfil para realizar el pago </div>

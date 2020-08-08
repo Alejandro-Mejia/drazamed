@@ -49,11 +49,13 @@ function trans(key, replace = {}) {
     return translation;
 }
 
+//getCategories();
+//show_favorites();
+
 $(document).ready(function() {
     var token = $("#security_token").val();
 
-    getCategories();
-    show_favorites();
+    
 
     if (token != "" || token != 0) {
         $("#myModal_change_password").modal({});
@@ -788,44 +790,6 @@ function show_our_products(cat = null) {
     });
 }
 
-function show_favorites() {
-    $.ajax({
-        url: "/favorites",
-        type: "GET",
-        async: true,
-        datatype: "JSON",
-        success: function(data) {
-            console.log("Productos:");
-            console.log(data);
-            $("#med-list").empty();
-            // $('#med-list').append('<div class="col-lg-12 col-md-12 col-sm12"><h4> Productos Recomendados </h4></div>')
-            $.each(data.result.msg, function(i, item) {
-                console.log(item);
-                medicina = item.name;
-                $("#med-list").append(
-                    '<div class="med cat_product" onclick="thumbClick(`' + medicina + '`)">' +
-                        '    <div class="row">' +
-                        '        <div class="col-md-4">' +
-                        '            <img class="med-thumbnail" src="' + item.url_img + '" alt="">' +
-                        "        </div>" +
-                        '        <div class="col-md-8">' +
-                        '            <h5 class="med-title">' +
-                        item.name +
-                        "</h5>" +
-                        '            <p class="med-description"> ' +
-                        item.composition +
-                        " </p>" +
-                        '            <p class="med-mrp" style="text-align:right; font-size:2e; color:green">  $' +
-                        convertToMoney(item.mrp) +
-                        " </p>" +
-                        "        </div>" +
-                        "    </div>" +
-                        "</div>"
-                );
-            });
-        }
-    });
-}
 
 $("#catList").on("click", "li", function(e) {
     //alert($(this).html());
