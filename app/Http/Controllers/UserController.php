@@ -553,7 +553,7 @@ class UserController extends BaseController
 			->join ('invoice as i' , 'i.pres_id' , '=' , DB::raw ("prescription.id AND i.payment_status IN (" . PayStatus::PENDING () . ",0) "));
 		$results = $prescriptions->get ();
 		// dd($results->toArray());
-		$responses[] = [];
+		$responses = [];
 
 		foreach ($results as $result) {
 			$items = [];
@@ -614,8 +614,11 @@ class UserController extends BaseController
 				];
 
 				// var_dump($details);
+				
 			}
 			
+			
+
 			$responses[] = $details;
 
 		}
