@@ -53,7 +53,7 @@
 
                 <li><a href="/about">Quiénes Somos</a></li>
                 <li><a href="/contact">Contacto</a></li>
-                @if (!Auth::check() )
+                @if (Auth::check() )
                 <button
                     class="btn btn-login btn-profile"
                 >
