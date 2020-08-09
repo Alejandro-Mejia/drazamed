@@ -132,12 +132,28 @@ main .quicksearch .qs-elems .med-list {
   .quicksearch .qs-elems .qs-med-search{
     display: none !important;
   }
+
+  #dra-logo-1{
+    display: none;
+  }
+
+  #dra-logo-1{
+    display: block;
+  }
 }
 
 @media (max-width: 1000px) {
   main .cover .wrapper p {
     width: 90%;
     margin: 0 auto;
+  }
+
+  #dra-logo-1{
+    display: block;
+  }
+
+  #dra-logo-1{
+    display: none;
   }
 }
 
