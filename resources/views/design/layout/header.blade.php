@@ -1,7 +1,8 @@
 <header>
     <div class="header-content">
         <a href="/">
-            <img src="/assets/images/logo.png" alt="" width="300px"/>
+            <img id="dra-logo-1" src="/assets/images/logo.png" alt="" width="300px"/>
+            <img id="dra-logo-2" src="/assets/images/logo2.png" alt="" width="100px"/>
         </a>
         <nav>
             <a href="/">Inicio</a>
