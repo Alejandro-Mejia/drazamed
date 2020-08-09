@@ -73,6 +73,7 @@
 
                 ?>
                 {{ $full_name ?? '' }}
+                
             </button>
                 @else
                     <button class="m-login-btn" data-toggle="modal" data-target="#login-modal">Ingresar</button>
