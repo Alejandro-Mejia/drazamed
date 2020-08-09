@@ -98,6 +98,14 @@ main .quicksearch .qs-elems .med-list {
   align-items: center;
 }
 
+#dra-logo-1{
+  display: block;
+}
+
+#dra-logo-2{
+  display: none;
+}
+
 @-webkit-keyframes upPreload {
   to {
     transform: translateY(-100%);
@@ -137,7 +145,7 @@ main .quicksearch .qs-elems .med-list {
     display: none;
   }
 
-  #dra-logo-1{
+  #dra-logo-2{
     display: block;
   }
 }
@@ -148,13 +156,6 @@ main .quicksearch .qs-elems .med-list {
     margin: 0 auto;
   }
 
-  #dra-logo-1{
-    display: block;
-  }
-
-  #dra-logo-1{
-    display: none;
-  }
 }
 
 @media (max-width: 1199px) {
