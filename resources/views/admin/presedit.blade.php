@@ -26,8 +26,11 @@
 
 </style>
 <link rel="stylesheet" href="{{url('/')}}/assets/adminFiles/css/bootstrap-spinner.css" type="text/css"/>
-<script src="https://use.fontawesome.com/641e308f57.js"></script>
-<script src="https://cdn.datatables.net/plug-ins/1.10.21/i18n/Spanish.json"></script>
+<script src="{{url('/')}}/js/DataTables-1.10.21/js/jQuery.dataTables.min.js"></script>
+<script src="{{url('/')}}/js/moment.min.js"></script>
+<script src="{{url('/')}}/js/bootstrap-datetimepicker.min.js"></script>
+<script src="{{url('/')}}/js/fontawesome.min.js"></script>
+{{-- <script src="https://cdn.datatables.net/plug-ins/1.10.21/i18n/Spanish.json"></script> --}}
 <section id="content">
 <section class="vbox">
 <section class="scrollable padder">
@@ -64,16 +67,45 @@
             <header class="panel-heading" >
                 <?php if ($status == 1) {
                     ?>
-                    <button style="float:right" id="add_field_button" class="btn btn-sm btn-default"><i
+                    {{-- <button style="float:right" id="add_field_button" class="btn btn-sm btn-default"><i
                             class="fa fa-plus-square" style="padding-right:5px"></i>{{ __('Add Medicine')}}
-                    </button>
+                    </button> --}}
+                    
+                    
                 <?php } ?>
-                {{ __('Shipping Cost')}} : <input type="text" id="shipping" name="shipping" class="form-control auto-input" style="width:400px"
-                       placeholder="Enter Shipping Cost For This Order" value=<?php echo $shipping; ?>>
-                <input type="" id="pres_id" name="pres_id", value=<?php echo $pres_id;?> hidden>
-                <input type="" id="invoice_id" name="invoice_id", value=<?php echo $invoice_id;?> hidden>
-                <input type="" id="itemS" name="itemS" value=1 hidden>
-                <input type="" id="total" name="total" value=0 hidden>
+                <div class="row">
+                    <div class="col-md-4">
+                        {{ __('Shipping Cost')}} : <input type="text" id="shipping" name="shipping" class="form-control auto-input" 
+                        placeholder="Costo de envio" value=<?php echo $shipping; ?> style="margin-top:5px">
+                        <input type="" id="pres_id" name="pres_id", value=<?php echo $pres_id;?> hidden>
+                        <input type="" id="invoice_id" name="invoice_id", value=<?php echo $invoice_id;?> hidden>
+                        <input type="" id="itemS" name="itemS" value=1 hidden>
+                        <input type="text" id="items" name="items" value="" hidden>
+                        <input type="" id="total" name="total" value=0 hidden>
+                    </div>
+                    <div class="col-md-3" style="float:center">
+                        <label for="datetime"> Vencimiento de la Fórmula</label>
+                        <div class="input-group date" data-provide="datepicker">
+                            <input width="100px" type="text" class="form-control" id="datetime">
+                            <div class="input-group-addon">
+                                <span class="glyphicon glyphicon-th"></span>
+                            </div>
+                        </div>
+                        
+                    </div>
+                    <div class="col-md-4" style="float:right; margin-top:10px">
+                        <input
+                            type="text"
+                            class="form-control search_medicine"
+                            placeholder="Adicionar producto"
+                            aria-label="Adicionar producto"
+                            aria-describedby="basic-addon2"
+                            id="search_medicine"
+                        />
+                    </div>
+                </div>
+                
+                
             </header>
             <div class="list-group bg-white" style="display: block;width: 100%; height: 625px;">
                 <section class="vbox">
@@ -134,7 +166,7 @@
 </section>
 </section>
 <script src="{{url('/')}}/assets/adminFiles/js/jquery.autocomplete.js"></script>
-<script src="{{url('/')}}/assets/adminFiles/js/jquery.spinner.js"></script>
+{{-- <script src="{{url('/')}}/assets/adminFiles/js/jquery.spinner.js"></script> --}}
 @include('admin/footer')
 
 <script type="text/javascript">
@@ -143,9 +175,11 @@
         var shipping = $('#shipping').val();
         var item = $("#item_code1").val();
         var data = table.rows().data().toArray();
-        // var items = JSON.stingify( data );
+        var items = JSON.stringify( data );
         var itemS = table.rows().length;
-        $('#itemS').val(itemS);
+        
+        $("#items").val(items);
+        // $('#itemS').val(itemS);
 
         if(item == ""){
             alert('Please add an item to the cart');
@@ -187,9 +221,17 @@
         table.rows().nodes().page.len(-1).draw(false);  // This is needed
 
         // post data
-        //$.post('/admin/update-invoice', values);​
+        // $.post( "test.php" );
         //continue submitting
-         e.currentTarget.submit();
+        e.currentTarget.submit();
+        // $.ajax({
+        //     type: "POST",
+        //     url: '/admin/update-invoice',
+        //     data: values,
+        //     success: function (data) {
+        //         console.log(data);
+        //     }
+        // });
 
     });
 
@@ -266,7 +308,7 @@
                 {
                     "data": null,
                     className: "center",
-                    "defaultContent": "<a href=''><i class='fa fa-trash fa-2x'></i></a><a href=''><i class='fa fa-edit fa-2x'></i></a>"
+                    "defaultContent": "<a href=''><i class='fa fa-times fa-2x'></i></a><a href=''><i class='fa fa-edit fa-2x'></i></a>"
                 }
                 
             ],
@@ -307,7 +349,40 @@
         });
 
         
+        /**
+         * Busqueda de Medicamentos por nombre
+         * @param cat= Categoria lab= Laboratorio term= Nombre Medicamento limit= #resultados max
+         */
+        $("#search_medicine")
+            .autocomplete({
+                search: function(event, ui) {
+                    $(".med_search_loader").css("display", "block");
+                },
+                open: function(event, ui) {
+                    $(".med_search_loader").css("display", "none");
+                },
+                source: "/medicine/load-medicine-web/1",
+                minLength: 2,
+                delay: 0,
+                max: 10,
 
+                response: function(event, ui) {
+                    $(".med_search_loader").css("display", "none");
+                },
+
+                select: function(event, ui) {
+                    console.log("itemCode=" + ui.item.item_code);
+                    item_code = ui.item.item_code;
+                    current_item_code = item_code;
+                    // goto_detail_page();
+                    show_detail_modal(ui.item);
+                }
+            })
+            .autocomplete("instance")._renderItem = function(ul, item) {
+            return $("<li>")
+                .append("<div>" + item.label + "</div>")
+                .appendTo(ul);
+            };
        
         
     } );
@@ -385,26 +460,49 @@
 
         })
 
-    });
-    $(document).on('focus', '.auto-input', function (e) {
-        var id = this.id.match(/\d+/)[0];
-        $(this).autocomplete({
-            serviceUrl: '{{url('/')}}/admin/load-medicine-web',
-            onSelect: function (suggestion) {
-                console.log(suggestion);
-                var disc = parseFloat((suggestion.discount == 0) ? discount : suggestion.discount);
-                $("#price" + id).val(suggestion.mrp);
-                $("#autocomplete" + id).val(suggestion.value);
-                $("#pricee" + id).val(suggestion.mrp);
-                $("#price" + id).val(suggestion.mrp);
-                $("#item_code" + id).val(suggestion.id);
-                $("#total_price" + id).val(parseFloat(suggestion.mrp) - disc);
-                $("#discount" + id).val(disc);
-                $("#discount1" + id).val(disc);
-                $("#itemS").val(id);
-            }
+
+        $("#datetime").datetimepicker({
+            format: 'DD-MM-YYYY'
         });
+
     });
+    // $(document).on('focus', '.auto-input', function (e) {
+    //     var id = this.id.match(/\d+/)[0];
+    //     $(this).autocomplete({
+    //         serviceUrl: '{{url('/')}}/admin/load-medicine-web',
+    //         onSelect: function (suggestion) {
+    //             console.log(suggestion);
+    //             var disc = parseFloat((suggestion.discount == 0) ? discount : suggestion.discount);
+    //             $("#price" + id).val(suggestion.mrp);
+    //             $("#autocomplete" + id).val(suggestion.value);
+    //             $("#pricee" + id).val(suggestion.mrp);
+    //             $("#price" + id).val(suggestion.mrp);
+    //             $("#item_code" + id).val(suggestion.id);
+    //             $("#total_price" + id).val(parseFloat(suggestion.mrp) - disc);
+    //             $("#discount" + id).val(disc);
+    //             $("#discount1" + id).val(disc);
+    //             $("#itemS").val(id);
+    //         }
+    //     });
+    // });
+    jQuery.event.special.touchstart = {
+        setup: function( _, ns, handle ){
+            if ( ns.includes("noPreventDefault") ) {
+            this.addEventListener("touchstart", handle, { passive: false });
+            } else {
+            this.addEventListener("touchstart", handle, { passive: true });
+            }
+        }
+    };
+    jQuery.event.special.touchmove = {
+        setup: function( _, ns, handle ){
+            if ( ns.includes("noPreventDefault") ) {
+            this.addEventListener("touchmove", handle, { passive: false });
+            } else {
+            this.addEventListener("touchmove", handle, { passive: true });
+            }
+        }
+    };
 
     // TODO
     function calculate(id, val) {
@@ -416,6 +514,10 @@
         $("#discount" + id2).val(discount);
         $("#total_price" + id2).val(total_price);
     }
+
+    
+
+        
 </script>
 
 

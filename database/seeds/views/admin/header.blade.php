@@ -12,8 +12,10 @@
   <link rel="stylesheet" href="{{url('/')}}/assets/adminFiles/css/icon.css" type="text/css" />
   <link rel="stylesheet" href="{{url('/')}}/assets/adminFiles/css/font.css" type="text/css" />
   <link rel="stylesheet" href="{{url('/')}}/assets/adminFiles/css/app.css" type="text/css" />
-  <link rel="stylesheet" href="//cdn.datatables.net/1.10.7/css/jquery.dataTables.min.css" type="text/css" />
-   <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
+  <link rel="stylesheet" href="{{url('/')}}/js/DataTables-1.10.21/css/jquery.dataTables.min.css" type="text/css" />
+  {{-- <link rel="stylesheet" href="//cdn.datatables.net/1.10.7/css/jquery.dataTables.min.css" type="text/css" /> --}}
+  {{-- <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.2.min.js"></script> --}}
+  <script type="text/javascript" src="{{url('/')}}/js/jquery-3.5.1.js"></script>
   <!--[if lt IE 9]>
     <script src="js/ie/html5shiv.js"></script>
     <script src="js/ie/respond.min.js"></script>

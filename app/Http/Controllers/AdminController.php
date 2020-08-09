@@ -868,21 +868,22 @@ class AdminController extends BaseController
 		if (!empty($got['invoice_id'])) {       // If Invoice Already Exists
 			$i = 1;
 			$items = ItemList::where ('invoice_id' , '=' , $got['invoice_id'])->get ();
+			$itemsPost = json_decode($got['items']);
+			// dd($itemsPost);
 			while ($i <= $got['itemS']) {
 				//$discount += $got['discount' . $i];
 				//$sub_total += $got['total_price' . $i];
 				$alreadyIn = 0;
 				foreach ($items as $item) {     // Update already Existings Cart
-					if ($got['item_code' . $i] == $item->medicine) {
-						$itemUpdate = ['quantity' => $got['qty' . $i] ,
-							'unit_price' => $got['pricee' . $i] ,
-							'total_price' => $got['total_price' . $i] ,
-							'discount_percentage' => $got['unit_discount' . $i] ,
-							'discount' => $got['discount' . $i] ,
+					if ($itemsPost[$i-1]->item_id == $item->medicine) {
+						$itemUpdate = ['quantity' => $itemsPost[$i-1]->quantity ,
+							'unit_price' => $itemsPost[$i-1]->unit_price ,
+							'total_price' => $itemsPost[$i-1]->total_price ,
+							'discount' => $itemsPost[$i-1]->discount ,
 							'updated_at' => date ('Y-m-d H:i:s') ,
 							'updated_by' => Auth::user ()->id
 						];
-						ItemList::where ('invoice_id' , '=' , $got['invoice_id'])->where ('medicine' , '=' , $got['item_code' . $i])->update ($itemUpdate);
+						ItemList::where ('invoice_id' , '=' , $got['invoice_id'])->where ('medicine' , '=' , $itemsPost[$i-1]->item_code)->update ($itemUpdate);
 						$alreadyIn = 1;
 						break;
 					}
@@ -890,12 +891,11 @@ class AdminController extends BaseController
 				if ($alreadyIn == 0) {
 					$newItem = new ItemList;
 					$newItem->invoice_id = $got['invoice_id'];
-					$newItem->medicine = $got['item_code' . $i];
-					$newItem->quantity = $got['qty' . $i];
-					$newItem->unit_price = $got['pricee' . $i];
-					$newItem->total_price = $got['total_price' . $i];
-					$newItem->discount_percentage = $got['unit_discount' . $i];
-					$newItem->discount = $got['discount' . $i];
+					$newItem->medicine =  $itemsPost[$i-1]->item_code;
+					$newItem->quantity =  $itemsPost[$i-1]->quantity;
+					$newItem->unit_price =  $itemsPost[$i-1]->unit_price;
+					$newItem->total_price = $itemsPost[$i-1]->total_price;
+					$newItem->discount = $itemsPost[$i-1]->discount;
 					$newItem->created_at = date ('Y-m-d H:i:s');
 					$newItem->created_by = Auth::user ()->id;
 					$newItem->updated_by = Auth::user ()->id;
@@ -930,18 +930,17 @@ class AdminController extends BaseController
 			$invoice->save ();
 			while ($i <= $got['itemS']) {
 				// Calculate Prices
-				$sub_total += $got['sub_total' . $i];
-				$discount += $got['discount' . $i];
-				$total_price += $got['total_price' . $i];
+				$sub_total += $itemsPost[$i-1]->unit_price * $itemsPost[$i-1]->quantity;
+				$discount += $itemsPost[$i-1]->discount;
+				$total_price += $itemsPost[$i-1]->total_price;
 				// Add Items
 				$newItem = new ItemList;
 				$newItem->invoice_id = $invoice->id;
-				$newItem->medicine = $got['item_code' . $i];
-				$newItem->quantity = $got['qty' . $i];
-				$newItem->unit_price = $got['pricee' . $i];
-				$newItem->total_price = $got['total_price' . $i];
-				$newItem->discount_percentage = $got['unit_discount' . $i];
-				$newItem->discount = $got['discount' . $i];
+				$newItem->medicine = $itemsPost[$i-1]->item_code;
+				$newItem->quantity = $itemsPost[$i-1]->discount;
+				$newItem->unit_price = $itemsPost[$i-1]->unit_price;
+				$newItem->total_price = $itemsPost[$i-1]->total_price;
+				$newItem->discount = $itemsPost[$i-1]->discount;
 				$newItem->created_at = date ('Y-m-d H:i:s');
 				$newItem->created_by = Auth::user ()->id;
 				$newItem->save ();

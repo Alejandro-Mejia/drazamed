@@ -14,7 +14,8 @@
   <script src="{{url('/')}}/assets/adminFiles/js/charts/flot/jquery.flot.resize.js"></script>
   <script src="{{url('/')}}/assets/adminFiles/js/charts/flot/jquery.flot.grow.js"></script>
 
-  <script src="//cdn.datatables.net/1.10.7/js/jquery.dataTables.min.js"></script>
+  <script src="{{url('/')}}/js/DataTables-1.10.21/js/jQuery.dataTables.min.js"></script>
+  
 
   <script src="{{url('/')}}/assets/adminFiles/js/app.plugin.js"></script>
 {{--  <script type="text/javascript" src="http://jqueryrotate.googlecode.com/svn/trunk/jQueryRotate.js"></script>--}}
