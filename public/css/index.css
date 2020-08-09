@@ -106,6 +106,7 @@ main .quicksearch .qs-elems .med-list {
   display: none;
 }
 
+
 @-webkit-keyframes upPreload {
   to {
     transform: translateY(-100%);
