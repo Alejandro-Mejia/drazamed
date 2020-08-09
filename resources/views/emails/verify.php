@@ -32,7 +32,7 @@
                     <?php echo Setting::param('site', 'app_name')['value']; ?></h2>
 
                 <h2 style="font-family: 'Open Sans', sans-serif; color:#fff;font-weight: 100;margin: 0;font-size: 18px;text-align: center;">
-                    Compra medicamentos en online en la Sabana, es fácil</h2>
+                    Compra medicamentos online en la Sabana, es fácil</h2>
             </div>
         </div>
         <!--banner-mail ends here-->

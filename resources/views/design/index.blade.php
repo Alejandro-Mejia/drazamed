@@ -31,7 +31,7 @@
                     <input
                         type="text"
                         class="form-control search_medicine"
-                        placeholder="Busca cualquier producto de droguería"
+                        placeholder="Busca productos de droguería"
                         aria-label="Busca un producto por nombre"
                         aria-describedby="basic-addon2"
                         id="search_medicine"
@@ -58,7 +58,7 @@
     <div class="quicksearch">
         <div class="qs-elems">
             <div class="row">
-                <div class="col-lg-4 col-sm-12">
+                <div class="col-lg-4 col-sm-12 qs-med-search">
                     <div class="dra-box qs-med-form">
                         <h3 class="mb-4">Buscar</h3>
                         <form action="" class="form-search-med">
