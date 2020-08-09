@@ -13,13 +13,13 @@
             <ul style="margin: 0; ">
                 <li style="list-style:none;  float:left;  margin-left: -38px; ">
                     <a href="<?php echo URL::to('/'); ?>"><img
-                            src="<?php echo 'SYSTEM_IMAGE_URL' . Setting::param('site', 'logo')['value']; ?> "
-                            alt=" <?php echo Setting::param('site', 'app_name')['value']; ?>"></a>
+                            src="<?php echo URL::to('/'); ?>/assets/images/logo.png"
+                            alt=" <?php echo Setting::param('site', 'app_name')['value']; ?>" width="100px"></a>
                 </li>
                 <li style="list-style:none;  float:right;  margin-right: 8px; ">
                     <a style="text-decoration:none;  font-family: 'Open Sans', sans-serif;  color:#498ea0; "
-                       href="<?php echo URL::to('/'); ?>"><p>Login
-                            to <?php echo Setting::param('site', 'app_name')['value']; ?></p></a>
+                       href="<?php echo URL::to('/'); ?>"><p>Ir a
+                            <?php echo Setting::param('site', 'app_name')['value']; ?></p></a>
                 </li>
             </ul>
             <div style="clear:both"></div>
@@ -32,7 +32,7 @@
                     <?php echo Setting::param('site', 'app_name')['value']; ?></h2>
 
                 <h2 style="font-family: 'Open Sans', sans-serif; color:#fff;font-weight: 100;margin: 0;font-size: 18px;text-align: center;">
-                    Compra medicamentos en linea, es facil</h2>
+                    Compra medicamentos en online en la Sabana, es fácil</h2>
             </div>
         </div>
         <!--banner-mail ends here-->
@@ -43,7 +43,7 @@
 
             <p>Queremos informarte que  <?php echo Setting::param('site', 'app_name')['value']; ?> ha revisado y verificado tu fórmula médica. Por favor revisa en "Ordenes pendientes de pago"  el nuevo estado de tu fórmula.</p>
 
-            <p> cuando tu fórmula médica este verificada, por favor haz click en COMPRAR AHORA. Te notificaremos cuando recibamos el comprobante de pago y enviaremos tu orden en muy poco tiempo</p>
+            <p> Por favor haz click en COMPRAR AHORA. Te notificaremos cuando recibamos el comprobante de pago y enviaremos tu orden en muy poco tiempo</p>
 
             <p>Preguntas? envienos un email a  <?php echo Setting::param('site', 'website')['value']; ?>.</p>
 
