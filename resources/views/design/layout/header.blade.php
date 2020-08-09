@@ -50,7 +50,7 @@
 
             <ul>
 
-                <li><a href="/about">Quienes somos</a></li>
+                <li><a href="/about">Quiénes Somos</a></li>
                 <li><a href="/contact">Contacto</a></li>
                 @if (!Auth::check() )
                     <button class="u-profile-btn">Perfil</button>

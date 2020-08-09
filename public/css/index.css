@@ -110,6 +110,30 @@ main .quicksearch .qs-elems .med-list {
   }
 }
 
+@media (max-width: 400px) {
+  main .cover {
+    background-image: url("/assets/images/bg_banner_search-min_cel.jpg") !important;
+  }
+
+  main .cover .wrapper p {
+    width: 90%;
+    margin: 0 auto;
+    
+  }
+
+  main .quicksearch {
+    padding: 0px 0 !important;
+  }
+
+  h1 {
+    font-size: 3rem !important;
+  }
+
+  .quicksearch .qs-elems .qs-med-search{
+    display: none !important;
+  }
+}
+
 @media (max-width: 1000px) {
   main .cover .wrapper p {
     width: 90%;
