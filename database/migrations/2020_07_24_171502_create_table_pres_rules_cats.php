@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTablePricerules extends Migration
+class CreateTablePresRulesCats extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,11 @@ class CreateTablePricerules extends Migration
      */
     public function up()
     {
-        Schema::create('pricerules', function (Blueprint $table) {
+        Schema::create('pres_rules_cats', function (Blueprint $table) {
             $table->id();
-            $table->string('laboratory',50);
-            $table->integer('rule_type')->default(1);
-            $table->double('rule')->nullable();
-            $table->boolean('isVtaReal')->default(0);
-            $table->boolean('isVtaCte')->default(0);
+            $table->string('category', 100);
+            $table->boolean('is_pres_required')->default(0);
+            $table->boolean('is_by_product')->default(0);
             $table->timestamps();
         });
     }
@@ -31,6 +29,6 @@ class CreateTablePricerules extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('pricerules');
+        Schema::dropIfExists('pres_ruls_cats');
     }
 }

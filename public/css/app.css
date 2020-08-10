@@ -1,4 +1,4 @@
-@import url(https://fonts.googleapis.com/css?family=Nunito);/*!
+/*!
  * jQuery UI CSS Framework 1.12.1
  * http://jqueryui.com
  *
@@ -3615,6 +3615,8 @@ pre code {
   .table-responsive-sm > .table-bordered {
     border: 0;
   }
+
+  
 }
 
 @media (max-width: 767.98px) {

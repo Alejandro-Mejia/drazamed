@@ -68,7 +68,7 @@ main .quicksearch {
 }
 
 main .quicksearch .qs-elems {
-  width: 80%;
+  width: 70%;
 }
 
 main .quicksearch .qs-elems .qs-med-form {
@@ -98,15 +98,6 @@ main .quicksearch .qs-elems .med-list {
   align-items: center;
 }
 
-#dra-logo-1{
-  display: block;
-}
-
-#dra-logo-2{
-  display: none;
-}
-
-
 @-webkit-keyframes upPreload {
   to {
     transform: translateY(-100%);
@@ -119,44 +110,11 @@ main .quicksearch .qs-elems .med-list {
   }
 }
 
-@media (max-width: 400px) {
-  main .cover {
-    background-image: url("/assets/images/bg_banner_search-min_cel.jpg") !important;
-  }
-
-  main .cover .wrapper p {
-    width: 90%;
-    margin: 0 auto;
-    
-  }
-
-  main .quicksearch {
-    padding: 0px 0 !important;
-  }
-
-  h1 {
-    font-size: 3rem !important;
-  }
-
-  .quicksearch .qs-elems .qs-med-search{
-    display: none !important;
-  }
-
-  #dra-logo-1{
-    display: none;
-  }
-
-  #dra-logo-2{
-    display: block;
-  }
-}
-
 @media (max-width: 1000px) {
   main .cover .wrapper p {
     width: 90%;
     margin: 0 auto;
   }
-
 }
 
 @media (max-width: 1199px) {

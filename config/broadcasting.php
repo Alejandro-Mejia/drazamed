@@ -15,7 +15,7 @@ return [
     |
     */
 
-    'default' => env('BROADCAST_DRIVER', 'null'),
+    'default' => env('BROADCAST_DRIVER', 'pusher'),
 
     /*
     |--------------------------------------------------------------------------
@@ -26,6 +26,10 @@ return [
     | to broadcast events to other systems or over websockets. Samples of
     | each available type of connection are provided inside this array.
     |
+    app_id = "1052486"
+key = "270a27c11d1a38de071b"
+secret = "f40bad866353132f7985"
+cluster = "us2"
     */
 
     'connections' => [

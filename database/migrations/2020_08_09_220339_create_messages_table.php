@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTablePresRulsCats extends Migration
+class CreateMessagesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,11 @@ class CreateTablePresRulsCats extends Migration
      */
     public function up()
     {
-        Schema::create('pres_ruls_cats', function (Blueprint $table) {
-            $table->id();
-            $table->string('category', 100);
-            $table->boolean('is_pres_required')->default(0);
-            $table->boolean('is_by_product')->default(0);
+        Schema::create('messages', function (Blueprint $table) {
+            $table->increments('id');
+            $table->integer('from', FALSE, TRUE);
+            $table->integer('to', FALSE, TRUE);
+            $table->text('message');
             $table->timestamps();
         });
     }
@@ -29,6 +29,6 @@ class CreateTablePresRulsCats extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('pres_ruls_cats');
+        Schema::dropIfExists('messages');
     }
 }
