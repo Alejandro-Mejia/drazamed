@@ -15,8 +15,8 @@ use Illuminate\Support\Facades\Log;
 
 
 /** @brief Class for medicines
-@author Alejandro Mejia
-@date March 2020
+* @author Alejandro Mejia
+* @date March 2020
 */
 class MedicinesImport implements ToModel, WithHeadingRow, WithBatchInserts , WithChunkReading, WithValidation, SkipsOnFailure, SkipsOnError
 {
@@ -113,11 +113,13 @@ class MedicinesImport implements ToModel, WithHeadingRow, WithBatchInserts , Wit
 
     public function setPriority($lab)
     {
-        if(Str::contains($lab,  'ICOM') {
+        if(Str::contains($lab,  'ICOM')) {
             return 1;
         } else {
             return 0;
         }
+
+        return $return;
     }
 
     public function ivaImport($value)
