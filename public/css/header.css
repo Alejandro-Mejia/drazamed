@@ -89,24 +89,6 @@ header .side-nav ul .m-login-btn {
   font-weight: 600 !important;
 }
 
-@media (max-width: 400px) {
-  #dra-logo-1 {
-    display:none;
-  }
-  #dra-logo-2 {
-    display:block;
-  }
-}
-
-@media (min-width: 500px) {
-  #dra-logo-1 {
-    display:block;
-  }
-  #dra-logo-2 {
-    display:none;
-  }
-}
-
 @media (max-width: 1000px) {
   header nav {
     display: none;

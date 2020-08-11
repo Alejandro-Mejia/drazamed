@@ -79,7 +79,7 @@
     </div>
  
     <!-- receive notifications -->
-    <script src="{{ asset('js/echo.js') }}"></script>
+    <script src="{{ asset('js/app.js') }}"></script>
  
     <script src="https://js.pusher.com/4.1/pusher.min.js"></script>
          
