@@ -14,7 +14,7 @@
         {
             Schema::create('prescription', function (Blueprint $table) {
                 $table->increments('id');
-                $table->integer('pres_id');
+                $table->integer('pres_id')->nullable();
                 $table->string('path', 100);
                 $table->integer('status')->default(1)->comment = "References Prescription Status Table";
                 $table->integer('user_id')->comment = "References User Table";
