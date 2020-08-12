@@ -1727,9 +1727,11 @@ class MedicineController extends BaseController
 			"street_name" => $address
 		);
 
+		//dd($invoice);
+
 		foreach ($invoice->cartList() as $cart) {
 			
-			Log::info('Cart item : ' . print_r($cart, true));
+			// Log::info('Cart item : ' . print_r($cart, true));
 
 			$item_name .= Medicine::medicines ($cart->medicine)['item_name'];
 			$item_name .= " ,";
@@ -1743,7 +1745,7 @@ class MedicineController extends BaseController
 			$item = new MercadoPago\Item();
 			$item->title = Medicine::medicines ($cart->medicine)['item_name'];;
 			$item->quantity = $cart->quantity;
-			$item->ptcture_url = 'https://drazamed.com/images/products/' . Medicine::medicines ($cart->medicine)['item_code'] . '.png';
+			$item->picture_url = 'https://drazamed.com/images/products/' . Medicine::medicines ($cart->medicine)['item_code'] . '.png';
 			$item->unit_price = $cart->unit_price;
 			$item->currency_id = 'COP';
 			$item->id = 1;
@@ -1775,7 +1777,7 @@ class MedicineController extends BaseController
 		$preference->external_reference = $invoice->id;
 
 
-		Log::info('Preference items: ' . print_r($preference, true)); 
+		Log::info('Preference with items, shpment and payer: ' . print_r($preference, true)); 
 		$preference->save();
 
 		// Crea el arreglo de datos que se va a enviar a la vista para despliegue
@@ -1792,10 +1794,22 @@ class MedicineController extends BaseController
 		$data['is_pres_required'] = $pres_required;
 		$data['access_token'] = $access_token;
 		
-		if ($isMobile)
-			return View::make ('/users/mobile_paypal_payment' , array('posted' => $data, 'preference' => $preference, 'invoice' => $invoice));
-		else
-			return View::make ('/users/mercadopago_payment' , array('posted' => $data, 'preference' => $preference, 'invoice' => $invoice));
+		//dd($preference);
+
+		// if ($isMobile)
+		// 	return View::make ('/users/mobile_paypal_payment' , array('posted' => $data, 'preference' => $preference, 'invoice' => $invoice));
+		// else
+		// 	return View::make ('/users/mercadopago_payment' , array('posted' => $data, 'preference' => $preference, 'invoice' => $invoice));
+
+		$response = array(
+			'posted' => $data,
+			'preference' => $preference->toArray(),
+			'invoice' => $invoice
+		);
+
+		// var_dump($response);
+
+		return	$response;
 		
 	}
 

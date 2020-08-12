@@ -95,13 +95,22 @@
 
                     @if (($prescription['pres_status'] == PrescriptionStatus::VERIFIED() && $prescription['invoice_status'] != InvoiceStatus::PAID()) && !empty($prescription['cart']))
 
-                        @if($payment_mode==1)
+                        {{-- @if($payment_mode==1)
                             <button type="button"class="btn btn-info buynow-btn ripple" invoice="<?php if (!empty($prescription['id'])) { echo $prescription['id']; }?>" onclick="purchase_paypal(this)">{{__('BUY NOW')}}</button>
                         @elseif($payment_mode==2)
                             <button type="button"class="btn btn-info buynow-btn ripple" invoice="<?php if (!empty($prescription['id'])) { echo $prescription['id']; }?>" onclick="purchase_mercadopago(this)">{{__('BUY NOW')}}</button>
+                             --}}
+            
+
+                            <form action="/procesar-pago" method="POST">
+                                <script
+                                    src="https://www.mercadopago.com.co/integrations/v1/web-payment-checkout.js"
+                                    data-preference-id="<?php echo $prescription['preference']['id']; ?>">
+                                </script>
+                            </form>
 
                             
-                        @endif
+                        {{-- @endif --}}
 
                     @endif
 

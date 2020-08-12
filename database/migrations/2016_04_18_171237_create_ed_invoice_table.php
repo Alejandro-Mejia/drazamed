@@ -14,9 +14,9 @@
         {
             Schema::create('invoice', function (Blueprint $table) {
                 $table->increments('id');
-                $table->string('invoice');
-                $table->string('description', 100);
-                $table->string('shipping_address');
+                $table->string('invoice')->nullable();
+                $table->string('description', 100)->nullable();
+                $table->string('shipping_address')->nullable();
                 $table->integer('pres_id')->comment('Referencing Prescription Table ');
                 $table->integer('user_id')->comment('Referencing User Table ');
                 $table->integer('status_id')->default(1)->comment('Referencing Invoice Status Table');
@@ -30,9 +30,9 @@
                 $table->integer('updated_by');
                 $table->integer('shipping_status')->default(1)->comment('Referencing Shipping Status Table');
                 $table->integer('shipping_mode')->comment('Referencing Shipping Table');
-                $table->integer('shipping_id')->comment('Shipping Reference Id');
+                $table->integer('shipping_id')->comment('Shipping Reference Id')->nullable();
                 $table->integer('payment_status')->default(1)->comment('Referencing payment status Table');
-                $table->string('transaction_id')->comment('Payment Reference Transaction ID');
+                $table->string('transaction_id')->comment('Payment Reference Transaction ID')->nullable();
                 $table->timestamps();
 
 

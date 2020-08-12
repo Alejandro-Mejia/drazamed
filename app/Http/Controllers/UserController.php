@@ -557,7 +557,19 @@ class UserController extends BaseController
 
 		foreach ($results as $result) {
 			$items = [];
+			// dd($result);
 
+			$invoice = Invoice::where ('pres_id' , '=' , $result->pres_id)->first()->toArray();
+
+			//dd($invoice);
+			$mp_data = app('App\Http\Controllers\MedicineController')->anyMakeMercadoPagoPayment($invoice["id"]);
+
+			// dd($mp_data);
+
+			// $mp_data_obj = json_decode($mp_data, true);
+
+			// dd($mp_data_obj);
+			
 			// echo("Prescriptions");
 			// var_dump($result);
 
@@ -577,6 +589,10 @@ class UserController extends BaseController
 					// var_dump($cart);
 					// dd($cart, $medicines, $results);
 					$tax = $cart->unit_price - ceil(($cart->unit_price / (1+($medicines[$cart->medicine]['tax']/100))));
+
+					
+
+					
 					$items[$i] = ['id' => $cart->id ,
 						'item_id' => $cart->medicine ,
 						'item_code' => $medicines[$cart->medicine]['item_code'] ,
@@ -596,6 +612,7 @@ class UserController extends BaseController
 					$i++;
 				}
 				
+				
 				$details = [
 					'id' => (is_null ($result->pres_id)) ? 0 : $result->pres_id ,
 					'invoice' => (is_null ($result->invoice)) ? 0 : $result->invoice ,
@@ -610,19 +627,20 @@ class UserController extends BaseController
 					'pres_status' => $result->status ,
 					'payment_status' => $result->payment_status,
 					'invoice_status' => is_null ($result->status_id) ? 0 : $result->status_id ,
-					'path' => $result->path
+					'path' => $result->path,
+					'posted' => $mp_data["posted"],
+					'preference' => $mp_data["preference"],
 				];
 
 				// var_dump($details);
 				
 			}
-			
-			
 
 			$responses[] = $details;
 
 		}
 
+		
 		// dd($responses);
 
 		$payment_mode = Setting::select ('value')->where ('group' , '=' , 'payment')->where ('key' , '=' , 'mode')->first ();

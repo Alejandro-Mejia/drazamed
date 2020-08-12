@@ -488,13 +488,27 @@
 
     }
 
-    function purchase_mercadopago(obj) {
-        var invoice = $(obj).attr('invoice');
-        console.log("Invoice:");
-        console.log(invoice);
-        window.location = "{{URL::to('medicine/make-mercado-pago-payment/')}}/" + invoice;
 
-    }
+
+    // function purchase_mercadopago(obj) {
+    //     var invoice = $(obj).attr('invoice');
+    //     console.log("Invoice:");
+    //     console.log(invoice);
+    //     // window.location = "{{URL::to('medicine/make-mercado-pago-payment/')}}/" + invoice;
+    //     $.ajax({
+    //         type: "GET",
+    //         url: "{{URL::to('medicine/make-mercado-pago-payment/')}}/" + invoice,
+    //         success: function(data) {
+    //             console.log(data);
+    //             // alert('Se ha borrado su orden');
+                
+                
+                
+    //         }
+    //     });
+
+
+    // }
 
     
 
