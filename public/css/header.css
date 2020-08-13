@@ -89,6 +89,8 @@ header .side-nav ul .m-login-btn {
   font-weight: 600 !important;
 }
 
+
+
 @media (max-width: 1000px) {
   header nav {
     display: none;
@@ -101,5 +103,6 @@ header .side-nav ul .m-login-btn {
   header .header-content .btn-header-resp {
     display: block;
   }
+
 }
 
