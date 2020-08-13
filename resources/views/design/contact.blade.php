@@ -12,8 +12,8 @@
             <div class="col-md-12 col-lg-8">
                 <div class="panel">
                     <h2 class="panel-title">
-                        Complete el siguiente formulario y estaremos atentos
-                        para resolver sus dudas
+                        Completa el siguiente formulario y estaremos atentos
+                        para resolver tus dudas
                     </h2>
 
                     <!-- <h2 class="contact-h2">{{ __('Get in touch with us')}}</h2> -->
@@ -165,7 +165,7 @@
                                     $('.contact-form')[0].reset();
                                     if(alerts==0)
                                     {
-                                        $('.mail_alert').html("No hemos podido enviar su mensaje, por favor intente de nuevo ");
+                                        $('.mail_alert').html("No hemos podido enviar tu mensaje, por favor intenta de nuevo ");
                                     }
                                     $('.mail_alert').css('display', 'block' );
                                         $(".mail_alert").delay(5000).fadeOut("slow");
