@@ -41,7 +41,7 @@
             <h2 style="font-family: 'Open Sans', sans-serif;  color:#272727; font-weight: 100; margin: 0;  font-size:14px; margin-bottom: 28px; ">
                 Hola <span style="color:#404040; font-weight: bold; "><?php echo $name; ?></span></h2>
 
-            <p>Queremos informarte que  <?php echo Setting::param('site', 'app_name')['value']; ?> ha revisado y verificado tu fórmula médica. Por favor revisa en "Ordenes pendientes de pago"  el nuevo estado de tu fórmula.</p>
+            <p>Queremos informarte que  <?php echo Setting::param('site', 'app_name')['value']; ?> ha revisado y verificado tu pedido. Por favor revisa en "Ordenes pendientes de pago"  el nuevo estado de tu fórmula.</p>
 
             <p> Por favor haz click en COMPRAR AHORA. Te notificaremos cuando recibamos el comprobante de pago y enviaremos tu orden en muy poco tiempo</p>
 
