@@ -17,9 +17,6 @@
     }
 </style>
 
-
-
-
 <section class="profile">
     <div class="profile-body">
         <div class="row">
