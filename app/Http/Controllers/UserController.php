@@ -311,6 +311,9 @@ class UserController extends BaseController
 			} else {
 				if (Auth::attempt (array('email' => $email , 'password' => $password))) {
 					$status = User::where ('email' , '=' , $email)->join ('user_status as us' , 'us.id' , '=' , 'user_status')->first ()->name;
+					$user = User::select('name')->where('email' , '=' , $email)->first()->name;
+					// dd($user);
+					//dd($status);
 					Session::put ('user_id' , $email);
 					Log::info('Email: '.$email);
 					Log::info('Passwd: '.$password);
@@ -326,8 +329,9 @@ class UserController extends BaseController
 					// $result = ['status' => 'SUCCESS' , 'msg' => 'User Logged In' , 'data' => ['status' => $status , 'pres_status' => $pres_status ,
 					// 	'invoice_status' => $invoice_status , 'payment_status' => $payment_status , 'shipping_status' => $shipping_status]];
 					//
-					$result = ['status' => 'SUCCESS' , 'msg' => 'User Logged In' , 'data' => ['status' => $status ]];
-					Log::info('result: '.$result);
+					$result = ['status' => 'SUCCESS' , 'msg' => 'User Logged In', 'email' => $email, 'name'=> $user,  'data' => ['status' => $status ]];
+					//dd($result);
+					// Log::info('result: '. print_f($result, true));
 				} else {
 					throw new Exception('Invalid Login Credientials' , 401);
 				}
