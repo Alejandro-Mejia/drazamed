@@ -890,10 +890,11 @@ class AdminController extends BaseController
 						Log::info('Invoice sub_total : ' . $sub_total );
 					}
 				
+					
 					if ($alreadyIn == 0) {
 						$newItem = new ItemList;
 						$newItem->invoice_id = $got['invoice_id'];
-						$newItem->medicine =  $itemsPost[$i-1]->item_code;
+						$newItem->medicine =  $itemsPost[$i-1]->item_id;
 						$newItem->quantity =  $itemsPost[$i-1]->quantity;
 						$newItem->unit_price =  $itemsPost[$i-1]->unit_price;
 						$newItem->total_price = $itemsPost[$i-1]->total_price;
