@@ -873,6 +873,8 @@ class AdminController extends BaseController
 			while ($i <= $got['itemS']) {
 				$alreadyIn = 0;
 				foreach ($items as $item) {     // Update already Existings Cart
+					Log::info('Medicine item (from Cart) : ' . $item->medicine );
+					Log::info('Posted item (from Verify) : ' . $itemsPost[$i-1]->item_id );
 					if ($itemsPost[$i-1]->item_id == $item->medicine) {
 						$itemUpdate = ['quantity' => $itemsPost[$i-1]->quantity ,
 							'unit_price' => $itemsPost[$i-1]->unit_price ,
@@ -890,7 +892,7 @@ class AdminController extends BaseController
 						Log::info('Invoice sub_total : ' . $sub_total );
 					}
 				
-					
+
 					if ($alreadyIn == 0) {
 						$newItem = new ItemList;
 						$newItem->invoice_id = $got['invoice_id'];
