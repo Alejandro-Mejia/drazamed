@@ -870,7 +870,7 @@ class AdminController extends BaseController
 			$items = ItemList::where ('invoice_id' , '=' , $got['invoice_id'])->get ();
 			$itemsPost = json_decode($got['items']);
 			// dd($got);
-			while ($i <= $got['itemS']) {º
+			while ($i <= $got['itemS']) {
 				//$discount += $got['discount' . $i];
 				//$sub_total += $got['total_price' . $i];
 				$alreadyIn = 0;
