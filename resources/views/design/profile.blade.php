@@ -307,7 +307,7 @@
                                             </td>
                                             <td class="text-center"><span class="date-added"> {{ $invoice->created_at  ?? ''}}</span>
                                             </td>
-
+                                            {{-- {{ var_dump($invoice)}} --}}
                                             <td class="text-center">{{ Setting::currencyFormat($invoice->total) }}
                                             </td>
 

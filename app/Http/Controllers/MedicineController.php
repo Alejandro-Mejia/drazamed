@@ -1824,7 +1824,7 @@ class MedicineController extends BaseController
 		$processing_mode = Request::get ('processing_mode' , '');
 		$invoice_id = Request::get ('external_reference' , '');
 		
-
+		
 		if($payment_status == "approved") {
 			// Obtiene la informacion de la factura
 			$invoice = Invoice::find ($invoice_id);
