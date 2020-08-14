@@ -869,8 +869,8 @@ class AdminController extends BaseController
 			$i = 1;
 			$items = ItemList::where ('invoice_id' , '=' , $got['invoice_id'])->get ();
 			$itemsPost = json_decode($got['items']);
-			// dd($itemsPost);
-			while ($i <= $got['itemS']) {
+			// dd($got);
+			while ($i <= $got['itemS']) {º
 				//$discount += $got['discount' . $i];
 				//$sub_total += $got['total_price' . $i];
 				$alreadyIn = 0;
@@ -885,7 +885,9 @@ class AdminController extends BaseController
 						];
 						ItemList::where ('invoice_id' , '=' , $got['invoice_id'])->where ('medicine' , '=' , $itemsPost[$i-1]->item_code)->update ($itemUpdate);
 						$alreadyIn = 1;
-						break;
+						$sub_total += $itemsPost[$i-1]->total_price;
+						$i++;
+						
 					}
 				}
 				if ($alreadyIn == 0) {
