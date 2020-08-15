@@ -569,6 +569,7 @@ class UserController extends BaseController
 			$mp_data = app('App\Http\Controllers\MedicineController')->anyMakeMercadoPagoPayment($invoice["id"]);
 
 			// dd($mp_data);
+			// var_dump($mp_data['preference']);
 
 			// $mp_data_obj = json_decode($mp_data, true);
 
