@@ -241,7 +241,10 @@ class MedicinesImport implements ToModel, WithHeadingRow, WithBatchInserts , Wit
         echo "Error: " . $e;
     }
 
-
+    public function getRowCount(): int
+    {
+        return $this->rows;
+    }
 
 
 }
