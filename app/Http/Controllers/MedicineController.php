@@ -2386,7 +2386,7 @@ class MedicineController extends BaseController
 		try {
 			// dd(Request::file ('file'));
 			if (!Request::hasFile ('file'))
-				throw new Exception('BAD REQUEST' , 400);
+				throw new Exception('BAD REQUEST - NO FILE IN POST' , 400);
 			$file = Request::file ('file');
 			Log::info('Archivo:' . $file);
 
