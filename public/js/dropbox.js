@@ -19,6 +19,7 @@
 			label		 = form.querySelector( 'label' ),
 			errorMsg	 = form.querySelector( '.box__error__msg' ),
 			restart		 = form.querySelectorAll( '.box__restart' ),
+			uploadingMsg = form.querySelector( '.box__uploading' ),
 			droppedFiles = false,
 			showFiles	 = function( files )
 			{
@@ -100,6 +101,7 @@
 			// preventing the duplicate submissions if the current one is in progress
 			if( form.classList.contains( 'is-uploading' ) ) return false;
 
+			$('.box__uploading').fadeIn("slow");
 
 			form.classList.add( 'is-uploading' );
 			form.classList.remove( 'is-error' );
@@ -137,11 +139,14 @@
 						form.classList.add( data.status == "SUCCESS" ? 'is-success' : 'is-error' );
 
 						if( data.status == "FAILURE" ) {
-							errorMsg.textContent = data.msg;
+							// errorMsg.textContent = data.msg;
+							$("#errorMsg").show();
+							$("#box__error__msg").html(data.msg);
 							setTimeout(function(){location.reload()}, 2000)
 						}
 
 						if (data.status == "SUCCESS") {
+							$("#boxSuccess").show();
 							setTimeout(function(){window.location="/account-page/#por_pagar";}, 2000)
 						}
 
