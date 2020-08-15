@@ -2383,6 +2383,8 @@ class MedicineController extends BaseController
 	public
 	function postUpload()
 	{
+		Log::info('Se esta subiendo el archivo' . print_r(Request::file('file')));
+
 		try {
 			// dd(Request::file ('file'));
 			if (!Request::hasFile ('file'))
