@@ -170,8 +170,7 @@
                     <p>
                         Por favor espera a que verifiquemos tu pedido. Una vez
                         lo verifiquemos cambiara su estado a "Verificado" y podrás
-                        proceder al pago haciendo click en el botón COMPRAR
-                        AHORA.
+                        proceder al pago haciendo click en el botón PAGAR.
                     </p>
                     <div class="table-responsive">
                         @if(!empty(count($prescriptions)))

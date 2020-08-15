@@ -1727,8 +1727,11 @@ class MedicineController extends BaseController
 			"street_name" => $address
 		);
 
-		//dd($invoice);
-
+		// if($invoice_id == 6) {
+		// 	dd($invoice->cartList());
+		// }
+		
+		$items = array();
 		foreach ($invoice->cartList() as $cart) {
 			
 			// Log::info('Cart item : ' . print_r($cart, true));
@@ -1752,10 +1755,17 @@ class MedicineController extends BaseController
 		
 			Log::info('Item : ' . print_r($item, true));
 		
-			$preference->items = array($item);
+			array_push ($items, $item);
+			
 			
 		}
 
+		// if($invoice_id == 6) {
+		// 	dd($items);
+		// }
+		
+
+		$preference->items = $items;
 		// Crea un ítem en la preferencia
 		// $item = new MercadoPago\Item();
 		// $item->title = 'Mi producto';
@@ -1766,7 +1776,9 @@ class MedicineController extends BaseController
 
 		Log::info('Item : ' . print_r($preference, true));
 
-		$preference->items = array($item);
+		// array_push($preference->items, array($item));
+
+		// $preference->items = array($item);
 
 		$shipments = new MercadoPago\Shipments();
 		$shipments->cost = $invoice->shipping;
