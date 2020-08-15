@@ -2388,17 +2388,20 @@ class MedicineController extends BaseController
 			if (!Request::hasFile ('file'))
 				throw new Exception('BAD REQUEST' , 400);
 			$file = Request::file ('file');
+			Log::info('Archivo:' . $file);
+
 			$extension = strtolower ($file->getClientOriginalExtension ());
 			if (!in_array ($extension , ['xls' , 'xlsx', 'csv'])) {
 				throw new Exception('Invalid File Uploaded ! Please upload either xls or xlsx file' , 400);
 			}
-
+			Log::info('Archivo:' . $extension);
 			// $medicines = Excel::import(new MedicinesImport, $file);
 			// dd($medicines);
 			// $headings = (new HeadingRowImport)->toArray($file);
 			// dd($headings);
 			//
 			try {
+				Log::info('Iniciando Import:');
 		    	$import = (new MedicinesImport)->import($file);
 			} catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
 			     $failures = $e->failures();

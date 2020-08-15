@@ -228,10 +228,10 @@ class MedicinesImport implements ToModel, WithHeadingRow, WithBatchInserts , Wit
     // /**
     //  * @param Failure ...$failures
     //  */
-    // public function onFailure(Failure ...$failures)
-    // {
-    //     Log::stack(['import-failure-logs'])->info(json_encode($failures));
-    // }
+    public function onFailure(Failure ...$failures)
+    {
+        Log::stack(['import-failure-logs'])->info(json_encode($failures));
+    }
 
 
     public function onError(\Throwable $e)
