@@ -2387,33 +2387,33 @@ class MedicineController extends BaseController
 		Log::info('Se esta subiendo el archivo' . print_r(Request::file('file')));
 		//$target_dir = env('APP_URL'). "/uploads/";
 
-		// dd($_FILES);
-		$target_file = basename($_FILES["file"]["name"]);
-		$uploadOk = 1;
-		$imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
+		// // dd($_FILES);
+		// $target_file = basename($_FILES["file"]["name"]);
+		// $uploadOk = 1;
+		// $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
 
-		Log::info('Upload Files : ' . print_r($_FILES, true));
-		Log::info('Target File : ' . $target_file);
-		Log::info('Target Type : ' . $imageFileType);
+		// Log::info('Upload Files : ' . print_r($_FILES, true));
+		// Log::info('Target File : ' . $target_file);
+		// Log::info('Target Type : ' . $imageFileType);
 
 
-		$file = request()->file('file');
-		Log::info('Tmp File : ' . $file);
+		// $file = request()->file('file');
+		// Log::info('Tmp File : ' . $file);
 
-		$file = request()->file('file')->store('uploads');
-		Log::info('Store File : ' . $file);
+		// $file = request()->file('file')->store('uploads');
+		// Log::info('Store File : ' . $file);
 		
-		// echo '<pre>';
-		// if (Storage::disk('uploads')->put($_FILES["file"]["name"], 'Contents')) {
-		// 	echo "El fichero es válido y se subió con éxito.\n";
-		// } else {
-		// 	echo "¡Posible ataque de subida de ficheros!\n";
-		// }
+		// // echo '<pre>';
+		// // if (Storage::disk('uploads')->put($_FILES["file"]["name"], 'Contents')) {
+		// // 	echo "El fichero es válido y se subió con éxito.\n";
+		// // } else {
+		// // 	echo "¡Posible ataque de subida de ficheros!\n";
+		// // }
 
-		// echo 'Más información de depuración:';
-		// print_r($_FILES);
+		// // echo 'Más información de depuración:';
+		// // print_r($_FILES);
 
-		// print "</pre>";
+		// // print "</pre>";
 
 		try {
 			dd(Request::file ('file'));
