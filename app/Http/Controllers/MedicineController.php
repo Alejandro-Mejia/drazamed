@@ -1063,8 +1063,10 @@ class MedicineController extends BaseController
 		if (!empty($key)) {
 			$medicines = array_filter ($medicines , function ($medicine) use ($key) {
 				$medTemp = $this->stringClean ($medicine['item_name']);
+				$medComp = $this->stringClean ($medicine['group']);
 				$keyTemp = $this->stringClean ($key);
 				if ((stripos ($medicine['item_name'] , $key)
+						|| stripos ($medComp , $key)
 						|| stripos ($medTemp , $key)
 						|| stripos ($medTemp , $keyTemp) === 0
 					) && $medicine['is_delete'] == 0
@@ -1086,9 +1088,14 @@ class MedicineController extends BaseController
 					'value' => $data['item_name'] ,
 					'label' => $data['item_name'] ,
 					'item_code' => $data['item_code'] ,
-					'mrp' => $data['sell_price']
+					'mrp' => $data['sell_price'],
+					'sp' => $data['show_priority']
 				);
 			}
+			
+			array_multisort(array_map(function($element) {
+				return $element['sp'];
+			}, $json), SORT_DESC, $json);
 
 			return Response::json ($json);
 
