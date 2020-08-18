@@ -1058,26 +1058,33 @@ class MedicineController extends BaseController
 		} else {
 			$key = Request::get ('n' , '');
 		}
-		$medicines = Medicine::medicines();
 		
-		if (!empty($key)) {
-			$medicines = array_filter ($medicines , function ($medicine) use ($key) {
-				$medTemp = $this->stringClean ($medicine['item_name']);
-				$medComp = $this->stringClean ($medicine['group']);
-				$keyTemp = $this->stringClean ($key);
-				if ((stripos ($medicine['item_name'] , $key)
-						|| stripos ($medComp , $key)
-						|| stripos ($medTemp , $key)
-						|| stripos ($medTemp , $keyTemp) === 0
-					) && $medicine['is_delete'] == 0
-				)
-					return true;
-				else
-					return false;
-			});
-			// $medicines->sortBy('show_priority');
-			$medicines = collect($medicines)->sortBy('show_priority')->reverse()->toArray();
-		}
+		$medicines = Medicine::select('id' , 'item_code' , 'item_name' , 'item_name as value' , 'item_name as label' , 'item_code' , 'composition' , 'discount' , 'discount_type' , 'tax' , 'tax_type' , 'manufacturer' , 'group' , 'is_delete' , 'is_pres_required', 'show_priority')
+							->where('item_name', 'LIKE', '%' . $key . '%')
+							->orWhere('group', 'LIKE', '%' . $key . '%')
+							->get()
+							->toArray ();
+
+		// $medicines = Medicine::medicines();
+		
+		// if (!empty($key)) {
+		// 	$medicines = array_filter ($medicines , function ($medicine) use ($key) {
+		// 		$medTemp = $this->stringClean ($medicine['item_name']);
+		// 		$medComp = $this->stringClean ($medicine['group']);
+		// 		$keyTemp = $this->stringClean ($key);
+		// 		if ((stripos ($medicine['item_name'] , $key)
+		// 				|| stripos ($medComp , $key)
+		// 				|| stripos ($medTemp , $key)
+		// 				|| stripos ($medTemp , $keyTemp) === 0
+		// 			) && $medicine['is_delete'] == 0
+		// 		)
+		// 			return true;
+		// 		else
+		// 			return false;
+		// 	});
+		// 	// $medicines->sortBy('show_priority');
+		// 	$medicines = collect($medicines)->sortBy('show_priority')->reverse()->toArray();
+		// }
 		
 		
 		if ($isWeb) {
