@@ -1059,6 +1059,7 @@ class MedicineController extends BaseController
 			$key = Request::get ('n' , '');
 		}
 		$medicines = Medicine::medicines();
+		
 		if (!empty($key)) {
 			$medicines = array_filter ($medicines , function ($medicine) use ($key) {
 				$medTemp = $this->stringClean ($medicine['item_name']);
@@ -1075,21 +1076,25 @@ class MedicineController extends BaseController
 			// $medicines->sortBy('show_priority');
 			$medicines = collect($medicines)->sortBy('show_priority')->reverse()->toArray();
 		}
+		
+		
 		if ($isWeb) {
 			$json = [];
 			foreach ($medicines as $data) {
 				$json[] = array(
+					'id' => $data['item_code'],
 					'value' => $data['item_name'] ,
 					'label' => $data['item_name'] ,
 					'item_code' => $data['item_code'] ,
+					'mrp' => $data['sell_price']
 				);
 			}
 
 			return Response::json ($json);
 
 		} else {
-			$medicines = array_slice ($medicines , 0 , 4);
-
+			$medicines = array_slice ($medicines , 0 , 10);
+			//dd($medicines);
 			if (empty($medicines))
 				return Response::make (['status' => 'FAILURE' , 'msg' => 'No Medicines Found'] , 404);
 //			$result = array(array('result' => array('status' => 'success' , 'msg' => $medicines)));

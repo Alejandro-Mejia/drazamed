@@ -186,9 +186,13 @@
         /**
          * Muestra los productos de Icom
          */
-        function show_favorites() {
+        function show_favorites(id_min, n) {
         $.ajax({
-            url: "/favorites",
+            url: "/favorites/getFavorites",
+            data: {
+                id_min: id_min,
+                n: n
+            },
             type: "GET",
             async: true,
             datatype: "JSON",
@@ -227,7 +231,7 @@
 
     $(document).ready(function() {
         getCategories();
-        show_favorites(); 
+        show_favorites(1,9); 
     });
 
 </script>
