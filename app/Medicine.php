@@ -170,6 +170,8 @@
 					$medicines[$list['id']]['is_pres_required'] = $list['is_pres_required'];
 					$medicines[$list['id']]['photo_url'] = $list['photo_url'];
 					$medicines[$list['id']]['sell_price'] = $list['sell_price'];
+					$medicines[$list['id']]['mrp'] = $list['sell_price'];
+					$medicines[$list['id']]['show_priority'] = $list['show_priority'];
 				}
 				Cache::put ('CACHE_PARAM_MEDICINE' , $medicines , 1440);
 			}

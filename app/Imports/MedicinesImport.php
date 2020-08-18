@@ -119,7 +119,7 @@ class MedicinesImport implements ToModel, WithHeadingRow, WithBatchInserts , Wit
             return 0;
         }
 
-        return $return;
+        // return $return;
     }
 
     public function ivaImport($value)
