@@ -173,7 +173,7 @@
 					$medicines[$list['id']]['mrp'] = $list['sell_price'];
 					$medicines[$list['id']]['show_priority'] = $list['show_priority'];
 				}
-				Cache::put ('CACHE_PARAM_MEDICINE' , $medicines , 1440);
+				//Cache::put ('CACHE_PARAM_MEDICINE' , $medicines , 1440);
 			}
 
 			return empty($key) ? $medicines : $medicines[$key];
