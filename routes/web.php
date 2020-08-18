@@ -164,6 +164,7 @@ use MercadoPago;
      * Favorites
      */
     Route::get('/favorites', 'MedicineController@anyShowFavorites');
+    Route::get('/favorites/getFavorites', 'FavoritesController@getFavorites');
 
     /**
      * Settings routes

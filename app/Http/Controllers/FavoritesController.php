@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
-// use Illuminate\Http\Request;
+use Illuminate\Http\Request;
+
 
 use App\Favorite;
 use App\Medicine;
-use Request;
+//use Request;
 use Response;
 
 class FavoritesController extends Controller
@@ -20,9 +21,23 @@ class FavoritesController extends Controller
 	 */
 
 	public
-	function getFavorites ()
+	function getFavorites (Request $request)
 	{
-		$favorites = Favorite::select ('*')->get();
+
+
+		($request->has('id_min')) ? $id_min = $request->query('id_min') : $id_min = null;
+		($request->has('n')) ? $n = $request->query('n') : $n = 9;
+		
+		// dd($id_min, $n);
+
+		if ($id_min != null && $n != null) {
+			$favorites = Favorite::select ('*')->where('id', '>=', $id_min)->take($n)->get();
+		} else {
+			$favorites = Favorite::select ('*')->get();
+		}
+		
+		
+		// dd($favorites);
 
 		// if (count ($favorites) > 0) {
 		// 	$result = array(array('result' => array('status' => 'sucess' , 'msg' => $favorites)));
@@ -33,15 +48,19 @@ class FavoritesController extends Controller
 
 		// return Response::json ($result);
 
-
-		if (isset($favorites) &&  $favorites->count () > 0) {
+		$i = 0 ;
+		if (isset($favorites) &&  $favorites->count() > 0) {
 			foreach ($favorites as $fav) {
 
 				$meds = $fav->getMedicine()->get();
-				$med = $meds[0];
+				// dd($meds[0]);
+
+				if ($meds->count() > 0) {
+					$med = $meds[0];
 				// dd($med['id']);
 				// $sellprice = app(Medicine::class)->anyCalculateMRP($med['id']) ? $this->anyCalculateMRP($med['id']) : 0;
-
+				// $sellprice = app()->call('App\Http\Controllers\MedicineController@anyCalculateMRP', ['id' => $med['id']]);
+				
 		        $medImagen = isset($med['item_code']) ? $med['item_code'].'.png' : 'default.png';
 				$medPath = "/images/products/" . $medImagen;
 
@@ -52,7 +71,9 @@ class FavoritesController extends Controller
 
 				$medPath = (is_file($path)) ? $medPath : "/images/products/default.png";
 
-				$medicineNameArray[$i] = array("id" => $med->id ,'item_code' => $med->item_code,  "name" => $med->item_name , 'mrp' => $sellprice ,'quantity' => $med->quantity, 'lab' => $med->manufacturer , 'composition' => $med->composition, 'image-url' => $med->photo_url, 'is_pres_required' => $med->is_pres_required, 'group' => $med->group, 'url_img' => $medPath);
+				$medicineNameArray[$i] = array("id" => $med->id ,'item_code' => $med->item_code,  "name" => $med->item_name , 'mrp' => $med->sellprice() ,'quantity' => $med->quantity, 'lab' => $med->manufacturer , 'composition' => $med->composition, 'image-url' => $med->photo_url, 'is_pres_required' => $med->is_pres_required, 'group' => $med->group, 'url_img' => $medPath);
+				}
+				
 				$i++;
 			}
 			$result = array('result' => array('status' => 'sucess' , 'msg' => $medicineNameArray));
