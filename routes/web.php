@@ -174,6 +174,14 @@ use MercadoPago;
     Route::post('/setting/payment', 'SettingController@postPayment');
     Route::post('/setting/user', 'SettingController@postUser');
 
+
+
+    Route::get('cache/medicines', function() {
+        return Cache::remember('medicines', 60, function() {
+            return Medicine::all();
+        });
+    });
+    
     /*
     |--------------------------------------------------------------------------
     | Admin Related Pages
