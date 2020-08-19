@@ -1059,12 +1059,11 @@ class MedicineController extends BaseController
 			$key = Request::get ('n' , '');
 		}
 		
-		$medicines = Medicine::select('id' , 'item_code' , 'item_name' , 'item_name as value' , 'item_name as label' , 'item_code' , 'composition' , 'discount' , 'discount_type' , 'tax' , 'tax_type' , 'manufacturer' , 'group' , 'is_delete' , 'is_pres_required', 'show_priority')
-							->where('item_name', 'LIKE', '%' . $key . '%')
-							->orWhere('group', 'LIKE', '%' . $key . '%')
+		$medicines = Medicine::where('item_name', 'LIKE', '%' . $key . '%')
+							->orWhere('composition', 'LIKE', '%' . $key . '%')
 							->get()
 							->toArray ();
-
+		//dd($medicines);
 		// $medicines = Medicine::medicines();
 		
 		// if (!empty($key)) {
@@ -1108,11 +1107,33 @@ class MedicineController extends BaseController
 
 		} else {
 			$medicines = array_slice ($medicines , 0 , 10);
+			// 'id' , 'item_code' , 'item_name' , 'item_name as value' , 'item_name as label' , 'item_code' , 'composition' , 'discount' , 'discount_type' , 'tax' , 'tax_type' , 'manufacturer' , 'group' , 'is_delete' , 'is_pres_required')->get()->toArray ();
+			foreach ($medicines as $data) {
+				$json[] = array(
+					'id' => $data['id'],
+					'value' => $data['item_name'] ,
+					'label' => $data['item_name'] ,
+					'item_code' => $data['item_code'] ,
+					'composition' => $data['composition'] ,
+					'manufacturer' => $data['manufacturer'] ,
+					'group' => $data['group'] ,
+					'mrp' => $data['sell_price'],
+					'discount' => $data['discount'],
+					'discount_type' => $data['discount_type'],
+					'tax' => $data['tax'],
+					'tax_type' => $data['tax_type'],
+					'sp' => $data['show_priority']
+				);
+			}
+			array_multisort(array_map(function($element) {
+				return $element['sp'];
+			}, $json), SORT_DESC, $json);
+
 			//dd($medicines);
 			if (empty($medicines))
 				return Response::make (['status' => 'FAILURE' , 'msg' => 'No Medicines Found'] , 404);
 //			$result = array(array('result' => array('status' => 'success' , 'msg' => $medicines)));
-			$result = ['status' => 'SUCCESS' , 'msg' => 'Search Results' , 'data' => $medicines];
+			$result = ['status' => 'SUCCESS' , 'msg' => 'Search Results' , 'data' => $json];
 
 			return Response::json ($result);
 		}
