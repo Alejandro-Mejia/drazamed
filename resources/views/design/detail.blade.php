@@ -111,14 +111,14 @@
                                     <div style="display: block">
                                     <button class="dra-button btn_payment btn alertbox" title="Debe aceptar las condiciones para poder pagar" id="alertbox.{{$prescription['id']}}" data-id="{{$prescription['id']}}" > PAGAR </button>
                                     </div>
-                                    <div style="display:  none">
+                                    {{-- <div style="display:  none">
                                         <form action="/procesar-pago" method="POST" disabled="true" id="payForm.{{$prescription['id']}}" data-id="{{$prescription['id']}}">
                                             <script
                                                 src="https://www.mercadopago.com.co/integrations/v1/web-payment-checkout.js"
                                                 data-preference-id="<?php echo $prescription['preference']['id']; ?>">
                                             </script>
                                         </form>
-                                    </div>
+                                    </div> --}}
                                 </div>
                             </div>
                             

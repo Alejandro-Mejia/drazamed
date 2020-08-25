@@ -730,8 +730,8 @@ class MedicineController extends BaseController
 								
 
 								// dd($labRule);
-								$labRule->rule_type = $prodrule->rule_type;
-								$labRule->rule = $prodrule->rule;
+								$labRule->rule_type = isset($prodrule->rule_type) ? $prodrule->rule_type : 0;
+								// $labRule->rule = $prodrule->rule;
 							}
 
 							$sellprice = ($med->real_price*$labRule->isVtaReal + $med->current_price*$labRule->isVtaCte);
@@ -783,7 +783,7 @@ class MedicineController extends BaseController
 		header ("Access-Control-Allow-Origin: *");
 		$term = Request::get ('term' , null);
 		$xterm = Request::get ('xterm' , null);
-		$limitResutls = Request::get ('limit' , 20);
+		$limitResutls = Request::get ('limit' , 200);
 		$category = Request::get ('cat' , null);
 		$lab = Request::get ('lab' , null);
 		$xlab = Request::get ('xlab' , null);
@@ -799,35 +799,35 @@ class MedicineController extends BaseController
 		// dd($category, $lab, $ean);
 		$medicine = Medicine::where (function($query) use ($term){
 				if($term) {
-					$query->where('item_name' , 'LIKE' , $term . '%');
+					$query->where('item_name' , 'LIKE' , '%' . $term . '%');
 				}
 			})
 		->where(function($query) use ($xterm){
 				if($xterm) {
-					$query->where('group' , 'NOT LIKE' ,  $xterm . '%');
+					$query->where('group' , 'NOT LIKE' , "'" . '%' . $xterm . '%' .  "'" );
 				}
 			})
 		->where(function($query) use ($category){
 				if($category) {
-					$query->where('group' , 'LIKE' ,  $category . '%');
+					$query->where('group' , 'LIKE' , '%' . $category . '%');
 				}
 			})
 		->where(function($query) use ($lab){
 				if($lab) {
-					$query->where('manufacturer' , 'LIKE' ,  $lab . '%');
+					$query->where('manufacturer' , 'LIKE' , '%' .  $lab . '%');
 				}
 			})
 		->where(function($query) use ($xlab){
 				if($xlab) {
-					$query->where('manufacturer' , 'NOT LIKE' ,   $xlab . '%');
+					$query->where('manufacturer' , 'NOT LIKE' ,  '%' . $xlab . '%');
 				}
 			})
 		->where(function($query) use ($ean){
 				if($ean) {
-					$query->where('item_code' , 'LIKE' , $ean . '%');
+					$query->where('item_code' , 'LIKE' , '%' . $ean . '%');
 				}
 			})
-		->take ($limitResutls)->get ();
+		->groupBy('item_code')->take ($limitResutls)->get ();
 			// ->orWhere('group' , 'LIKE' , $term . '%')
 			// ->orWhere('composition' , 'LIKE' , $term . '%')
 			// ->orWhere('manufacurer' , 'LIKE' , $term . '%')
@@ -852,7 +852,8 @@ class MedicineController extends BaseController
 
 				if ($presRule['is_pres_required'] == true) {
 					if($presRule['is_by_product'] == true) {
-						$presRuleProd = PresRulesProd::Where('item_code',  'LIKE', '%' . $med->item_code . '%')->first();
+						$itemCodeSql = '%' . $med->item_code . '%';
+						$presRuleProd = PresRulesProd::Where('item_code',  'LIKE', $itemCodeSql )->first();
 						if($presRuleProd != null) {
 							if ($presRuleProd->is_pres_required == true) {
 								$pres_required = 1;
