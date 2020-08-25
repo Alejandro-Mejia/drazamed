@@ -566,8 +566,8 @@ class UserController extends BaseController
 			$invoice = Invoice::where ('pres_id' , '=' , $result->pres_id)->first()->toArray();
 
 			//dd($invoice);
-			//$mp_data = app('App\Http\Controllers\MedicineController')->anyMakeMercadoPagoPayment($invoice["id"]);
-			$mp_data=[];
+			$mp_data = app('App\Http\Controllers\MedicineController')->anyMakeMercadoPagoPayment($invoice["id"],0);
+			//$mp_data=[];
 
 			//$medicines = Medicine::medicines ();
 			if (!is_null ($result->id) || !empty($result->id)) {
@@ -613,6 +613,7 @@ class UserController extends BaseController
 				
 				$details = [
 					'id' => (is_null ($result->pres_id)) ? 0 : $result->pres_id ,
+					'invoice_id' => (is_null ($result->id)) ? 0 : $result->id ,
 					'invoice' => (is_null ($result->invoice)) ? 0 : $result->invoice ,
 					'sub_total' => (is_null ($result->sub_total)) ? 0 : $result->sub_total ,
 					'discount' => (is_null ($result->discount)) ? 0 : $result->discount ,
@@ -626,11 +627,11 @@ class UserController extends BaseController
 					'payment_status' => $result->payment_status,
 					'invoice_status' => is_null ($result->status_id) ? 0 : $result->status_id ,
 					'path' => $result->path,
-					//'posted' => $mp_data["posted"],
-					//'preference' => $mp_data["preference"],
+					'posted' => $mp_data["posted"],
+					'preference' => $mp_data["preference"],
 				];
 
-				// var_dump($details);
+				// dd($result, $details);
 				
 			}
 
