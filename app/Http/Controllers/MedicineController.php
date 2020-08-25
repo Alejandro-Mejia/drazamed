@@ -1716,7 +1716,10 @@ class MedicineController extends BaseController
 
 	}
 
-	public function anyMakeMercadoPagoPayment($invoice_id, $isMobile = 0) {
+	public function anyMakeMercadoPagoPayment($invoice_id, $isMobile=0) {
+
+		// $invoice_id = Request::get ('invoice_id' , '');
+		// $isMobile = Request::get ('isMobile' , '');
 
 		// Datos del usuario
 		$email = Session::get ('user_id');
@@ -1780,6 +1783,8 @@ class MedicineController extends BaseController
 		$payer->address = array(
 			"street_name" => $address
 		);
+		
+		Log::info('Payer : ' . print_r($payer, true));
 
 		// if($invoice_id == 6) {
 		// 	dd($invoice->cartList());
@@ -1788,21 +1793,26 @@ class MedicineController extends BaseController
 		$items = array();
 		foreach ($invoice->cartList() as $cart) {
 			
-			// Log::info('Cart item : ' . print_r($cart, true));
+			Log::info('Cart item : ' . print_r($cart, true));
 
-			$item_name .= Medicine::medicines ($cart->medicine)['item_name'];
+			$medicine = Medicine::where('id', $cart->medicine)->first()->toArray();
+			Log::info('Medicine item : ' . print_r($medicine, true));
+
+			$item_name .= $medicine['item_name'];
 			$item_name .= " ,";
 			$total += $cart->unit_price;
 
-			if (Medicine::medicines($cart->medicine)['is_pres_required']) {
+			
+
+			if ($medicine['is_pres_required']) {
 				$pres_required = 1;
 			}
 			//dd($cart->unit_price * 10);
 			// Crea un ítem en la preferencia
 			$item = new MercadoPago\Item();
-			$item->title = Medicine::medicines ($cart->medicine)['item_name'];;
+			$item->title = $medicine['item_name'];;
 			$item->quantity = $cart->quantity;
-			$item->picture_url = 'https://drazamed.com/images/products/' . Medicine::medicines ($cart->medicine)['item_code'] . '.jpg';
+			$item->picture_url = 'https://drazamed.com/images/products/' . $medicine['item_code'] . '.jpg';
 			$item->unit_price = $cart->unit_price;
 			$item->currency_id = 'COP';
 			$item->id = 1;
