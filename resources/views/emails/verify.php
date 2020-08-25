@@ -43,7 +43,7 @@
 
             <p>Queremos informarte que  <?php echo Setting::param('site', 'app_name')['value']; ?> ha revisado y verificado tu pedido. Por favor revisa en "Ordenes pendientes de pago"  el nuevo estado de tu fórmula.</p>
 
-            <p> Por favor haz click en COMPRAR AHORA. Te notificaremos cuando recibamos el comprobante de pago y enviaremos tu orden en muy poco tiempo</p>
+            <p> Por favor haz click en PAGAR. Te notificaremos cuando recibamos el comprobante de pago y enviaremos tu orden en muy poco tiempo</p>
 
             <p>Preguntas? envienos un email a  <?php echo Setting::param('site', 'website')['value']; ?>.</p>
 

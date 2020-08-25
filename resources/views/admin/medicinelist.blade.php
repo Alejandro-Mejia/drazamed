@@ -104,7 +104,7 @@ $(function()
 	   <td><?php echo $medicines[$i]['composition']; ?></td>
 	   <td><?= ($medicines[$i]['is_pres_required'] == 1) ? __('Yes') : __('No') ; ?> </td>
      <?php
-      $medImagen = isset($medicines[$i]['item_code']) ? $medicines[$i]['item_code'].'.png' : 'default.png';
+      $medImagen = isset($medicines[$i]['item_code']) ? $medicines[$i]['item_code'].'.jpg' : 'default.png';
       $medPath = "/images/products/" . $medImagen;
       $medPath = (is_file($medPath)) ? $medPath : "/images/products/default.png";
      ?>

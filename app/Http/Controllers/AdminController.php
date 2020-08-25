@@ -869,12 +869,12 @@ class AdminController extends BaseController
 			$i = 1;
 			$items = ItemList::where ('invoice_id' , '=' , $got['invoice_id'])->get ();
 			$itemsPost = json_decode($got['items']);
-			// dd($itemsPost);
+			// dd($got);
 			while ($i <= $got['itemS']) {
-				//$discount += $got['discount' . $i];
-				//$sub_total += $got['total_price' . $i];
 				$alreadyIn = 0;
 				foreach ($items as $item) {     // Update already Existings Cart
+					Log::info('Medicine item (from Cart) : ' . $item->medicine );
+					Log::info('Posted item (from Verify) : ' . $itemsPost[$i-1]->item_id );
 					if ($itemsPost[$i-1]->item_id == $item->medicine) {
 						$itemUpdate = ['quantity' => $itemsPost[$i-1]->quantity ,
 							'unit_price' => $itemsPost[$i-1]->unit_price ,
@@ -885,26 +885,40 @@ class AdminController extends BaseController
 						];
 						ItemList::where ('invoice_id' , '=' , $got['invoice_id'])->where ('medicine' , '=' , $itemsPost[$i-1]->item_code)->update ($itemUpdate);
 						$alreadyIn = 1;
-						break;
+						$discount += $itemsPost[$i-1]->discount;
+						$sub_total += $itemsPost[$i-1]->total_price;
+						Log::info('Existing item : ' . $item->medicine );
+						Log::info('item sub_total : ' . $itemsPost[$i-1]->total_price );
+						Log::info('Invoice sub_total : ' . $sub_total );
 					}
+				
+
+					if ($alreadyIn == 0) {
+						$newItem = new ItemList;
+						$newItem->invoice_id = $got['invoice_id'];
+						$newItem->medicine =  $itemsPost[$i-1]->item_id;
+						$newItem->quantity =  $itemsPost[$i-1]->quantity;
+						$newItem->unit_price =  $itemsPost[$i-1]->unit_price;
+						$newItem->total_price = $itemsPost[$i-1]->total_price;
+						$newItem->discount = $itemsPost[$i-1]->discount;
+						$newItem->created_at = date ('Y-m-d H:i:s');
+						$newItem->created_by = Auth::user ()->id;
+						$newItem->updated_by = Auth::user ()->id;
+						$newItem->save ();
+						$discount += $itemsPost[$i-1]->discount;
+						$sub_total += $itemsPost[$i-1]->total_price;
+						Log::info('New item : ' . $itemsPost[$i-1]->item_code );
+						Log::info('item sub_total : ' . $itemsPost[$i-1]->total_price );
+						Log::info('Invoice sub_total : ' . $sub_total );
+					}
+					$i++;
 				}
-				if ($alreadyIn == 0) {
-					$newItem = new ItemList;
-					$newItem->invoice_id = $got['invoice_id'];
-					$newItem->medicine =  $itemsPost[$i-1]->item_code;
-					$newItem->quantity =  $itemsPost[$i-1]->quantity;
-					$newItem->unit_price =  $itemsPost[$i-1]->unit_price;
-					$newItem->total_price = $itemsPost[$i-1]->total_price;
-					$newItem->discount = $itemsPost[$i-1]->discount;
-					$newItem->created_at = date ('Y-m-d H:i:s');
-					$newItem->created_by = Auth::user ()->id;
-					$newItem->updated_by = Auth::user ()->id;
-					$newItem->save ();
-				}
-				$i++;
 			}
+			Log::info('Invoice sub_total : ' . $sub_total );
 			// Calculate Total Price of Invoice
 			$total_price = $sub_total + $shipping - $overall_discount;
+			Log::info('Invoice total : ' . $total_price );
+
 			$invoice = Invoice::find ($got['invoice_id']);
 			$invoice->invoice = INVOICE_PREFIX . (10000 + $got['invoice_id']);
 			$invoice->updated_at = date ("Y-m-d H:i:s");

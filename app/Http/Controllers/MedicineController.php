@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
 use Exception;
+use Storage;
 use Session;
 use Redirect;
 use Request;
@@ -62,7 +63,19 @@ class MedicineController extends BaseController
 	 */
 	public function import()
 	{
-	    (new MedicinesImport)->import('inv.xls');
+		
+		$data = Excel::toArray(new MedicinesImport, request()->file('file')); 
+		
+		
+		collect(head($data))
+			->each(function ($row, $key) {
+				DB::table('medicine')
+					->where('item_code', $row['item_code'])
+					->update(array_except($row, ['item_code']));
+			});
+
+		// $data = (new MedicinesImport)->import('inv.xls');
+
 
 	    return redirect('/')->with('success', 'File imported successfully!');
 	}
@@ -859,7 +872,7 @@ class MedicineController extends BaseController
 
 				// dd($pres_required);
 
-		        $medImagen = isset($med['item_code']) ? $med['item_code'].'.png' : 'default.png';
+		        $medImagen = isset($med['item_code']) ? $med['item_code'].'.jpg' : 'default.png';
 				$medPath = "/images/products/" . $medImagen;
 
 
@@ -896,7 +909,7 @@ class MedicineController extends BaseController
 			if(sizeof($meds) > 0){
 				$med = $meds[0];
 				$sellprice = ($this->anyCalculateMRP($med['id'])) ? $this->anyCalculateMRP($med['id']) : 0;
-				$medImagen = isset($med['item_code']) ? $med['item_code'].'.png' : 'default.png';
+				$medImagen = isset($med['item_code']) ? $med['item_code'].'.jpg' : 'default.png';
 				$medPath = "/images/products/" . $medImagen;
 				// $path =  URL::to('/') .'public/images/products/' . $medImagen;
 				$path = realpath(public_path('images'));
@@ -1057,42 +1070,82 @@ class MedicineController extends BaseController
 		} else {
 			$key = Request::get ('n' , '');
 		}
-		$medicines = Medicine::medicines();
-		if (!empty($key)) {
-			$medicines = array_filter ($medicines , function ($medicine) use ($key) {
-				$medTemp = $this->stringClean ($medicine['item_name']);
-				$keyTemp = $this->stringClean ($key);
-				if ((stripos ($medicine['item_name'] , $key)
-						|| stripos ($medTemp , $key)
-						|| stripos ($medTemp , $keyTemp) === 0
-					) && $medicine['is_delete'] == 0
-				)
-					return true;
-				else
-					return false;
-			});
-			// $medicines->sortBy('show_priority');
-			$medicines = collect($medicines)->sortBy('show_priority')->reverse()->toArray();
-		}
+		
+		$medicines = Medicine::where('item_name', 'LIKE', '%' . $key . '%')
+							->orWhere('composition', 'LIKE', '%' . $key . '%')
+							->get()
+							->toArray ();
+		//dd($medicines);
+		// $medicines = Medicine::medicines();
+		
+		// if (!empty($key)) {
+		// 	$medicines = array_filter ($medicines , function ($medicine) use ($key) {
+		// 		$medTemp = $this->stringClean ($medicine['item_name']);
+		// 		$medComp = $this->stringClean ($medicine['group']);
+		// 		$keyTemp = $this->stringClean ($key);
+		// 		if ((stripos ($medicine['item_name'] , $key)
+		// 				|| stripos ($medComp , $key)
+		// 				|| stripos ($medTemp , $key)
+		// 				|| stripos ($medTemp , $keyTemp) === 0
+		// 			) && $medicine['is_delete'] == 0
+		// 		)
+		// 			return true;
+		// 		else
+		// 			return false;
+		// 	});
+		// 	// $medicines->sortBy('show_priority');
+		// 	$medicines = collect($medicines)->sortBy('show_priority')->reverse()->toArray();
+		// }
+		
+		
 		if ($isWeb) {
 			$json = [];
 			foreach ($medicines as $data) {
 				$json[] = array(
+					'id' => $data['item_code'],
 					'value' => $data['item_name'] ,
 					'label' => $data['item_name'] ,
 					'item_code' => $data['item_code'] ,
+					'mrp' => $data['sell_price'],
+					'sp' => $data['show_priority']
 				);
 			}
+			
+			array_multisort(array_map(function($element) {
+				return $element['sp'];
+			}, $json), SORT_DESC, $json);
 
 			return Response::json ($json);
 
 		} else {
-			$medicines = array_slice ($medicines , 0 , 4);
+			$medicines = array_slice ($medicines , 0 , 10);
+			// 'id' , 'item_code' , 'item_name' , 'item_name as value' , 'item_name as label' , 'item_code' , 'composition' , 'discount' , 'discount_type' , 'tax' , 'tax_type' , 'manufacturer' , 'group' , 'is_delete' , 'is_pres_required')->get()->toArray ();
+			foreach ($medicines as $data) {
+				$json[] = array(
+					'id' => $data['id'],
+					'value' => $data['item_name'] ,
+					'label' => $data['item_name'] ,
+					'item_code' => $data['item_code'] ,
+					'composition' => $data['composition'] ,
+					'manufacturer' => $data['manufacturer'] ,
+					'group' => $data['group'] ,
+					'mrp' => $data['sell_price'],
+					'discount' => $data['discount'],
+					'discount_type' => $data['discount_type'],
+					'tax' => $data['tax'],
+					'tax_type' => $data['tax_type'],
+					'sp' => $data['show_priority']
+				);
+			}
+			array_multisort(array_map(function($element) {
+				return $element['sp'];
+			}, $json), SORT_DESC, $json);
 
+			//dd($medicines);
 			if (empty($medicines))
 				return Response::make (['status' => 'FAILURE' , 'msg' => 'No Medicines Found'] , 404);
 //			$result = array(array('result' => array('status' => 'success' , 'msg' => $medicines)));
-			$result = ['status' => 'SUCCESS' , 'msg' => 'Search Results' , 'data' => $medicines];
+			$result = ['status' => 'SUCCESS' , 'msg' => 'Search Results' , 'data' => $json];
 
 			return Response::json ($result);
 		}
@@ -1679,7 +1732,7 @@ class MedicineController extends BaseController
 		// Obtiene la informacion de la factura
 		$invoice = Invoice::find ($invoice_id);
 
-		Log::info('Invoice : ' . print_r($invoice, true));
+		Log::info('Invoice : ' . print_r($invoice->id, true));
 
 
 		// Determina el modo de trabajo de MP y establece el token de acuerdo a eso
@@ -1696,7 +1749,9 @@ class MedicineController extends BaseController
 			// MercadoPago\SDK::setAccessToken("APP_USR-2009643657185989-050901-f80d5fbf89c8c43f650efb2167d51d1b-544483632");
 		}
 
+		Log::info('Setting Access Token...');
 		MercadoPago\SDK::setAccessToken($access_token);
+		Log::info('Set');
 
 		// Obtiene los datos de cliente, dependiendo del tipo de cliente
 		if ($type == UserType::CUSTOMER ()) {
@@ -1713,8 +1768,6 @@ class MedicineController extends BaseController
 			$address = $user_info->prof_address;
 		}
 
-
-
 		// Crea un objeto de preferencia
 		$preference = new MercadoPago\Preference();
 		Log::info('Preference : ' . print_r($preference, true));
@@ -1727,8 +1780,11 @@ class MedicineController extends BaseController
 			"street_name" => $address
 		);
 
-		//dd($invoice);
-
+		// if($invoice_id == 6) {
+		// 	dd($invoice->cartList());
+		// }
+		
+		$items = array();
 		foreach ($invoice->cartList() as $cart) {
 			
 			// Log::info('Cart item : ' . print_r($cart, true));
@@ -1745,17 +1801,24 @@ class MedicineController extends BaseController
 			$item = new MercadoPago\Item();
 			$item->title = Medicine::medicines ($cart->medicine)['item_name'];;
 			$item->quantity = $cart->quantity;
-			$item->picture_url = 'https://drazamed.com/images/products/' . Medicine::medicines ($cart->medicine)['item_code'] . '.png';
+			$item->picture_url = 'https://drazamed.com/images/products/' . Medicine::medicines ($cart->medicine)['item_code'] . '.jpg';
 			$item->unit_price = $cart->unit_price;
 			$item->currency_id = 'COP';
 			$item->id = 1;
 		
 			Log::info('Item : ' . print_r($item, true));
 		
-			$preference->items = array($item);
+			array_push ($items, $item);
+			
 			
 		}
 
+		// if($invoice_id == 6) {
+		// 	dd($items);
+		// }
+		
+
+		$preference->items = $items;
 		// Crea un ítem en la preferencia
 		// $item = new MercadoPago\Item();
 		// $item->title = 'Mi producto';
@@ -1766,7 +1829,9 @@ class MedicineController extends BaseController
 
 		Log::info('Item : ' . print_r($preference, true));
 
-		$preference->items = array($item);
+		// array_push($preference->items, array($item));
+
+		// $preference->items = array($item);
 
 		$shipments = new MercadoPago\Shipments();
 		$shipments->cost = $invoice->shipping;
@@ -1824,7 +1889,7 @@ class MedicineController extends BaseController
 		$processing_mode = Request::get ('processing_mode' , '');
 		$invoice_id = Request::get ('external_reference' , '');
 		
-
+		
 		if($payment_status == "approved") {
 			// Obtiene la informacion de la factura
 			$invoice = Invoice::find ($invoice_id);
@@ -2301,7 +2366,7 @@ class MedicineController extends BaseController
 		foreach ($medicines as $key => $value) {
 			$mrp = $this->getSellingPrice($value['item_code']);
 
-			$medImagen = isset($value['item_code']) ? $value['item_code'].'.png' : 'default.png';
+			$medImagen = isset($value['item_code']) ? $value['item_code'].'.jpg' : 'default.png';
 			$medPath = "/images/products/" . $medImagen;
 
 			;
@@ -2371,23 +2436,42 @@ class MedicineController extends BaseController
 	public
 	function postUpload()
 	{
+		Log::info('Se esta subiendo el archivo' . Request::file('file'));
+
 		try {
 			// dd(Request::file ('file'));
 			if (!Request::hasFile ('file'))
-				throw new Exception('BAD REQUEST' , 400);
+				throw new Exception('BAD REQUEST - NO FILE IN POST' , 400);
 			$file = Request::file ('file');
+			Log::info('Archivo:' . $file);
+
 			$extension = strtolower ($file->getClientOriginalExtension ());
 			if (!in_array ($extension , ['xls' , 'xlsx', 'csv'])) {
 				throw new Exception('Invalid File Uploaded ! Please upload either xls or xlsx file' , 400);
 			}
-
+			Log::info('Archivo:' . $extension);
 			// $medicines = Excel::import(new MedicinesImport, $file);
 			// dd($medicines);
 			// $headings = (new HeadingRowImport)->toArray($file);
 			// dd($headings);
 			//
 			try {
-		    	$import = (new MedicinesImport)->import($file);
+				Log::info('Iniciando Import:');
+
+				// Esto borra la tabla de Medicinas (Poner un mensaje de Esta Seguro?????)
+				// Medicine::query()->truncate();
+
+				$import = (new MedicinesImport)->import($file);
+				
+				//$data = Excel::toArray(new MedicinesImport, request()->file('file')); 
+		
+				// collect(head($import))
+				// 	->each(function ($row, $key) {
+				// 		DB::table('medicine')
+				// 			->where('item_code', $row['item_code'])
+				// 			->update(array_except($row, ['item_code']));
+				// 	});
+
 			} catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
 			     $failures = $e->failures();
 

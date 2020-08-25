@@ -170,8 +170,7 @@
                     <p>
                         Por favor espera a que verifiquemos tu pedido. Una vez
                         lo verifiquemos cambiara su estado a "Verificado" y podrás
-                        proceder al pago haciendo click en el botón COMPRAR
-                        AHORA.
+                        proceder al pago haciendo click en el botón PAGAR.
                     </p>
                     <div class="table-responsive">
                         @if(!empty(count($prescriptions)))
@@ -307,7 +306,7 @@
                                             </td>
                                             <td class="text-center"><span class="date-added"> {{ $invoice->created_at  ?? ''}}</span>
                                             </td>
-
+                                            {{-- {{ var_dump($invoice)}} --}}
                                             <td class="text-center">{{ Setting::currencyFormat($invoice->total) }}
                                             </td>
 
