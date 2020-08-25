@@ -91,22 +91,3 @@
   }
 }
 
-@media (max-width:400px) {
-  #dra-logo-1 {
-    display: none;
-  }
-
-  #dra-logo-2 {
-    display: block;
-  }
-}
-@media (min-width:420px) {
-  #dra-logo-1 {
-    display: block;
-  }
-
-  #dra-logo-2 {
-    display: none;
-  }
-}
-
