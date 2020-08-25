@@ -49,6 +49,7 @@ class FavoritesController extends Controller
 		// return Response::json ($result);
 
 		$i = 0 ;
+		$medicineNameArray = [];
 		if (isset($favorites) &&  $favorites->count() > 0) {
 			foreach ($favorites as $fav) {
 
