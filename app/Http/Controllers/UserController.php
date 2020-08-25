@@ -568,16 +568,6 @@ class UserController extends BaseController
 			//dd($invoice);
 			$mp_data = app('App\Http\Controllers\MedicineController')->anyMakeMercadoPagoPayment($invoice["id"]);
 
-			// dd($mp_data);
-			// var_dump($mp_data['preference']);
-
-			// $mp_data_obj = json_decode($mp_data, true);
-
-			// dd($mp_data_obj);
-			
-			// echo("Prescriptions");
-			// var_dump($result);
-
 			$medicines = Medicine::medicines ();
 			if (!is_null ($result->id) || !empty($result->id)) {
 				$carts = ItemList::where ('invoice_id' , '=' , $result->id)->get ();
