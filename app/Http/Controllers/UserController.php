@@ -566,7 +566,7 @@ class UserController extends BaseController
 			$invoice = Invoice::where ('pres_id' , '=' , $result->pres_id)->first()->toArray();
 
 			//dd($invoice);
-			//$mp_data = app('App\Http\Controllers\MedicineController')->anyMakeMercadoPagoPayment($invoice["id"]);
+			$mp_data = app('App\Http\Controllers\MedicineController')->anyMakeMercadoPagoPayment($invoice["id"]);
 
 			// dd($mp_data);
 			// var_dump($mp_data['preference']);
