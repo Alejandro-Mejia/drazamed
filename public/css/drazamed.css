@@ -97,13 +97,13 @@
   }
 
   #dra-logo-1 {
-    display: hidden;
+    display: none;
   }
 }
 
 @media (min-width: 768px) {
   #dra-logo-2 {
-    display: hidden;
+    display: none;
   }
 
   #dra-logo-1 {
