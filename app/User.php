@@ -58,4 +58,13 @@ class User extends Authenticatable
     {
         return $this->hasOne('MedicalProfessional', 'id', 'user_id');
     }
+
+    /**
+     * Realtime Messages
+     * A user can have many messages
+     */
+    public function messages()
+    {
+    return $this->hasMany(Message::class);
+    }
 }

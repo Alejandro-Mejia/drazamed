@@ -12,28 +12,43 @@ class MessageController extends Controller
         $this->middleware('auth');
     }
  
+    /**
+     * Show chats
+     *
+     * @return \Illuminate\Http\Response
+     */
+
     public function index()
     {
-        $user_id = Auth::user()->id;
-        $data = array('user_id' => $user_id);
- 
-        return view('broadcast', $data);
+    return view('chat');
     }
- 
-    public function send()
+
+    /**
+     * Fetch all messages
+     *
+     * @return Message
+     */
+    public function fetchMessages()
     {
-        // ...
-         
-        // message is being sent
-        $message = new Message;
-        $message->setAttribute('from', 1);
-        $message->setAttribute('to', 2);
-        $message->setAttribute('message', 'Demo message from user 1 to user 2');
-        $message->save();
-         
-        // want to broadcast NewMessageNotification event
-        event(new NewMessageNotification($message));
-         
-        // ...
+    return Message::with('user')->get();
+    }
+
+    /**
+     * Persist message to database
+     *
+     * @param  Request $request
+     * @return Response
+     */
+    public function sendMessage(Request $request)
+    {
+    $user = Auth::user();
+
+    $message = $user->messages()->create([
+        'message' => $request->input('message')
+    ]);
+
+    broadcast(new MessageSent($user, $message))->toOthers();
+
+    return ['status' => 'Message Sent!'];
     }
 }

@@ -152,8 +152,8 @@ use MercadoPago;
     /**
      * Messages
     */
-    Route::get('message/index', 'MessageController@index');
-    Route::get('message/send', 'MessageController@send');
+    Route::get('messages', 'ChatsController@fetchMessages');
+    Route::post('messages', 'ChatsController@sendMessage');
 
     /**
      * PriceRules
@@ -175,10 +175,15 @@ use MercadoPago;
     Route::post('/setting/user', 'SettingController@postUser');
 
 
-
     Route::get('cache/medicines', function() {
         return Cache::remember('medicines', 60, function() {
             return Medicine::all();
+        });
+    });
+
+    Route::get('cache/users', function() {
+        return Cache::remember('users', 60, function() {
+            return User::all();
         });
     });
     

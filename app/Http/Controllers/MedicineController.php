@@ -63,7 +63,19 @@ class MedicineController extends BaseController
 	 */
 	public function import()
 	{
-	    (new MedicinesImport)->import('inv.xls');
+		
+		$data = Excel::toArray(new MedicinesImport, request()->file('file')); 
+		
+		
+		collect(head($data))
+			->each(function ($row, $key) {
+				DB::table('medicine')
+					->where('item_code', $row['item_code'])
+					->update(array_except($row, ['item_code']));
+			});
+
+		// $data = (new MedicinesImport)->import('inv.xls');
+
 
 	    return redirect('/')->with('success', 'File imported successfully!');
 	}
@@ -860,7 +872,7 @@ class MedicineController extends BaseController
 
 				// dd($pres_required);
 
-		        $medImagen = isset($med['item_code']) ? $med['item_code'].'.png' : 'default.png';
+		        $medImagen = isset($med['item_code']) ? $med['item_code'].'.jpg' : 'default.png';
 				$medPath = "/images/products/" . $medImagen;
 
 
@@ -897,7 +909,7 @@ class MedicineController extends BaseController
 			if(sizeof($meds) > 0){
 				$med = $meds[0];
 				$sellprice = ($this->anyCalculateMRP($med['id'])) ? $this->anyCalculateMRP($med['id']) : 0;
-				$medImagen = isset($med['item_code']) ? $med['item_code'].'.png' : 'default.png';
+				$medImagen = isset($med['item_code']) ? $med['item_code'].'.jpg' : 'default.png';
 				$medPath = "/images/products/" . $medImagen;
 				// $path =  URL::to('/') .'public/images/products/' . $medImagen;
 				$path = realpath(public_path('images'));
@@ -1720,7 +1732,7 @@ class MedicineController extends BaseController
 		// Obtiene la informacion de la factura
 		$invoice = Invoice::find ($invoice_id);
 
-		Log::info('Invoice : ' . print_r($invoice, true));
+		Log::info('Invoice : ' . print_r($invoice->id, true));
 
 
 		// Determina el modo de trabajo de MP y establece el token de acuerdo a eso
@@ -1737,7 +1749,9 @@ class MedicineController extends BaseController
 			// MercadoPago\SDK::setAccessToken("APP_USR-2009643657185989-050901-f80d5fbf89c8c43f650efb2167d51d1b-544483632");
 		}
 
+		Log::info('Setting Access Token...');
 		MercadoPago\SDK::setAccessToken($access_token);
+		Log::info('Set');
 
 		// Obtiene los datos de cliente, dependiendo del tipo de cliente
 		if ($type == UserType::CUSTOMER ()) {
@@ -1753,8 +1767,6 @@ class MedicineController extends BaseController
 			$lname = $user_info->prof_last_name;
 			$address = $user_info->prof_address;
 		}
-
-
 
 		// Crea un objeto de preferencia
 		$preference = new MercadoPago\Preference();
@@ -1789,7 +1801,7 @@ class MedicineController extends BaseController
 			$item = new MercadoPago\Item();
 			$item->title = Medicine::medicines ($cart->medicine)['item_name'];;
 			$item->quantity = $cart->quantity;
-			$item->picture_url = 'https://drazamed.com/images/products/' . Medicine::medicines ($cart->medicine)['item_code'] . '.png';
+			$item->picture_url = 'https://drazamed.com/images/products/' . Medicine::medicines ($cart->medicine)['item_code'] . '.jpg';
 			$item->unit_price = $cart->unit_price;
 			$item->currency_id = 'COP';
 			$item->id = 1;
@@ -2354,7 +2366,7 @@ class MedicineController extends BaseController
 		foreach ($medicines as $key => $value) {
 			$mrp = $this->getSellingPrice($value['item_code']);
 
-			$medImagen = isset($value['item_code']) ? $value['item_code'].'.png' : 'default.png';
+			$medImagen = isset($value['item_code']) ? $value['item_code'].'.jpg' : 'default.png';
 			$medPath = "/images/products/" . $medImagen;
 
 			;
@@ -2447,9 +2459,19 @@ class MedicineController extends BaseController
 				Log::info('Iniciando Import:');
 
 				// Esto borra la tabla de Medicinas (Poner un mensaje de Esta Seguro?????)
-				Medicine::query()->truncate();
+				// Medicine::query()->truncate();
 
-		    	$import = (new MedicinesImport)->import($file);
+				$import = (new MedicinesImport)->import($file);
+				
+				//$data = Excel::toArray(new MedicinesImport, request()->file('file')); 
+		
+				// collect(head($import))
+				// 	->each(function ($row, $key) {
+				// 		DB::table('medicine')
+				// 			->where('item_code', $row['item_code'])
+				// 			->update(array_except($row, ['item_code']));
+				// 	});
+
 			} catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
 			     $failures = $e->failures();
 

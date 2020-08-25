@@ -25,6 +25,7 @@ mix.js("resources/js/app.js", "public/js")
     .sass("resources/sass/profile.scss", "public/css")
     .sass("resources/sass/about.scss", "public/css");
 
+
 // Full API
 // mix.js(src, output);
 // mix.react(src, output); <-- Identical to mix.js(), but registers React Babel compilation.
@@ -36,7 +37,10 @@ mix.js("resources/js/app.js", "public/js")
 // mix.less(src, output);
 // mix.stylus(src, output);
 // mix.postCss(src, output, [require('postcss-some-plugin')()]);
-// mix.browserSync('my-site.test');
+mix.browserSync('dra.devel');
+if(mix.inProduction()){
+    mix.version();
+} 
 // mix.combine(files, destination);
 // mix.babel(files, destination); <-- Identical to mix.combine(), but also includes Babel compilation.
 // mix.copy(from, to);
