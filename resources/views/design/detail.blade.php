@@ -103,7 +103,7 @@
                             <div class=row>
                                 <div class=col-md-8 style="text-align:left !important">
                                     <div class="form-group form-check-inline">
-                                    <input type="checkbox" class="form-check-input" id="val_terminos_{{$prescription['id']}}" style="width: 10% !important">
+                                    <input class="valterminos" type="checkbox" class="form-check-input" id="val_terminos_{{$prescription['id']}}" data-invoice={{$prescription['invoice_id']}}  style="width: 10% !important">
                                         <label class="form-check-label" for="" style="font-size:12px !important">Conozco y acepto los <a href="/terminos"  target="_blank">Términos y Condiciones</a> y <a href="/datos_personales" target="_blank">Pólitica de Manejo de Datos Personales</a></label>
                                     </div>
                                 </div>
@@ -112,13 +112,14 @@
                                     <button class="dra-button btn_payment btn alertbox" title="Debe aceptar las condiciones para poder pagar" id="alertbox.{{$prescription['id']}}" data-id="{{$prescription['id']}}" > PAGAR </button>
                                     </div>
                                     <div style="display:  none">
-                                        <form action="/procesar-pago" method="POST" disabled="true" id="payForm.{{$prescription['id']}}" data-id="{{$prescription['id']}}">
+                                        <form class="payProccess" action="/procesar-pago" method="POST" disabled="true" id="payForm.{{$prescription['id']}}" data-id="{{$prescription['id']}}">
                                             <script
                                                 src="https://www.mercadopago.com.co/integrations/v1/web-payment-checkout.js"
-                                                data-preference-id="<?php echo $prescription['preference']['id']; ?>">
+                                                data-preference-id= <?php echo $prescription['preference']['id']; ?> >
                                             </script>
                                         </form>
                                     </div>
+
                                 </div>
                             </div>
                             
@@ -144,29 +145,68 @@
     var boton, formulario, pres, valTerminos ;
     $(".alertbox").unbind('click');
     $('.alertbox').on('click', function(event){
-    console.log('Boton pagar');
-    event.preventDefault();
-    boton = $(this);
-    pres = boton.data('id');
-    valTermId = "val_terminos_" + pres;
-    console.log(valTermId);
-    valTerminos = document.getElementById(valTermId).checked;
-    
-    console.log(valTerminos);
-    
-    formulario = document.getElementById('payForm.' + pres);
-
-    // mp_button = formulario.closest('button');
-    console.log(formulario);
-
-
-    if (!(valTerminos)) {
+        console.log('Boton pagar');
+        event.preventDefault();
+        boton = $(this);
+        pres = boton.data('id');
+        valTermId = "val_terminos_" + pres;
+        console.log(valTermId);
+        invoice=boton.data('invoice');
+        console.log('invoice id: ' + invoice);
+        valTerminos = document.getElementById(valTermId).checked;
         
-        bootbox.alert("Debes aceptar los términos y condiciones antes de pagar")
-    } else {
-        formulario.elements[0].click();
-    }
+        console.log(valTerminos);
+        
+        formulario = document.getElementById('payForm.' + pres);
+
+        // mp_button = formulario.closest('button');
+        console.log(formulario);
+
+
+        if (!(valTerminos)) {
+            
+            bootbox.alert("Debes aceptar los términos y condiciones antes de pagar")
+        } else {
+
+            //getMpData(invoice);
+
+            formulario.elements[0].click();
+        }
+        
     
-   
-});
+    });
+
+    // $('.valterminos').unbind().change(function(){
+    //     invoice=$(this).data('invoice');
+    //     console.log('invoice id: ' + invoice);
+
+    //     if($(this).is(':checked')){
+    //         getMpData(invoice);
+    //     }
+    //     else
+    //     {
+    //         console.log("UNCheckeddddddd");
+    //     }    
+
+    // });
+
+    function getMpData(invoice) {
+        $.ajax({
+            url:'{{ URL::to('medicine/make-mercado-pago-payment/' )}}',
+            type:'GET',
+            data:{
+                invoice_id: invoice,
+                isMobile:0
+            },
+            // datatype: 'JSON',
+            success: function(data){
+                console.log(data);
+
+            }
+        });
+    }
+    // $('.payProccess').submit(function(e){
+    //     e,preventDefault();
+    //     alert('Presiono pagar');
+    // })
 </script>

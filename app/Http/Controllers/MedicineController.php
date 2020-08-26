@@ -730,8 +730,8 @@ class MedicineController extends BaseController
 								
 
 								// dd($labRule);
-								$labRule->rule_type = $prodrule->rule_type;
-								$labRule->rule = $prodrule->rule;
+								$labRule->rule_type = isset($prodrule->rule_type) ? $prodrule->rule_type : 0;
+								// $labRule->rule = $prodrule->rule;
 							}
 
 							$sellprice = ($med->real_price*$labRule->isVtaReal + $med->current_price*$labRule->isVtaCte);
@@ -783,7 +783,7 @@ class MedicineController extends BaseController
 		header ("Access-Control-Allow-Origin: *");
 		$term = Request::get ('term' , null);
 		$xterm = Request::get ('xterm' , null);
-		$limitResutls = Request::get ('limit' , 20);
+		$limitResutls = Request::get ('limit' , 200);
 		$category = Request::get ('cat' , null);
 		$lab = Request::get ('lab' , null);
 		$xlab = Request::get ('xlab' , null);
@@ -799,32 +799,32 @@ class MedicineController extends BaseController
 		// dd($category, $lab, $ean);
 		$medicine = Medicine::where (function($query) use ($term){
 				if($term) {
-					$query->where('item_name' , 'LIKE' , $term . '%');
+					$query->where('item_name' , 'LIKE' , '%' . $term . '%');
 				}
 			})
 		->where(function($query) use ($xterm){
 				if($xterm) {
-					$query->where('group' , 'NOT LIKE' ,  $xterm . '%');
+					$query->where('group' , 'NOT LIKE' , "'" . '%' . $xterm . '%' .  "'" );
 				}
 			})
 		->where(function($query) use ($category){
 				if($category) {
-					$query->where('group' , 'LIKE' ,  $category . '%');
+					$query->where('group' , 'LIKE' , '%' . $category . '%');
 				}
 			})
 		->where(function($query) use ($lab){
 				if($lab) {
-					$query->where('manufacturer' , 'LIKE' ,  $lab . '%');
+					$query->where('manufacturer' , 'LIKE' , '%' .  $lab . '%');
 				}
 			})
 		->where(function($query) use ($xlab){
 				if($xlab) {
-					$query->where('manufacturer' , 'NOT LIKE' ,   $xlab . '%');
+					$query->where('manufacturer' , 'NOT LIKE' ,  '%' . $xlab . '%');
 				}
 			})
 		->where(function($query) use ($ean){
 				if($ean) {
-					$query->where('item_code' , 'LIKE' , $ean . '%');
+					$query->where('item_code' , 'LIKE' , '%' . $ean . '%');
 				}
 			})
 		->take ($limitResutls)->get ();
@@ -852,7 +852,8 @@ class MedicineController extends BaseController
 
 				if ($presRule['is_pres_required'] == true) {
 					if($presRule['is_by_product'] == true) {
-						$presRuleProd = PresRulesProd::Where('item_code',  'LIKE', '%' . $med->item_code . '%')->first();
+						$itemCodeSql = '%' . $med->item_code . '%';
+						$presRuleProd = PresRulesProd::Where('item_code',  'LIKE', $itemCodeSql )->first();
 						if($presRuleProd != null) {
 							if ($presRuleProd->is_pres_required == true) {
 								$pres_required = 1;
@@ -1715,7 +1716,10 @@ class MedicineController extends BaseController
 
 	}
 
-	public function anyMakeMercadoPagoPayment($invoice_id, $isMobile = 0) {
+	public function anyMakeMercadoPagoPayment($invoice_id, $isMobile=0) {
+
+		// $invoice_id = Request::get ('invoice_id' , '');
+		// $isMobile = Request::get ('isMobile' , '');
 
 		// Datos del usuario
 		$email = Session::get ('user_id');
@@ -1779,6 +1783,8 @@ class MedicineController extends BaseController
 		$payer->address = array(
 			"street_name" => $address
 		);
+		
+		Log::info('Payer : ' . print_r($payer, true));
 
 		// if($invoice_id == 6) {
 		// 	dd($invoice->cartList());
@@ -1787,21 +1793,26 @@ class MedicineController extends BaseController
 		$items = array();
 		foreach ($invoice->cartList() as $cart) {
 			
-			// Log::info('Cart item : ' . print_r($cart, true));
+			Log::info('Cart item : ' . print_r($cart, true));
 
-			$item_name .= Medicine::medicines ($cart->medicine)['item_name'];
+			$medicine = Medicine::where('id', $cart->medicine)->first()->toArray();
+			Log::info('Medicine item : ' . print_r($medicine, true));
+
+			$item_name .= $medicine['item_name'];
 			$item_name .= " ,";
 			$total += $cart->unit_price;
 
-			if (Medicine::medicines($cart->medicine)['is_pres_required']) {
+			
+
+			if ($medicine['is_pres_required']) {
 				$pres_required = 1;
 			}
 			//dd($cart->unit_price * 10);
 			// Crea un ítem en la preferencia
 			$item = new MercadoPago\Item();
-			$item->title = Medicine::medicines ($cart->medicine)['item_name'];;
+			$item->title = $medicine['item_name'];;
 			$item->quantity = $cart->quantity;
-			$item->picture_url = 'https://drazamed.com/images/products/' . Medicine::medicines ($cart->medicine)['item_code'] . '.jpg';
+			$item->picture_url = 'https://drazamed.com/images/products/' . $medicine['item_code'] . '.jpg';
 			$item->unit_price = $cart->unit_price;
 			$item->currency_id = 'COP';
 			$item->id = 1;
