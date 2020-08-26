@@ -181,8 +181,8 @@
             }
         });
 
-        
-        
+
+
         /**
          * Muestra los productos de Icom
          */
@@ -231,14 +231,14 @@
 
     $(document).ready(function() {
         getCategories();
-        show_favorites(1,9); 
+        show_favorites(1,120);
     });
 
 </script>
 
 
 
- 
+
 @endsection
 
 
