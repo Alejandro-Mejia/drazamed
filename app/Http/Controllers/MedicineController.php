@@ -827,7 +827,7 @@ class MedicineController extends BaseController
 					$query->where('item_code' , 'LIKE' , '%' . $ean . '%');
 				}
 			})
-		->groupBy('item_code')->take ($limitResutls)->get ();
+		->take ($limitResutls)->get ();
 			// ->orWhere('group' , 'LIKE' , $term . '%')
 			// ->orWhere('composition' , 'LIKE' , $term . '%')
 			// ->orWhere('manufacurer' , 'LIKE' , $term . '%')
