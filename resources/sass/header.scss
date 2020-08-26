@@ -46,13 +46,7 @@ header {
     }
 
     .side-nav {
-        .close-btn {
-            position: absolute;
-            top: 0;
-            right: 22px;
-            font-size: 36px;
-            margin-left: 50px;
-        }
+        
 
         width: 0;
         height: 100%;
@@ -65,6 +59,13 @@ header {
         background-color: #FFF;
         overflow-x: hidden;
         transition: 0.3s;
+        .close-btn {
+            position: absolute;
+            top: 0;
+            right: 22px;
+            font-size: 36px;
+            margin-left: 50px;
+        }
 
         ul {
             list-style-type: none;

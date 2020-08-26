@@ -50,15 +50,17 @@ main {
         left: 0;
         z-index: 2;
         background-color: #fff;
-
         display: flex;
         align-items: center;
         justify-content: center;
-
-        animation-name: upPreload;
-        animation-duration: 0.75s;
-        animation-delay: 1.25s;
-        animation-fill-mode: forwards;
+        -webkit-animation-name: upPreload;
+            animation-name: upPreload;
+        -webkit-animation-duration: 0.75s;
+            animation-duration: 0.75s;
+        -webkit-animation-delay: 1.25s;
+            animation-delay: 1.25s;
+        -webkit-animation-fill-mode: forwards;
+            animation-fill-mode: forwards;
     }
 
     .quicksearch {
@@ -101,7 +103,12 @@ main {
         }
     }
 }
-
+@-webkit-keyframes upPreload {
+    to {
+      transform: translateY(-100%);
+    }
+  }
+  
 @keyframes upPreload {
     to {
         transform: translateY(-100%);
