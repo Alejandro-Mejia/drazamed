@@ -12453,7 +12453,7 @@ a.text-dark:focus {
 main {
   margin-top: 90px;
   background-color: #fafaf8;
-  padding: 50px 100px 10px 100px;
+  /* padding: 50px 100px 10px 100px; */
 }
 
 .cart-section {
