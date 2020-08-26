@@ -32,7 +32,7 @@
 }
 
 .med-box {
-  box-shadow: 2px 2px 5px 0px rgba(201, 201, 201, 1);
+  box-shadow: 2px 2px 5px 0px #c9c9c9;
   padding: 20px 20px;
   border-radius: 20px;
   word-wrap: break-word !important;
@@ -44,5 +44,6 @@
 }
 
 .med-box:hover {
-  box-shadow: 5px 5px 20px 0px rgba(201, 201, 201, 1);
+  box-shadow: 5px 5px 20px 0px #c9c9c9;
 }
+
