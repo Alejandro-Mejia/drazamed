@@ -566,19 +566,10 @@ class UserController extends BaseController
 			$invoice = Invoice::where ('pres_id' , '=' , $result->pres_id)->first()->toArray();
 
 			//dd($invoice);
-			//$mp_data = app('App\Http\Controllers\MedicineController')->anyMakeMercadoPagoPayment($invoice["id"]);
+			$mp_data = app('App\Http\Controllers\MedicineController')->anyMakeMercadoPagoPayment($invoice["id"],0);
+			//$mp_data=[];
 
-			// dd($mp_data);
-			// var_dump($mp_data['preference']);
-
-			// $mp_data_obj = json_decode($mp_data, true);
-
-			// dd($mp_data_obj);
-			
-			// echo("Prescriptions");
-			// var_dump($result);
-
-			$medicines = Medicine::medicines ();
+			//$medicines = Medicine::medicines ();
 			if (!is_null ($result->id) || !empty($result->id)) {
 				$carts = ItemList::where ('invoice_id' , '=' , $result->id)->get ();
 
@@ -593,15 +584,17 @@ class UserController extends BaseController
 				foreach ($carts as $cart) {
 					// var_dump($cart);
 					// dd($cart, $medicines, $results);
-					$tax = $cart->unit_price - ceil(($cart->unit_price / (1+($medicines[$cart->medicine]['tax']/100))));
+					$medicines = Medicine::where('id', 'LIKE', $cart->medicine)->first()->toArray();
+					// dd($medicines);
+					$tax = $cart->unit_price - ceil(($cart->unit_price / (1+($medicines['tax']/100))));
 
 					
 
 					
 					$items[$i] = ['id' => $cart->id ,
 						'item_id' => $cart->medicine ,
-						'item_code' => $medicines[$cart->medicine]['item_code'] ,
-						'item_name' => $medicines[$cart->medicine]['item_name'] ,
+						'item_code' => $medicines['item_code'] ,
+						'item_name' => $medicines['item_name'] ,
 						'unit_price' => $cart->unit_price ,
 						'discount_percent' => $cart->discount_percentage ,
 						'discount' => $cart->discount ,
@@ -620,6 +613,7 @@ class UserController extends BaseController
 				
 				$details = [
 					'id' => (is_null ($result->pres_id)) ? 0 : $result->pres_id ,
+					'invoice_id' => (is_null ($result->id)) ? 0 : $result->id ,
 					'invoice' => (is_null ($result->invoice)) ? 0 : $result->invoice ,
 					'sub_total' => (is_null ($result->sub_total)) ? 0 : $result->sub_total ,
 					'discount' => (is_null ($result->discount)) ? 0 : $result->discount ,
@@ -637,7 +631,7 @@ class UserController extends BaseController
 					'preference' => $mp_data["preference"],
 				];
 
-				// var_dump($details);
+				// dd($result, $details);
 				
 			}
 
