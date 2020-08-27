@@ -59,7 +59,7 @@ const app = new Vue({
 
 });
 
-Echo.private('chat')
+Echo.private('drazamed')
   .listen('MessageSent', (e) => {
     this.messages.push({
       message: e.message.message,

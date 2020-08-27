@@ -891,7 +891,7 @@ class AdminController extends BaseController
 						Log::info('item sub_total : ' . $itemsPost[$i-1]->total_price );
 						Log::info('Invoice sub_total : ' . $sub_total );
 					}
-				
+
 
 					if ($alreadyIn == 0) {
 						$newItem = new ItemList;
