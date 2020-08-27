@@ -58,6 +58,10 @@ use MercadoPago;
 
     });
 
+    Route::get('/vue', function () {
+        return View::make('vue');
+    });
+
     Route::get('/admin-login', function () {
         return View::make('admin.signin');
     });
@@ -289,6 +293,9 @@ use MercadoPago;
     });
 
 // Auth::routes();
+Auth::routes();
+
+
 
 /**
  * Clear cache from server
@@ -311,6 +318,10 @@ Route::get('/cache', function () {
 Route::any('/logout', function () {
     Session::flush();
     Auth::logout();
+    return Redirect::to('/');
+});
+
+Route::any('/home', function () {
     return Redirect::to('/');
 });
 

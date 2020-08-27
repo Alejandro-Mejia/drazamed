@@ -59434,8 +59434,8 @@ window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 // Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 
-Vue.component('chat-messages', __webpack_require__(/*! ./components/ChatMessages.vue */ "./resources/js/components/ChatMessages.vue"));
-Vue.component('chat-form', __webpack_require__(/*! ./components/ChatForm.vue */ "./resources/js/components/ChatForm.vue"));
+Vue.component('chat-messages', __webpack_require__(/*! ./components/ChatMessages.vue */ "./resources/js/components/ChatMessages.vue")["default"]);
+Vue.component('chat-form', __webpack_require__(/*! ./components/ChatForm.vue */ "./resources/js/components/ChatForm.vue")["default"]);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -59443,7 +59443,7 @@ Vue.component('chat-form', __webpack_require__(/*! ./components/ChatForm.vue */ 
  */
 
 var app = new Vue({
-  el: '#app',
+  el: '#chat',
   data: {
     messages: []
   },
@@ -59466,7 +59466,7 @@ var app = new Vue({
     }
   }
 });
-Echo["private"]('drazamed').listen('MessageSent', function (e) {
+Echo["private"]('Drazamed').listen('MessageSent', function (e) {
   _this2.messages.push({
     message: e.message.message,
     user: e.user
@@ -59524,7 +59524,12 @@ window.Echo = new laravel_echo__WEBPACK_IMPORTED_MODULE_1__["default"]({
   broadcaster: 'pusher',
   key: "270a27c11d1a38de071b",
   cluster: "us2",
-  encrypted: true
+  encrypted: true // auth: {
+  //     headers: {
+  //         Authorization: 'Bearer ' + 1052486
+  //     },
+  // },
+
 });
 
 /***/ }),
