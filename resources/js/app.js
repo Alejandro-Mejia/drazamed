@@ -31,7 +31,7 @@ Vue.component('chat-form', require('./components/ChatForm.vue'));
  */
 
 const app = new Vue({
-    el: '#app',
+    el: '#chat',
 
     data: {
         messages: []
