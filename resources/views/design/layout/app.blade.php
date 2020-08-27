@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
 
-        <script src="/js/app.js"></script>
+
 
         {{-- <script src="/js/app.js"></script> --}}
         <!-- jQuery-3.5 -->
@@ -114,7 +114,11 @@
     </head>
     <body>
         @include('design.layout.header')
-        @yield('content')
+
+        <div id="chat">
+            @yield('content')
+        </div>
+
 
         <script src="/js/modal_manager.js"></script>
         <script src="/js/design.js"></script>
@@ -122,6 +126,7 @@
 
 
         @yield('custom-js')
+        <script src="/js/app.js"></script>
     </body>
 
 

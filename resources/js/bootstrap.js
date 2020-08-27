@@ -44,5 +44,10 @@ window.Echo = new Echo({
     broadcaster: 'pusher',
     key: "270a27c11d1a38de071b",
     cluster: "us2",
-    encrypted: true
+    encrypted: true,
+    // auth: {
+    //     headers: {
+    //         Authorization: 'Bearer ' + 1052486
+    //     },
+    // },
 });

@@ -7,10 +7,11 @@ use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PresenceChannel;
 use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
+use Illuminate\Contracts\Broadcasting\ShouldBroadcastNow;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class MessageSent
+class MessageSent implements ShouldBroadcastNow
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
@@ -33,7 +34,7 @@ class MessageSent
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($user, $message)
     {
         $this->user = $user;
         $this->message = $message;
@@ -46,6 +47,8 @@ class MessageSent
      */
     public function broadcastOn()
     {
-        return new PrivateChannel('drazamed');
+        return new PrivateChannel('Drazamed');
     }
+
+
 }

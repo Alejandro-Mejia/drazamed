@@ -10,10 +10,10 @@ use Illuminate\Support\Facades\Auth;
 
 class ChatsController extends Controller
 {
-    // public function __construct()
-    // {
-    //     $this->middleware('auth');
-    // }
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
 
     /**
      * Show chats
@@ -43,15 +43,15 @@ class ChatsController extends Controller
      */
     public function sendMessage(Request $request)
     {
-        // $user = Auth::user();
+        $user = Auth::user();
 
-        $user = User::where('id', $request->input('user_id'))->first();
+        //$user = User::where('id', $request->input('user_id'))->first();
 
         $message = $user->messages()->create([
             'message' => $request->input('message')
         ]);
 
-        // broadcast(new MessageSent($user, $message))->toOthers();
+        broadcast(new MessageSent($user, $message))->toOthers();
 
         return ['status' => 'Message Sent!'];
     }
