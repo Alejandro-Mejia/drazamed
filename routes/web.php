@@ -152,6 +152,7 @@ use MercadoPago;
     /**
      * Messages
     */
+    Route::get('messages/chats', 'ChatsController@index');
     Route::get('messages', 'ChatsController@fetchMessages');
     Route::post('messages', 'ChatsController@sendMessage');
 
@@ -186,7 +187,7 @@ use MercadoPago;
             return User::all();
         });
     });
-    
+
     /*
     |--------------------------------------------------------------------------
     | Admin Related Pages
@@ -377,7 +378,7 @@ Route::get('/testMP', function() {
 
     $sandBoxMode = config('payment-methods.use_sandbox');
     Log::info('Use Sandobox  '.print_r($sandBoxMode, true));
-        
+
     if ($sandBoxMode) {
         $access_token = config('mercadopago.mp_app_access_token_sb');
         Log::info('Sandbox Pub Key '.$access_token);
@@ -407,10 +408,10 @@ Route::get('/testMP', function() {
 
     $preference->items = array($item);
 
-    Log::info('Preference items: ' . print_r($preference, true)); 
+    Log::info('Preference items: ' . print_r($preference, true));
     $preference->save();
-    
+
     return View::make('testMP')->with('preference', $preference);
-    
-    
+
+
 });
