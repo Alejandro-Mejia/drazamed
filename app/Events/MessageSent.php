@@ -50,5 +50,10 @@ class MessageSent implements ShouldBroadcastNow
         return new Channel('Drazamed');
     }
 
+    public function broadcastAs()
+    {
+        return 'MessageSent';
+    }
+
 
 }

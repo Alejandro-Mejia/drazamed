@@ -67,7 +67,7 @@ Echo.channel('Drazamed')
   .listen('.MessageSent', (e) => {
     console.log(e);
     app.messages.push({
-      message: e.message,
+      message: e.message.message,
       user: e.user
     });
   });
