@@ -52,7 +52,7 @@ window.Echo = new Echo({
     // },
 });
 
-window.Echo.private(`Drazamed`)
-    .listen('.MessageSent', (e) => {
-    console.log('notif arrived', e);
-})
+// window.Echo.channel(`Drazamed`)
+//     .listen('MessageSent', (e) => {
+//     console.log('notif arrived', e);
+// })

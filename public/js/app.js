@@ -59413,8 +59413,6 @@ module.exports = function(module) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-var _this2 = this;
-
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
@@ -59467,13 +59465,12 @@ var app = new Vue({
   }
 }); // import Echo from "laravel-echo";
 
-window.Echo["private"]('Drazamed').listen('MessageSent', function (e) {
-  console.log(e);
-
-  _this2.messages.push({
-    message: e.message.message,
-    user: e.user
-  });
+Pusher.logToConsole = true;
+Echo.channel('Drazamed').listen('.MessageSent', function (e) {
+  console.log(e); // this.messages.push({
+  //   message: e.message.message,
+  //   user: e.user
+  // });
 });
 
 /***/ }),
@@ -59533,10 +59530,10 @@ window.Echo = new laravel_echo__WEBPACK_IMPORTED_MODULE_1__["default"]({
   //     },
   // },
 
-});
-window.Echo["private"]("Drazamed").listen('.MessageSent', function (e) {
-  console.log('notif arrived', e);
-});
+}); // window.Echo.channel(`Drazamed`)
+//     .listen('MessageSent', (e) => {
+//     console.log('notif arrived', e);
+// })
 
 /***/ }),
 

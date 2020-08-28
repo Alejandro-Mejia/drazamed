@@ -61,12 +61,13 @@ const app = new Vue({
 
 // import Echo from "laravel-echo";
 
+Pusher.logToConsole = true;
 
-window.Echo.private('Drazamed')
-  .listen('MessageSent', (e) => {
+Echo.channel('Drazamed')
+  .listen('.MessageSent', (e) => {
     console.log(e);
-    this.messages.push({
-      message: e.message.message,
-      user: e.user
-    });
+    // this.messages.push({
+    //   message: e.message.message,
+    //   user: e.user
+    // });
   });
