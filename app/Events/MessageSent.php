@@ -47,7 +47,7 @@ class MessageSent implements ShouldBroadcastNow
      */
     public function broadcastOn()
     {
-        return new PrivateChannel('Drazamed');
+        return new Channel('Drazamed');
     }
 
 
