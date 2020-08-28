@@ -59465,8 +59465,11 @@ var app = new Vue({
       });
     }
   }
-});
-Echo["private"]('Drazamed').listen('MessageSent', function (e) {
+}); // import Echo from "laravel-echo";
+
+window.Echo["private"]('Drazamed').listen('MessageSent', function (e) {
+  console.log(e);
+
   _this2.messages.push({
     message: e.message.message,
     user: e.user
@@ -59530,6 +59533,9 @@ window.Echo = new laravel_echo__WEBPACK_IMPORTED_MODULE_1__["default"]({
   //     },
   // },
 
+});
+window.Echo["private"]("Drazamed").listen('.MessageSent', function (e) {
+  console.log('notif arrived', e);
 });
 
 /***/ }),

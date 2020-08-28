@@ -59,8 +59,12 @@ const app = new Vue({
 
 });
 
-Echo.private('Drazamed')
+// import Echo from "laravel-echo";
+
+
+window.Echo.private('Drazamed')
   .listen('MessageSent', (e) => {
+    console.log(e);
     this.messages.push({
       message: e.message.message,
       user: e.user
