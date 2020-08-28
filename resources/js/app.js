@@ -66,8 +66,8 @@ Pusher.logToConsole = true;
 Echo.channel('Drazamed')
   .listen('.MessageSent', (e) => {
     console.log(e);
-    // this.messages.push({
-    //   message: e.message.message,
-    //   user: e.user
-    // });
+    app.messages.push({
+      message: e.message,
+      user: e.user
+    });
   });

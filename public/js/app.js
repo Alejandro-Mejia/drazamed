@@ -59467,10 +59467,11 @@ var app = new Vue({
 
 Pusher.logToConsole = true;
 Echo.channel('Drazamed').listen('.MessageSent', function (e) {
-  console.log(e); // this.messages.push({
-  //   message: e.message.message,
-  //   user: e.user
-  // });
+  console.log(e);
+  app.messages.push({
+    message: e.message,
+    user: e.user
+  });
 });
 
 /***/ }),
