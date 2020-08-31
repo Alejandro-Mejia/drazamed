@@ -12424,7 +12424,6 @@ a.text-dark:focus {
 main {
   margin-top: 90px;
   background-color: #fafaf8;
-  padding: 50px 100px 10px 100px;
 }
 
 .cart-section {
@@ -12627,6 +12626,13 @@ main {
 
   #dra-logo-1 {
     display: none;
+  }
+
+  main .cover .wrapper h1 {
+    font-size: 2rem !important;
+    font-weight: bolder;
+    width: 90%;
+    text-align: center;
   }
 }
 
