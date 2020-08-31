@@ -202,7 +202,7 @@
                 $("#med-list").empty();
                 // $('#med-list').append('<div class="col-lg-12 col-md-12 col-sm12"><h4> Productos Recomendados </h4></div>')
                 $.each(data.result.msg, function(i, item) {
-                    console.log(item);
+                    //console.log(item);
                     medicina = item.name;
                     $("#med-list").append(
                         '<div class="med cat_product" onclick="thumbClick(`' + medicina + '`)">' +
@@ -231,7 +231,7 @@
 
     $(document).ready(function() {
         getCategories();
-        show_favorites(1,120);
+        show_favorites(1,30);
     });
 
 </script>

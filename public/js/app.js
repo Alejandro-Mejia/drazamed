@@ -59506,7 +59506,7 @@ function checkedUser(data) {
       window.location.href = "/account-page";
     } // alert('Tu orden ha sido verificada, desde tu perfil podras pagar a partir de este momento. Gracias por confiar en Drazamed');
 
-  } else {// alert('Mensaje para otro usuario');
+  } else {//alert('Mensaje para otro usuario');
     }
 }
 

@@ -55,7 +55,7 @@ function trans(key, replace = {}) {
 $(document).ready(function() {
     var token = $("#security_token").val();
 
-    
+
 
     if (token != "" || token != 0) {
         $("#myModal_change_password").modal({});
@@ -164,7 +164,7 @@ $(document).ready(function() {
     //         .appendTo(ul);
     //     };
 
-    
+
 });
 
 
@@ -726,7 +726,7 @@ function show_our_products(cat = null) {
             $("#med-list").empty();
             // $('#med-list').append('<div class="col-lg-12 col-md-12 col-sm12"><h4> Productos Recomendados </h4></div>')
             $.each(data.result.msg, function(i, item) {
-                console.log(item);
+                //console.log(item);
                 medicina = item.name;
                 $("#med-list").append(
                     '<div class="med cat_product" onclick="thumbClick(`' + medicina + '`)">' +
@@ -763,7 +763,7 @@ function show_our_products(cat = null) {
             // $('#med-list').empty();
             // $('#med-list').append('<div class="col-lg-12 col-md-12 col-sm12"><h4> Todos los Productos </h4></div>')
             $.each(data.result.msg, function(i, item) {
-                console.log(item);
+                //console.log(item);
                 medicina = item.name;
                 $("#med-list").append(
                     '<div class="med cat_product" onclick="thumbClick(`' + medicina + '`)">' +

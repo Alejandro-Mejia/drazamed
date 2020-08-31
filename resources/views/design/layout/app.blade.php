@@ -115,18 +115,23 @@
     <body>
         @include('design.layout.header')
 
-        <div id="chat">
-            @yield('content')
-        </div>
 
+        {{-- <div id="chat"> --}}
+            @yield('content')
+        {{-- </div> --}}
+
+        <!-- jQuery-3.5 -->
+        <script src="/js/jquery-3.5.1.js"></script>
+        <!-- // jQuery UI -->
+        <script src="/js/jquery-ui.js"></script>
+        <link rel="stylesheet" href="/css/jquery-ui.css">
 
         <script src="/js/modal_manager.js"></script>
-        <script src="/js/design.js"></script>
         <script src="/js/mobile_menu.js"></script>
-
 
         @yield('custom-js')
         <script src="/js/app.js"></script>
+        <script src="/js/design.js"></script>
     </body>
 
 
@@ -141,5 +146,5 @@
 @include('design.modals.register')
 @include('design.modals.recovery')
 @include('design.modals.pinfo')
-@include('design.modals.chat')
+{{-- @include('design.modals.chat') --}}
 @include('cookieConsent::index')
