@@ -109,7 +109,7 @@ function checkedUser(data) {
         }
         // alert('Tu orden ha sido verificada, desde tu perfil podras pagar a partir de este momento. Gracias por confiar en Drazamed');
     } else {
-        // alert('Mensaje para otro usuario');
+        //alert('Mensaje para otro usuario');
     }
 
 }
