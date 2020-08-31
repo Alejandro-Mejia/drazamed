@@ -1135,7 +1135,8 @@ class MedicineController extends BaseController
 					'discount_type' => $data['discount_type'],
 					'tax' => $data['tax'],
 					'tax_type' => $data['tax_type'],
-					'sp' => $data['show_priority']
+                    'sp' => $data['show_priority'],
+                    'is_pres_required' => $data['is_pres_required']
 				);
 			}
 			array_multisort(array_map(function($element) {
