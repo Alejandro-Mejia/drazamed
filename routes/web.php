@@ -89,6 +89,7 @@ use MercadoPago;
     Route::any('/user/store-profile-pic', 'UserController@anyStoreProfilePic');
     Route::any('/user/web-activate-account/{code}', 'UserController@anyWebActivateAccount');
     Route::any('/user/pres-delete/{pres_id}', 'UserController@anyPresDelete');
+    Route::get('/user/is-actual-user/{user_js}', 'UserController@getIsActualUser');
 
     /**
      * Medicine routes

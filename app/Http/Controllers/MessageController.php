@@ -1,17 +1,17 @@
 <?php
 namespace App\Http\Controllers;
- 
+
 use App\Http\Controllers\Controller;
 use App\Message;
 use App\Events\NewMessageNotification;
 use Illuminate\Support\Facades\Auth;
- 
+
 class MessageController extends Controller
 {
     public function __construct() {
         $this->middleware('auth');
     }
- 
+
     /**
      * Show chats
      *
@@ -41,14 +41,14 @@ class MessageController extends Controller
      */
     public function sendMessage(Request $request)
     {
-    $user = Auth::user();
+        $user = Auth::user();
 
-    $message = $user->messages()->create([
-        'message' => $request->input('message')
-    ]);
+        $message = $user->messages()->create([
+            'message' => $request->input('message')
+        ]);
 
-    broadcast(new MessageSent($user, $message))->toOthers();
+        broadcast(new MessageSent($user, $message))->toOthers();
 
-    return ['status' => 'Message Sent!'];
+        return ['status' => 'Message Sent!'];
     }
 }
