@@ -59,10 +59,62 @@ const app = new Vue({
 
 });
 
-Echo.private('chat')
-  .listen('MessageSent', (e) => {
-    this.messages.push({
+// Echo.private('chat')
+//   .listen('MessageSent', (e) => {
+//     this.messages.push({
+//       message: e.message.message,
+//       user: e.user
+//     });
+//   });
+
+Pusher.logToConsole = true;
+
+Echo.channel('Drazamed')
+  .listen('.MessageSent', (e) => {
+    console.log(e);
+    app.messages.push({
       message: e.message.message,
       user: e.user
     });
+  })
+  .listen('.orderStatus', (e) => {
+    console.log('Orden verificada : ' );
+    console.log(e);
+    console.log(e.user.id);
+    httpGetAsync('/user/is-actual-user/' + e.user.id, checkedUser);
   });
+
+function httpGetAsync(theUrl, callback)
+{
+    var xmlHttp = new XMLHttpRequest();
+    xmlHttp.onreadystatechange = function() {
+        if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
+            callback(xmlHttp.responseText);
+    }
+    xmlHttp.open("GET", theUrl, true); // true for asynchronous
+    xmlHttp.send(null);
+}
+
+
+function checkedUser(data) {
+
+    console.log("Usuario : ");
+
+    dataJson = JSON.parse(data);
+    console.log(dataJson);
+    console.log(dataJson.status);
+
+    if (dataJson.status == "SUCCESS") {
+        var ask = window.confirm("Tu orden ha sido verificada, desde tu perfil podras pagar a partir de este momento. Gracias por confiar en Drazamed");
+        if (ask) {
+            // window.alert("This post was successfully deleted.");
+
+            window.location.href = "/account-page";
+
+        }
+        // alert('Tu orden ha sido verificada, desde tu perfil podras pagar a partir de este momento. Gracias por confiar en Drazamed');
+    } else {
+        //alert('Mensaje para otro usuario');
+    }
+
+}
