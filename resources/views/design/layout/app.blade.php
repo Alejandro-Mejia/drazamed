@@ -33,18 +33,18 @@
         <!-- Estilos propios del proyecto -->
         <link rel="stylesheet" href="/css/app.css">
 
-        {{-- <link rel="stylesheet" href="/css/header.css">
+        <link rel="stylesheet" href="/css/header.css">
         <link rel="stylesheet" href="/css/login.css" />
         <link rel="stylesheet" href="/css/search-form.css">
         <link rel="stylesheet" href="/css/footer.css">
         <link rel="stylesheet" href="/css/dropbox.css">
-        
-        <link rel="stylesheet" href="/css/drazamed.css"> --}}
+
+        <link rel="stylesheet" href="/css/drazamed.css">
 
         <link rel="stylesheet" href="/assets/fonts/fontawesome/css/fontawesome.css">
         <link rel="stylesheet" href="/assets/fonts/fontawesome/css/solid.css">
         <link rel="stylesheet" href="/css/fonts.css">
-        
+
 
         <!-- Google Analytics -->
         <!-- Global site tag (gtag.js) - Google Analytics -->
