@@ -60,7 +60,7 @@ Vue.component('chat-form', require('./components/ChatForm.vue').default);
 
 // });
 
-// import Echo from "laravel-echo";
+import Echo from "laravel-echo";
 
 Pusher.logToConsole = true;
 
