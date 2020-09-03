@@ -59439,32 +59439,30 @@ Vue.component('chat-form', __webpack_require__(/*! ./components/ChatForm.vue */ 
  * the page. Then, you may begin adding components to this application
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
-
-var app = new Vue({
-  el: '#chat',
-  data: {
-    messages: [],
-    orders: []
-  },
-  created: function created() {
-    this.fetchMessages();
-  },
-  methods: {
-    fetchMessages: function fetchMessages() {
-      var _this = this;
-
-      axios.get('/messages').then(function (response) {
-        _this.messages = response.data;
-      });
-    },
-    addMessage: function addMessage(message) {
-      this.messages.push(message);
-      axios.post('/messages', message).then(function (response) {
-        console.log(response.data);
-      });
-    }
-  }
-}); // import Echo from "laravel-echo";
+// const app = new Vue({
+//     el: '#chat',
+//     data: {
+//         messages: [],
+//         orders: []
+//     },
+//     created() {
+//         this.fetchMessages();
+//     },
+//     methods: {
+//         fetchMessages() {
+//             axios.get('/messages').then(response => {
+//                 this.messages = response.data;
+//             });
+//         },
+//         addMessage(message) {
+//             this.messages.push(message);
+//             axios.post('/messages', message).then(response => {
+//               console.log(response.data);
+//             });
+//         }
+//     }
+// });
+// import Echo from "laravel-echo";
 
 Pusher.logToConsole = true;
 Echo.channel('Drazamed').listen('.MessageSent', function (e) {
@@ -59767,6 +59765,17 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/sass/dropbox.scss":
+/*!*************************************!*\
+  !*** ./resources/sass/dropbox.scss ***!
+  \*************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+
 /***/ "./resources/sass/footer.scss":
 /*!************************************!*\
   !*** ./resources/sass/footer.scss ***!
@@ -59845,9 +59854,9 @@ __webpack_require__.r(__webpack_exports__);
 /***/ }),
 
 /***/ 0:
-/*!***********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** multi ./resources/js/app.js ./resources/sass/app.scss ./resources/sass/header.scss ./resources/sass/index.scss ./resources/sass/footer.scss ./resources/sass/login.scss ./resources/sass/drazamed.scss ./resources/sass/search-form.scss ./resources/sass/pinfo.scss ./resources/sass/cart.scss ./resources/sass/contact.scss ./resources/sass/profile.scss ./resources/sass/about.scss ***!
-  \***********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*!*****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** multi ./resources/js/app.js ./resources/sass/app.scss ./resources/sass/header.scss ./resources/sass/index.scss ./resources/sass/footer.scss ./resources/sass/login.scss ./resources/sass/drazamed.scss ./resources/sass/search-form.scss ./resources/sass/pinfo.scss ./resources/sass/cart.scss ./resources/sass/contact.scss ./resources/sass/profile.scss ./resources/sass/dropbox.scss ./resources/sass/about.scss ***!
+  \*****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -59863,6 +59872,7 @@ __webpack_require__(/*! /Users/amejia/Sites/drazamed/resources/sass/pinfo.scss *
 __webpack_require__(/*! /Users/amejia/Sites/drazamed/resources/sass/cart.scss */"./resources/sass/cart.scss");
 __webpack_require__(/*! /Users/amejia/Sites/drazamed/resources/sass/contact.scss */"./resources/sass/contact.scss");
 __webpack_require__(/*! /Users/amejia/Sites/drazamed/resources/sass/profile.scss */"./resources/sass/profile.scss");
+__webpack_require__(/*! /Users/amejia/Sites/drazamed/resources/sass/dropbox.scss */"./resources/sass/dropbox.scss");
 module.exports = __webpack_require__(/*! /Users/amejia/Sites/drazamed/resources/sass/about.scss */"./resources/sass/about.scss");
 
 

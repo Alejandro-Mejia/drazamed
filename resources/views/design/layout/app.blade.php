@@ -15,6 +15,12 @@
         <script src="/js/jquery-ui.js"></script>
         <link rel="stylesheet" href="/css/jquery-ui.css">
 
+        {{-- <!-- jQuery-3.5 -->
+        <script src="/js/jquery-3.5.1.js"></script>
+        <!-- // jQuery UI -->
+        <script src="/js/jquery-ui.js"></script>
+        <link rel="stylesheet" href="/css/jquery-ui.css"> --}}
+
         <!-- Money format for JS -->
         <script src="/js/simple.money.format.js"></script>
 
@@ -35,13 +41,13 @@
         <!-- Estilos propios del proyecto -->
         <link rel="stylesheet" href="/css/app.css">
 
-        {{-- <link rel="stylesheet" href="/css/header.css">
+        <link rel="stylesheet" href="/css/header.css">
         <link rel="stylesheet" href="/css/login.css" />
         <link rel="stylesheet" href="/css/search-form.css">
         <link rel="stylesheet" href="/css/footer.css">
         <link rel="stylesheet" href="/css/dropbox.css">
 
-        <link rel="stylesheet" href="/css/drazamed.css"> --}}
+        <link rel="stylesheet" href="/css/drazamed.css">
 
         <link rel="stylesheet" href="/assets/fonts/fontawesome/css/fontawesome.css">
         <link rel="stylesheet" href="/assets/fonts/fontawesome/css/solid.css">
@@ -120,11 +126,7 @@
             @yield('content')
         {{-- </div> --}}
 
-        <!-- jQuery-3.5 -->
-        <script src="/js/jquery-3.5.1.js"></script>
-        <!-- // jQuery UI -->
-        <script src="/js/jquery-ui.js"></script>
-        <link rel="stylesheet" href="/css/jquery-ui.css">
+
 
         <script src="/js/modal_manager.js"></script>
         <script src="/js/mobile_menu.js"></script>

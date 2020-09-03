@@ -129,12 +129,16 @@
             },
 
             select: function(event, ui) {
-                console.log("itemCode=" + ui.item.item_code);
+                    console.log("itemCode=" + ui.item.item_code);
                 item_code = ui.item.item_code;
                 current_item_code = item_code;
                 // goto_detail_page();
                 show_detail_modal(ui.item);
+            },
+            menufocus:function(e,ui) {
+                return false;
             }
+
         })
         .autocomplete("instance")._renderItem = function(ul, item) {
         return $("<li>")
