@@ -30,35 +30,35 @@ Vue.component('chat-form', require('./components/ChatForm.vue').default);
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-const app = new Vue({
-    el: '#chat',
+// const app = new Vue({
+//     el: '#chat',
 
-    data: {
-        messages: [],
-        orders: []
-    },
+//     data: {
+//         messages: [],
+//         orders: []
+//     },
 
-    created() {
-        this.fetchMessages();
-    },
+//     created() {
+//         this.fetchMessages();
+//     },
 
-    methods: {
-        fetchMessages() {
-            axios.get('/messages').then(response => {
-                this.messages = response.data;
-            });
-        },
+//     methods: {
+//         fetchMessages() {
+//             axios.get('/messages').then(response => {
+//                 this.messages = response.data;
+//             });
+//         },
 
-        addMessage(message) {
-            this.messages.push(message);
+//         addMessage(message) {
+//             this.messages.push(message);
 
-            axios.post('/messages', message).then(response => {
-              console.log(response.data);
-            });
-        }
-    }
+//             axios.post('/messages', message).then(response => {
+//               console.log(response.data);
+//             });
+//         }
+//     }
 
-});
+// });
 
 // import Echo from "laravel-echo";
 

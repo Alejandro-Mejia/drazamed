@@ -52,10 +52,10 @@
 			'created_by' ,
 			'added_by'
 		];
-		
+
 		public function getSellPriceAttribute()
 		{
-			// $this = Medicine::where('id',$this->id)->get()[0];	
+			// $this = Medicine::where('id',$this->id)->get()[0];
 			if($this->marked_price == 0) {
 				switch ($this->tax) {
 					case '19':
@@ -83,7 +83,7 @@
 							$labRule = Pricerule::where('laboratory','LIKE','%' . $compareLab . '%')->first();
 							// print_r($labRule,true);
 
-				
+
 
 							if (isset($labRule) && $labRule != null) {
 								if ($labRule->isByProd == 1) {
@@ -99,12 +99,12 @@
 										$labRule["rule_type"] = $prodrule->rule_type;
 										$labRule["rule"] = $prodrule->rule;
 									}
-									
-									
+
+
 									// dd($labRule["rule_type"]);
 
 									// dd($labRule);
-									
+
 								}
 
 								$sellprice = ($this->real_price*$labRule->isVtaReal + $this->current_price*$labRule->isVtaCte);
@@ -145,12 +145,12 @@
 		 */
 		public static function medicines ($key = '')
 		{
-			$medicines = Cache::get ('CACHE_PARAM_MEDICINE' , null);
-			if (is_null ($medicines)) {
+			// $medicines = Cache::get ('CACHE_PARAM_MEDICINE' , null);
+			// if (is_null ($medicines)) {
 
 				//$medicine_list = self::select ('id' , 'item_code' , 'item_name' , 'item_name as value' , 'item_name as label' , 'item_code' , 'composition' , 'discount' , 'discount_type' , 'tax' , 'tax_type' , 'manufacturer' , 'group' , 'is_delete' , 'is_pres_required')->get()->toArray ();
 				//$medicine_list = self::select ('id' , 'item_code' , 'item_name' , 'item_name as value' , 'item_name as label' , 'item_code' , 'composition' , 'discount' , 'discount_type' , 'tax' , 'tax_type' , 'manufacturer' , 'group' , 'is_delete' , 'is_pres_required', 'sell_price')->get()->toArray ();
-				$medicine_list = self::all()->toArray();
+				$medicine_list = self::where('id', '=', $key)->toArray();
 				//dd($medicines);
 				$medicines = [];
 				foreach ($medicine_list as $list) {
@@ -173,8 +173,8 @@
 					$medicines[$list['id']]['mrp'] = $list['sell_price'];
 					$medicines[$list['id']]['show_priority'] = $list['show_priority'];
 				}
-				//Cache::put ('CACHE_PARAM_MEDICINE' , $medicines , 1440);
-			}
+				// //Cache::put ('CACHE_PARAM_MEDICINE' , $medicines , 1440);
+			//}
 
 			return empty($key) ? $medicines : $medicines[$key];
 		}
@@ -183,13 +183,13 @@
 			return $this->hasMany('App\ItemList','medicine','id');
 		}
 
-		
+
 
 		public function sellprice()
 		{
 
 			// $this = Medicine::where('id',$this->id)->get()[0];
-			
+
 			if($this->marked_price == 0) {
 				switch ($this->tax) {
 					case '19':
@@ -214,7 +214,7 @@
 
 							$labRule = Pricerule::where('laboratory','LIKE','%' . $compareLab . '%')->first();
 							// dd($labRule)
-				
+
 
 							if (isset($labRule) && $labRule != null) {
 								if ($labRule->isByProd == 1) {
@@ -222,10 +222,10 @@
 									$prod = substr($this['item_name'],0,15);
 									$prodrule = Prodrule::where('product', 'LIKE' , '%' . $prod . '%')->first();
 
-									
+
 
 									// $labRule = Pricerule::with(["prodrule"=> function($q) use($prod) {$q->where('product', 'LIKE' , '%' . $prod . '%')->first();}])->where('laboratory','LIKE', '%' . $this['manufacturer'] . '%')->first();
-									
+
 
 									// dd($labRule);
 									$labRule->rule_type = $prodrule->rule_type;
@@ -261,7 +261,7 @@
 				$sellprice = $this->marked_price;
 			}
 
-			
+
 			$sellprice = ceil( $sellprice / 100 ) * 100;
 			// $sellprice = round( $sellprice, -2, PHP_ROUND_HALF_UP);
 
@@ -270,4 +270,4 @@
 
 
 	}
-		
+
