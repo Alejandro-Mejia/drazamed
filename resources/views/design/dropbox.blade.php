@@ -1,7 +1,7 @@
 
-@section('custom-css')
+{{-- @section('custom-css')
 <link rel="stylesheet" href="/css/dropbox.css" />
-@endsection
+@endsection --}}
 
 
 <div style="text-align: center;">
@@ -46,7 +46,7 @@
 </div> --}}
 <br>
 @if($pres_required == 1)
-	
+
 	<div class="alert alert-success" role="alert">
 	  Si tienes una fórmula médica que no entiendes, envíanosla y nosotros la revisaremos y crearemos el pedido por ti
 	</div>

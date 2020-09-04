@@ -12,19 +12,19 @@ let mix = require("laravel-mix");
  */
 
 mix.js("resources/js/app.js", "public/js")
-    .sass("resources/sass/app.scss", "public/css")
-    .sass("resources/sass/header.scss", "public/css")
-    .sass("resources/sass/index.scss", "public/css")
-    .sass("resources/sass/footer.scss", "public/css")
-    .sass("resources/sass/login.scss", "public/css")
-    .sass("resources/sass/drazamed.scss", "public/css")
-    .sass("resources/sass/search-form.scss", "public/css")
-    .sass("resources/sass/pinfo.scss", "public/css")
-    .sass("resources/sass/cart.scss", "public/css")
-    .sass("resources/sass/contact.scss", "public/css")
-    .sass("resources/sass/profile.scss", "public/css")
-    .sass("resources/sass/dropbox.scss", "public/css")
-    .sass("resources/sass/about.scss", "public/css");
+    .sass("resources/sass/app.scss", "public/css");
+    // .sass("resources/sass/header.scss", "public/css")
+    // .sass("resources/sass/index.scss", "public/css")
+    // .sass("resources/sass/footer.scss", "public/css")
+    // .sass("resources/sass/login.scss", "public/css")
+    // .sass("resources/sass/drazamed.scss", "public/css")
+    // .sass("resources/sass/search-form.scss", "public/css")
+    // .sass("resources/sass/pinfo.scss", "public/css")
+    // .sass("resources/sass/cart.scss", "public/css")
+    // .sass("resources/sass/contact.scss", "public/css")
+    // .sass("resources/sass/profile.scss", "public/css")
+    // .sass("resources/sass/dropbox.scss", "public/css")
+    // .sass("resources/sass/about.scss", "public/css");
 
 
 // Full API

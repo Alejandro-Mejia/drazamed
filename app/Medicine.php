@@ -150,7 +150,7 @@
 
 				//$medicine_list = self::select ('id' , 'item_code' , 'item_name' , 'item_name as value' , 'item_name as label' , 'item_code' , 'composition' , 'discount' , 'discount_type' , 'tax' , 'tax_type' , 'manufacturer' , 'group' , 'is_delete' , 'is_pres_required')->get()->toArray ();
 				//$medicine_list = self::select ('id' , 'item_code' , 'item_name' , 'item_name as value' , 'item_name as label' , 'item_code' , 'composition' , 'discount' , 'discount_type' , 'tax' , 'tax_type' , 'manufacturer' , 'group' , 'is_delete' , 'is_pres_required', 'sell_price')->get()->toArray ();
-				$medicine_list = self::where('id', '=', $key)->toArray();
+				$medicine_list = self::where('id', '=', $key)->get();
 				//dd($medicines);
 				$medicines = [];
 				foreach ($medicine_list as $list) {
