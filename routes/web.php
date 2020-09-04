@@ -58,6 +58,10 @@ use MercadoPago;
 
     });
 
+    Route::get('/vue', function () {
+        return View::make('vue');
+    });
+
     Route::get('/admin-login', function () {
         return View::make('admin.signin');
     });
@@ -81,10 +85,11 @@ use MercadoPago;
     Route::any('/user/check-user-name', 'UserController@anyCheckUserName');
     Route::any('/user/user-login/{is_web}', 'UserController@anyUserLogin');
     Route::any('/user/activate-account', 'UserController@anyActivateAccount');
-    Route::any('/user/contact-us', 'UserController@anyContactUs');
+    Route::any('/user/contact-us', 'UserController@anyContactUs')->middleware("cors");;
     Route::any('/user/store-profile-pic', 'UserController@anyStoreProfilePic');
     Route::any('/user/web-activate-account/{code}', 'UserController@anyWebActivateAccount');
     Route::any('/user/pres-delete/{pres_id}', 'UserController@anyPresDelete');
+    Route::get('/user/is-actual-user/{user_js}', 'UserController@getIsActualUser');
 
     /**
      * Medicine routes
@@ -152,6 +157,7 @@ use MercadoPago;
     /**
      * Messages
     */
+    Route::get('messages/chats', 'ChatsController@index');
     Route::get('messages', 'ChatsController@fetchMessages');
     Route::post('messages', 'ChatsController@sendMessage');
 
@@ -186,7 +192,7 @@ use MercadoPago;
             return User::all();
         });
     });
-    
+
     /*
     |--------------------------------------------------------------------------
     | Admin Related Pages
@@ -288,6 +294,9 @@ use MercadoPago;
     });
 
 // Auth::routes();
+Auth::routes();
+
+
 
 /**
  * Clear cache from server
@@ -310,6 +319,10 @@ Route::get('/cache', function () {
 Route::any('/logout', function () {
     Session::flush();
     Auth::logout();
+    return Redirect::to('/');
+});
+
+Route::any('/home', function () {
     return Redirect::to('/');
 });
 
@@ -377,7 +390,7 @@ Route::get('/testMP', function() {
 
     $sandBoxMode = config('payment-methods.use_sandbox');
     Log::info('Use Sandobox  '.print_r($sandBoxMode, true));
-        
+
     if ($sandBoxMode) {
         $access_token = config('mercadopago.mp_app_access_token_sb');
         Log::info('Sandbox Pub Key '.$access_token);
@@ -407,10 +420,10 @@ Route::get('/testMP', function() {
 
     $preference->items = array($item);
 
-    Log::info('Preference items: ' . print_r($preference, true)); 
+    Log::info('Preference items: ' . print_r($preference, true));
     $preference->save();
-    
+
     return View::make('testMP')->with('preference', $preference);
-    
-    
+
+
 });

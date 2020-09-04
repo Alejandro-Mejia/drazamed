@@ -261,6 +261,18 @@ class UserController extends BaseController
 
 	}
 
+    public function getIsActualUser($user_js) {
+        $user = Auth::user();
+        if ($user->id == $user_js) {
+            return Response::make (['status' => 'SUCCESS' , 'msg' => 'User matched'] ,200);
+        } else {
+            return Response::make (['status' => 'FAILURE' , 'msg' => 'Different user'] ,401);
+        }
+
+    }
+
+
+
 	/**
 	 * User Login
 	 *
@@ -578,7 +590,7 @@ class UserController extends BaseController
 				$items = [];
 				$i=0;
 
-				
+
 				//var_dump($carts);
 
 				foreach ($carts as $cart) {
@@ -588,9 +600,9 @@ class UserController extends BaseController
 					// dd($medicines);
 					$tax = $cart->unit_price - ceil(($cart->unit_price / (1+($medicines['tax']/100))));
 
-					
 
-					
+
+
 					$items[$i] = ['id' => $cart->id ,
 						'item_id' => $cart->medicine ,
 						'item_code' => $medicines['item_code'] ,
@@ -603,14 +615,14 @@ class UserController extends BaseController
 						'total_price' => $cart->total_price
 					];
 
-					
+
 
 					$taxTotal += $tax;
 					$totalPrice += $cart->total_price;
 					$i++;
 				}
-				
-				
+
+
 				$details = [
 					'id' => (is_null ($result->pres_id)) ? 0 : $result->pres_id ,
 					'invoice_id' => (is_null ($result->id)) ? 0 : $result->id ,
@@ -632,14 +644,14 @@ class UserController extends BaseController
 				];
 
 				// dd($result, $details);
-				
+
 			}
 
 			$responses[] = $details;
 
 		}
 
-		
+
 		// dd($responses);
 
 		$payment_mode = Setting::select ('value')->where ('group' , '=' , 'payment')->where ('key' , '=' , 'mode')->first ();
@@ -860,7 +872,7 @@ class UserController extends BaseController
 		try {
 			if (!Auth::check ())
 				throw new Exception('UNAUTHORISED : User not logged in ' , 401);
-			
+
 			$pay_success2 = DB::table ('prescription')->where ('id' , '=' , $pres_id)->update (array('is_delete' => 1 , 'updated_at' => date ('Y-m-d H:i:s')));
 			// If Save is Success
 			if ($pay_success2)

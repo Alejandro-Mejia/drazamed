@@ -99,6 +99,13 @@
   #dra-logo-1 {
     display: none;
   }
+
+  main .cover .wrapper h1 {
+    font-size: 2rem !important;
+    font-weight: bolder;
+    width: 90%;
+    text-align: center;
+  }
 }
 
 @media (min-width: 768px) {

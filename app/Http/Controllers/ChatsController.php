@@ -1,14 +1,17 @@
 <?php
+
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use App\Message;
-use App\Events\NewMessageNotification;
+use App\User;
+use App\Events\MessageSent;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class MessageController extends Controller
+class ChatsController extends Controller
 {
-    public function __construct() {
+    public function __construct()
+    {
         $this->middleware('auth');
     }
 
@@ -17,10 +20,9 @@ class MessageController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-
     public function index()
     {
-    return view('chat');
+        return view('design.chat');
     }
 
     /**
@@ -30,7 +32,7 @@ class MessageController extends Controller
      */
     public function fetchMessages()
     {
-    return Message::with('user')->get();
+        return Message::with('user')->get();
     }
 
     /**
@@ -42,6 +44,8 @@ class MessageController extends Controller
     public function sendMessage(Request $request)
     {
         $user = Auth::user();
+
+        //$user = User::where('id', $request->input('user_id'))->first();
 
         $message = $user->messages()->create([
             'message' => $request->input('message')

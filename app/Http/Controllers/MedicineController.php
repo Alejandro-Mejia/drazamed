@@ -58,27 +58,27 @@ class MedicineController extends BaseController
 {
 
 
-	/**
-	 * Import test
-	 */
-	public function import()
-	{
-		
-		$data = Excel::toArray(new MedicinesImport, request()->file('file')); 
-		
-		
-		collect(head($data))
-			->each(function ($row, $key) {
-				DB::table('medicine')
-					->where('item_code', $row['item_code'])
-					->update(array_except($row, ['item_code']));
-			});
+	// /**
+	//  * Import test
+	//  */
+	// public function import()
+	// {
 
-		// $data = (new MedicinesImport)->import('inv.xls');
+	// 	$data = Excel::toArray(new MedicinesImport, request()->file('file'));
 
 
-	    return redirect('/')->with('success', 'File imported successfully!');
-	}
+	// 	collect(head($data))
+	// 		->each(function ($row, $key) {
+	// 			DB::table('medicine')
+	// 				->where('item_code', $row['item_code'])
+	// 				->update(array_except($row, ['item_code']));
+	// 		});
+
+	// 	// $data = (new MedicinesImport)->import('inv.xls');
+
+
+	//     return redirect('/')->with('success', 'File imported successfully!');
+	// }
 
 	/**
 	 * Store Prescription
@@ -226,7 +226,7 @@ class MedicineController extends BaseController
 				Mail::send ('emails.admin_prescription_upload' , array('name' => $name) , function ($message) use ($data) {
 					$message->to (Setting::param ('site' , 'mail')['value'])->subject ('Una nueva orden de compra!! ' . Setting::param ('site' , 'app_name')['value']);
 				});
-				
+
 				DB::table ('sessions')->where ('user_id' , '=' , $email)->delete ();
 				Session::flash ('flash_message' , '<b>Exitoso !</b> tu orden ha sido enviada correctamente. Por favor haz seguimiento en tu perfil.');
 				Session::flash ('flash_type' , 'alert-success');
@@ -716,7 +716,7 @@ class MedicineController extends BaseController
 
 						$labRule = Pricerule::where('laboratory','LIKE','%' . $compareLab . '%')->first();
 						// dd($labRule)
-			
+
 
 						if (isset($labRule) && $labRule != null) {
 							if ($labRule->isByProd == 1) {
@@ -724,10 +724,10 @@ class MedicineController extends BaseController
 								$prod = substr($med['item_name'],0,15);
 								$prodrule = Prodrule::where('product', 'LIKE' , '%' . $prod . '%')->first();
 
-								
+
 
 								// $labRule = Pricerule::with(["prodrule"=> function($q) use($prod) {$q->where('product', 'LIKE' , '%' . $prod . '%')->first();}])->where('laboratory','LIKE', '%' . $med['manufacturer'] . '%')->first();
-								
+
 
 								// dd($labRule);
 								$labRule->rule_type = isset($prodrule->rule_type) ? $prodrule->rule_type : 0;
@@ -763,7 +763,7 @@ class MedicineController extends BaseController
 	        $sellprice = $med->marked_price;
 	    }
 
-	    
+
 	    $sellprice = ceil( $sellprice / 100 ) * 100;
 	    // $sellprice = round( $sellprice, -2, PHP_ROUND_HALF_UP);
 
@@ -793,7 +793,7 @@ class MedicineController extends BaseController
   //               $query->where('gender', '=', $gender);
   //           }
   //           })->get();
-  //           
+  //
   //     query = User::where('name', 'LIKE', "%$term%");
 		 //			dd($query->toSql(), $query->getBindings());
 		// dd($category, $lab, $ean);
@@ -847,8 +847,8 @@ class MedicineController extends BaseController
 
 				$pres_required = false;
 
-				
-	
+
+
 
 				if ($presRule['is_pres_required'] == true) {
 					if($presRule['is_by_product'] == true) {
@@ -863,7 +863,7 @@ class MedicineController extends BaseController
 						} else {
 							$pres_required = 0;
 						}
-						
+
 					} else {
 						$pres_required = 1;
 					}
@@ -1071,14 +1071,14 @@ class MedicineController extends BaseController
 		} else {
 			$key = Request::get ('n' , '');
 		}
-		
+
 		$medicines = Medicine::where('item_name', 'LIKE', '%' . $key . '%')
 							->orWhere('composition', 'LIKE', '%' . $key . '%')
 							->get()
 							->toArray ();
 		//dd($medicines);
 		// $medicines = Medicine::medicines();
-		
+
 		// if (!empty($key)) {
 		// 	$medicines = array_filter ($medicines , function ($medicine) use ($key) {
 		// 		$medTemp = $this->stringClean ($medicine['item_name']);
@@ -1097,8 +1097,8 @@ class MedicineController extends BaseController
 		// 	// $medicines->sortBy('show_priority');
 		// 	$medicines = collect($medicines)->sortBy('show_priority')->reverse()->toArray();
 		// }
-		
-		
+
+
 		if ($isWeb) {
 			$json = [];
 			foreach ($medicines as $data) {
@@ -1111,7 +1111,7 @@ class MedicineController extends BaseController
 					'sp' => $data['show_priority']
 				);
 			}
-			
+
 			array_multisort(array_map(function($element) {
 				return $element['sp'];
 			}, $json), SORT_DESC, $json);
@@ -1135,7 +1135,8 @@ class MedicineController extends BaseController
 					'discount_type' => $data['discount_type'],
 					'tax' => $data['tax'],
 					'tax_type' => $data['tax_type'],
-					'sp' => $data['show_priority']
+                    'sp' => $data['show_priority'],
+                    'is_pres_required' => $data['is_pres_required']
 				);
 			}
 			array_multisort(array_map(function($element) {
@@ -1742,7 +1743,7 @@ class MedicineController extends BaseController
 		// Determina el modo de trabajo de MP y establece el token de acuerdo a eso
 		$sandBoxMode = config('payment-methods.use_sandbox');
 		Log::info('Use Sandobox  '.print_r($sandBoxMode, true));
-			
+
 		if ($sandBoxMode) {
 			$access_token = config('mercadopago.mp_app_access_token_sb');
 			Log::info('Sandbox Pub Key '.$access_token);
@@ -1783,16 +1784,16 @@ class MedicineController extends BaseController
 		$payer->address = array(
 			"street_name" => $address
 		);
-		
+
 		Log::info('Payer : ' . print_r($payer, true));
 
 		// if($invoice_id == 6) {
 		// 	dd($invoice->cartList());
 		// }
-		
+
 		$items = array();
 		foreach ($invoice->cartList() as $cart) {
-			
+
 			Log::info('Cart item : ' . print_r($cart, true));
 
 			$medicine = Medicine::where('id', $cart->medicine)->first()->toArray();
@@ -1802,7 +1803,7 @@ class MedicineController extends BaseController
 			$item_name .= " ,";
 			$total += $cart->unit_price;
 
-			
+
 
 			if ($medicine['is_pres_required']) {
 				$pres_required = 1;
@@ -1816,18 +1817,18 @@ class MedicineController extends BaseController
 			$item->unit_price = $cart->unit_price;
 			$item->currency_id = 'COP';
 			$item->id = 1;
-		
+
 			Log::info('Item : ' . print_r($item, true));
-		
+
 			array_push ($items, $item);
-			
-			
+
+
 		}
 
 		// if($invoice_id == 6) {
 		// 	dd($items);
 		// }
-		
+
 
 		$preference->items = $items;
 		// Crea un ítem en la preferencia
@@ -1853,7 +1854,7 @@ class MedicineController extends BaseController
 		$preference->external_reference = $invoice->id;
 
 
-		Log::info('Preference with items, shpment and payer: ' . print_r($preference, true)); 
+		Log::info('Preference with items, shpment and payer: ' . print_r($preference, true));
 		$preference->save();
 
 		// Crea el arreglo de datos que se va a enviar a la vista para despliegue
@@ -1869,7 +1870,7 @@ class MedicineController extends BaseController
 		$data['productinfo'] = $item_name;
 		$data['is_pres_required'] = $pres_required;
 		$data['access_token'] = $access_token;
-		
+
 		//dd($preference);
 
 		// if ($isMobile)
@@ -1886,7 +1887,7 @@ class MedicineController extends BaseController
 		// var_dump($response);
 
 		return	$response;
-		
+
 	}
 
 
@@ -1899,8 +1900,8 @@ class MedicineController extends BaseController
 		$merchant_account_id = Request::get ('merchant_account_id' , '');
 		$processing_mode = Request::get ('processing_mode' , '');
 		$invoice_id = Request::get ('external_reference' , '');
-		
-		
+
+
 		if($payment_status == "approved") {
 			// Obtiene la informacion de la factura
 			$invoice = Invoice::find ($invoice_id);
@@ -1920,10 +1921,10 @@ class MedicineController extends BaseController
 		return View::make ('mp.process_response' , array('posted' => $data));
 	}
 
-	/**	
+	/**
 	 * nueva funcion payment MercadoPago con integracion de redirect
 	 */
-	
+
 
 
 	// public function anyMakeMercadoPagoPayment($invoice, $isMobile = 0)
@@ -1959,7 +1960,7 @@ class MedicineController extends BaseController
 	// 		$access_token = config('mercadopago.mp_app_access_token_pr');
 	// 		Log::info('Production  Pub Key '.$access_token);
 	// 	}
-		
+
 	// 	// $access_token = env("MP_APP_ACCESS_TOKEN", null);
 	// 	MercadoPago\SDK::setAccessToken($access_token);
 
@@ -1982,8 +1983,8 @@ class MedicineController extends BaseController
 
 	// 	foreach ($invoiceDetails->cartList() as $cart) {
 
-			
-			
+
+
 	// 		$item_name .= Medicine::medicines ($cart->medicine)['item_name'];
 	// 		$item_name .= " ,";
 	// 		$total += $cart->unit_price;
@@ -1999,13 +2000,13 @@ class MedicineController extends BaseController
 	// 		$item->unit_price = $cart->unit_price;
 	// 		$item->currency_id = 'COP';
 	// 		$item->id = 1;
-		
+
 	// 		Log::info('Item : ' . print_r($item, true));
-		
+
 	// 		$preference->items = array($item);
 	// 	}
 
-		
+
 	// 	$preference->save();
 	// 	Log::info('Preference : ' . print_r($preference, true));
 
@@ -2051,7 +2052,7 @@ class MedicineController extends BaseController
 	// 			// Log::info('Access_Token:'.$access_token);
 	// 			// // dd($access_token);
 
-				
+
 
 	// 			// $email = "test_user_44639121@testuser.com";
 	// 			$payment = new MercadoPago\Payment();
@@ -2473,9 +2474,9 @@ class MedicineController extends BaseController
 				// Medicine::query()->truncate();
 
 				$import = (new MedicinesImport)->import($file);
-				
-				//$data = Excel::toArray(new MedicinesImport, request()->file('file')); 
-		
+
+				//$data = Excel::toArray(new MedicinesImport, request()->file('file'));
+
 				// collect(head($import))
 				// 	->each(function ($row, $key) {
 				// 		DB::table('medicine')
@@ -2523,7 +2524,7 @@ class MedicineController extends BaseController
 	             $request->get('payment_method'),
 	             $order
 			 );
-			 
+
 		Log::info('Auto Url '.print_r($allowedPaymentMethods, true));
 	    return redirect()->to($url);
 	}

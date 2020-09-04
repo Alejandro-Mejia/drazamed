@@ -32,7 +32,10 @@
 	use App\MedicalProfessional;
 	use App\Medicine;
 	use App\NewMedicine;
-	use App\Cache;
+    use App\Cache;
+
+    use App\Message;
+    use App\Events\OrderStatusSent;
 
 
 
@@ -781,8 +784,8 @@ class AdminController extends BaseController
 		if (!is_null ($invoice) && ($invoice->status_id == InvoiceStatus::PAID () && $status == PrescriptionStatus::UNVERIFIED ())) {
 			return Redirect::to ('admin/pres-edit/' . $pres_id . '/0');
 		}
-		//$shipping = 0;
-		$medicines = Medicine::medicines ();
+		$shipping = 0;
+		// $medicines = Medicine::medicines ();
 		$setting = Setting::param ('site' , 'discount')['value'];
 		$discounts = floatval (Setting::param ('site' , 'discount')['value']);
 		$items = [];
@@ -818,7 +821,7 @@ class AdminController extends BaseController
 		// }
 
 		//$shipping = 0;
-		$medicines = Medicine::medicines ();
+		// $medicines = Medicine::medicines ();
 		$setting = Setting::param ('site' , 'discount')['value'];
 		$discounts = floatval (Setting::param ('site' , 'discount')['value']);
 		$items = [];
@@ -891,7 +894,7 @@ class AdminController extends BaseController
 						Log::info('item sub_total : ' . $itemsPost[$i-1]->total_price );
 						Log::info('Invoice sub_total : ' . $sub_total );
 					}
-				
+
 
 					if ($alreadyIn == 0) {
 						$newItem = new ItemList;
@@ -996,6 +999,17 @@ class AdminController extends BaseController
 		Mail::send ('emails.verify' , array('name' => $user_name) , function ($message) use ($user_email) {
 			$message->to ($user_email)->subject ('Tu orden ha sido verificada ' . Setting::param ('site' , 'app_name')['value']);
 		});
+
+        $userbcast = array(
+            "id" => $user->id,
+            "email" => $user->email
+        );
+
+        $bcastdata = array(
+            "order_status" => $prescription->status
+        );
+
+        broadcast(new OrderStatusSent($userbcast, $bcastdata))->toOthers();
 
 		return Redirect::to ("/admin/load-all-prescription");
 	}
