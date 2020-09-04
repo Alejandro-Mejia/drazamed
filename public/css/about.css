@@ -41,3 +41,52 @@
   }
 }
 
+@media (max-width: 767px) {
+  .blur_effect {
+    -webkit-filter: blur(0px);
+    /* Safari 6.0 - 9.0 */
+    filter: blur(0px);
+  }
+
+  /*
+    .about .container h1{
+        color:red !important;
+    }
+    */
+
+  h1 {
+    color: green !important;
+  }
+}
+
+@media (min-width: 768px) {
+  .blur_effect {
+    -webkit-filter: blur(5px);
+    /* Safari 6.0 - 9.0 */
+    filter: blur(5px);
+  }
+}
+
+#galeria .col-lg-6 {
+  padding: 25px;
+  margin: 0 !important;
+}
+
+#galeria img {
+  width: 50%;
+  height: 100%;
+}
+
+#galeria img:hover {
+  border: 10px solid #3e3a7c;
+}
+
+#appButtons button {
+  background-color: Transparent;
+  background-repeat: no-repeat;
+  border: none;
+  cursor: pointer;
+  overflow: hidden;
+  outline: none;
+}
+
