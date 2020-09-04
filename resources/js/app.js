@@ -81,7 +81,7 @@ window.Echo.channel('Drazamed')
     console.log('Orden verificada : ' );
     console.log(e);
     // console.log(e.user.id);
-    httpGetAsync('/user/is-actual-user/' + e.user.id, checkedUser);
+    httpGetAsync('/user/is-actual-user/' + e.data.user.id, checkedUser);
   });
 
 function httpGetAsync(theUrl, callback)
