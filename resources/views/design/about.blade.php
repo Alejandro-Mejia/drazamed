@@ -658,7 +658,7 @@
     <div class="container justify-content-center" id="galeria p-2">
         <!--<h1 class="display-4 py-4 text-primary text-center">¡Descargala ahora!</h1> -->
         <h1 class="display-4 py-4 text-primary text-center">Nuestra App</h1>
-        <p class="text-center" style="font-size: 2rem"> <!-- <b>Nuestra App</b> --> Próximamente disponble en PlayStore y AppStore, lista para que personalices tu pastillero
+        <p class="text-center" style="font-size: 2rem"> <!-- <b>Nuestra App</b> --> Próximamente disponible en PlayStore y AppStore, lista para que personalices tu pastillero
             <!-- , hables directamente con el doctor --> y programes las próximas entregas de tus medicamentos. </p>
         <div class="row" id="appButtons">
             <div class="col-md-6 col-sm-12 justify-content-center p-3" style="text-align: center">
