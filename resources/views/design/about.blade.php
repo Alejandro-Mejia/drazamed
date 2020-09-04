@@ -12,13 +12,13 @@
             <h1 class="display-4 py-4 text-primary text-center">Tus medicinas a la mano</h1>
             <p style="font-size: 2rem">Organizamos los medicamentos de tu tratamiento para que los recibas siempre a tiempo en tu lugar de preferencia. </p>
             <br>
-            <p style="font-size: 2rem"> Estamos a tu servicio para que ganes tiempo, simplifiques tu vida y te sientas más saludable.Ya no tienes que estar pensando en tus medicamentos porque nosotros nos encargamos.​</p>
+            <p style="font-size: 2rem"> Estamos a tu servicio para que ganes tiempo, simplifiques tu vida y te sientas más saludable. Ya no tienes que estar pensando en tus medicamentos porque nosotros nos encargamos.​</p>
         </div>
         <div class="py-4">
             <h1 class="display-4 py-4 text-primary text-center">Próximamente APP para Android y Apple</h1>
             <div class="row" id="appButtons">
                 <div class="col-md-6 col-sm-12 justify-content-center p-3" style="text-align: center">
-                    <button><img src="images/GooglePlayLogo.png" alt="PlayStore"></button> 
+                    <button><img src="images/GooglePlayLogo.png" alt="PlayStore"></button>
                 </div>
                 <div class="col-md-6 col-sm-12 justify-content-center p-3" style="text-align: center">
                     <button><img src="images/AppStoreLogo.png" alt="AppStore"></button>
@@ -35,7 +35,7 @@
         <div class="embed-responsive embed-responsive-16by9 py-4" >
             <iframe src="https://player.vimeo.com/video/449923039?byline=0&portrait=0&title=0" width="640" height="360" byline="0" title="0" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
         </div>
-        
+
     </div>
 
     <!--Carousel Como funciona-->
@@ -83,8 +83,8 @@
                     <!--Second item -->
                     <div class="col-md-2 clearfix d-none d-md-block">
                         <div class="card mb-2">
-                            <img 
-                            class="card-img-top" 
+                            <img
+                            class="card-img-top"
                             src="images/Carousel/Car1Sl1.png"
                             alt="Card image cap">
                         </div>
@@ -107,7 +107,7 @@
                     <div class="col-md-1">
                         <div class="card mb-2">
                             <img id = "blur"
-                                class="card-img-top blur_effect" 
+                                class="card-img-top blur_effect"
                                 src="images/Carousel/Car1Sl1.png"
                                 alt="Card image cap">
                             <!--
@@ -144,8 +144,8 @@
                     <!--First item -->
                     <div class="col-md-1">
                         <div class="card mb-2">
-                            <img id = "blur" 
-                                class="card-img-top blur_effect" 
+                            <img id = "blur"
+                                class="card-img-top blur_effect"
                                 src="images/Carousel/Car1Sl2.png"
                                 alt="Card image cap">
                             <!--
@@ -182,7 +182,7 @@
                     <!--First item -->
                     <div class="col-md-1">
                         <div class="card mb-2">
-                            <img class="card-img-top blur_effect" 
+                            <img class="card-img-top blur_effect"
                                 src="images/Carousel/Car1Sl3.png"
                                 alt="Card image cap">
                             <!--
@@ -219,7 +219,7 @@
                     <!--First item -->
                     <div class="col-md-1">
                         <div class="card mb-2">
-                            <img class="card-img-top blur_effect" 
+                            <img class="card-img-top blur_effect"
                                 src="images/Carousel/Car1Sl4.png"
                                 alt="Card image cap">
                             <!--
@@ -256,7 +256,7 @@
                     <!--First item -->
                     <div class="col-md-1">
                         <div class="card mb-2">
-                            <img class="card-img-top blur_effect" 
+                            <img class="card-img-top blur_effect"
                                 src="images/Carousel/Car1Sl5.png"
                                 alt="Card image cap">
                             <!--
@@ -328,7 +328,7 @@
                                     <i class="fa fa-star" style="color: Dodgerblue" aria-hidden="true"></i>
                                 </p>
                                 <h4 class="card-title">Hernán García</h4>
-                                <p class="card-text">Con Drazamed nunca suspendo mi tratamiento por falta 
+                                <p class="card-text">Con Drazamed nunca suspendo mi tratamiento por falta
                                     de disponibilidad de mis medicamentos.</p>
                                 <p class="card-text" style="font-size: 1rem; color: Dodgerblue">72 años</p>
                             </div>
@@ -362,7 +362,7 @@
                                     <i class="fa fa-star" style="color: Dodgerblue" aria-hidden="true"></i>
                                 </p>
                                 <h4 class="card-title">Lina Restrepo</h4>
-                                <p class="card-text">Drazamed es efectivo, oportuno y presta 
+                                <p class="card-text">Drazamed es efectivo, oportuno y presta
                                     un servicio integral.</p>
                                 <p class="card-text" style="font-size: 1rem; color: Dodgerblue">58 años</p>
                             </div>
@@ -386,7 +386,7 @@
                                     <i class="fa fa-star" style="color: Dodgerblue" aria-hidden="true"></i>
                                 </p>
                                 <h4 class="card-title">Lina Restrepo</h4>
-                                <p class="card-text">Drazamed es efectivo, oportuno y presta 
+                                <p class="card-text">Drazamed es efectivo, oportuno y presta
                                     un servicio integral.</p>
                                 <p class="card-text" style="font-size: 1rem; color: Dodgerblue">58 años</p>
                             </div>
@@ -403,7 +403,7 @@
                                     <i class="fa fa-star" style="color: Dodgerblue" aria-hidden="true"></i>
                                 </p>
                                 <h4 class="card-title">Manuela Moreno</h4>
-                                <p class="card-text">Las herramientas de Drazamed me ayudan a manejar 
+                                <p class="card-text">Las herramientas de Drazamed me ayudan a manejar
                                     la complejidad de mis multitratamientos.</p>
                                 <p class="card-text" style="font-size: 1rem; color: Dodgerblue">24 años</p>
                             </div>
@@ -462,7 +462,7 @@
 
     </div>
     <!--/.Carousel Wrapper -->
-    {{-- 
+    {{--
     <!--Carousel APP-->
     <div id="multi-item-example3" class="carousel slide carousel-multi-item p-4 text-center" data-ride="carousel">
         <h1 class="display-4 py-4 text-primary text-center">Una Aplicación Amigable</h1>
@@ -508,8 +508,8 @@
                     <!--Second item -->
                     <div class="col-md-2 clearfix d-none d-md-block">
                         <div class="card mb-2">
-                            <img 
-                            class="card-img-top" 
+                            <img
+                            class="card-img-top"
                             src="images/AppView/App1.png"
                             alt="Card image cap">
                         </div>
@@ -517,8 +517,8 @@
                     <!--Third item -->
                     <div class="col-md-1 clearfix d-none d-md-block">
                         <div class="card mb-2">
-                            <img 
-                            class="card-img-top blur_effect" 
+                            <img
+                            class="card-img-top blur_effect"
                             src="images/AppView/App2.png"
                             alt="Card image cap">
                         </div>
@@ -534,7 +534,7 @@
                     <div class="col-md-1">
                         <div class="card mb-2">
                             <img id = "blur"
-                                class="card-img-top blur_effect" 
+                                class="card-img-top blur_effect"
                                 src="images/AppView/App1.png"
                                 alt="Card image cap">
                             <!--
@@ -550,8 +550,8 @@
                     <!--Second item -->
                     <div class="col-md-2 clearfix d-none d-md-block">
                         <div class="card mb-2">
-                            <img 
-                            class="card-img-top" 
+                            <img
+                            class="card-img-top"
                             src="images/AppView/App2.png"
                             alt="Card image cap">
                         </div>
@@ -559,8 +559,8 @@
                     <!--Third item -->
                     <div class="col-md-1 clearfix d-none d-md-block">
                         <div class="card mb-2">
-                            <img 
-                            class="card-img-top blur_effect" 
+                            <img
+                            class="card-img-top blur_effect"
                             src="images/AppView/App3.png"
                             alt="Card image cap">
                         </div>
@@ -575,8 +575,8 @@
                     <!--First item -->
                     <div class="col-md-1">
                         <div class="card mb-2">
-                            <img id = "blur" 
-                                class="card-img-top blur_effect" 
+                            <img id = "blur"
+                                class="card-img-top blur_effect"
                                 src="images/AppView/App2.png"
                                 alt="Card image cap">
                             <!--
@@ -592,8 +592,8 @@
                     <!--Second item -->
                     <div class="col-md-2 clearfix d-none d-md-block">
                         <div class="card mb-2">
-                            <img 
-                            class="card-img-top" 
+                            <img
+                            class="card-img-top"
                             src="images/AppView/App3.png"
                             alt="Card image cap">
                         </div>
@@ -601,8 +601,8 @@
                     <!--Third item -->
                     <div class="col-md-1 clearfix d-none d-md-block">
                         <div class="card mb-2">
-                            <img 
-                            class="card-img-top blur_effect" 
+                            <img
+                            class="card-img-top blur_effect"
                             src="images/AppView/App4.png"
                             alt="Card image cap">
                         </div>
@@ -617,7 +617,7 @@
                     <!--First item -->
                     <div class="col-md-1">
                         <div class="card mb-2">
-                            <img class="card-img-top blur_effect" 
+                            <img class="card-img-top blur_effect"
                                 src="images/AppView/App3.png"
                                 alt="Card image cap">
                             <!--
@@ -640,8 +640,8 @@
                     <!--Third item -->
                     <div class="col-md-1 clearfix d-none d-md-block">
                         <div class="card mb-2">
-                            <img 
-                            class="card-img-top blur_effect" 
+                            <img
+                            class="card-img-top blur_effect"
                             src="images/AppView/App1.png"
                             alt="Card image cap">
                         </div>
@@ -658,11 +658,11 @@
     <div class="container justify-content-center" id="galeria p-2">
         <!--<h1 class="display-4 py-4 text-primary text-center">¡Descargala ahora!</h1> -->
         <h1 class="display-4 py-4 text-primary text-center">Nuestra App</h1>
-        <p class="text-center" style="font-size: 2rem"> <!-- <b>Nuestra App</b> --> Próximamente disponble en PlayStore y AppStore, lista para que programes tu pastillero 
-            <!-- , hables directamente con el doctor --> y planees las próximas entregas de tus medicamentos </p>
+        <p class="text-center" style="font-size: 2rem"> <!-- <b>Nuestra App</b> --> Próximamente disponble en PlayStore y AppStore, lista para que programes tu pastillero
+            <!-- , hables directamente con el doctor --> y programes las próximas entregas de tus medicamentos </p>
         <div class="row" id="appButtons">
             <div class="col-md-6 col-sm-12 justify-content-center p-3" style="text-align: center">
-                <button><img src="images/GooglePlayLogo.png" alt="PlayStore"></button> 
+                <button><img src="images/GooglePlayLogo.png" alt="PlayStore"></button>
             </div>
             <div class="col-md-6 col-sm-12 justify-content-center p-3" style="text-align: center">
                 <button><img src="images/AppStoreLogo.png" alt="AppStore"></button>
