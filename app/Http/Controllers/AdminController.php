@@ -870,28 +870,29 @@ class AdminController extends BaseController
 		// }
 		if (!empty($got['invoice_id'])) {       // If Invoice Already Exists
 			$i = 1;
-			$items = ItemList::where ('invoice_id' , '=' , $got['invoice_id'])->get ();
+			// $items = ItemList::where ('invoice_id' , '=' , $got['invoice_id'])->get ();
 			$itemsPost = json_decode($got['items']);
 			// dd($got);
 			while ($i <= $got['itemS']) {
 				$alreadyIn = 0;
-				foreach ($items as $item) {     // Update already Existings Cart
-					Log::info('Medicine item (from Cart) : ' . $item->medicine );
-					Log::info('Posted item (from Verify) : ' . $itemsPost[$i-1]->item_id );
-					if ($itemsPost[$i-1]->item_id == $item->medicine) {
-						$itemUpdate = ['quantity' => $itemsPost[$i-1]->quantity ,
-							'unit_price' => $itemsPost[$i-1]->unit_price ,
-							'total_price' => $itemsPost[$i-1]->total_price ,
-							'discount' => $itemsPost[$i-1]->discount ,
+                foreach ($itemsPost as $item) {     // Update already Existings Cart
+                    $itemCart = ItemList::where ('invoice_id' , '=' , $got['invoice_id'])->where('medicine','=',$item->item_id )->first();
+					//Log::info('Medicine item (from Cart) : ' . $itemCart->medicine );
+					Log::info('Posted item (from Verify) : ' . $item->item_id );
+					if ($item->item_id == $itemCart->medicine) {
+						$itemUpdate = ['quantity' => $item->quantity ,
+							'unit_price' => $item->unit_price ,
+							'total_price' => $item->total_price ,
+							'discount' => $item->discount ,
 							'updated_at' => date ('Y-m-d H:i:s') ,
 							'updated_by' => Auth::user ()->id
 						];
-						ItemList::where ('invoice_id' , '=' , $got['invoice_id'])->where ('medicine' , '=' , $itemsPost[$i-1]->item_code)->update ($itemUpdate);
+						ItemList::where ('invoice_id' , '=' , $got['invoice_id'])->where ('medicine' , '=' , $item->item_code)->update ($itemUpdate);
 						$alreadyIn = 1;
-						$discount += $itemsPost[$i-1]->discount;
-						$sub_total += $itemsPost[$i-1]->total_price;
-						Log::info('Existing item : ' . $item->medicine );
-						Log::info('item sub_total : ' . $itemsPost[$i-1]->total_price );
+						$discount += $item->discount;
+						$sub_total += $item->total_price;
+						// Log::info('Existing item : ' . $item->medicine );
+						Log::info('item sub_total : ' . $item->total_price );
 						Log::info('Invoice sub_total : ' . $sub_total );
 					}
 
@@ -899,19 +900,19 @@ class AdminController extends BaseController
 					if ($alreadyIn == 0) {
 						$newItem = new ItemList;
 						$newItem->invoice_id = $got['invoice_id'];
-						$newItem->medicine =  $itemsPost[$i-1]->item_id;
-						$newItem->quantity =  $itemsPost[$i-1]->quantity;
-						$newItem->unit_price =  $itemsPost[$i-1]->unit_price;
-						$newItem->total_price = $itemsPost[$i-1]->total_price;
-						$newItem->discount = $itemsPost[$i-1]->discount;
+						$newItem->medicine =  $item->item_id;
+						$newItem->quantity =  $item->quantity;
+						$newItem->unit_price =  $item->unit_price;
+						$newItem->total_price = $item->total_price;
+						$newItem->discount = $item->discount;
 						$newItem->created_at = date ('Y-m-d H:i:s');
 						$newItem->created_by = Auth::user ()->id;
 						$newItem->updated_by = Auth::user ()->id;
 						$newItem->save ();
-						$discount += $itemsPost[$i-1]->discount;
-						$sub_total += $itemsPost[$i-1]->total_price;
-						Log::info('New item : ' . $itemsPost[$i-1]->item_code );
-						Log::info('item sub_total : ' . $itemsPost[$i-1]->total_price );
+						$discount += $item->discount;
+						$sub_total += $item->total_price;
+						Log::info('New item : ' . $item->item_code );
+						Log::info('item sub_total : ' . $item->total_price );
 						Log::info('Invoice sub_total : ' . $sub_total );
 					}
 					$i++;
