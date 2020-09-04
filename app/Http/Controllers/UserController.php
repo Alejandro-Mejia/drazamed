@@ -262,12 +262,19 @@ class UserController extends BaseController
 	}
 
     public function getIsActualUser($user_js) {
+        Log::info('User id : ' . $user_js);
         $user = Auth::user();
-        if ($user->id == $user_js) {
-            return Response::make (['status' => 'SUCCESS' , 'msg' => 'User matched'] ,200);
+        Log::info('User : ' . $user);
+        if (isset($user)) {
+            if ($user->id == $user_js) {
+                return Response::make (['status' => 'SUCCESS' , 'msg' => 'User matched'] ,200);
+            } else {
+                return Response::make (['status' => 'FAILURE' , 'msg' => 'Different user'] ,401);
+            }
         } else {
-            return Response::make (['status' => 'FAILURE' , 'msg' => 'Different user'] ,401);
+            return Response::make (['status' => 'FAILURE' , 'msg' => 'User not logged'] ,401);
         }
+
 
     }
 
