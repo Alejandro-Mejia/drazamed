@@ -1,0 +1,6 @@
+@media (max-width: 767) {
+  .about .container h1 {
+    color: red !important;
+  }
+}
+
