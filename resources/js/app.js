@@ -6,6 +6,11 @@
 
 require('./bootstrap');
 
+import $ from 'jquery';
+window.$ = window.jQuery = $;
+import 'jquery-ui/ui/widgets/datepicker.js';
+
+
 // window.Vue = require('vue');
 
 
@@ -21,8 +26,8 @@ require('./bootstrap');
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
 // Vue.component('example-component', require('./components/ExampleComponent.vue').default);
-Vue.component('chat-messages', require('./components/ChatMessages.vue').default);
-Vue.component('chat-form', require('./components/ChatForm.vue').default);
+// Vue.component('chat-messages', require('./components/ChatMessages.vue').default);
+// Vue.component('chat-form', require('./components/ChatForm.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -64,18 +69,18 @@ import Echo from "laravel-echo";
 
 Pusher.logToConsole = true;
 
-Echo.channel('Drazamed')
-  .listen('.MessageSent', (e) => {
-    console.log(e);
-    app.messages.push({
-      message: e.message.message,
-      user: e.user
-    });
-  })
+window.Echo.channel('Drazamed')
+//   .listen('.MessageSent', (e) => {
+//     console.log(e);
+//     app.messages.push({
+//       message: e.message.message,
+//       user: e.user
+//     });
+//   })
   .listen('.orderStatus', (e) => {
     console.log('Orden verificada : ' );
     console.log(e);
-    console.log(e.user.id);
+    // console.log(e.user.id);
     httpGetAsync('/user/is-actual-user/' + e.user.id, checkedUser);
   });
 
@@ -95,8 +100,10 @@ function checkedUser(data) {
 
     console.log("Usuario : ");
 
-    dataJson = JSON.parse(data);
-    console.log(dataJson);
+    var dataJson = JSON.parse(data);
+    // dataJson = data;
+    console.log(data);
+    // console.log(data.status);
     console.log(dataJson.status);
 
     if (dataJson.status == "SUCCESS") {

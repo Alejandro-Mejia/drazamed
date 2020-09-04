@@ -7,13 +7,16 @@
         <meta http-equiv="x-ua-compatible" content="ie=edge">
 
 
+        {{-- Cargar los js de la aplicacion --}}
+        <script src="/js/app.js"></script>
+
 
         {{-- <script src="/js/app.js"></script> --}}
         <!-- jQuery-3.5 -->
-        <script src="/js/jquery-3.5.1.js"></script>
+        {{-- <script src="/js/jquery-3.5.1.js"></script> --}}
         <!-- // jQuery UI -->
-        <script src="/js/jquery-ui.js"></script>
-        <link rel="stylesheet" href="/css/jquery-ui.css">
+        {{-- <script src="/js/jquery-ui.js"></script> --}}
+        {{--                                                                    <link rel="stylesheet" href="/css/jquery-ui.css"> --}}
 
         {{-- <!-- jQuery-3.5 -->
         <script src="/js/jquery-3.5.1.js"></script>
@@ -32,26 +35,25 @@
         <script src="/js/bootbox.all.min.js"></script>
         {{-- <link rel="stylesheet" href="/css/app.css"/> --}}
 
-        <link rel="stylesheet" href="/css/bootstrap.min.css"/>
+        {{-- <link rel="stylesheet" href="/css/bootstrap.min.css"/> --}}
 
         <!-- FlexboxGrid -->
-        <link rel="stylesheet" href="/css/flexboxgrid.min.css">
+        {{-- <link rel="stylesheet" href="/css/flexboxgrid.min.css"> --}}
 
 
         <!-- Estilos propios del proyecto -->
         <link rel="stylesheet" href="/css/app.css">
 
-        <link rel="stylesheet" href="/css/header.css">
-        <link rel="stylesheet" href="/css/login.css" />
-        <link rel="stylesheet" href="/css/search-form.css">
-        <link rel="stylesheet" href="/css/footer.css">
-        <link rel="stylesheet" href="/css/dropbox.css">
+        {{-- <link rel="stylesheet" href="/css/header.css"> --}}
+        {{-- <link rel="stylesheet" href="/css/login.css" /> --}}
+        {{-- <link rel="stylesheet" href="/css/search-form.css"> --}}
+        {{-- <link rel="stylesheet" href="/css/footer.css"> --}}
+        {{-- <link rel="stylesheet" href="/css/dropbox.css"> --}}
+        {{-- <link rel="stylesheet" href="/css/drazamed.css"> --}}
 
-        <link rel="stylesheet" href="/css/drazamed.css">
-
-        <link rel="stylesheet" href="/assets/fonts/fontawesome/css/fontawesome.css">
+        {{-- <link rel="stylesheet" href="/assets/fonts/fontawesome/css/fontawesome.css"> --}}
         <link rel="stylesheet" href="/assets/fonts/fontawesome/css/solid.css">
-        <link rel="stylesheet" href="/css/fonts.css">
+        {{-- <link rel="stylesheet" href="/css/fonts.css"> --}}
 
 
         <!-- Google Analytics -->
@@ -132,7 +134,7 @@
         <script src="/js/mobile_menu.js"></script>
 
         @yield('custom-js')
-        <script src="/js/app.js"></script>
+
         <script src="/js/design.js"></script>
     </body>
 

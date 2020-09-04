@@ -2,9 +2,9 @@
 
 @section('custom-css')
 <link rel="stylesheet" href="/css/index.css" />
-<link rel="stylesheet" href="/css/login.css" />
+{{-- <link rel="stylesheet" href="/css/login.css" />
 <link rel="stylesheet" href="/css/search-form.css">
-<link rel="stylesheet" href="/css/pinfo.css">
+<link rel="stylesheet" href="/css/pinfo.css"> --}}
 @endsection
 
 @section('content')
