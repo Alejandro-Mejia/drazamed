@@ -42,7 +42,6 @@
         <link rel="stylesheet" href="/css/drazamed.css">
 
 
-
         <!-- Google Analytics -->
         <!-- Global site tag (gtag.js) - Google Analytics -->
         <script async src="https://www.googletagmanager.com/gtag/js?id=G-C32TYXD8C1"></script>
@@ -56,6 +55,8 @@
 
         @yield('custom-css')
 
+        <link rel="stylesheet" href="/css/mobile.css">
+        
         <style>
             .cookie-consent {
                 background-color: #015670;

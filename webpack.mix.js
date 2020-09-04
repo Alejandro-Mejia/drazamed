@@ -23,8 +23,8 @@ mix.js("resources/js/app.js", "public/js")
     .sass("resources/sass/cart.scss", "public/css")
     .sass("resources/sass/contact.scss", "public/css")
     .sass("resources/sass/profile.scss", "public/css")
-    .sass("resources/sass/about.scss", "public/css");
-
+    .sass("resources/sass/about.scss", "public/css")
+    .sass("resources/sass/mobile.scss", "public/css");
 
 // Full API
 // mix.js(src, output);

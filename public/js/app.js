@@ -59767,6 +59767,17 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/sass/mobile.scss":
+/*!************************************!*\
+  !*** ./resources/sass/mobile.scss ***!
+  \************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+
 /***/ "./resources/sass/pinfo.scss":
 /*!***********************************!*\
   !*** ./resources/sass/pinfo.scss ***!
@@ -59801,25 +59812,26 @@ __webpack_require__.r(__webpack_exports__);
 /***/ }),
 
 /***/ 0:
-/*!***********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** multi ./resources/js/app.js ./resources/sass/app.scss ./resources/sass/header.scss ./resources/sass/index.scss ./resources/sass/footer.scss ./resources/sass/login.scss ./resources/sass/drazamed.scss ./resources/sass/search-form.scss ./resources/sass/pinfo.scss ./resources/sass/cart.scss ./resources/sass/contact.scss ./resources/sass/profile.scss ./resources/sass/about.scss ***!
-  \***********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*!****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** multi ./resources/js/app.js ./resources/sass/app.scss ./resources/sass/header.scss ./resources/sass/index.scss ./resources/sass/footer.scss ./resources/sass/login.scss ./resources/sass/drazamed.scss ./resources/sass/search-form.scss ./resources/sass/pinfo.scss ./resources/sass/cart.scss ./resources/sass/contact.scss ./resources/sass/profile.scss ./resources/sass/about.scss ./resources/sass/mobile.scss ***!
+  \****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! c:\xampp\htdocs\drazamed\resources\js\app.js */"./resources/js/app.js");
-__webpack_require__(/*! c:\xampp\htdocs\drazamed\resources\sass\app.scss */"./resources/sass/app.scss");
-__webpack_require__(/*! c:\xampp\htdocs\drazamed\resources\sass\header.scss */"./resources/sass/header.scss");
-__webpack_require__(/*! c:\xampp\htdocs\drazamed\resources\sass\index.scss */"./resources/sass/index.scss");
-__webpack_require__(/*! c:\xampp\htdocs\drazamed\resources\sass\footer.scss */"./resources/sass/footer.scss");
-__webpack_require__(/*! c:\xampp\htdocs\drazamed\resources\sass\login.scss */"./resources/sass/login.scss");
-__webpack_require__(/*! c:\xampp\htdocs\drazamed\resources\sass\drazamed.scss */"./resources/sass/drazamed.scss");
-__webpack_require__(/*! c:\xampp\htdocs\drazamed\resources\sass\search-form.scss */"./resources/sass/search-form.scss");
-__webpack_require__(/*! c:\xampp\htdocs\drazamed\resources\sass\pinfo.scss */"./resources/sass/pinfo.scss");
-__webpack_require__(/*! c:\xampp\htdocs\drazamed\resources\sass\cart.scss */"./resources/sass/cart.scss");
-__webpack_require__(/*! c:\xampp\htdocs\drazamed\resources\sass\contact.scss */"./resources/sass/contact.scss");
-__webpack_require__(/*! c:\xampp\htdocs\drazamed\resources\sass\profile.scss */"./resources/sass/profile.scss");
-module.exports = __webpack_require__(/*! c:\xampp\htdocs\drazamed\resources\sass\about.scss */"./resources/sass/about.scss");
+__webpack_require__(/*! C:\xampp\htdocs\drazamed\resources\js\app.js */"./resources/js/app.js");
+__webpack_require__(/*! C:\xampp\htdocs\drazamed\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\xampp\htdocs\drazamed\resources\sass\header.scss */"./resources/sass/header.scss");
+__webpack_require__(/*! C:\xampp\htdocs\drazamed\resources\sass\index.scss */"./resources/sass/index.scss");
+__webpack_require__(/*! C:\xampp\htdocs\drazamed\resources\sass\footer.scss */"./resources/sass/footer.scss");
+__webpack_require__(/*! C:\xampp\htdocs\drazamed\resources\sass\login.scss */"./resources/sass/login.scss");
+__webpack_require__(/*! C:\xampp\htdocs\drazamed\resources\sass\drazamed.scss */"./resources/sass/drazamed.scss");
+__webpack_require__(/*! C:\xampp\htdocs\drazamed\resources\sass\search-form.scss */"./resources/sass/search-form.scss");
+__webpack_require__(/*! C:\xampp\htdocs\drazamed\resources\sass\pinfo.scss */"./resources/sass/pinfo.scss");
+__webpack_require__(/*! C:\xampp\htdocs\drazamed\resources\sass\cart.scss */"./resources/sass/cart.scss");
+__webpack_require__(/*! C:\xampp\htdocs\drazamed\resources\sass\contact.scss */"./resources/sass/contact.scss");
+__webpack_require__(/*! C:\xampp\htdocs\drazamed\resources\sass\profile.scss */"./resources/sass/profile.scss");
+__webpack_require__(/*! C:\xampp\htdocs\drazamed\resources\sass\about.scss */"./resources/sass/about.scss");
+module.exports = __webpack_require__(/*! C:\xampp\htdocs\drazamed\resources\sass\mobile.scss */"./resources/sass/mobile.scss");
 
 
 /***/ })
