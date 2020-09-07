@@ -863,7 +863,8 @@ class AdminController extends BaseController
 		$shipping = Request::get ('shipping' , 0.00);
 		$prescription = Prescription::find ($got['pres_id']);
 		$type = $prescription->getUser->user_type_id;
-		$user_id = $prescription->getUser->id;
+        $user_id = $prescription->getUser->id;
+        $user_email = $prescription->getUser->email;
 		// Check if Cart Is Not Empty
 		// if (empty($got['item_code1'])) {
 		// 	return Redirect::back ()->withErrors (['No items added to the cart']);
@@ -1002,8 +1003,8 @@ class AdminController extends BaseController
 		});
 
         $userbcast = array(
-            "id" => $user->id,
-            "email" => $user->email
+            "id" => $user_id,
+            "email" => $user_email
         );
 
         $bcastdata = array(
