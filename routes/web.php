@@ -154,6 +154,7 @@ use MercadoPago;
     Route::post('/admin/pay-invoice', 'AdminController@postUpdateInvoice');
 
 
+
     /**
      * Messages
     */
