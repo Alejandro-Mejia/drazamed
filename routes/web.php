@@ -158,8 +158,8 @@ use MercadoPago;
     /**
      * Messages
     */
-    Route::get('messages/test', 'ChatsController@sendTestMessage');
-    Route::get('messages/chats', 'ChatsController@index');
+    Route::get('/messages/test', 'ChatsController@sendTestMessage');
+    Route::get('/messages/chats', 'ChatsController@index');
     Route::get('messages', 'ChatsController@fetchMessages');
     Route::post('messages', 'ChatsController@sendMessage');
 
