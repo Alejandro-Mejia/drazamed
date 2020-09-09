@@ -141,10 +141,34 @@
 
         })
         .autocomplete("instance")._renderItem = function(ul, item) {
-        return $("<li>")
-            .append("<div>" + item.label + "</div>")
-            .appendTo(ul);
-         };
+            console.log(item);
+
+
+            card = "<div class='card'>" +
+                        "<div class='row no-gutters'>" +
+                            "<div class='col-auto'>" +
+                                "<img width='100px' src='" + item.imgUrl + "' class='img-fluid' >" +
+                            "</div>" +
+                            "<div class='col'>" +
+                                "<div class='card-block px-2'>" +
+                                    "<h4 class='card-title'>" + item.value + "</h4>" +
+                                    "<p class='card-text'>" + item.composition + "</p>" +
+                                "</div>" +
+                            "</div>" +
+                        "</div>" +
+                    "</div>";
+
+            // card = "<div class='card' style='width: 18rem;'>" +
+            //             "<img class='card-img-top' src='/images/products/" + item.id + ".jpg' alt='Card image cap'>" +
+            //             "<div class='card-body'>" +
+            //                 "<h5 class='card-title'>" + item.value + "</h5>" +
+            //             "</div>" +
+            //             "</div>";
+            console.log(card);
+            return $("<li>")
+                .append(card)
+                .appendTo(ul);
+            };
     /**
      * Busqueda de categorias
      */
@@ -174,6 +198,7 @@
             }
         })
         .autocomplete("instance")._renderItem = function(ul, item) {
+        // console.log(item);
         return $("<li>")
             .append("<div>" + item.label + "</div>")
             .appendTo(ul);

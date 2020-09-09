@@ -1102,13 +1102,17 @@ class MedicineController extends BaseController
 		if ($isWeb) {
 			$json = [];
 			foreach ($medicines as $data) {
+                $imagenUrl = (file_exists( public_path().'/images/products/' . $data['item_code'] . '.jpg' )) ? '/images/products/' . $data['item_code'] . '.jpg' : '/images/products/default.png';
+
 				$json[] = array(
 					'id' => $data['item_code'],
 					'value' => $data['item_name'] ,
-					'label' => $data['item_name'] ,
+                    'label' => $data['item_name'] ,
+                    'composition' => $data['composition'] ,
 					'item_code' => $data['item_code'] ,
 					'mrp' => $data['sell_price'],
-					'sp' => $data['show_priority']
+                    'sp' => $data['show_priority'],
+                    'imgUrl' => $imagenUrl
 				);
 			}
 
