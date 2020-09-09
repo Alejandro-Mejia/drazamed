@@ -1,19 +1,25 @@
 // Fonts
-// @import url('https://fonts.googleapis.com/css?family=Nunito');
-
+// @import url('https://fonts.googleapis.com/css?family=Nunito')
 // Variables
 @import 'variables';
-
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
+@import '~flexboxgrid/css/flexboxgrid.css';
+@import '~font-awesome/scss/font-awesome.scss';
 
+
+@import '~jquery-ui/themes/base/all.css';
 // Other
 @import "cart.scss";
-@import "drazamed.scss";
+@import "fonts";
 @import "footer.scss";
 @import "header.scss";
+@import "search-form.scss";
 @import "login.scss";
 @import "pinfo.scss";
-@import '~jquery-ui/themes/base/all.css';
+@import "dropbox.scss";
+// @import "font-awesome-sprockets";
+// @import "font-awesome";
 
+@import "drazamed.scss";
 // @import "styles.scss";

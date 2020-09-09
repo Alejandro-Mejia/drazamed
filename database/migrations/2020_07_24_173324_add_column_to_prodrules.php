@@ -14,7 +14,7 @@ class AddColumnToProdrules extends Migration
     public function up()
     {
         Schema::table('prodrules', function (Blueprint $table) {
-            $table->string('item_code', 100);
+            $table->string('item_code', 100)->nullable();
         });
     }
 

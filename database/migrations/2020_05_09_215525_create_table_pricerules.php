@@ -15,7 +15,7 @@ class CreateTablePricerules extends Migration
     {
         Schema::create('pricerules', function (Blueprint $table) {
             $table->id();
-            $table->string('laboratory',15);
+            $table->string('laboratory',50);
             $table->integer('rule_type')->default(1);
             $table->double('rule')->nullable();
             $table->boolean('isVtaReal')->default(0);

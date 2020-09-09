@@ -1,8 +1,8 @@
 main .cover {
-    margin-top: 92px;
+    // margin-top: 92px;
 
     background-image: url("/assets/images/bg_banner_search-min.jpg");
-    background-attachment: fixed;
+    //background-attachment: fixed;
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -50,15 +50,17 @@ main {
         left: 0;
         z-index: 2;
         background-color: #fff;
-
         display: flex;
         align-items: center;
         justify-content: center;
-
-        animation-name: upPreload;
-        animation-duration: 0.75s;
-        animation-delay: 1.25s;
-        animation-fill-mode: forwards;
+        -webkit-animation-name: upPreload;
+            animation-name: upPreload;
+        -webkit-animation-duration: 0.75s;
+            animation-duration: 0.75s;
+        -webkit-animation-delay: 1.25s;
+            animation-delay: 1.25s;
+        -webkit-animation-fill-mode: forwards;
+            animation-fill-mode: forwards;
     }
 
     .quicksearch {
@@ -68,7 +70,7 @@ main {
         padding: 60px 0;
 
         .qs-elems {
-            width: 70%;
+            width: 90%;
 
             .qs-med-form {
                 margin-bottom: 20px;
@@ -101,7 +103,12 @@ main {
         }
     }
 }
-
+@-webkit-keyframes upPreload {
+    to {
+      transform: translateY(-100%);
+    }
+  }
+  
 @keyframes upPreload {
     to {
         transform: translateY(-100%);
@@ -112,7 +119,7 @@ main {
     main .cover {
         .wrapper {
             p {
-                width: 90%;
+                width: 100%;
                 margin: 0 auto;
             }
         }

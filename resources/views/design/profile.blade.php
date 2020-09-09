@@ -17,9 +17,6 @@
     }
 </style>
 
-
-
-
 <section class="profile">
     <div class="profile-body">
         <div class="row">
@@ -173,8 +170,7 @@
                     <p>
                         Por favor espera a que verifiquemos tu pedido. Una vez
                         lo verifiquemos cambiara su estado a "Verificado" y podrás
-                        proceder al pago haciendo click en el botón COMPRAR
-                        AHORA.
+                        proceder al pago haciendo click en el botón PAGAR.
                     </p>
                     <div class="table-responsive">
                         @if(!empty(count($prescriptions)))
@@ -310,7 +306,7 @@
                                             </td>
                                             <td class="text-center"><span class="date-added"> {{ $invoice->created_at  ?? ''}}</span>
                                             </td>
-
+                                            {{-- {{ var_dump($invoice)}} --}}
                                             <td class="text-center">{{ Setting::currencyFormat($invoice->total) }}
                                             </td>
 
@@ -488,13 +484,27 @@
 
     }
 
-    function purchase_mercadopago(obj) {
-        var invoice = $(obj).attr('invoice');
-        console.log("Invoice:");
-        console.log(invoice);
-        window.location = "{{URL::to('medicine/make-mercado-pago-payment/')}}/" + invoice;
 
-    }
+
+    // function purchase_mercadopago(obj) {
+    //     var invoice = $(obj).attr('invoice');
+    //     console.log("Invoice:");
+    //     console.log(invoice);
+    //     // window.location = "{{URL::to('medicine/make-mercado-pago-payment/')}}/" + invoice;
+    //     $.ajax({
+    //         type: "GET",
+    //         url: "{{URL::to('medicine/make-mercado-pago-payment/')}}/" + invoice,
+    //         success: function(data) {
+    //             console.log(data);
+    //             // alert('Se ha borrado su orden');
+                
+                
+                
+    //         }
+    //     });
+
+
+    // }
 
     
 

@@ -13,6 +13,16 @@ $_SESSION['is_pres_required']=$posted['is_pres_required'];
 
 @endsection
 
+
+<style>
+    button.mercadopago-button {
+    background-color: #fff;
+    color: #111;
+    border: 1px solid #111;
+    border-radius: 0;
+    }
+</style>
+
 <div id="overlay">
      <!-- <img src="loading.gif" alt="Loading" /> -->
      Loading...
@@ -57,7 +67,7 @@ $_SESSION['is_pres_required']=$posted['is_pres_required'];
                                     </div>
                                     
                                     <div class="btn_payment">
-                                        <form action="{{ action('MedicineController@anyProcessMercadopagoResponsecore.js', [$posted['invoice_id']]) }}" method="POST" id="mercadopagoForm">
+                                        <form action="{{ action('MedicineController@anyProcessMercadopagoResponse', [$posted['invoice_id']]) }}" method="POST" id="mercadopagoForm">
                                         {{-- <form action="/procesar-pago" method="POST"> --}}
                                         <div class="checkboxes_section" style ="text-align: left">
 

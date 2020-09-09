@@ -22,7 +22,13 @@
             $this->call('PaymentStatusSeeder');
             $this->call('PrescriptionStatusSeeder');
             $this->call('UserStatusSeeder');
+            $this->call('UsersTableSeeder');
             $this->call('PaymentGatewaySeeder');
+            $this->call('PresRulesCatsTableSeeder');
+            $this->call('PresRulesProdSeeder');
+            $this->call('PricerulesTableSeeder');
+            $this->call('ProdrulesTableSeeder');
+            $this->call('FavoriteSeeder');
             $this->command->info('Data table seeded!');
         }
 

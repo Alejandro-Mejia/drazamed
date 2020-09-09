@@ -2,33 +2,33 @@
     margin-top: 90px;
     background-color: #FAFAF8;
     font-family: "louis_george_cafe";
+}
 
-    .wrapper {
-        width: 80%;
-        margin: 0 auto;
-        padding: 20px 0;
-    }
+.about .wrapper {
+    width: 80%;
+    margin: 0 auto;
+    padding: 20px 0;
+}
 
-    .panel {
-        background-color: #fff;
-        padding: 40px;
-        border-radius: 20px;
+.about .panel {
+    background-color: #fff;
+    padding: 40px;
+    border-radius: 20px;
+}
 
-        .title {
-            font-size: 28px;
-            font-weight: 600;
-            margin-bottom: 20px;
-        }
+.about .panel .title {
+    font-size: 28px;
+    font-weight: 600;
+    margin-bottom: 20px;
+}
 
-        .icon {
-            width: 50px;
-        }
-    }
+.about .panel .icon {
+    width: 50px;   
+}
 
-    .com-title {
-        font-size: 18px;
-        font-weight: 600;
-    }
+.about .com-title {
+    font-size: 18px;
+    font-weight: 600;
 }
 
 @media (max-width: 1200px) {
@@ -39,4 +39,49 @@
     .sm-mt-20 {
         margin-top: 20px;
     }
+}
+
+@media(max-width: 767px){
+    .blur_effect {
+      -webkit-filter: blur(0px); /* Safari 6.0 - 9.0 */
+      filter: blur(0px);
+    }
+    /*
+    .about .container h1{
+        color:red !important;
+    }
+    */
+    h1 {
+        color: green !important;
+    }
+  }
+
+@media(min-width: 768px){
+    .blur_effect {
+        -webkit-filter: blur(5px); /* Safari 6.0 - 9.0 */
+        filter: blur(5px);
+    }
+}
+
+#galeria .col-lg-6 {
+    padding: 25px;
+    margin: 0 !important;
+}
+
+#galeria img {
+    width: 50%;
+    height: 100%;
+}
+
+#galeria img:hover {
+    border: 10px solid rgb(62, 58, 124);
+}
+
+#appButtons button{
+    background-color: Transparent;
+    background-repeat:no-repeat;
+    border: none;
+    cursor:pointer;
+    overflow: hidden;
+    outline:none;
 }

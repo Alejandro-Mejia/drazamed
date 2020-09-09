@@ -19,9 +19,9 @@
                 $table->integer('quantity');
                 $table->double('unit_price', 10, 2)->default(0.00);
                 $table->double('total_price', 10, 2)->default(0.00);
-                $table->string('discount_type');
+                $table->string('discount_type')->nullable();
                 $table->double('discount_percentage', 10, 2)->default(0.00);
-                $table->float('unit_discount', 5, 2);
+                $table->float('unit_discount', 5, 2)->default(0.00);
                 $table->double('discount', 10, 2)->default(0.00);
                 $table->boolean('is_removed')->default(0);
                 $table->timestamps();

@@ -2,9 +2,9 @@
 
 @section('custom-css')
 <link rel="stylesheet" href="/css/index.css" />
-<link rel="stylesheet" href="/css/login.css" />
+{{-- <link rel="stylesheet" href="/css/login.css" />
 <link rel="stylesheet" href="/css/search-form.css">
-<link rel="stylesheet" href="/css/pinfo.css">
+<link rel="stylesheet" href="/css/pinfo.css"> --}}
 @endsection
 
 @section('content')
@@ -129,12 +129,16 @@
             },
 
             select: function(event, ui) {
-                console.log("itemCode=" + ui.item.item_code);
+                    console.log("itemCode=" + ui.item.item_code);
                 item_code = ui.item.item_code;
                 current_item_code = item_code;
                 // goto_detail_page();
                 show_detail_modal(ui.item);
+            },
+            menufocus:function(e,ui) {
+                return false;
             }
+
         })
         .autocomplete("instance")._renderItem = function(ul, item) {
         return $("<li>")
@@ -181,14 +185,18 @@
             }
         });
 
-        
-        
+
+
         /**
          * Muestra los productos de Icom
          */
-        function show_favorites() {
+        function show_favorites(id_min, n) {
         $.ajax({
-            url: "/favorites",
+            url: "/favorites/getFavorites",
+            data: {
+                id_min: id_min,
+                n: n
+            },
             type: "GET",
             async: true,
             datatype: "JSON",
@@ -198,7 +206,7 @@
                 $("#med-list").empty();
                 // $('#med-list').append('<div class="col-lg-12 col-md-12 col-sm12"><h4> Productos Recomendados </h4></div>')
                 $.each(data.result.msg, function(i, item) {
-                    console.log(item);
+                    //console.log(item);
                     medicina = item.name;
                     $("#med-list").append(
                         '<div class="med cat_product" onclick="thumbClick(`' + medicina + '`)">' +
@@ -227,14 +235,14 @@
 
     $(document).ready(function() {
         getCategories();
-        show_favorites(); 
+        show_favorites(1,30);
     });
 
 </script>
 
 
 
- 
+
 @endsection
 
 

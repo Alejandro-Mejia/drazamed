@@ -2,10 +2,10 @@
 
 <?php setlocale(LC_MONETARY, 'es_CO'); ?>
 
-@section('custom-css')
+{{-- @section('custom-css')
   <link rel="stylesheet" href="/css/cart.css" />
   <link rel="stylesheet" href="/css/pinfo.css" />
-@endsection
+@endsection --}}
 
 @section('content')
 
@@ -171,41 +171,41 @@
 
                               </td>
                             </tr>
-                            
-                        
+
+
 
                         <!-- Si el carrito esta vacio -->
                         @else
                           <?php $pres_required = 1; ?>
                           <h4 style="color: red;" align="center">{{ __('Cart is empty')}}</h4>
                         @endif
-                        
+
                         </tbody>
                         @if($pres_required != 1)
-                    
+
                           <tfoot>
                             <tr>
                               <td colspan=4>
-                                
+
 
                                 <div id="send_formula" class="">
                                   <form method="post" action="/medicine/store-prescription/1" enctype="multipart/form-data" novalidate class="" id="noformula">
                                     <input type="" name="shipping_cost" id="shippingForm" value="" hidden required />
                                     <input type="" name="is_pres_required" id="is_pres_required" value="{{$pres_required}}" hidden/>
                                     <input type="" name="sub_total" id="sub_total_form" value="{{$subtotal}}" hidden/>
-                              
+
                                     <!-- Flexbox container for aligning the toasts -->
-                                    
-                                    
-                                  
+
+
+
                                     <!-- <button type="submit" class="box__button">Upload</button> -->
                                     <button  type="submit" class="float-right mt-4 dra-button btn" data-color="#40E0BC" id="uploadBtnNF" style="margin-top:-20px;" data-loading-text="<i class='fa fa-spinner fa-spin '></i> Procesando tu orden"> <img class="mail_loader" style="display: none;" src="./assets/images/loader1.gif"> {{ __('Place Order')}}</button>
-            
+
                                     <div style="text-align: center;">
-                                      <div class="box__uploading" style="color: green; font-weigth:bold">Enviando orden&hellip; <br>En unos segundos seras redirigido a tu perfil, una vez la verifiquemos, cambiara su estado a "verificado" y podrás realizar el pago </div>
-                                      <div class="box__success" style="color: green"> <br> Orden enviada!  </div>
-    
-                                      <div class="box__error" style="margin-top:50px;" id="errorMsg" style="display:none">
+                                      <div class="box__uploading" style="color: green; font-weigth:bold">Enviando tu orden....&hellip; <br></div>
+                                      <div class="box__success" style="color: green"> <br> En unos segundos seras redirigido a tu perfil, una vez la verifiquemos, cambiara su estado a "verificado" y podrás realizar el pago!  </div>
+
+                                      <div class="box__error" style="color: red; font-weigth:bold" id="errorMsg" style="display:none">
                                       <span class="box__error__msg" id ="box__error__msg" style="color:red"></span>. <br>
                                         {{-- <a href="https://css-tricks.com/examples/DragAndDropFileUploading//?" class="box__restart" role="button">Intente de nuevo!</a> --}}
                                       </div>
@@ -228,25 +228,25 @@
                                     </div>
                                   </div>
                                 </div>
-                             
+
                               {{-- <button class="float-right mt-4 dra-button" data-color="#40E0BC" id="uploadBtnNoFormula" >{{ __('Place Order')}}</button> --}}
-                            
+
                               </td>
                             </tr>
                           </tfoot>
 
                         @endif
-                        
+
                     </table>
 
                     {{-- {{ Form::open(array('url'=>'medicine/store-prescription/1','files'=>true,'id'=>'upload_form')) }}  --}}
-  
-                    
+
+
 
                     <!-- Envio de formulas medicas mediante drag & drop -->
                     @if($pres_required == 1)
-                    
-                      @include('design.dropbox')  
+
+                      @include('design.dropbox')
 
                     @endif
 
@@ -312,7 +312,7 @@ $(document).on({
               },
     ajaxStop: function() {
                 $('.cart_loader').css('display', 'none' );
-                
+
                 //document.getElementById('.mail_btn').disabled = false;
                 //$(".mail_btn").disabled =false;
               }
@@ -323,6 +323,7 @@ var formulario;
 
 $("#noformula").on('submit', function(event){
   event.preventDefault();
+
   $('.box__uploading').fadeIn("slow");
 
   $('#uploadBtnNF').prop('disabled', true);
@@ -334,7 +335,7 @@ $("#noformula").on('submit', function(event){
   console.log("Action");
   var url = form.attr('action');
   console.log(url);
-  
+
   $().toast('show');
 
   formulario = form;
@@ -354,7 +355,7 @@ $("#noformula").on('submit', function(event){
             }
         },
         success:function(responseText){
-          
+
           console.log(responseText);
           // var data = JSON.parse( responseText );
           var data = responseText;
@@ -366,6 +367,7 @@ $("#noformula").on('submit', function(event){
           }
 
           if (data.status == "SUCCESS") {
+            $('.box__success').fadeIn("slow");
             setTimeout(function(){window.location="/account-page/#por_pagar";}, 2000)
           }
 
@@ -375,7 +377,7 @@ $("#noformula").on('submit', function(event){
         }
   })
 
-  
+
 
 
 })
@@ -523,7 +525,7 @@ $("#search_medicine")
         .appendTo(ul);
     };
 
-    
+
 </script>
 
 @endsection

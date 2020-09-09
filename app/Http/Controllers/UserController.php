@@ -261,6 +261,25 @@ class UserController extends BaseController
 
 	}
 
+    public function getIsActualUser($user_js) {
+        Log::info('User id : ' . $user_js);
+        $user = Auth::user();
+        Log::info('User : ' . $user);
+        if (isset($user)) {
+            if ($user->id == $user_js) {
+                return Response::make (['status' => 'SUCCESS' , 'msg' => 'User matched'] ,200);
+            } else {
+                return Response::make (['status' => 'FAILURE' , 'msg' => 'Different user'] ,401);
+            }
+        } else {
+            return Response::make (['status' => 'FAILURE' , 'msg' => 'User not logged'] ,401);
+        }
+
+
+    }
+
+
+
 	/**
 	 * User Login
 	 *
@@ -311,6 +330,9 @@ class UserController extends BaseController
 			} else {
 				if (Auth::attempt (array('email' => $email , 'password' => $password))) {
 					$status = User::where ('email' , '=' , $email)->join ('user_status as us' , 'us.id' , '=' , 'user_status')->first ()->name;
+					$user = User::select('name')->where('email' , '=' , $email)->first()->name;
+					// dd($user);
+					//dd($status);
 					Session::put ('user_id' , $email);
 					Log::info('Email: '.$email);
 					Log::info('Passwd: '.$password);
@@ -326,8 +348,9 @@ class UserController extends BaseController
 					// $result = ['status' => 'SUCCESS' , 'msg' => 'User Logged In' , 'data' => ['status' => $status , 'pres_status' => $pres_status ,
 					// 	'invoice_status' => $invoice_status , 'payment_status' => $payment_status , 'shipping_status' => $shipping_status]];
 					//
-					$result = ['status' => 'SUCCESS' , 'msg' => 'User Logged In' , 'data' => ['status' => $status ]];
-					Log::info('result: '.$result);
+					$result = ['status' => 'SUCCESS' , 'msg' => 'User Logged In', 'email' => $email, 'name'=> $user,  'data' => ['status' => $status ]];
+					//dd($result);
+					// Log::info('result: '. print_f($result, true));
 				} else {
 					throw new Exception('Invalid Login Credientials' , 401);
 				}
@@ -557,11 +580,15 @@ class UserController extends BaseController
 
 		foreach ($results as $result) {
 			$items = [];
+			// dd($result);
 
-			// echo("Prescriptions");
-			// var_dump($result);
+			$invoice = Invoice::where ('pres_id' , '=' , $result->pres_id)->first()->toArray();
 
-			$medicines = Medicine::medicines ();
+			//dd($invoice);
+			$mp_data = app('App\Http\Controllers\MedicineController')->anyMakeMercadoPagoPayment($invoice["id"],0);
+			//$mp_data=[];
+
+			//$medicines = Medicine::medicines ();
 			if (!is_null ($result->id) || !empty($result->id)) {
 				$carts = ItemList::where ('invoice_id' , '=' , $result->id)->get ();
 
@@ -570,17 +597,23 @@ class UserController extends BaseController
 				$items = [];
 				$i=0;
 
-				
+
 				//var_dump($carts);
 
 				foreach ($carts as $cart) {
 					// var_dump($cart);
 					// dd($cart, $medicines, $results);
-					$tax = $cart->unit_price - ceil(($cart->unit_price / (1+($medicines[$cart->medicine]['tax']/100))));
+					$medicines = Medicine::where('id', 'LIKE', $cart->medicine)->first()->toArray();
+					// dd($medicines);
+					$tax = $cart->unit_price - ceil(($cart->unit_price / (1+($medicines['tax']/100))));
+
+
+
+
 					$items[$i] = ['id' => $cart->id ,
 						'item_id' => $cart->medicine ,
-						'item_code' => $medicines[$cart->medicine]['item_code'] ,
-						'item_name' => $medicines[$cart->medicine]['item_name'] ,
+						'item_code' => $medicines['item_code'] ,
+						'item_name' => $medicines['item_name'] ,
 						'unit_price' => $cart->unit_price ,
 						'discount_percent' => $cart->discount_percentage ,
 						'discount' => $cart->discount ,
@@ -589,15 +622,17 @@ class UserController extends BaseController
 						'total_price' => $cart->total_price
 					];
 
-					
+
 
 					$taxTotal += $tax;
 					$totalPrice += $cart->total_price;
 					$i++;
 				}
-				
+
+
 				$details = [
 					'id' => (is_null ($result->pres_id)) ? 0 : $result->pres_id ,
+					'invoice_id' => (is_null ($result->id)) ? 0 : $result->id ,
 					'invoice' => (is_null ($result->invoice)) ? 0 : $result->invoice ,
 					'sub_total' => (is_null ($result->sub_total)) ? 0 : $result->sub_total ,
 					'discount' => (is_null ($result->discount)) ? 0 : $result->discount ,
@@ -610,18 +645,19 @@ class UserController extends BaseController
 					'pres_status' => $result->status ,
 					'payment_status' => $result->payment_status,
 					'invoice_status' => is_null ($result->status_id) ? 0 : $result->status_id ,
-					'path' => $result->path
+					'path' => $result->path,
+					'posted' => $mp_data["posted"],
+					'preference' => $mp_data["preference"],
 				];
 
-				// var_dump($details);
-				
+				// dd($result, $details);
+
 			}
-			
-			
 
 			$responses[] = $details;
 
 		}
+
 
 		// dd($responses);
 
@@ -843,7 +879,7 @@ class UserController extends BaseController
 		try {
 			if (!Auth::check ())
 				throw new Exception('UNAUTHORISED : User not logged in ' , 401);
-			
+
 			$pay_success2 = DB::table ('prescription')->where ('id' , '=' , $pres_id)->update (array('is_delete' => 1 , 'updated_at' => date ('Y-m-d H:i:s')));
 			// If Save is Success
 			if ($pay_success2)

@@ -1,8 +1,18 @@
 
-@section('custom-css')
+{{-- @section('custom-css')
 <link rel="stylesheet" href="/css/dropbox.css" />
-@endsection
+@endsection --}}
 
+
+<div style="text-align: center;">
+	<div class="box__uploading">Enviando orden&hellip;</div>
+	<div class="box__success" style="color: green" id="boxSuccess"> <br> En unos segundos seras redirigido a tu perfil, una vez la verifiquemos, cambiara su estado a "verificado" y podrás realizar el pago! </div>
+
+	<div class="box__error" style="margin-top:50px;" id="errorMsg">
+		Error! <br> <span class="box__error__msg" id ="box__error__msg"></span>. <br>
+		<a href="https://css-tricks.com/examples/DragAndDropFileUploading//?" class="box__restart" role="button">Intente de nuevo!</a>
+	</div>
+</div>
 
 
 
@@ -25,7 +35,7 @@
 		</div>
 	</form>
 </div>
-<div style="text-align: center;">
+{{-- <div style="text-align: center;">
 	<div class="box__uploading">Enviando orden&hellip;</div>
 	<div class="box__success" style="color: green"> <br> Orden enviada! En unos segundos sera redirigido a su perfil para realizar el pago </div>
 
@@ -33,10 +43,10 @@
 		Error! <br> <span class="box__error__msg"></span>. <br>
 		<a href="https://css-tricks.com/examples/DragAndDropFileUploading//?" class="box__restart" role="button">Intente de nuevo!</a>
 	</div>
-</div>
+</div> --}}
 <br>
 @if($pres_required == 1)
-	
+
 	<div class="alert alert-success" role="alert">
 	  Si tienes una fórmula médica que no entiendes, envíanosla y nosotros la revisaremos y crearemos el pedido por ti
 	</div>

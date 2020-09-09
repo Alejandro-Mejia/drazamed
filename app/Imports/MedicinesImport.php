@@ -15,8 +15,8 @@ use Illuminate\Support\Facades\Log;
 
 
 /** @brief Class for medicines
-@author Alejandro Mejia
-@date March 2020
+* @author Alejandro Mejia
+* @date March 2020
 */
 class MedicinesImport implements ToModel, WithHeadingRow, WithBatchInserts , WithChunkReading, WithValidation, SkipsOnFailure, SkipsOnError
 {
@@ -34,6 +34,17 @@ class MedicinesImport implements ToModel, WithHeadingRow, WithBatchInserts , Wit
     */
     public function model(array $row)
     {
+        $exists = Medicine::where('item_code',$row['ean'])->first();
+        
+        if ($exists) {
+            //LOGIC HERE TO UPDATE
+            Log::info('Producto existente en la DB :' . $exists['item_name']) ;
+            
+            return null;
+        }
+        
+        
+
         // HeadingRowFormatter::default('none');
         return new Medicine([
 
@@ -42,6 +53,7 @@ class MedicinesImport implements ToModel, WithHeadingRow, WithBatchInserts , Wit
             'denomination'  => isset($row['denominacion']) ? $row['denominacion'] : "ND",
             'batch_no'      => isset($row['lote']) ? $row['lote'] : "ND",
             'units'         => isset($row['und']) ? $row['und'] : "ND",
+            'units_value'   => null, 
             'quantity'      => isset($row['cantidad']) ? $row['cantidad'] : 0,
 
             'marked_price'  => isset($row['marcado']) ? $row['marcado']*1000 : 0,
@@ -53,7 +65,7 @@ class MedicinesImport implements ToModel, WithHeadingRow, WithBatchInserts , Wit
             'composition'   => isset($row['subgrupo']) ? $row['subgrupo'] : "ND",
             'manufacturer'  => isset($row['proveedor']) ? $this->cleanManufacturer($row['proveedor']) : "ND",
             'marketed_by'   => isset($row['proveedor']) ? $row['proveedor'] : "ND",
-            'show_priority' => isset($row['proveedor']) ? setPriority($row['proveedor']) : 0,
+            'show_priority' => isset($row['proveedor']) ? $this->setPriority($row['proveedor']) : 0,
             'group'         => isset($row['grupo']) ? $row['grupo'] : "ND",
             'is_pres_required' => isset($row['grupo']) ? (($row['grupo'] == 'ANTIBIOTICOS') ? 1 : 0) : 0,
             'subgroup'      => isset($row['subgrupo']) ? $row['subgrupo'] : "ND",
@@ -103,7 +115,27 @@ class MedicinesImport implements ToModel, WithHeadingRow, WithBatchInserts , Wit
 
 
             },
-            'proveedor' => 'required|string',
+            'proveedor' => function($attribute, $value, $onFailure) {
+                if(Str::contains($value,  'COMERC.MUNDIAL DE DEPORTE' )) {
+                    Log::info('Laboratorio no aplicable :' . $value) ;
+                }
+                if(Str::contains($value,  'FLEXO SPRING S.A.' )) {
+                    Log::info('Laboratorio no aplicable :' . $value) ;
+                }
+                if(Str::contains($value,  'ICARO DISENO Y PRODUCCION' )) {
+                    Log::info('Laboratorio no aplicable :' . $value) ;
+                }
+                if(Str::contains($value,  'MB TECH DE COLOMBIA S.A.S' )) {
+                    Log::info('Laboratorio no aplicable :' . $value) ;
+                }
+                if(Str::contains($value,  'MULTIOPCIONES PROMOCIONAL' )) {
+                    Log::info('Laboratorio no aplicable :' . $value) ;
+                }
+                if(Str::contains($value,  'SFAGARO S.A.S' )) {
+                    Log::info('Laboratorio no aplicable :' . $value) ;
+                }
+                $onFailure('Laboratorio no aplicables. No se importa a la BD : ' . $value);
+            },
             '*.proveedor' => 'required|string',
             'ean' => 'required|string',
             '*.ean' => 'required|string',
@@ -113,11 +145,13 @@ class MedicinesImport implements ToModel, WithHeadingRow, WithBatchInserts , Wit
 
     public function setPriority($lab)
     {
-        if(Str::contains($lab,  'ICOM') {
+        if(Str::contains($lab,  'ICOM')) {
             return 1;
         } else {
             return 0;
         }
+
+        // return $return;
     }
 
     public function ivaImport($value)
@@ -142,6 +176,16 @@ class MedicinesImport implements ToModel, WithHeadingRow, WithBatchInserts , Wit
         }
         return $iva;
     }
+    
+
+    public function setUnitVal($value) {
+        if(Str::contains($value,  'CAP' )) {
+            preg_match_all('!\d+!', $value, $matches);
+            Log::info('Cantidades :' . $matches) ;
+        }
+        
+    }
+
 
     public function cleanManufacturer($value) {
 
@@ -180,10 +224,12 @@ class MedicinesImport implements ToModel, WithHeadingRow, WithBatchInserts , Wit
         $value = Str::replaceLast('(SF)', '', $value);
         $value = Str::replaceLast('(SC)', '', $value);
         $value = Str::replaceLast('(T)', '', $value);
+        $value = Str::replaceLast('(T', '', $value);
         $value = preg_replace_array('/\(M\)\d{3,6}/', [''], $value);
         // $value = preg_replace_array('/\(M\)\d{3,6}/', [''], $value);
         $value = preg_replace_array('/\(P\)\d{3,6}/', [''], $value);
         $value = Str::replaceLast('(A)', '', $value);
+        $value = Str::replaceLast('(A', '', $value);
         $value = Str::replaceLast('(M)', '', $value);
         $value = Str::replaceLast('(E)', '', $value);
         $value = Str::replaceLast('(P)', '', $value);
@@ -239,7 +285,10 @@ class MedicinesImport implements ToModel, WithHeadingRow, WithBatchInserts , Wit
         echo "Error: " . $e;
     }
 
-
+    public function getRowCount(): int
+    {
+        return $this->rows;
+    }
 
 
 }

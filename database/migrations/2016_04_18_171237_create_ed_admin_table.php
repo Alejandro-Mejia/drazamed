@@ -30,7 +30,7 @@
          */
         public function down()
         {
-            Schema::drop('ed_admin');
+            Schema::drop('admin');
         }
 
     }
