@@ -162,7 +162,6 @@ use MercadoPago;
     Route::get('messages', 'ChatsController@fetchMessages');
     Route::post('messages', 'ChatsController@sendMessage');
 
-
     /**
      * PriceRules
      */
