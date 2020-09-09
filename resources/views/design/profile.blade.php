@@ -175,11 +175,11 @@
                     <div class="table-responsive">
                         @if(!empty(count($prescriptions)))
                             <table class="table" id="ordenes_pendientes">
-                                
+
                                 <tbody>
                                     <?php $i=0; $pres = sizeof($prescriptions); ?>
 
-                                    
+
                                     @if(sizeof($prescriptions) > 0)
 
 
@@ -188,7 +188,7 @@
                                             @if(sizeof($prescription) > 0)
                                             <!-- Section 1 -->
                                             <!-- Si el estado es sin verificar o verificado! -->
-                                            
+
                                                 <thead class="table-header" id="th{{$prescription['id']}}">
                                                     {{-- <th>FÓRMULA MÉDICA</th> --}}
                                                     <th style="text-align:center">FECHA</th>
@@ -208,8 +208,8 @@
                                                         <td class="text-center"><span class="date-added"><?php echo $prescription['created_on']; ?></span>
                                                         </td>
 
-                                                        @php 
-                                                            $status  = $prescription['pres_status']; 
+                                                        @php
+                                                            $status  = $prescription['pres_status'];
                                                             switch ($status) {
                                                                 case '1':
                                                                     $statusColor = "orange";
@@ -220,13 +220,13 @@
                                                                 case '3':
                                                                     $statusColor = "red";
                                                                     break;
-                                                                
+
                                                                 default:
                                                                     $statusColor = "red";
                                                                     break;
                                                             }
-                                                    
-                                                    
+
+
                                                         @endphp
 
                                                         <td class="text-center" style="color:{{ $statusColor }}">{{ __(PrescriptionStatus::statusName($prescription['pres_status'])) }}
@@ -234,7 +234,7 @@
                                                         <td></td>
                                                         <td style="text-align:right">
                                                             {{-- <i class="fas fa-edit details" data-id={{ $prescription["id"]}}></i> --}}
-                                                            <i style="color:red" class="fas fa-trash-alt presDelete"  data-id={{ $prescription["id"]}} ></i>
+                                                            <i style="color:red" class="fa fa-trash presDelete"  data-id={{ $prescription["id"]}} ></i>
                                                             <a href="/my-cart"><i class="fas fa-shopping-cart"></i></a>
                                                         </td>
                                                     </tr>
@@ -256,7 +256,7 @@
                                     @endif
 
 
-                                    
+
                                 </tbody>
 
                             </table>
@@ -285,7 +285,7 @@
                                         <th class="text-center text-align-responsive" width="25%"> No. Pedido</th>
                                         <th class="text-center text-align-responsive" width="25%">Fecha</th>
                                         <th class="text-center text-align-responsive" width="25%">Total</th>
-                                        
+
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -310,7 +310,7 @@
                                             <td class="text-center">{{ Setting::currencyFormat($invoice->total) }}
                                             </td>
 
-                
+
                                         </tr>
                                     @endif
 
@@ -400,7 +400,7 @@
         <div class="modal-body">
             <p id="msgConfirm"></p>
         </div>
-        
+
         <div class="modal-footer">
             <button type="button" class="btn btn-default" id="modal-btn-si">Si</button>
             <button type="button" class="btn btn-primary" id="modal-btn-no">No</button>
@@ -431,7 +431,7 @@
                         label: 'BORRAR',
                         className: 'dra-button'
                     }
-                    
+
                 },
                 callback: function (result) {
                     console.log('This was logged in the callback: ' + result);
@@ -456,10 +456,10 @@
 
                                 element = document.getElementById(rowHeader);
                                 element.remove();
-                                
+
                             }
                         });
-                    } 
+                    }
                 }
             });
 
@@ -497,16 +497,16 @@
     //         success: function(data) {
     //             console.log(data);
     //             // alert('Se ha borrado su orden');
-                
-                
-                
+
+
+
     //         }
     //     });
 
 
     // }
 
-    
+
 
     // <div class="modal-content">
     //    <div class="modal-header">
