@@ -141,7 +141,7 @@
 
         })
         .autocomplete("instance")._renderItem = function(ul, item) {
-            console.log(item);
+            //console.log(item);
 
 
             card = "<div class='card'>" +
@@ -157,14 +157,6 @@
                             "</div>" +
                         "</div>" +
                     "</div>";
-
-            // card = "<div class='card' style='width: 18rem;'>" +
-            //             "<img class='card-img-top' src='/images/products/" + item.id + ".jpg' alt='Card image cap'>" +
-            //             "<div class='card-body'>" +
-            //                 "<h5 class='card-title'>" + item.value + "</h5>" +
-            //             "</div>" +
-            //             "</div>";
-            console.log(card);
             return $("<li>")
                 .append(card)
                 .appendTo(ul);

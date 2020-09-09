@@ -8,7 +8,9 @@
 @endsection --}}
 
 @section('content')
-
+<style type="text/css">
+    .ui-autocomplete { max-height: 500px; overflow-y: scroll; overflow-x: hidden; margin-left:-50px;}
+</style>
 
 <style type="text/css">
   /*input[type="file"] {
@@ -520,10 +522,26 @@ $("#search_medicine")
         }
     })
     .autocomplete("instance")._renderItem = function(ul, item) {
-    return $("<li>")
-        .append("<div>" + item.label + "</div>")
-        .appendTo(ul);
-    };
+            //console.log(item);
+
+
+            card = "<div class='card'>" +
+                        "<div class='row no-gutters'>" +
+                            "<div class='col-auto'>" +
+                                "<img width='100px' src='" + item.imgUrl + "' class='img-fluid' >" +
+                            "</div>" +
+                            "<div class='col'>" +
+                                "<div class='card-block px-2'>" +
+                                    "<h5 class='card-title'>" + item.value + "</h5>" +
+                                    "<p class='card-text'>" + item.composition + "</p>" +
+                                "</div>" +
+                            "</div>" +
+                        "</div>" +
+                    "</div>";
+            return $("<li>")
+                .append(card)
+                .appendTo(ul);
+            };
 
 
 </script>
