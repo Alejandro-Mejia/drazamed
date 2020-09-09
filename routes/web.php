@@ -19,6 +19,8 @@ use App\Mail\NewMail;
 use Elasticquent\ElasticquentTrait;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Sitemap\SitemapGenerator;
+use App\Events\OrderStatusSent;
+
 
 // use App\MercadoPago\SDK;
 use MercadoPago;
@@ -162,6 +164,11 @@ use MercadoPago;
     Route::get('/messages/chats', 'ChatsController@index');
     Route::get('messages', 'ChatsController@fetchMessages');
     Route::post('messages', 'ChatsController@sendMessage');
+
+    Route::get('msgtest', function () {
+        event(new OrderStatusSent(1,'Mensaje'));
+        return "Event has been sent!";
+    });
 
     /**
      * PriceRules
