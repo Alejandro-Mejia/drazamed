@@ -9,7 +9,7 @@
 <div class="about">
     <div class="container p-3">
         <div class="col-12 col-sm-10 col-lg-12 mx-auto text-justify">
-            <h1 class="display-4 py-4 text-primary text-center">Tus medicinas a la mano</h1>
+            <h1 class="display-4 py-4 text-primary text-center">Tus Medicinas a la Mano</h1>
             <p style="font-size: 2rem">Organizamos los medicamentos de tu tratamiento para que los recibas siempre a tiempo en tu lugar de preferencia. </p>
             <br>
             <p style="font-size: 2rem"> Estamos a tu servicio para que ganes tiempo, simplifiques tu vida y te sientas más saludable. Ya no tienes que estar pensando en tus medicamentos porque nosotros nos encargamos.​</p>
