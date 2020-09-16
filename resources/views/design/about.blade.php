@@ -12,7 +12,7 @@
             <h1 class="display-4 py-4 text-primary text-center">Tus medicinas a la mano</h1>
             <p style="font-size: 2rem">Organizamos los medicamentos de tu tratamiento para que los recibas siempre a tiempo en tu lugar de preferencia. </p>
             <br>
-            <p style="font-size: 2rem"> Estamos a tu servicio para que ganes tiempo, simplifiques tu vida y te sientas más saludable. Ya no tienes que estar pensando en tus medicamentos porque nosotros nos encargamos.​</p>
+            <p class= "text-left" style="font-size: 2rem"> Estamos a tu servicio para que ganes tiempo, simplifiques tu vida y te sientas más saludable. Ya no tienes que estar pensando en tus medicamentos porque nosotros nos encargamos.​</p>
         </div>
         <div class="py-4">
             <h1 class="display-4 py-4 text-primary text-center">Próximamente APP para Android y Apple</h1>
@@ -30,7 +30,7 @@
         </div>
         <div class="col-10 col-sm-10 col-lg-12 mx-auto text-justify py-4">
             <h1 class="display-4 py-4 text-primary text-center">Quiénes Somos</h1>
-            <p style="font-size: 2rem">Somos tu droguería de confianza, tu droguería de siempre que está aquí para facilitarte las cosas. Vamos más lejos, utilizamos nuestra tecnología para poder acompañarte en tus tratamientos. El servicio es completamente personalizado. </p>
+            <p class= "text-left" style="font-size: 2rem">Somos tu droguería de confianza, tu droguería de siempre que está aquí para facilitarte las cosas. Vamos más lejos, utilizamos nuestra tecnología para poder acompañarte en tus tratamientos. El servicio es completamente personalizado. </p>
         </div>
         <div class="embed-responsive embed-responsive-16by9 py-4" >
             <iframe src="https://player.vimeo.com/video/449923039?byline=0&portrait=0&title=0" width="640" height="360" byline="0" title="0" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>

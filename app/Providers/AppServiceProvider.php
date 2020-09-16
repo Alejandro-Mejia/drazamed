@@ -24,7 +24,12 @@ class AppServiceProvider extends ServiceProvider
      * @return void
      */
     public function boot()
-    {
+    {   
+        view()->composer('*', function($view){
+        $view_name = str_replace('.', '-', $view->getName());
+        view()->share('view_name', $view_name);
+        });
+        
         Schema::defaultStringLength(191);
     }
 }

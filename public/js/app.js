@@ -49162,17 +49162,6 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
 /***/ }),
 
-/***/ "./resources/sass/about.scss":
-/*!***********************************!*\
-  !*** ./resources/sass/about.scss ***!
-  \***********************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-
 /***/ "./resources/sass/app.scss":
 /*!*********************************!*\
   !*** ./resources/sass/app.scss ***!
@@ -49184,148 +49173,15 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
 /***/ }),
 
-/***/ "./resources/sass/cart.scss":
-/*!**********************************!*\
-  !*** ./resources/sass/cart.scss ***!
-  \**********************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-
-/***/ "./resources/sass/contact.scss":
-/*!*************************************!*\
-  !*** ./resources/sass/contact.scss ***!
-  \*************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-
-/***/ "./resources/sass/drazamed.scss":
-/*!**************************************!*\
-  !*** ./resources/sass/drazamed.scss ***!
-  \**************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-
-/***/ "./resources/sass/dropbox.scss":
-/*!*************************************!*\
-  !*** ./resources/sass/dropbox.scss ***!
-  \*************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-
-/***/ "./resources/sass/footer.scss":
-/*!************************************!*\
-  !*** ./resources/sass/footer.scss ***!
-  \************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-
-/***/ "./resources/sass/header.scss":
-/*!************************************!*\
-  !*** ./resources/sass/header.scss ***!
-  \************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-
-/***/ "./resources/sass/index.scss":
-/*!***********************************!*\
-  !*** ./resources/sass/index.scss ***!
-  \***********************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-
-/***/ "./resources/sass/login.scss":
-/*!***********************************!*\
-  !*** ./resources/sass/login.scss ***!
-  \***********************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-
-/***/ "./resources/sass/pinfo.scss":
-/*!***********************************!*\
-  !*** ./resources/sass/pinfo.scss ***!
-  \***********************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-
-/***/ "./resources/sass/profile.scss":
-/*!*************************************!*\
-  !*** ./resources/sass/profile.scss ***!
-  \*************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-
-/***/ "./resources/sass/search-form.scss":
-/*!*****************************************!*\
-  !*** ./resources/sass/search-form.scss ***!
-  \*****************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-
 /***/ 0:
-/*!*****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** multi ./resources/js/app.js ./resources/sass/app.scss ./resources/sass/header.scss ./resources/sass/index.scss ./resources/sass/footer.scss ./resources/sass/login.scss ./resources/sass/drazamed.scss ./resources/sass/search-form.scss ./resources/sass/pinfo.scss ./resources/sass/cart.scss ./resources/sass/contact.scss ./resources/sass/profile.scss ./resources/sass/dropbox.scss ./resources/sass/about.scss ***!
-  \*****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*!*************************************************************!*\
+  !*** multi ./resources/js/app.js ./resources/sass/app.scss ***!
+  \*************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /Users/amejia/Sites/drazamed/resources/js/app.js */"./resources/js/app.js");
-__webpack_require__(/*! /Users/amejia/Sites/drazamed/resources/sass/app.scss */"./resources/sass/app.scss");
-__webpack_require__(/*! /Users/amejia/Sites/drazamed/resources/sass/header.scss */"./resources/sass/header.scss");
-__webpack_require__(/*! /Users/amejia/Sites/drazamed/resources/sass/index.scss */"./resources/sass/index.scss");
-__webpack_require__(/*! /Users/amejia/Sites/drazamed/resources/sass/footer.scss */"./resources/sass/footer.scss");
-__webpack_require__(/*! /Users/amejia/Sites/drazamed/resources/sass/login.scss */"./resources/sass/login.scss");
-__webpack_require__(/*! /Users/amejia/Sites/drazamed/resources/sass/drazamed.scss */"./resources/sass/drazamed.scss");
-__webpack_require__(/*! /Users/amejia/Sites/drazamed/resources/sass/search-form.scss */"./resources/sass/search-form.scss");
-__webpack_require__(/*! /Users/amejia/Sites/drazamed/resources/sass/pinfo.scss */"./resources/sass/pinfo.scss");
-__webpack_require__(/*! /Users/amejia/Sites/drazamed/resources/sass/cart.scss */"./resources/sass/cart.scss");
-__webpack_require__(/*! /Users/amejia/Sites/drazamed/resources/sass/contact.scss */"./resources/sass/contact.scss");
-__webpack_require__(/*! /Users/amejia/Sites/drazamed/resources/sass/profile.scss */"./resources/sass/profile.scss");
-__webpack_require__(/*! /Users/amejia/Sites/drazamed/resources/sass/dropbox.scss */"./resources/sass/dropbox.scss");
-module.exports = __webpack_require__(/*! /Users/amejia/Sites/drazamed/resources/sass/about.scss */"./resources/sass/about.scss");
+__webpack_require__(/*! C:\xampp\htdocs\drazamed\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\xampp\htdocs\drazamed\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

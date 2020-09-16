@@ -38,7 +38,7 @@
                     <nav class="profile-menu">
                         <ul>
                             <li>
-                                <a href="/"
+                                <a href="/account-page"
                                     ><span class="mr-10 fa fa-id-card"></span>Mi
                                     Perfil</a
                                 >

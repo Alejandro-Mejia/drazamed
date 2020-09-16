@@ -19,7 +19,7 @@
     <div class="cover">
         <div class="wrapper">
             <h1>
-                Pide Medicamentos Online en la Sabana. ¡Es muy Fácil!
+                Pide Medicamentos Online en la Sabana. <br> ¡Es muy Fácil!
             </h1>
             <p class="text-center">
                 Entregamos en Guaymaral, Cota, Chía, Cajicá, Tabio, Briceño, Sopó y Tocancipá
@@ -48,9 +48,14 @@
                     </div>
                 </div>
                  <p class="text-center">
-                    Si lo prefieres llámanos (1) 879-3999
+                    Si lo prefieres llámanos <strong><u>(1) 879-3999</u></strong>
                 </p>
-                <p class="text-center"> <a href="https://api.whatsapp.com/send?phone=573208671998&texto=Quisiera%20consultar%20sobre%20la%20venta%20de%20productos%20de%20%drogueria`"> <img src="/images/whatsapp-icon.png" width="36px" > (320) 867-1998 </a> </p>
+                <p id="wppbutton" class="text-center mx-auto"> 
+                    <a id="wppbutton" class="btn btn-outline-success"
+                        ref="https://api.whatsapp.com/send?phone=573208671998&texto=Quisiera%20consultar%20sobre%20la%20venta%20de%20productos%20de%20%drogueria`">
+                         <img src="/images/whatsapp-icon.png" width="36px" > <strong><u>(320) 867-1998</u></strong> 
+                    </a> 
+                </p>
             </form>
         </div>
     </div>

@@ -10,20 +10,6 @@
         {{-- Cargar los js de la aplicacion --}}
         <script src="/js/app.js"></script>
 
-
-        {{-- <script src="/js/app.js"></script> --}}
-        <!-- jQuery-3.5 -->
-        {{-- <script src="/js/jquery-3.5.1.js"></script> --}}
-        <!-- // jQuery UI -->
-        {{-- <script src="/js/jquery-ui.js"></script> --}}
-        {{--                                                                    <link rel="stylesheet" href="/css/jquery-ui.css"> --}}
-
-        {{-- <!-- jQuery-3.5 -->
-        <script src="/js/jquery-3.5.1.js"></script>
-        <!-- // jQuery UI -->
-        <script src="/js/jquery-ui.js"></script>
-        <link rel="stylesheet" href="/css/jquery-ui.css"> --}}
-
         <!-- Money format for JS -->
         <script src="/js/simple.money.format.js"></script>
 
@@ -33,30 +19,8 @@
         <!-- Bootstrap 4 -->
         <script src="/js/bootstrap.min.js"></script>
         <script src="/js/bootbox.all.min.js"></script>
-        {{-- <link rel="stylesheet" href="/css/app.css"/> --}}
-
-        {{-- <link rel="stylesheet" href="/css/bootstrap.min.css"/> --}}
-
-        <!-- FlexboxGrid -->
-        {{-- <link rel="stylesheet" href="/css/flexboxgrid.min.css"> --}}
-
-
-        <!-- Estilos propios del proyecto -->
         <link rel="stylesheet" href="/css/app.css">
-
-        {{-- <link rel="stylesheet" href="/css/header.css"> --}}
-        {{-- <link rel="stylesheet" href="/css/login.css" /> --}}
-        {{-- <link rel="stylesheet" href="/css/search-form.css"> --}}
-        {{-- <link rel="stylesheet" href="/css/footer.css"> --}}
-        {{-- <link rel="stylesheet" href="/css/dropbox.css"> --}}
-        {{-- <link rel="stylesheet" href="/css/drazamed.css"> --}}
-
-        {{-- <link rel="stylesheet" href="/assets/fonts/fontawesome/css/fontawesome.css"> --}}
         <link rel="stylesheet" href="/assets/fonts/fontawesome/css/solid.css">
-        {{-- <link rel="stylesheet" href="/css/fonts.css"> --}}
-
-        <!-- Google Analytics -->
-        <!-- Global site tag (gtag.js) - Google Analytics -->
         <script async src="https://www.googletagmanager.com/gtag/js?id=G-C32TYXD8C1"></script>
         <script>
           window.dataLayer = window.dataLayer || [];
@@ -81,7 +45,6 @@
 
         </style>
 
-        <!-- resources/views/chat.blade.php -->
         <style>
             .chat {
                 list-style: none;
@@ -125,10 +88,7 @@
         @include('design.layout.header')
 
 
-        {{-- <div id="chat"> --}}
-            @yield('content')
-        {{-- </div> --}}
-
+        @yield('content')
 
 
         <script src="/js/modal_manager.js"></script>
