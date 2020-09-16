@@ -80,4 +80,16 @@
             </ul>
         </div>
     </div>
+
+    <script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" async=""></script>
+    <script>
+    window.OneSignal = window.OneSignal || [];
+    OneSignal.push(function() {
+        OneSignal.init({
+        appId: "353ac594-08e3-44b9-8e42-4bc48d942847",
+        });
+    });
+    </script>
+
+
 </header>

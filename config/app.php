@@ -190,7 +190,8 @@ return [
         // JS translations
         Mariuzzo\LaravelJsLocalization\LaravelJsLocalizationServiceProvider::class,
 
-
+        // Amazon AWS
+        Aws\Laravel\AwsServiceProvider::class,
 
     ],
 
@@ -258,6 +259,7 @@ return [
         'Image' => Intervention\Image\Facades\Image::class,
         'Debugbar' => Barryvdh\Debugbar\Facade::class,
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
+        'AWS' => Aws\Laravel\AwsFacade::class,
         // Mercadopago
         //'MP' => Patosmack\MercadoPago\Facades\MP::Class,
 

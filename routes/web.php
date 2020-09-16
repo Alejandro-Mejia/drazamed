@@ -170,6 +170,27 @@ use MercadoPago;
         return "Event has been sent!";
     });
 
+
+    Route::get('/send-notification', function () {
+        echo("Notificaciones");
+        $sms = \AWS::createClient('sns');
+        $sms->publish([
+            'Message' => 'Primer publicación SNS',
+            'TargetArn' => 'arn:aws:sns:us-east-1:611609623675:DrazamedNotification',
+            'name' => 'updated',
+            'MessageAttributes' => [
+                'Information' => [
+                    'DataType' => 'String',
+                    'StringValue' => json_encode([
+                        'nicho' => 'mexicans',
+                        'id' => '123456',
+                        'status' => 'updated'
+                    ], true),
+                ]
+           ],
+       ]);
+    });
+
     /**
      * PriceRules
      */
