@@ -747,7 +747,12 @@ class UserController extends BaseController
 		$client_name = Request::get ('name');
 		$client_mail = Request::get ('email');
 		$client_msg = Request::get ('msg');
-		$mail_id = Setting::param ('site' , 'mail')['value'];
+        $mail_id = Setting::param ('site' , 'mail')['value'];
+
+        Log::info('Mensaje recibido');
+        Log::info('Name : ' . $client_name);
+        Log::info('Mail : ' . $client_mail);
+        Log::info('Msg : ' . $client_msg);
 
 		Mail::send ('emails.customer_query' , array('client_name' => $client_name , 'client_mail' => $client_mail , 'client_msg' => $client_msg) , function ($message) use ($client_mail) {
 			$message->to($client_mail)->subject ('Has enviado un mensaje por Contactenos de Drazamed');
