@@ -38,7 +38,7 @@ use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 
 
 
-header ("Access-Control-Allow-Origin: *");
+//header ("Access-Control-Allow-Origin: *");
 
 class UserController extends BaseController
 {

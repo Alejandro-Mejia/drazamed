@@ -166,6 +166,7 @@ use MercadoPago;
     Route::post('messages', 'ChatsController@sendMessage');
 
     Route::get('msgtest', function () {
+        echo "Enviando mensaje";
         event(new OrderStatusSent(1,'Mensaje'));
         return "Event has been sent!";
     });
