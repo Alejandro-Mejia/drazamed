@@ -741,13 +741,17 @@ class UserController extends BaseController
 	 *
 	 * @return int
 	 */
-	public function anyContactUs ()
+	public function anyContactUs (Request $request)
 	{
         header ("Access-Control-Allow-Origin: *");
+
 		$client_name = Request::get ('name');
 		$client_mail = Request::get ('email');
 		$client_msg = Request::get ('msg');
         $mail_id = Setting::param ('site' , 'mail')['value'];
+
+        Log::info('Datos POST');
+        Log::info($request->all());
 
         Log::info('Mensaje recibido');
         Log::info('Name : ' . $client_name);
