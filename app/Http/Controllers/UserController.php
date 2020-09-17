@@ -750,9 +750,6 @@ class UserController extends BaseController
 		$client_msg = Request::get ('msg');
         $mail_id = Setting::param ('site' , 'mail')['value'];
 
-        Log::info('Datos POST');
-        Log::info($request->all());
-
         Log::info('Mensaje recibido');
         Log::info('Name : ' . $client_name);
         Log::info('Mail : ' . $client_mail);
