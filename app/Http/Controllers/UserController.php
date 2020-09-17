@@ -743,6 +743,7 @@ class UserController extends BaseController
 	 */
 	public function anyContactUs ()
 	{
+        header ("Access-Control-Allow-Origin: *");
 		$client_name = Request::get ('name');
 		$client_mail = Request::get ('email');
 		$client_msg = Request::get ('msg');
