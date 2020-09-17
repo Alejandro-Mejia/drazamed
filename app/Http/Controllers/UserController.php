@@ -771,7 +771,7 @@ class UserController extends BaseController
 			$errors = 0; //Failed to send email, please try again
 			return $errors;
 		} else {
-			return 1;
+			return Response::make (['status' => 'SUCCESS' , 'msg' => ['client' => $client_name, 'email' => $client_mail, 'msg'=> $client_msg]]);
 		}
 
 	}
