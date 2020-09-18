@@ -4,9 +4,9 @@ namespace App;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
-use App\Http\Requests;
 use App\Setting;
 use Redirect;
+use Request;
 use Mail;
 use URL;
 use View;
@@ -92,6 +92,19 @@ use MercadoPago;
     Route::any('/user/web-activate-account/{code}', 'UserController@anyWebActivateAccount');
     Route::any('/user/pres-delete/{pres_id}', 'UserController@anyPresDelete');
     Route::get('/user/is-actual-user/{user_js}', 'UserController@getIsActualUser');
+
+
+
+    /**
+     * Test cors
+     */
+    Route::get('/my-api-endpoint',  function  (Request $request)  {
+
+        return response()->json(['Hello Laravel 7']);
+
+      });
+
+
 
     /**
      * Medicine routes
