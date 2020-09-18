@@ -564,7 +564,6 @@ class UserController extends BaseController
 	public function getAccountPage ()
 	{
 		$user_type = Auth::user ()->user_type_id;
-
 		$email = Session::get ('user_id');
 		$path = 'URL' . '/public/images/prescription/' . $email . '/';
 		// $user_id = Auth::user ()->id;

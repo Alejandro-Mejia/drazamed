@@ -48,12 +48,6 @@
     filter: blur(0px);
   }
 
-  /*
-    .about .container h1{
-        color:red !important;
-    }
-    */
-
   h1 {
     color: green !important;
   }
@@ -89,4 +83,3 @@
   overflow: hidden;
   outline: none;
 }
-

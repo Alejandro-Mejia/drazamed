@@ -14,7 +14,6 @@ header {
         display: flex;
         justify-content: space-between;
         align-items: center;
-
         .btn-header-resp {
             display: none;
 
@@ -93,7 +92,11 @@ header {
         }
     }
 }
-
+@media (min-width:1024){
+    #NavSettings{
+        font-size: medium;
+    }
+}
 @media (max-width: 1000px) {
     header {
         nav {
@@ -107,5 +110,22 @@ header {
                 display: block;
             }
         }
+    }
+}
+@media (max-width:426){
+    #NavSettings{
+        font-size: smaller;
+    }
+}
+
+@media (min-width:1439){
+    #NavSettings{
+        font-size: x-large;
+    }
+}
+
+@media (max-width: 768){
+    #navlistitems{
+        width: 100%;
     }
 }

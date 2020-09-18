@@ -16,11 +16,13 @@ main .cover {
         display: flex;
         flex-direction: column;
         justify-content: center;
+        padding: 0.5rem;
 
         h1,
         p {
             color: #fff;
             font-family: "louis_george_cafe";
+            padding: 2rem;
         }
 
         h1 {
@@ -28,10 +30,12 @@ main .cover {
             font-weight: bolder;
             width: 100%;
             text-align: center;
+            padding: 2rem;
         }
 
         p {
             font-size: 16px;
+            padding: 0.5rem;
         }
 
         .cover-search {
@@ -118,9 +122,11 @@ main {
 @media (max-width: 1000px) {
     main .cover {
         .wrapper {
+            h1,
             p {
                 width: 100%;
                 margin: 0 auto;
+                padding: 0.5rem;
             }
         }
     }
@@ -129,6 +135,9 @@ main {
 @media (max-width: 1199px) {
     .wrapper {
         min-width: 95%;
+        h1, p{
+            padding: 0.5rem;
+        }
     }
 
     .quicksearch .qs-elems {
