@@ -1269,7 +1269,7 @@ class MedicineController extends BaseController
 	}
 
 	/**
-	 * Update Medicine cart list
+	 * Update Medicine list
 	 *
 	 * @return mixed
 	 */
