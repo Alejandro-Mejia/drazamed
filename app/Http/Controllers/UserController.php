@@ -754,24 +754,28 @@ class UserController extends BaseController
         Log::info('Mail : ' . $client_mail);
         Log::info('Msg : ' . $client_msg);
 
-		Mail::send ('emails.customer_query' , array('client_name' => $client_name , 'client_mail' => $client_mail , 'client_msg' => $client_msg) , function ($message) use ($client_mail) {
-			$message->to($client_mail)->subject ('Has enviado un mensaje por Contactenos de Drazamed');
-		});
-		$client_name = Request::get ('name');
-		$client_mail = Request::get ('email');
-		$client_msg = Request::get ('msg');
-		$mail_id = Setting::param ('site' , 'mail')['value'];
+        if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            Mail::send ('emails.customer_query' , array('client_name' => $client_name , 'client_mail' => $client_mail , 'client_msg' => $client_msg) , function ($message) use ($client_mail) {
+                $message->to($client_mail)->subject ('Has enviado un mensaje por Contactenos de Drazamed');
+            });
+            $client_name = Request::get ('name');
+            $client_mail = Request::get ('email');
+            $client_msg = Request::get ('msg');
+            $mail_id = Setting::param ('site' , 'mail')['value'];
 
-		Mail::send ('emails.customer_query' , array('client_name' => $client_name , 'client_mail' => $client_mail , 'client_msg' => $client_msg) , function ($message) use ($mail_id) {
-			$message->to ($mail_id)->subject ('Ha recibido un mensaje de un cliente');
-		});
+            Mail::send ('emails.customer_query' , array('client_name' => $client_name , 'client_mail' => $client_mail , 'client_msg' => $client_msg) , function ($message) use ($mail_id) {
+                $message->to ($mail_id)->subject ('Ha recibido un mensaje de un cliente');
+            });
 
-		if (count (Mail::failures ()) > 0) {
-			$errors = 0; //Failed to send email, please try again
-			return $errors;
-		} else {
-			return Response::make (['status' => 'SUCCESS' , 'msg' => ['client' => $client_name, 'email' => $client_mail, 'msg'=> $client_msg]]);
-		}
+            if (count (Mail::failures ()) > 0) {
+                $errors = 0; //Failed to send email, please try again
+                return $errors;
+            } else {
+                return Response::make (['status' => 'SUCCESS' , 'msg' => ['client' => $client_name, 'email' => $client_mail, 'msg'=> $client_msg]]);
+            }
+        } else {
+            return Response::make (['status' => 'FAILURE' , 'msg' => ['client' => $client_name, 'email' => $client_mail, 'msg'=> $client_msg]]);
+        }
 
 	}
 
