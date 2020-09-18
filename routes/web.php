@@ -85,7 +85,7 @@ use MercadoPago;
     Route::get('/user/check-session', 'UserController@getCheckSession');
     Route::any('/user/create-user/{is_web}', 'UserController@anyCreateUser');
     Route::any('/user/check-user-name', 'UserController@anyCheckUserName');
-    Route::any('/user/user-login/{is_web}', 'UserController@anyUserLogin');
+    Route::middleware("cors")->any('/user/user-login/{is_web}', 'UserController@anyUserLogin');
     Route::any('/user/activate-account', 'UserController@anyActivateAccount');
     Route::middleware("cors")->any('/user/contact-us', 'UserController@anyContactUs');
     Route::any('/user/store-profile-pic', 'UserController@anyStoreProfilePic');
