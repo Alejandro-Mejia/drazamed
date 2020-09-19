@@ -12,6 +12,7 @@ class PreflightResponse
     */
     public function handle($request, Closure $next )
     {
+        header ("Access-Control-Allow-Origin: *");
         if ($request->getMethod() === "OPTIONS") {
             return response('');
         }
