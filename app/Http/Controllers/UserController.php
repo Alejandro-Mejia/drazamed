@@ -754,7 +754,7 @@ class UserController extends BaseController
         Log::info('Mail : ' . $client_mail);
         Log::info('Msg : ' . $client_msg);
 
-        if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        if (filter_var($client_mail, FILTER_VALIDATE_EMAIL)) {
             Mail::send ('emails.customer_query' , array('client_name' => $client_name , 'client_mail' => $client_mail , 'client_msg' => $client_msg) , function ($message) use ($client_mail) {
                 $message->to($client_mail)->subject ('Has enviado un mensaje por Contactenos de Drazamed');
             });
