@@ -485,7 +485,9 @@ class UserController extends BaseController
 	public function anyResetPassword ()
 	{
 		try {
-			$email = Request::get ('email' , '');
+            $email = Request::get ('email' , '');
+            Log::info('email:' . $email);
+
 			if (Request::has ('email') && Request::has ('security_code') && Request::has ('new_password')) {
 				$security_code = Request::get ('security_code');
 				dd($security_code);
@@ -506,19 +508,20 @@ class UserController extends BaseController
 				if (User::where ('email' , '=' , $email)->count () == 1) {
 					$digits = 4;
 					$randomValue = rand (pow (10 , $digits - 1) , pow (10 , $digits) - 1);
-					$updatedValues = array('security_code' => $randomValue);
-					$user = User::where ('email' , '=' , $email)->update ($updatedValues);
-					Mail::later (10 , 'emails.reset_password' , array('code' => $randomValue) , function ($message) use ($email) {
-						$message->to ($email)->subject ('Activate Account');
+                    $updatedValues = array('security_code' => $randomValue);
+                    $user = User::where ('email' , '=' , $email)->update ($updatedValues);
+                    Mail::send ('emails.reset_password' , array('code' => $randomValue) , function ($message) use ($email) {
+						$message->to ($email)->subject ('Utiliza este codigo para restableceer tu contraseña ' . Setting::param ('site' , 'app_name')['value']);
 					});
-//					$result = array(array('result' => array('status' => 'reset_success')));
-					$result = ['status' => 'SUCCESS' , 'msg' => 'Password Reset'];
+// //					$result = array(array('result' => array('status' => 'reset_success')));
+					$result = ['status' => 'SUCCESS' , 'msg' => 'Enviando correo de recuperacion de email'];
 				} else {
-					throw new Exception('No User Found' , 404);
+                    $result = ['status' => 'FAILURE' , 'msg' => 'Usuario no encontrado'];
+					// throw new Exception('No User Found' , 404);
 				}
-
+                //$result = ['status' => 'SUCCESS' , 'msg' => 'Password Reset'];
 			}
-
+            // $result = ['status' => 'SUCCESS' , 'msg' => 'Password Reset'];
 			return Response::json ($result);
 		}
 		catch (Exception $e) {

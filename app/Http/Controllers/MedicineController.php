@@ -1483,24 +1483,37 @@ class MedicineController extends BaseController
 //                return 0;
 //            }
 //
+        if($isWeb==1)
+        {
+            $medicine = (Session::get ('medicine') == "") ? Request::get ('medicine') : Session::get ('medicine');
+            $med_quantity = (Session::get ('med_quantity') == "") ? Request::get ('med_quantity') : Session::get ('med_quantity');
+            // $med_mrp = Request::get ('hidden_selling_price') ;
 
-		$medicine = (Session::get ('medicine') == "") ? Request::get ('medicine') : Session::get ('medicine');
-		$med_quantity = (Session::get ('med_quantity') == "") ? Request::get ('med_quantity') : Session::get ('med_quantity');
-		// $med_mrp = Request::get ('hidden_selling_price') ;
+            $item_code = (Session::get ('item_code') == "") ? Request::get ('hidden_item_code') : Session::get ('item_code');
+            $item_id = (Session::get ('item_id') == "") ? Request::get ('id') : Session::get ('item_id');
 
-		$item_code = (Session::get ('item_code') == "") ? Request::get ('hidden_item_code') : Session::get ('item_code');
-		$item_id = (Session::get ('item_id') == "") ? Request::get ('id') : Session::get ('item_id');
-		$med_mrp = $this->anyCalculateMRP($item_id);
+            $med_mrp = $this->anyCalculateMRP($item_id);
 
-		$pres_required = (Session::get ('pres_required') == "") ? Request::get ('pres_required') : Session::get ('pres_required');
+            $pres_required = (Session::get ('pres_required') == "") ? Request::get ('pres_required') : Session::get ('pres_required');
 
-		Session::put ('medicine' , $medicine);
-		Session::put ('med_quantity' , $med_quantity);
-		Session::put ('med_mrp' , $med_mrp);
-		Session::put ('item_code' , $item_code);
-		Session::put ('item_id' , $item_id);
-		Session::put ('pres_required' , $pres_required);
-		$email = "";
+            Session::put ('medicine' , $medicine);
+            Session::put ('med_quantity' , $med_quantity);
+            Session::put ('med_mrp' , $med_mrp);
+            Session::put ('item_code' , $item_code);
+            Session::put ('item_id' , $item_id);
+            Session::put ('pres_required' , $pres_required);
+            $email = "";
+        } else {
+            $medicine = Request::get ('medicine');
+            $med_quantity = Request::get ('med_quantity');
+            $item_code = Request::get ('hidden_item_code');
+            $item_id = Request::get ('id');
+            $med_mrp = $this->anyCalculateMRP($item_id);
+            $pres_required = Request::get ('pres_required');
+            $user_id = Request::get ('user_id');
+
+        }
+
 		try {
 			if (!Auth::check ())
 					throw new Exception("You are not authorized to do this action" , 401);
