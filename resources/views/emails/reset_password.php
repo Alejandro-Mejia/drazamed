@@ -56,7 +56,7 @@
 
 				<p style="text-align: center">o</p>
 
-				<p> {{ __('Enter the security code in your mobile app')}} : <strong><?= $code; ?></strong></p>
+				<p> Utiliza este codigo para reestablecer tu contraseña : <strong><?= $code; ?></strong></p>
 
 				<p>Si usted piensa que alguien mas ha intentado cambiar la contraseña de su usuario, por favor comuniquese con nosotros lo mas pronto posible.</p>
 

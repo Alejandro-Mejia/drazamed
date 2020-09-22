@@ -486,11 +486,22 @@ class UserController extends BaseController
 	{
 		try {
             $email = Request::get ('email' , '');
+
+            $post = 0;
+            if(!empty(Request::json()->all())) {
+                $email_json = Request::input ('email');
+                $security_code = Request::input ('security_code');
+                $new_password = Request::input ('new_password');
+                $confirm_password = Request::input ('confirm_password');
+                $post=1;
+            }
+
             Log::info('email:' . $email);
 
-			if (Request::has ('email') && Request::has ('security_code') && Request::has ('new_password')) {
+
+			if ($email && $security_code && $new_password) {
 				$security_code = Request::get ('security_code');
-				dd($security_code);
+				// dd($security_code);
 				$password = Request::get ('new_password');
 				$confirm_password = Request::get ('confirm_password');
 				$user = User::where ('email' , '=' , $email)->where ('security_code' , '=' , $security_code)->first ();
@@ -519,9 +530,9 @@ class UserController extends BaseController
                     $result = ['status' => 'FAILURE' , 'msg' => 'Usuario no encontrado'];
 					// throw new Exception('No User Found' , 404);
 				}
-                //$result = ['status' => 'SUCCESS' , 'msg' => 'Password Reset'];
+
 			}
-            // $result = ['status' => 'SUCCESS' , 'msg' => 'Password Reset'];
+
 			return Response::json ($result);
 		}
 		catch (Exception $e) {
