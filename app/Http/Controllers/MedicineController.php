@@ -1523,7 +1523,7 @@ class MedicineController extends BaseController
                 'user_id' => $user_id
             ];
 
-            Log::info('Data:' . $data);
+            Log::info('Data:' . print_r($data, true));
 
         }
 
