@@ -1463,12 +1463,20 @@ class MedicineController extends BaseController
 	public
 	function anyRemoveFromCartApp ()
 	{
-        $email = Session::get ('user_id');
-        $item_code = Session::get ('item_code');
+        $email = Request::get ('email');
+        $item_code = Request::get ('item_code');
 
-		DB::table ('sessions')->where ('user_id' , '=' , $email)->where('item_code' , '=' , $item_code)->delete ();
 
-		return Response::json (['status' => 'SUCCESS' , 'msg' => 'Se elimino el item']);
+        // dd(DB::table ('sessions')->where ('user_id' , '=' , $email)->where('item_code' , '=' , $item_code)->toSql());
+        $delete =  DB::table ('sessions')->where ('user_id' , '=' , $email)->where('item_code' , '=' , $item_code)->delete ();
+
+
+        if($delete) {
+            return Response::json (['status' => 'SUCCESS' , 'msg' => 'Se elimino el item']);
+        } else {
+            return Response::json (['status' => 'FAILURE' , 'msg' => 'No se pudo eliminar el item']);
+        }
+
 
 	}
 
