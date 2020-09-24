@@ -1596,16 +1596,24 @@ class MedicineController extends BaseController
 	 */
 
 	public
-	function anyUpdateCart ()
+	function anyUpdateCart ($is_web)
 	{
 		// Update Item
 		$item_code = Request::get ('item_code');
 		$new_qty = Request::get ('new_qty');
-		$email = Session::get ('user_id');
+        $email = Session::get ('user_id');
+
+        Log::info('item_code:' . $item_code);
+        Log::info('new_qty:' . $new_qty);
+        Log::info('user_id:' . $user_id);
+
 		$qty_updt = DB::table ('sessions')
 			->where ('user_id' , '=' , $email)
 			->where ('item_code' , '=' , $item_code)
             ->update (array('medicine_count' => $new_qty));
+
+        Log::info('Update:' . $qty_updt);
+
         if($is_web) {
             if ($qty_updt) {
                 echo 1;
