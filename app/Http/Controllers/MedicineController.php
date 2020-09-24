@@ -1483,7 +1483,7 @@ class MedicineController extends BaseController
 //                return 0;
 //            }
 //
-        if($isWeb==1)
+        if($is_web==1)
         {
             $medicine = (Session::get ('medicine') == "") ? Request::get ('medicine') : Session::get ('medicine');
             $med_quantity = (Session::get ('med_quantity') == "") ? Request::get ('med_quantity') : Session::get ('med_quantity');
