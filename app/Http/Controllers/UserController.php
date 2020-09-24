@@ -332,7 +332,7 @@ class UserController extends BaseController
                     $status = User::where ('email' , '=' , $email)->join ('user_status as us' , 'us.id' , '=' , 'user_status')->first ()->name;
                     // $user_id = User::where ('email' , '=' , $email)->join ('user_status as us' , 'us.id' , '=' , 'user_status')->first ()->id;
                     $user = User::select('name')->where('email' , '=' , $email)->first()->name;
-                    $user_id = User::select('name')->where('email' , '=' , $email)->first()->id;
+                    $user_id = User::select('id')->where('email' , '=' , $email)->first()->id;
 					// dd($user);
 					//dd($status);
 					Session::put ('user_id' , $email);
