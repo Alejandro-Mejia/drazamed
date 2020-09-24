@@ -1554,7 +1554,8 @@ class MedicineController extends BaseController
 						if ($is_web == 1) {
 							return Redirect::to ("my-cart");
 						} else {
-							return "inserted";
+                            return Response::json (['status' => 'SUCCESS' , 'msg' => 'Inserted']);
+							// return "inserted";
 						}
 					}
 				}
