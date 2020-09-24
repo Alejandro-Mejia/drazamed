@@ -329,7 +329,8 @@ class UserController extends BaseController
 
 			} else {
 				if (Auth::attempt (array('email' => $email , 'password' => $password))) {
-					$status = User::where ('email' , '=' , $email)->join ('user_status as us' , 'us.id' , '=' , 'user_status')->first ()->name;
+                    $status = User::where ('email' , '=' , $email)->join ('user_status as us' , 'us.id' , '=' , 'user_status')->first ()->name;
+                    $user_id = User::where ('email' , '=' , $email)->join ('user_status as us' , 'us.id' , '=' , 'user_status')->first ()->id;
 					$user = User::select('name')->where('email' , '=' , $email)->first()->name;
 					// dd($user);
 					//dd($status);
@@ -348,7 +349,7 @@ class UserController extends BaseController
 					// $result = ['status' => 'SUCCESS' , 'msg' => 'User Logged In' , 'data' => ['status' => $status , 'pres_status' => $pres_status ,
 					// 	'invoice_status' => $invoice_status , 'payment_status' => $payment_status , 'shipping_status' => $shipping_status]];
 					//
-					$result = ['status' => 'SUCCESS' , 'msg' => 'User Logged In', 'email' => $email, 'name'=> $user,  'data' => ['status' => $status ]];
+					$result = ['status' => 'SUCCESS' , 'msg' => 'User Logged In', 'email' => $email, 'name'=> $user,  'data' => ['status' => $status, 'user_id'=>$user_id ]];
 					//dd($result);
 					// Log::info('result: '. print_f($result, true));
 				} else {
