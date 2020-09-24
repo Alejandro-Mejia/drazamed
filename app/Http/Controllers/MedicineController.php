@@ -1539,7 +1539,8 @@ class MedicineController extends BaseController
                 //$email = 'santysierra0@gmail.com';
 				$medicine_exist = DB::table ('sessions')->select ('medicine_name')->where ('user_id' , '=' , $email)->where ('item_code' , '=' , $item_code)->get ();
 				if (count ($medicine_exist) > 0) {
-					$increment = DB::table ('sessions')->where ('user_id' , '=' , $email)->where ('item_code' , '=' , $item_code)->increment ('medicine_count' , $med_quantity);
+                    $increment = DB::table ('sessions')->where ('user_id' , '=' , $email)->where ('item_code' , '=' , $item_code)->increment ('medicine_count' , $med_quantity);
+                    Log::info('increment:' . $increment);
 					if ($increment) {
 						Session::forget ('medicine');
 						Session::forget ('med_quantity');
@@ -1604,12 +1605,21 @@ class MedicineController extends BaseController
 		$qty_updt = DB::table ('sessions')
 			->where ('user_id' , '=' , $email)
 			->where ('item_code' , '=' , $item_code)
-			->update (array('medicine_count' => $new_qty));
-		if ($qty_updt) {
-			echo 1;
-		} else {
-			echo 0;
-		}
+            ->update (array('medicine_count' => $new_qty));
+        if($is_web) {
+            if ($qty_updt) {
+                echo 1;
+            } else {
+                echo 0;
+            }
+        } else {
+            if ($qty_updt) {
+                return Response::json (['status' => 'SUCCESS' , 'msg' => 'Updated']);
+            } else {
+                return Response::json (['status' => 'FAILURE' , 'msg' => 'Error actualizando cantidades']);
+            }
+        }
+
 
 	}
 

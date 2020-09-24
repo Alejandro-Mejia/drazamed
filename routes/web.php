@@ -130,6 +130,7 @@ use MercadoPago;
     Route::any('/medicine/admin-pay-success/{invoice}', 'MedicineController@anyAdminPaySuccess');
     Route::any('/medicine/create-order/{invoice}/{request}', 'MedicineController@anyCreateOrder');
     Route::any('/medicine/audit-database', 'MedicineController@anyAuditDatabase');
+    Route::any('/medicine/update-cart/{is_web}', 'MedicineController@anyUpdateCart');
     Route::any('/medicine/update-cart', 'MedicineController@anyUpdateCart');
     Route::get('/medicine/medicine-list-from-name', 'MedicineController@getMedicineListFromName');
     Route::get('/medicine/selling-price/{item_code}', 'MedicineController@getSellingPrice');
