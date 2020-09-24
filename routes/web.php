@@ -71,6 +71,7 @@ use MercadoPago;
      * General Routes
      */
     Route::get('/my-cart', 'MedicineController@getMyCart');
+    Route::get('/my-cart-app', 'MedicineController@getMyCartApp');
     Route::get('/my-cart1', 'MedicineController@getMyCart1');
     Route::get('/my-prescription/{option?}', 'MedicineController@getMyPrescription');
     Route::get('/paid-prescription', 'MedicineController@getPaidPrescription');
@@ -119,6 +120,7 @@ use MercadoPago;
     Route::any('/medicine/load-medicine-cats/{is_web}', 'MedicineController@anyLoadMedicineCategories');
     Route::any('/medicine/load-medicine-labs/{is_web}', 'MedicineController@anyLoadMedicineLabs');
     Route::any('/medicine/add-cart/{is_web}', 'MedicineController@anyAddCart');
+    Route::any('/medicine/get-cart/{is_web}', 'MedicineController@anyGetCart');
     Route::any('/medicine/remove-from-cart-app', 'MedicineController@anyRemoveFromCartApp');
     Route::any('/medicine/remove-from-cart/{item_id}', 'MedicineController@anyRemoveFromCart');
     Route::any('/medicine/load-sub-medicine', 'MedicineController@anyLoadSubMedicine');
