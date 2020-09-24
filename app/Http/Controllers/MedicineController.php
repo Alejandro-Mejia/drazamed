@@ -1433,7 +1433,7 @@ class MedicineController extends BaseController
 
     function getMyCartApp()
 	{
-		$email = Session::get ('email');
+		$email = Request::get ('email');
 		$current_orders = DB::table ('sessions')->where ('user_id' , '=' , $email)->get ();
         return Response::json (['status' => 'SUCCESS' , 'items' => $current_orders]);
 
@@ -1442,7 +1442,7 @@ class MedicineController extends BaseController
 
 	function getMyCart()
 	{
-		$email = Request::get ('email');
+		$email = Session::get ('user_id');
 		$current_orders = DB::table ('sessions')->where ('user_id' , '=' , $email)->get ();
 
 		return View::make ('/design/cart' , array('current_orders' => $current_orders));
