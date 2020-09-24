@@ -1124,7 +1124,7 @@ class MedicineController extends BaseController
 
 		} else {
             $medicines = array_slice ($medicines , 0 , 10);
-            Log::info('Medicines'. print_r())
+            // Log::info('Medicines'. print_r());
 			// 'id' , 'item_code' , 'item_name' , 'item_name as value' , 'item_name as label' , 'item_code' , 'composition' , 'discount' , 'discount_type' , 'tax' , 'tax_type' , 'manufacturer' , 'group' , 'is_delete' , 'is_pres_required')->get()->toArray ();
 			foreach ($medicines as $data) {
 				$json[] = array(
