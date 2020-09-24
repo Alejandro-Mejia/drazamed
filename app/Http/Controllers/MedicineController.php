@@ -1123,7 +1123,8 @@ class MedicineController extends BaseController
 			return Response::json ($json);
 
 		} else {
-			$medicines = array_slice ($medicines , 0 , 10);
+            $medicines = array_slice ($medicines , 0 , 10);
+            Log::info('Medicines'. print_r())
 			// 'id' , 'item_code' , 'item_name' , 'item_name as value' , 'item_name as label' , 'item_code' , 'composition' , 'discount' , 'discount_type' , 'tax' , 'tax_type' , 'manufacturer' , 'group' , 'is_delete' , 'is_pres_required')->get()->toArray ();
 			foreach ($medicines as $data) {
 				$json[] = array(
@@ -1512,6 +1513,18 @@ class MedicineController extends BaseController
             $pres_required = Request::get ('pres_required');
             $user_id = Request::get ('user_id');
 
+            $data = [
+                'medicine' => $medicine,
+                'quantity' => $med_quantity,
+                'item_code' => $item_code,
+                'item_id' => $item_id,
+                'mrp' => $med_mrp,
+                'pres_required' => $pres_required,
+                'user_id' => $user_id
+            ];
+
+            Log::info('Data:' . $data);
+
         }
 
 		try {
@@ -1521,7 +1534,7 @@ class MedicineController extends BaseController
                 // $email = User::where('id', 'user_id');
                 $email = Session::get ('user_id' , '');
                 //$email = 'santysierra0@gmail.com';
-				$medicine_exist = DB::table ('sessions')->select ('medicine_name')->where ('user_id' , '=' , $email)->where ('medicine_name' , '=' , $medicine)->get ();
+				$medicine_exist = DB::table ('sessions')->select ('medicine_name')->where ('user_id' , '=' , $email)->where ('item_code' , '=' , $item_code)->get ();
 				if (count ($medicine_exist) > 0) {
 					$increment = DB::table ('sessions')->increment ('medicine_count' , $med_quantity);
 					if ($increment) {
