@@ -41,6 +41,7 @@ use App\Medicine;
 use App\Invoice;
 use App\Customer;
 use App\Cache;
+use App\User;
 
 use Maatwebsite\Excel\Facades\Excel;
 use Maatwebsite\Excel\HeadingRowImport;
