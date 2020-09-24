@@ -1539,7 +1539,7 @@ class MedicineController extends BaseController
                 //$email = 'santysierra0@gmail.com';
 				$medicine_exist = DB::table ('sessions')->select ('medicine_name')->where ('user_id' , '=' , $email)->where ('item_code' , '=' , $item_code)->get ();
 				if (count ($medicine_exist) > 0) {
-					$increment = DB::table ('sessions')->increment ('medicine_count' , $med_quantity);
+					$increment = DB::table ('sessions')->where ('user_id' , '=' , $email)->where ('item_code' , '=' , $item_code)->increment ('medicine_count' , $med_quantity);
 					if ($increment) {
 						Session::forget ('medicine');
 						Session::forget ('med_quantity');
