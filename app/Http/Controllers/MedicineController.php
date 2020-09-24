@@ -1515,10 +1515,12 @@ class MedicineController extends BaseController
         }
 
 		try {
-			if (!Auth::check ())
+			if (!Auth::check () && !isset($user_id))
 					throw new Exception("You are not authorized to do this action" , 401);
-			if (Auth::check ()) {
-				$email = Session::get ('user_id' , '');
+			if (Auth::check () || isset($user_id)) {
+                // $email = User::where('id', 'user_id');
+                // $email = Session::get ('user_id' , '');
+                $email = 'santysierra0@gmail.com';
 				$medicine_exist = DB::table ('sessions')->select ('medicine_name')->where ('user_id' , '=' , $email)->where ('medicine_name' , '=' , $medicine)->get ();
 				if (count ($medicine_exist) > 0) {
 					$increment = DB::table ('sessions')->increment ('medicine_count' , $med_quantity);
