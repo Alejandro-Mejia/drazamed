@@ -1566,8 +1566,9 @@ class MedicineController extends BaseController
 			}
 
 		} catch (Exception $e) {
-			// $message = $this->catchException ($e);
-			return 'sin_usuario';
+            // $message = $this->catchException ($e);
+            return Response::json (['status' => 'FAILURE' , 'msg' => 'Sin usuario o usuario invalido']);
+			// return 'sin_usuario';
 		}
 
 
