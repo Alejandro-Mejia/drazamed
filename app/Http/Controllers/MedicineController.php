@@ -1601,11 +1601,11 @@ class MedicineController extends BaseController
 		// Update Item
 		$item_code = Request::get ('item_code');
 		$new_qty = Request::get ('new_qty');
-        $email = Session::get ('user_id');
+        $email = Request::get ('email');
 
         Log::info('item_code:' . $item_code);
         Log::info('new_qty:' . $new_qty);
-        Log::info('user_id:' . $user_id);
+        Log::info('email:' . $email);
 
 		$qty_updt = DB::table ('sessions')
 			->where ('user_id' , '=' , $email)
