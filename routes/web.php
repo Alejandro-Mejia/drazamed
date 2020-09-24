@@ -119,6 +119,7 @@ use MercadoPago;
     Route::any('/medicine/load-medicine-cats/{is_web}', 'MedicineController@anyLoadMedicineCategories');
     Route::any('/medicine/load-medicine-labs/{is_web}', 'MedicineController@anyLoadMedicineLabs');
     Route::any('/medicine/add-cart/{is_web}', 'MedicineController@anyAddCart');
+    Route::any('/medicine/remove-from-cart-app', 'MedicineController@anyRemoveFromCartApp');
     Route::any('/medicine/remove-from-cart/{item_id}', 'MedicineController@anyRemoveFromCart');
     Route::any('/medicine/load-sub-medicine', 'MedicineController@anyLoadSubMedicine');
     Route::any('/medicine/store-prescription/{is_web}', 'MedicineController@anyStorePrescription');

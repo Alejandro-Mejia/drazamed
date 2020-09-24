@@ -1453,6 +1453,23 @@ class MedicineController extends BaseController
 
 		return Redirect::back ()->withErrors (['msg' , 'Item has been removed']);
 
+    }
+
+    /*
+	 * remove item from cart from app
+	 * deletes row from 'sessions'  table
+	 * */
+
+	public
+	function anyRemoveFromCartApp ()
+	{
+        $email = Session::get ('user_id');
+        $item_code = Session::get ('item_code');
+
+		DB::table ('sessions')->where ('user_id' , '=' , $email)->where('item_code' , '=' , $item_code)->delete ();
+
+		return Response::json (['status' => 'SUCCESS' , 'msg' => 'Se elimino el item']);
+
 	}
 
 	/*
