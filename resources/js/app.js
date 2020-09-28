@@ -78,10 +78,11 @@ window.Echo.channel('Drazamed')
 //     });
 //   })
   .listen('.orderStatus', (e) => {
-    console.log('Orden verificada : ' );
+    console.log('Orden verificada ....: ' );
     console.log(e);
     // console.log(e.user.id);
-    httpGetAsync('/user/is-actual-user/' + e.data.user.id, checkedUser);
+    console.log("Verificando que sea para el usuario");
+    httpGetAsync('/user/is-actual-user/' + e.user.id, checkedUser);
   });
 
 function httpGetAsync(theUrl, callback)
@@ -89,6 +90,7 @@ function httpGetAsync(theUrl, callback)
     var xmlHttp = new XMLHttpRequest();
     xmlHttp.onreadystatechange = function() {
         if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
+            console.log(xmlHttp.responseText);
             callback(xmlHttp.responseText);
     }
     xmlHttp.open("GET", theUrl, true); // true for asynchronous
