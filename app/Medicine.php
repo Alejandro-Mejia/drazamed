@@ -152,32 +152,68 @@
 				//$medicine_list = self::select ('id' , 'item_code' , 'item_name' , 'item_name as value' , 'item_name as label' , 'item_code' , 'composition' , 'discount' , 'discount_type' , 'tax' , 'tax_type' , 'manufacturer' , 'group' , 'is_delete' , 'is_pres_required', 'sell_price')->get()->toArray ();
 				$medicine_list = self::where('id', '=', $key)->get();
 				//dd($medicines);
-				$medicines = [];
+				// $medicines = [];
 				foreach ($medicine_list as $list) {
-					$medicines[$list['id']]['id'] = $list['id'];
-					$medicines[$list['id']]['item_code'] = $list['item_code'];
-					$medicines[$list['id']]['item_name'] = $list['item_name'];
-					$medicines[$list['id']]['value'] = $list['item_name'];
-					$medicines[$list['id']]['label'] = $list['item_name'];
-					$medicines[$list['id']]['composition'] = $list['composition'];
-					$medicines[$list['id']]['discount'] = $list['discount'];
-					$medicines[$list['id']]['discount_type'] = $list['discount_type'];
-					$medicines[$list['id']]['tax'] = $list['tax'];
-					$medicines[$list['id']]['tax_type'] = $list['tax_type'];
-					$medicines[$list['id']]['manufacturer'] = $list['manufacturer'];
-					$medicines[$list['id']]['group'] = $list['group'];
-					$medicines[$list['id']]['is_delete'] = $list['is_delete'];
-					$medicines[$list['id']]['is_pres_required'] = $list['is_pres_required'];
-					$medicines[$list['id']]['photo_url'] = $list['photo_url'];
-					$medicines[$list['id']]['sell_price'] = $list['sell_price'];
-					$medicines[$list['id']]['mrp'] = $list['sell_price'];
-					$medicines[$list['id']]['show_priority'] = $list['show_priority'];
+					$medicines['id'] = $list['id'];
+					$medicines['item_code'] = $list['item_code'];
+					$medicines['item_name'] = $list['item_name'];
+					$medicines['value'] = $list['item_name'];
+					$medicines['label'] = $list['item_name'];
+					$medicines['composition'] = $list['composition'];
+					$medicines['discount'] = $list['discount'];
+					$medicines['discount_type'] = $list['discount_type'];
+					$medicines['tax'] = $list['tax'];
+					$medicines['tax_type'] = $list['tax_type'];
+					$medicines['manufacturer'] = $list['manufacturer'];
+					$medicines['group'] = $list['group'];
+					$medicines['is_delete'] = $list['is_delete'];
+					$medicines['is_pres_required'] = $list['is_pres_required'];
+					$medicines['photo_url'] = $list['photo_url'];
+					$medicines['sell_price'] = $list['sell_price'];
+					$medicines['mrp'] = $list['sell_price'];
+					$medicines['show_priority'] = $list['show_priority'];
 				}
 				// //Cache::put ('CACHE_PARAM_MEDICINE' , $medicines , 1440);
 			//}
 
-			return empty($key) ? $medicines : $medicines[$key];
+			return empty($key) ? $medicines : $medicines;
 		}
+
+        public static function medicineCode ($key = '')
+		{
+			// $medicines = Cache::get ('CACHE_PARAM_MEDICINE' , null);
+			// if (is_null ($medicines)) {
+
+				//$medicine_list = self::select ('id' , 'item_code' , 'item_name' , 'item_name as value' , 'item_name as label' , 'item_code' , 'composition' , 'discount' , 'discount_type' , 'tax' , 'tax_type' , 'manufacturer' , 'group' , 'is_delete' , 'is_pres_required')->get()->toArray ();
+				//$medicine_list = self::select ('id' , 'item_code' , 'item_name' , 'item_name as value' , 'item_name as label' , 'item_code' , 'composition' , 'discount' , 'discount_type' , 'tax' , 'tax_type' , 'manufacturer' , 'group' , 'is_delete' , 'is_pres_required', 'sell_price')->get()->toArray ();
+				$medicine_list = self::where('item_code', '=', $key)->get();
+				//dd($medicines);
+				$medicines = [];
+				foreach ($medicine_list as $list) {
+					$medicines['id'] = $list['id'];
+					$medicines['item_code'] = $list['item_code'];
+					$medicines['item_name'] = $list['item_name'];
+					$medicines['value'] = $list['item_name'];
+					$medicines['label'] = $list['item_name'];
+					$medicines['composition'] = $list['composition'];
+					$medicines['discount'] = $list['discount'];
+					$medicines['discount_type'] = $list['discount_type'];
+					$medicines['tax'] = $list['tax'];
+					$medicines['tax_type'] = $list['tax_type'];
+					$medicines['manufacturer'] = $list['manufacturer'];
+					$medicines['group'] = $list['group'];
+					$medicines['is_delete'] = $list['is_delete'];
+					$medicines['is_pres_required'] = $list['is_pres_required'];
+					$medicines['photo_url'] = $list['photo_url'];
+					$medicines['sell_price'] = $list['sell_price'];
+					$medicines['mrp'] = $list['sell_price'];
+					$medicines['show_priority'] = $list['show_priority'];
+				}
+				// //Cache::put ('CACHE_PARAM_MEDICINE' , $medicines , 1440);
+			//}
+
+			return $medicines;
+        }
 
 		public function carts () {
 			return $this->hasMany('App\ItemList','medicine','id');

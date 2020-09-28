@@ -95,7 +95,7 @@
 
 
         <script src="/js/modal_manager.js"></script>
-        <script src="/js/mobile_menu.js"></script>
+        {{-- <script src="/js/mobile_menu.js"></script> --}}
 
         @yield('custom-js')
 

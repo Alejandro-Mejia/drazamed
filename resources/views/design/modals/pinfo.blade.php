@@ -245,7 +245,7 @@
         if (med_quantity.length > 0 && med_quantity > 0) {
             $.ajax({
                 type: "GET",
-                url: "medicine/add-cart/0",
+                url: "medicine/add-cart/1",
                 data:
                     "id=" +
                     id +

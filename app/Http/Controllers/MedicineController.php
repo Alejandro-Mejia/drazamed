@@ -6,6 +6,7 @@ use Intervention\Image\ImageManagerStatic as Image;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
+use DateTime;
 use Exception;
 use Storage;
 use Session;
@@ -245,11 +246,11 @@ class MedicineController extends BaseController
 
 		} else {
 			try {
-				if (!Auth::check ())
-					throw new Exception("No esta autorizado para esta acción" , 401);
+				// if (!Auth::check ())
+				// 	throw new Exception("No esta autorizado para esta acción" , 401);
 
-				$email = Auth::user ()->email;
-
+				// $email = Auth::user ()->email;
+                $email = Request::get ('email' , '');
 				$prescription = Request::get ('prescription' , '');
 				$is_pres_required = Request::get ('is_pres_required' , 1);
 
@@ -261,7 +262,7 @@ class MedicineController extends BaseController
 					throw new Exception('Se requiere formula médica para esta orden' , 412);
 
 				$path = base_path () . '/public/images/prescription/' . $email . '/';
-				$date = new DateTime();
+				$date = new \DateTime();
 
 				$file_name = "";
 
@@ -300,15 +301,17 @@ class MedicineController extends BaseController
 				$invoice_id = $invoice->id;
 
 				if ($cart_length > 0) {
-
+                    $item_codes = Request::get ('item_code' , null);
+                    $quantities = Request::get ('quantity' , null);
 					for ($i = 0; $i < $cart_length; $i++) {
-						$item_id = Request::get ('id' . $i , null);
-						$quantity = Request::get ('quantity' . $i , null);
-						if (is_null ($item_id) || empty($item_id) || is_null ($quantity))
+
+                        $item_code = $item_codes[$i];
+						$quantity = $quantities[$i];
+						if (is_null ($item_code) || empty($item_code) || is_null ($quantity))
 							continue;
 
-						$medicine_details = Medicine::medicines ($item_id);
-
+						// $medicine_details = Medicine::where ('item_code', '=', $item_code)->first();
+                        $medicine_details = Medicine::medicineCode($item_code);
 						// Medicine Details
 						if (is_null ($medicine_details) || empty($medicine_details))
 							continue;
@@ -317,7 +320,7 @@ class MedicineController extends BaseController
 						$total_price = ($medicine_details['mrp'] * $quantity) - $total_discount;
 						$itemList = new ItemList;
 						$itemList->invoice_id = $invoice_id;
-						$itemList->medicine = $item_id;
+						$itemList->medicine = $medicine_details['id'];
 						$itemList->quantity = $quantity;
 						$itemList->unit_price = $medicine_details['mrp'];
 						$itemList->discount_percentage = $medicine_details['discount'];
@@ -1512,7 +1515,7 @@ class MedicineController extends BaseController
 	 * */
 
 	public
-	function anyAddCart ($is_web = 0)
+	function anyAddCart ($is_web = 1)
 	{
 //            if (!$this->isCsrfAccepted()) {
 //                return 0;
@@ -1538,6 +1541,7 @@ class MedicineController extends BaseController
             Session::put ('item_id' , $item_id);
             Session::put ('pres_required' , $pres_required);
             $email = "";
+            $user_id=1;
         } else {
             $medicine = Request::get ('medicine');
             $med_quantity = Request::get ('med_quantity');
@@ -1566,7 +1570,11 @@ class MedicineController extends BaseController
 					throw new Exception("You are not authorized to do this action" , 401);
 			if (Auth::check () || isset($user_id)) {
 
-                $email = User::select('email')->where('id' , '=' , $user_id)->first()->email;
+                if(!$is_web) {
+                    $email = User::select('email')->where('id' , '=' , $user_id)->first()->email;
+                } else {
+                    $email = Session::get ('user_id' , '');
+                }
                 Log::info('email:' . $email);
                 //$email = Session::get ('user_id' , '');
                 //$email = 'santysierra0@gmail.com';
