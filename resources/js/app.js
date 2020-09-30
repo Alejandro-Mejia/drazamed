@@ -104,8 +104,8 @@ function checkedUser(data) {
 
     var dataJson = JSON.parse(data);
     // dataJson = data;
-    console.log("data:");
-    console.log(data);
+    // console.log("data:");
+    // console.log(data);
 
     console.log("dataJson:");
     console.log(dataJson);
