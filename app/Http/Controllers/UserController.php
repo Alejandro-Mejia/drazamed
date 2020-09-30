@@ -275,7 +275,6 @@ class UserController extends BaseController
             return Response::make (['status' => 'FAILURE' , 'msg' => 'User not logged'] ,401);
         }
 
-
     }
 
 
