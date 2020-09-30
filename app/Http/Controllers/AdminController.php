@@ -1003,13 +1003,13 @@ class AdminController extends BaseController
 		});
 
         $userbcast = array(
-            "id" => $user_id,
-            "email" => $user_email
+            'id' => $user_id,
+            'email' => $user_email
         );
 
         $bcastdata = array(
-            // "id" => $prescription->id,
-            "order_status" => $prescription->status
+            'id' => $prescription->id,
+            'order_status' => $prescription->status
         );
 
         broadcast(new OrderStatusSent($userbcast, $bcastdata))->toOthers();
