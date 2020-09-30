@@ -52,7 +52,7 @@ class OrderStatusSent implements ShouldBroadcastNow
 
     public function broadcastAs()
     {
-        return 'OrderStatus';
+        return 'orderStatus';
     }
 
 

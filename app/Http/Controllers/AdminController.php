@@ -1008,6 +1008,7 @@ class AdminController extends BaseController
         );
 
         $bcastdata = array(
+            "id" => $prescription->id,
             "order_status" => $prescription->status
         );
 

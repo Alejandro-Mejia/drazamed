@@ -114,7 +114,7 @@ class MedicineController extends BaseController
 				}
 
 				$path = base_path () . '/public/images/prescription/' . $email . '/';
-//				if($is_pres_required)
+
 
 				$file_name = "";
 				// dd(Request::all());
@@ -152,7 +152,7 @@ class MedicineController extends BaseController
 				// ($is_pres_required == 1) ? 1 : 2;
 				// Save Prescription
 				$prescription = new Prescription;
-				$user_id = Auth::user ()->id;
+				$user_id = Auth::user()->id;
 				$prescription->path = $file_name;
 				$prescription->created_at = date ('Y-m-d H:i:s');
 				$prescription->user_id = $user_id;
@@ -252,7 +252,12 @@ class MedicineController extends BaseController
 				// $email = Auth::user ()->email;
                 $email = Request::get ('email' , '');
 				$prescription = Request::get ('prescription' , '');
-				$is_pres_required = Request::get ('is_pres_required' , 1);
+                $is_pres_required = Request::get ('is_pres_required' , 1);
+
+                Log::info('email:' . $mail);
+                Log::info('prescription:' . $prescription);
+                Log::info('is_pres_required:' . $is_pres_required);
+
 
 				if (empty($email))
 					throw new Exception('Email is empty' , 400);
@@ -261,10 +266,10 @@ class MedicineController extends BaseController
 				if ($is_pres_required && empty($prescription))
 					throw new Exception('Se requiere formula médica para esta orden' , 412);
 
-				$path = base_path () . '/public/images/prescription/' . $email . '/';
-				$date = new \DateTime();
+                $path = base_path () . '/public/images/prescription/' . $email . '/';
+                $date = new \DateTime();
 
-				$file_name = "";
+                $file_name = "";
 
 				if (!empty($prescription)) {
 					$file_name = $date->getTimestamp ();
