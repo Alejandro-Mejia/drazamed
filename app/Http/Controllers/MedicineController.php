@@ -1121,6 +1121,7 @@ class MedicineController extends BaseController
 					'item_code' => $data['item_code'] ,
 					'mrp' => $data['sell_price'],
                     'sp' => $data['show_priority'],
+                    'quantity' => $data['quantity'],
                     'imgUrl' => $imagenUrl
 				);
 			}

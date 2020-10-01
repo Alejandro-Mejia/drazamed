@@ -267,7 +267,7 @@ class UserController extends BaseController
         Log::info('User : ' . $user);
         if (isset($user)) {
             if ($user->id == $user_js) {
-                return response()->json(['status' => 'SUCCESS' , 'msg' => 'Usuario actual'] ,200);
+                return Response::make(['status' => 'SUCCESS' , 'msg' => 'Usuario actual'] ,200);
                 return Response::json ($result);
             } else {
                 return Response::make (['status' => 'FAILURE' , 'msg' => 'Different user'] ,401);

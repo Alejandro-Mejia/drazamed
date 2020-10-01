@@ -464,7 +464,9 @@
         }
     })
     .autocomplete("instance")._renderItem = function(ul, item) {
-            //console.log(item);
+            // console.log(item);
+            availability = (item.quantity >= 50) ? "Disponible" : "No Disponible";
+            color = (item.quantity >= 50) ? "green" : "Red";
 
 
             card = "<div class='card'>" +
@@ -476,6 +478,7 @@
                                 "<div class='card-block px-2'>" +
                                     "<h5 class='card-title'>" + item.value + "</h5>" +
                                     "<p class='card-text'>" + item.composition + "</p>" +
+                                    "<p class='card-text' style='color:" + color + "'>" + availability + "</p>" +
                                 "</div>" +
                             "</div>" +
                         "</div>" +
