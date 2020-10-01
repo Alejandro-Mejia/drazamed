@@ -881,10 +881,10 @@ $(".add_to_cart").click(function() {
             complete: function(data) {},
             success: function(data) {
                 console.log(data);
-                if (data == 0) {
+                if (data.msg == 0) {
                     $("#loginModal").click();
                 }
-                if (data == "updated") {
+                if (data.msg == "Updated") {
                     $(".med_detailes_alert").css("display", "block");
                     $(".med_detailes_alert").html(
                         "Your cart has been successfully updated."
@@ -895,7 +895,7 @@ $(".add_to_cart").click(function() {
 
                     // alert("your order is updated");
                 }
-                if (data == "inserted") {
+                if (data.msg == "Inserted") {
                     $(".med_detailes_alert").css("display", "block");
                     $(".med_detailes_alert").html(
                         "Your cart has been successfully updated."
@@ -906,7 +906,7 @@ $(".add_to_cart").click(function() {
                     window.location = "my-cart/";
                 }
 
-                if (data == "sin_usuario") {
+                if (data.msg == "Sin usuario o usuario invalido") {
                     window.location = "/?msg=please_login";
                     console.log("Debe ingresar usuario y contraseña")
                 }

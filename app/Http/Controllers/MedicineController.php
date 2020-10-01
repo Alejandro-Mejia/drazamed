@@ -1617,7 +1617,7 @@ class MedicineController extends BaseController
 
 						Session::forget ('pres_required');
 						if ($is_web == 1) {
-							return Redirect::to ("my-cart");
+							return Response::json (['status' => 'SUCCESS' , 'msg' => 'Inserted']);
 						} else {
                             return Response::json (['status' => 'SUCCESS' , 'msg' => 'Inserted']);
 							// return "inserted";

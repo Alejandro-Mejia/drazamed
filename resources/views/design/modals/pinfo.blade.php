@@ -265,7 +265,7 @@
                 complete: function(data) {},
                 success: function(data) {
                     console.log(data);
-                    if (data == 0) {
+                    if (data.msg == 0) {
                         $("#loginModal").click();
                     }
                     if (data.msg == "Updated") {
