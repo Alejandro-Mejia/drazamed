@@ -1926,7 +1926,18 @@ class MedicineController extends BaseController
 			array_push ($items, $item);
 
 
-		}
+        }
+
+        if($invoice->shipping > 0) {
+            $item = new MercadoPago\Item();
+			$item->title = "Domicilio";
+			$item->quantity = 1;
+			// $item->picture_url = 'https://drazamed.com/images/products/' . $medicine['item_code'] . '.jpg';
+			$item->unit_price = $invoice->shipping;
+            $item->currency_id = 'COP';
+            array_push ($items, $item);
+			// $item->id = 1;
+        }
 
 		// if($invoice_id == 6) {
 		// 	dd($items);
