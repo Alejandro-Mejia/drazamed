@@ -880,6 +880,7 @@ $(".add_to_cart").click(function() {
             datatype: "json",
             complete: function(data) {},
             success: function(data) {
+                console.log(data);
                 if (data == 0) {
                     $("#loginModal").click();
                 }
