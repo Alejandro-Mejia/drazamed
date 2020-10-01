@@ -1948,12 +1948,12 @@ class MedicineController extends BaseController
 
 		// $preference->items = array($item);
 
-		$shipments = new MercadoPago\Shipments();
-		$shipments->cost = $invoice->shipping;
-		$shipments->mode = "custom";
+		// $shipments = new MercadoPago\Shipments();
+		// $shipments->cost = $invoice->shipping;
+		// $shipments->mode = "custom";
 
 		$preference->payer = $payer;
-		$preference->shipments = $shipments;
+		// $preference->shipments = $shipments;
 		$preference->external_reference = $invoice->id;
 
 
