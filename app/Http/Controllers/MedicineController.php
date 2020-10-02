@@ -91,6 +91,7 @@ class MedicineController extends BaseController
 	 */
 	public function anyStorePrescription ($isWeb = 0)
 	{
+        Log::info('isWeb : ' . $isWeb ? 'true' : 'false');
 
 		if ($isWeb) {
 
