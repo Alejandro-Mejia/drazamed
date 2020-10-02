@@ -35,15 +35,15 @@ class MedicinesImport implements ToModel, WithHeadingRow, WithBatchInserts , Wit
     public function model(array $row)
     {
         $exists = Medicine::where('item_code',$row['ean'])->first();
-        
-        if ($exists) {
-            //LOGIC HERE TO UPDATE
-            Log::info('Producto existente en la DB :' . $exists['item_name']) ;
-            
-            return null;
-        }
-        
-        
+
+        // if ($exists) {
+        //     //LOGIC HERE TO UPDATE
+        //     Log::info('Producto existente en la DB :' . $exists['item_name']) ;
+
+        //     return null;
+        // }
+
+
 
         // HeadingRowFormatter::default('none');
         return new Medicine([
@@ -53,7 +53,7 @@ class MedicinesImport implements ToModel, WithHeadingRow, WithBatchInserts , Wit
             'denomination'  => isset($row['denominacion']) ? $row['denominacion'] : "ND",
             'batch_no'      => isset($row['lote']) ? $row['lote'] : "ND",
             'units'         => isset($row['und']) ? $row['und'] : "ND",
-            'units_value'   => null, 
+            'units_value'   => isset($row['denominacion']) ? $this->setUnitVal($row['denominacion']) : 0,
             'quantity'      => isset($row['cantidad']) ? $row['cantidad'] : 0,
 
             'marked_price'  => isset($row['marcado']) ? $row['marcado']*1000 : 0,
@@ -154,6 +154,10 @@ class MedicinesImport implements ToModel, WithHeadingRow, WithBatchInserts , Wit
         // return $return;
     }
 
+
+
+
+
     public function ivaImport($value)
     {
 
@@ -176,14 +180,46 @@ class MedicinesImport implements ToModel, WithHeadingRow, WithBatchInserts , Wit
         }
         return $iva;
     }
-    
+
 
     public function setUnitVal($value) {
-        if(Str::contains($value,  'CAP' )) {
+
+        $value = $this->cleanDenomination($value);
+
+        if(Str::contains($value,  ' CAP' )) {
             preg_match_all('!\d+!', $value, $matches);
-            Log::info('Cantidades :' . $matches) ;
+            Log::info('$value :' . $value . ', unidades : CAPSULAS,  cantidad:' . print_r($matches, true)) ;
         }
-        
+        if(Str::contains($value,  'AMPOLLAS' )) {
+            preg_match_all('!\d+!', $value, $matches);
+            Log::info('$value :' . $value . ', unidades : AMPOLLAS,  cantidad:' . print_r($matches, true)) ;
+        }
+
+        if(Str::contains($value,  'TABLETAS' )) {
+            preg_match_all('!\d+!', $value, $matches);
+            Log::info('$value :' . $value . ', unidades : TABLETAS,  cantidad:' . print_r($matches, true)) ;
+        }
+
+        if(Str::contains($value,  ' TBS' )) {
+            preg_match_all('!\d+!', $value, $matches);
+            Log::info('$value :' . $value . ', unidades : TABLETAS,  cantidad:' . print_r($matches, true)) ;
+        }
+
+        if(Str::contains($value,  'GRAGEAS' )) {
+            preg_match_all('!\d+!', $value, $matches);
+            Log::info('$value :' . $value . ', unidades : GRAGEAS,  cantidad:' . print_r($matches, true)) ;
+        }
+        if(Str::contains($value,  ' GR' )) {
+            preg_match_all('!\d+!', $value, $matches);
+            Log::info('$value :' . $value . ', unidades : GRAMOS,  cantidad:' . print_r($matches, true)) ;
+        }
+        if(Str::contains($value,  ' ML' )) {
+            preg_match_all('!\d+!', $value, $matches);
+            Log::info('$value :' . $value . ', unidades : MILILITROS,  cantidad:' . print_r($matches, true)) ;
+        }
+
+        return null;
+
     }
 
 
