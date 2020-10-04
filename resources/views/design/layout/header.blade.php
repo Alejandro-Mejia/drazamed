@@ -17,17 +17,17 @@
             <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
                 <ul class="nav nav-pills ml-auto">
                     <li id="navlistitems" class="nave-item">
-                        <a id="navlistitems" class="nav-link" href="/">
+                        <a class="nav-link" href="/">
                             Inicio
                         </a>
                     </li>
                     <li id="navlistitems" class="nave-item">
-                        <a id="navlistitems" class="nav-link" href="/about">
+                        <a class="nav-link" href="/about">
                             Quienes Somos
                         </a>
                     </li>
                     <li id="navlistitems" class="nave-item">
-                        <a id="navlistitems" class="nav-link" href="/contact">
+                        <a class="nav-link" href="/contact">
                             Contacto
                         </a>
                     </li>

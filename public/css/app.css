@@ -16574,7 +16574,7 @@ header .side-nav ul .m-login-btn {
   width: 100%;
   height: 300px;
   margin: auto;
-  font-size: 1.25rem;
+  font-size: 0.9rem;
   /* 20 */
   background-color: #c8dadf;
   position: relative;
@@ -16735,6 +16735,12 @@ header .side-nav ul .m-login-btn {
 .box__button:hover,
 .box__button:focus {
   background-color: #0f3c4b;
+}
+
+@media (max-width: 1024) {
+  .box {
+    font-size: 0.9rem;
+  }
 }
 
 .drazamed-link {
