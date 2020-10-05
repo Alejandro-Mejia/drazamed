@@ -3,7 +3,7 @@
 width: 100%;
 height: 300px;
 margin: auto;
-font-size: 1.25rem; /* 20 */
+font-size: 0.9rem; /* 20 */
 background-color: #c8dadf;
 position: relative;
 padding: 40px 20px;
@@ -157,3 +157,9 @@ background-color: #fff;
 	{
 		background-color: #0f3c4b;
 	}
+
+@media(max-width:1024){
+	.box{
+		font-size: 0.9rem;
+	}
+}

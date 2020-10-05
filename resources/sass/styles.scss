@@ -8,6 +8,9 @@ $font-myriad: Myriad-pro, Helvetica, Arial, sans-serif;
   width: 7px;
   height: 7px;
 }
+
+$enable-responsive-font-sizes: true;
+
 ::-webkit-scrollbar-thumb {
   background-color: #d3d6d7;
   border-radius: 12px;
