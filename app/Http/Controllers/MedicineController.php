@@ -402,15 +402,17 @@ class MedicineController extends BaseController
 	 */
 	public function getMyPrescriptions ()
 	{
-		if (!Auth::check ())
-			return Redirect::to ('/');
+		// if (!Auth::check ())
+        // 	return Redirect::to ('/');
 
-		$email = Session::get ('user_id');
+        $email = Request::get ('email' , '');
+
+		$user_id = User::where('email', "=", $email)->first()->id;
 		$path = 'URL' . '/public/images/prescription/' . $email . '/';
-		$user_id = Auth::user ()->id;
-		$prescriptions  = Prescription::where ('user_id' , '=' , $user_id)->get ();
-        dd($prescriptions);
-		return json_encode($invoices);
+		// $user_id = Auth::user ()->id;
+		$prescriptions  = Prescription::with('getCart')->where ('user_id' , '=' , $user_id)->get ();
+        // dd($prescriptions);
+		return json_encode($prescriptions);
 
 		// return View::make ('/users/my_order' , array('invoices' => $invoices , 'email' => $email , 'default_img' => url ('/') . "/assets/images/no_pres_square.png"));
 
