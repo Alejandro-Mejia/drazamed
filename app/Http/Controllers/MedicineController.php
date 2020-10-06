@@ -255,7 +255,7 @@ class MedicineController extends BaseController
 				$prescription = Request::get ('prescription' , '');
                 $is_pres_required = Request::get ('is_pres_required' , 1);
 
-                Log::info('email:' . $mail);
+                Log::info('email:' . $email);
                 Log::info('prescription:' . $prescription);
                 Log::info('is_pres_required:' . $is_pres_required);
 
