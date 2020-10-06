@@ -17,10 +17,18 @@
     }
 </style>
 
+
+
 <section class="profile">
+    <div class="mx auto"> 
+        <a class="d-flex p-1 btn btn-outline-success justify-content-center" href="/my-cart" style="margin-top: 35px">
+            <span class="mr-10 fa fa-shopping-cart"></span>
+            Ve a tu  <strong> carrito de Compras </strong>
+        </a>
+    </div>
     <div class="profile-body">
         <div class="row">
-            <div class="col-lg-3 col-md-12">
+            <div id="responsiveProfile" class="col-lg-3 col-md-12 d-none d-lg-block">
                 <div class="panel nav-profile">
                     <div class="row">
                         <div class="col-md-3">
@@ -83,7 +91,7 @@
                     </nav>
                 </div>
             </div>
-
+            
             <div class="col-lg-9 col-md-12" style="max-height: 90%; overflow: auto;">
                 <div class="panel profile-panel">
                     <h2 class="panel-title">Mi Perfil</h2>
@@ -388,6 +396,7 @@
         </div>
     </div>
 </section>
+
 
 
 <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" id="confirmDelete">

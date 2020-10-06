@@ -102,6 +102,10 @@
     .profile-panel {
         margin-top: 30px;
     }
+    div#responsiveProfile{
+        display: block;
+        visibility: visible;
+    }
 }
 
 @media(max-width: 768px) {
@@ -111,5 +115,9 @@
         .profile-body {
             width: 100%;
         }
+    }
+    div#responsiveProfile{
+        display: none;
+        visibility: hidden;
     }
 }
