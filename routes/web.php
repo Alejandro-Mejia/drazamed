@@ -77,6 +77,7 @@ use MercadoPago;
     Route::get('/paid-prescription', 'MedicineController@getPaidPrescription');
     Route::get('/my-order', 'MedicineController@getMyOrder');
     Route::get('/my-orders', 'MedicineController@getMyOrders');
+    Route::get('/my-prescriptions', 'MedicineController@getMyPrescriptions');
     Route::get('/medicine-detail/{item_code}', 'MedicineController@getMedicineDetail');
     Route::get('/account-page', 'UserController@getAccountPage');
 

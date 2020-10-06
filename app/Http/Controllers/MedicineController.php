@@ -388,7 +388,28 @@ class MedicineController extends BaseController
 		$path = 'URL' . '/public/images/prescription/' . $email . '/';
 		$user_id = Auth::user ()->id;
 		$invoices = Invoice::where ('user_id' , '=' , $user_id)->where ('shipping_status' , '=' , ShippingStatus::SHIPPED ())->get ();
+        dd($invoices);
+		return json_encode($invoices);
 
+		// return View::make ('/users/my_order' , array('invoices' => $invoices , 'email' => $email , 'default_img' => url ('/') . "/assets/images/no_pres_square.png"));
+
+		// return View::make('/users/my_order');
+    }
+
+    /**
+	 * Get Prescriptions
+	 *     * @return mixed
+	 */
+	public function getMyPrescriptions ()
+	{
+		if (!Auth::check ())
+			return Redirect::to ('/');
+
+		$email = Session::get ('user_id');
+		$path = 'URL' . '/public/images/prescription/' . $email . '/';
+		$user_id = Auth::user ()->id;
+		$prescriptions  = Prescription::where ('user_id' , '=' , $user_id)->get ();
+        dd($prescriptions);
 		return json_encode($invoices);
 
 		// return View::make ('/users/my_order' , array('invoices' => $invoices , 'email' => $email , 'default_img' => url ('/') . "/assets/images/no_pres_square.png"));
