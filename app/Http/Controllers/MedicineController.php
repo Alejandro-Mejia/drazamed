@@ -195,6 +195,7 @@ class MedicineController extends BaseController
 						$itemList = new ItemList;
 						$itemList->invoice_id = $invoice_id;
 						$itemList->medicine = $medicine['medicine_id'];
+						$itemList->item_code = $medicine['item_code'];
 						$itemList->quantity = $medicine['medicine_count'];
 						$itemList->unit_price = $medicine_details['mrp'];
 						$itemList->discount_percentage = $medicine_details['discount'];
@@ -399,6 +400,7 @@ class MedicineController extends BaseController
     /**
 	 * Get Prescriptions
 	 *     * @return mixed
+     *      Retorna las prescripciones activas
 	 */
 	public function getMyPrescriptions ()
 	{
@@ -414,9 +416,6 @@ class MedicineController extends BaseController
         // dd($prescriptions);
 		return json_encode($prescriptions);
 
-		// return View::make ('/users/my_order' , array('invoices' => $invoices , 'email' => $email , 'default_img' => url ('/') . "/assets/images/no_pres_square.png"));
-
-		// return View::make('/users/my_order');
 	}
 
 	/**
@@ -1702,7 +1701,33 @@ class MedicineController extends BaseController
         }
 
 
+    }
+
+    /**
+	 * Empty Cart
+	 */
+
+	public
+	function anyEmptyCart ()
+	{
+
+        $email = Request::get ('email');
+
+        Log::info('email:' . $email);
+
+		$empty = DB::table('sessions')->where('user_id', $email)->delete();
+
+        Log::info('Empty:' . $empty);
+
+        if($empty) {
+            return Response::json (['status' => 'SUCCESS' , 'msg' => 'Vacio']);
+        } else {
+            return Response::json (['status' => 'FAILURE' , 'msg' => 'Error vaciando carrito']);
+        }
+
+
 	}
+
 
 	/**
 	 * Download Prescription

@@ -73,6 +73,7 @@ use MercadoPago;
     Route::get('/my-cart', 'MedicineController@getMyCart');
     Route::get('/my-cart-app', 'MedicineController@getMyCartApp');
     Route::get('/my-cart1', 'MedicineController@getMyCart1');
+    Route::get('/empty-cart', 'MedicineController@anyEmptyCart');
     Route::get('/my-prescription/{option?}', 'MedicineController@getMyPrescription');
     Route::get('/paid-prescription', 'MedicineController@getPaidPrescription');
     Route::get('/my-order', 'MedicineController@getMyOrder');
