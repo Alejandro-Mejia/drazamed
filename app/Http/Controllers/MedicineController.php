@@ -1875,10 +1875,18 @@ class MedicineController extends BaseController
 		// $invoice_id = Request::get ('invoice_id' , '');
 		// $isMobile = Request::get ('isMobile' , '');
 
-		// Datos del usuario
-		$email = Session::get ('user_id');
-		$user = Auth::user ();
-		$type = $user->user_type_id;
+        // Datos del usuario
+        if ($isMobile == 0) {
+            $email = Session::get ('user_id');
+            $user = Auth::user ();
+		    $type = $user->user_type_id;
+        } else {
+            $email = Request::get ('email');
+            $type =  UserType::CUSTOMER ();
+            $user = User::where('email', "=", $email)->first();
+        }
+
+
 
 		// Inicializacion de variables para post
 		$data = array();
