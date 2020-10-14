@@ -389,7 +389,7 @@ class MedicineController extends BaseController
 		$path = 'URL' . '/public/images/prescription/' . $email . '/';
 		$user_id = Auth::user ()->id;
 		$invoices = Invoice::where ('user_id' , '=' , $user_id)->where ('shipping_status' , '=' , ShippingStatus::SHIPPED ())->get ();
-        dd($invoices);
+        //dd($invoices);
 		return json_encode($invoices);
 
 		// return View::make ('/users/my_order' , array('invoices' => $invoices , 'email' => $email , 'default_img' => url ('/') . "/assets/images/no_pres_square.png"));
@@ -412,7 +412,17 @@ class MedicineController extends BaseController
 		$user_id = User::where('email', "=", $email)->first()->id;
 		$path = 'URL' . '/public/images/prescription/' . $email . '/';
 		// $user_id = Auth::user ()->id;
-		$prescriptions  = Prescription::with('getCart')->where ('user_id' , '=' , $user_id)->get ();
+        $prescriptions  = Prescription::with('getCart')
+                          ->where ('user_id' , '=' , $user_id)
+                          ->get ();
+
+        foreach($prescriptions as $prescription) {
+            foreach($prescription['getCart'] as $cart) {
+                Log::info('Medicina:' . print_r(Medicine::medicineCode($cart->item_code)));
+                $cart['name'] = Medicine::medicineCode($cart->item_code);
+            }
+        }
+
         // dd($prescriptions);
 		return json_encode($prescriptions);
 
