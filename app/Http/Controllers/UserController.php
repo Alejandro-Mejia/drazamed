@@ -486,7 +486,8 @@ class UserController extends BaseController
 	 */
 	public function anyResetPassword ()
 	{
-        //header ("Access-Control-Allow-Headers: '*'");
+        header ("Access-Control-Allow-Origin: *");
+        header ("Access-Control-Allow-Headers: '*'");
 		try {
             $email = Request::get ('email' , '');
 
