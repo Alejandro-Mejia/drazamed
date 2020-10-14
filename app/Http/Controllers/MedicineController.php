@@ -91,6 +91,9 @@ class MedicineController extends BaseController
 	 */
 	public function anyStorePrescription ($isWeb = 0)
 	{
+        header ("Access-Control-Allow-Origin: *");
+        header ("Access-Control-Allow-Headers: *");
+
         Log::info('isWeb : ' . $isWeb ? 'true' : 'false');
 
 		if ($isWeb) {
@@ -363,6 +366,9 @@ class MedicineController extends BaseController
 	 */
 	public function getMyOrder ()
 	{
+        header ("Access-Control-Allow-Origin: *");
+        header ("Access-Control-Allow-Headers: *");
+
 		if (!Auth::check ())
 			return Redirect::to ('/');
 		$email = Session::get ('user_id');
@@ -382,6 +388,9 @@ class MedicineController extends BaseController
 	 */
 	public function getMyOrders ()
 	{
+        header ("Access-Control-Allow-Origin: *");
+        header ("Access-Control-Allow-Headers: *");
+
 		if (!Auth::check ())
 			return Redirect::to ('/');
 
@@ -406,6 +415,9 @@ class MedicineController extends BaseController
 	{
 		// if (!Auth::check ())
         // 	return Redirect::to ('/');
+        header ("Access-Control-Allow-Origin: *");
+        header ("Access-Control-Allow-Headers: *");
+
 
         $email = Request::get ('email' , '');
 
@@ -433,6 +445,9 @@ class MedicineController extends BaseController
 	 */
 	public function createPrescriptionList ($invoice)
 	{
+        header ("Access-Control-Allow-Origin: *");
+        header ("Access-Control-Allow-Headers: *");
+
 		$medicines = Medicine::medicines ();
 		$items = [];
 		foreach ($invoice->cartList () as $cart) {
@@ -472,6 +487,9 @@ class MedicineController extends BaseController
 	 */
 	public function getMyPrescription ($is_category = 0)
 	{
+        header ("Access-Control-Allow-Origin: *");
+        header ("Access-Control-Allow-Headers: *");
+
 		if (!Auth::check ())
 			return Redirect::to ('/');
 		$email = Session::get ('user_id');
@@ -547,6 +565,9 @@ class MedicineController extends BaseController
 	 */
 	public function getPaidPrescription ()
 	{
+        header ("Access-Control-Allow-Origin: *");
+        header ("Access-Control-Allow-Headers: *");
+
 		if (!Auth::check ())
 			return Redirect::to ('/');
 		// Prescriptions
@@ -565,6 +586,9 @@ class MedicineController extends BaseController
 	 */
 	public function anyGetPrescriptionThumb ()
 	{
+        header ("Access-Control-Allow-Origin: *");
+        header ("Access-Control-Allow-Headers: *");
+
 		try {
 
 			if (!Auth::check ())
@@ -672,7 +696,8 @@ class MedicineController extends BaseController
 	public
 	function anyLoadMedicine ()
 	{
-		header ("Access-Control-Allow-Origin: *");
+        header ("Access-Control-Allow-Origin: *");
+        header ("Access-Control-Allow-Headers: *");
 		$medicineName = Request::get ('medicine' , '');
 		$medicine = Medicine::where ('item_name' , 'LIKE' , $medicineName . '%')->take (4)->get ();
 		$i = 0;
@@ -696,7 +721,8 @@ class MedicineController extends BaseController
 	 */
 	function anySearchCategories ($isWeb)
 	{
-		header ("Access-Control-Allow-Origin: *");
+        header ("Access-Control-Allow-Origin: *");
+        header ("Access-Control-Allow-Headers: *");
 		$term = Request::get ('term' , null);
 		$limitResutls = Request::get ('limit' , 10);
 
@@ -732,6 +758,8 @@ class MedicineController extends BaseController
 
 	public function anyCalculateMRP($id)
 	{
+        header ("Access-Control-Allow-Origin: *");
+        header ("Access-Control-Allow-Headers: *");
 		$med = Medicine::where ('id' , '=' , $id)->first ();
 
 		if($med->marked_price == 0) {
@@ -822,7 +850,10 @@ class MedicineController extends BaseController
 	public
 	function anySearchMedicine ()
 	{
-		header ("Access-Control-Allow-Origin: *");
+        header ("Access-Control-Allow-Origin: *");
+        header ("Access-Control-Allow-Headers: *");
+
+
 		$term = Request::get ('term' , null);
 		$xterm = Request::get ('xterm' , null);
 		$limitResutls = Request::get ('limit' , 200);
@@ -941,6 +972,9 @@ class MedicineController extends BaseController
 	 */
 	public function anyShowFavorites($value='')
 	{
+        header ("Access-Control-Allow-Origin: *");
+        header ("Access-Control-Allow-Headers: *");
+
 		$favorites = Favorite::get();
 		$notfound = [];
 		//dd($favorites);
@@ -984,6 +1018,9 @@ class MedicineController extends BaseController
 	public
 	function getSellingPrice($item_code)
 	{
+
+        header ("Access-Control-Allow-Origin: *");
+        header ("Access-Control-Allow-Headers: *");
 
 		$medicine = Medicine::where ('item_code', $item_code)->get ();
 		$i = 0;
@@ -1062,6 +1099,7 @@ class MedicineController extends BaseController
 	function anyLoadMedicineCategories ()
 	{
 		header ("Access-Control-Allow-Origin: *");
+        header ("Access-Control-Allow-Headers: *");
 
 		$cats = Medicine::select('group')->distinct()->orderBy('group')->get();
 
@@ -1086,6 +1124,7 @@ class MedicineController extends BaseController
 	function anyLoadMedicineLabs ()
 	{
 		header ("Access-Control-Allow-Origin: *");
+        header ("Access-Control-Allow-Headers: *");
 
 		$labs = Medicine::select('marketed_by')->distinct()->orderBy('marketed_by')->get();
 
@@ -1108,6 +1147,7 @@ class MedicineController extends BaseController
 	function anyLoadMedicineWeb ($isWeb = 0)
 	{
 		header ("Access-Control-Allow-Origin: *");
+        header ("Access-Control-Allow-Headers: *");
 		if ($isWeb) {
 			$key = Request::get ('term' , '');
 		} else {
@@ -1261,6 +1301,9 @@ class MedicineController extends BaseController
 	public
 	function anyLoadSubMedicine ()
 	{
+        header ("Access-Control-Allow-Origin: *");
+        header ("Access-Control-Allow-Headers: *");
+
 		try {
 
 
@@ -1322,6 +1365,9 @@ class MedicineController extends BaseController
 	public
 	function anyUpdateBuyMedicine ()
 	{
+        header ("Access-Control-Allow-Origin: *");
+        header ("Access-Control-Allow-Headers: *");
+
 		$updatedRows = 0;
 		$deletedRow = 0;
 		header ("Access-Control-Allow-Origin: *");
@@ -1357,6 +1403,9 @@ class MedicineController extends BaseController
 	public
 	function anyUpdateBuy ()
 	{
+        header ("Access-Control-Allow-Origin: *");
+        header ("Access-Control-Allow-Headers: *");
+
 		$updatedRows = 0;
 		$deletedRow = 0;
 		header ("Access-Control-Allow-Origin: *");
@@ -1391,6 +1440,9 @@ class MedicineController extends BaseController
 	public
 	function anyAddMedicine ()
 	{
+        header ("Access-Control-Allow-Origin: *");
+        header ("Access-Control-Allow-Headers: *");
+
 		$name = Request::get ('name' , '');
 		$oldMed = NewMedicine::where ('name' , '=' , $name)->get ();
 		if ($oldMed->count () > 0) {
@@ -1427,6 +1479,9 @@ class MedicineController extends BaseController
 	public
 	function postGetPresImg ()
 	{
+        header ("Access-Control-Allow-Origin: *");
+        header ("Access-Control-Allow-Headers: *");
+
 		$pres_id = Request::get ('pres_id');
 		$u = User::join ('prescription' , 'prescription.user_id' , '=' , 'users.id')->where ('id' , '=' , $pres_id)->first ();
 		$path = url('/') . '/public/images/prescription/' . $u->email . '/' . $u->path;
@@ -1446,6 +1501,9 @@ class MedicineController extends BaseController
 	public
 	function getMedicineDetail ($searched_medicine)
 	{
+        header ("Access-Control-Allow-Origin: *");
+        header ("Access-Control-Allow-Headers: *");
+
 		$med_info = Medicine::select ('*')
 			->where ('item_code' , '=' , $searched_medicine)
 			->get ();
@@ -1467,6 +1525,9 @@ class MedicineController extends BaseController
 	public
 	function getMyCart1()
 	{
+        header ("Access-Control-Allow-Origin: *");
+        header ("Access-Control-Allow-Headers: *");
+
 		$email = Session::get ('user_id');
 		$current_orders = DB::table ('sessions')->where ('user_id' , '=' , $email)->get ();
 
@@ -1476,6 +1537,9 @@ class MedicineController extends BaseController
 
     function getMyCartApp()
 	{
+        header ("Access-Control-Allow-Origin: *");
+        header ("Access-Control-Allow-Headers: *");
+
 		$email = Request::get ('email');
 		$current_orders = DB::table ('sessions')->where ('user_id' , '=' , $email)->get ();
         return Response::json (['status' => 'SUCCESS' , 'items' => $current_orders]);
@@ -1485,6 +1549,9 @@ class MedicineController extends BaseController
 
 	function getMyCart()
 	{
+        header ("Access-Control-Allow-Origin: *");
+        header ("Access-Control-Allow-Headers: *");
+
 		$email = Session::get ('user_id');
 		$current_orders = DB::table ('sessions')->where ('user_id' , '=' , $email)->get ();
 
@@ -1500,6 +1567,9 @@ class MedicineController extends BaseController
 	public
 	function anyRemoveFromCart ($item_id)
 	{
+        header ("Access-Control-Allow-Origin: *");
+        header ("Access-Control-Allow-Headers: *");
+
 		DB::table ('sessions')->where ('id' , '=' , $item_id)->delete ();
 
 		return Redirect::back ()->withErrors (['msg' , 'Item has been removed']);
@@ -1514,6 +1584,9 @@ class MedicineController extends BaseController
 	public
 	function anyRemoveFromCartApp ()
 	{
+        header ("Access-Control-Allow-Origin: *");
+        header ("Access-Control-Allow-Headers: *");
+
         $email = Request::get ('email');
         $item_code = Request::get ('item_code');
 
@@ -1538,6 +1611,9 @@ class MedicineController extends BaseController
 	public
 	function anyViewItemInfo ($item_code)
 	{
+        header ("Access-Control-Allow-Origin: *");
+        header ("Access-Control-Allow-Headers: *");
+
 		$item_details = DB::table ('medicine')
 			->where ('item_code' , '=' , $item_code)
 			->get ();
@@ -1557,6 +1633,9 @@ class MedicineController extends BaseController
 	public
 	function anyAddCart ($is_web = 1)
 	{
+        header ("Access-Control-Allow-Origin: *");
+        header ("Access-Control-Allow-Headers: *");
+
 //            if (!$this->isCsrfAccepted()) {
 //                return 0;
 //            }
@@ -1680,6 +1759,9 @@ class MedicineController extends BaseController
 	public
 	function anyUpdateCart ($is_web)
 	{
+        header ("Access-Control-Allow-Origin: *");
+        header ("Access-Control-Allow-Headers: *");
+
 		// Update Item
 		$item_code = Request::get ('item_code');
 		$new_qty = Request::get ('new_qty');
@@ -1721,6 +1803,9 @@ class MedicineController extends BaseController
 	function anyEmptyCart ()
 	{
 
+        header ("Access-Control-Allow-Origin: *");
+        header ("Access-Control-Allow-Headers: *");
+
         $email = Request::get ('email');
 
         Log::info('email:' . $email);
@@ -1750,6 +1835,10 @@ class MedicineController extends BaseController
 	public
 	function anyDownloading ($file_name)
 	{
+        header ("Access-Control-Allow-Origin: *");
+        header ("Access-Control-Allow-Headers: *");
+
+
 		$email = Session::get ('user_id');
 		$pathToFile = base_path () . '/public/images/prescription/' . $email . '/' . $file_name;
 
@@ -1767,6 +1856,9 @@ class MedicineController extends BaseController
 	public
 	function anyMakePayment ($invoice , $isMobile = 0)
 	{
+        header ("Access-Control-Allow-Origin: *");
+        header ("Access-Control-Allow-Headers: *");
+
 		// If User Authenticated
 		if (!Auth::check ())
 			return Redirect::to ('/');
@@ -1828,6 +1920,9 @@ class MedicineController extends BaseController
 	public
 	function anyMakePaypalPayment ($invoice , $isMobile = 0)
 	{
+        header ("Access-Control-Allow-Origin: *");
+        header ("Access-Control-Allow-Headers: *");
+
 		// If User Authenticated
 		if (!Auth::check ())
 			return Redirect::to ('/');
@@ -1881,6 +1976,9 @@ class MedicineController extends BaseController
 	}
 
 	public function anyMakeMercadoPagoPayment($invoice_id, $isMobile=0) {
+
+        header ("Access-Control-Allow-Origin: *");
+        header ("Access-Control-Allow-Headers: *");
 
 		// $invoice_id = Request::get ('invoice_id' , '');
 		// $isMobile = Request::get ('isMobile' , '');
@@ -2074,6 +2172,10 @@ class MedicineController extends BaseController
 
 
 	public function anyProcessMercadopagoResponse() {
+
+        header ("Access-Control-Allow-Origin: *");
+        header ("Access-Control-Allow-Headers: *");
+
 		$preference_id = Request::get ('preference_id' , '');
 		$payment_id = Request::get ('payment_id' , '');
 		$payment_status = Request::get ('payment_status' , '');
@@ -2332,6 +2434,10 @@ class MedicineController extends BaseController
 	public
 	function anyPaySuccess ($invoice, $transaction_id)
 	{
+
+        header ("Access-Control-Allow-Origin: *");
+        header ("Access-Control-Allow-Headers: *");
+
 		// $transaction_id = Request::get ('payuMoneyId' , '');             // Save Return Transaction Id of Payment Gateway
 		// Update Invoice
 		//$invoice = Invoice::find ($invoice);
@@ -2370,6 +2476,9 @@ class MedicineController extends BaseController
 	public
 	function anyPaypalSuccess ()
 	{
+        header ("Access-Control-Allow-Origin: *");
+        header ("Access-Control-Allow-Headers: *");
+
 		session_start ();
 		session_destroy ();
 		$invoice = Request::get ('pay_id' , '');
@@ -2416,6 +2525,9 @@ class MedicineController extends BaseController
 	public
 	function anyMercadoPagoSuccess ()
 	{
+        header ("Access-Control-Allow-Origin: *");
+        header ("Access-Control-Allow-Headers: *");
+
 		session_start ();
 		session_destroy ();
 		$invoice = Request::get ('pay_id' , '');
@@ -2463,6 +2575,9 @@ class MedicineController extends BaseController
 	public
 	function anyAdminPaySuccess ($invoice)
 	{
+        header ("Access-Control-Allow-Origin: *");
+        header ("Access-Control-Allow-Headers: *");
+
 		// Update Invoice
 		$invoice = Invoice::find ($invoice);
 		$invoice->status_id = InvoiceStatus::PAID ();
@@ -2519,6 +2634,9 @@ class MedicineController extends BaseController
 	public
 	function getMedicineData ()
 	{
+        header ("Access-Control-Allow-Origin: *");
+        header ("Access-Control-Allow-Headers: *");
+
 		try {
 			$mid = Request::get ('id' , 0);
 
@@ -2549,6 +2667,9 @@ class MedicineController extends BaseController
 	public
 	function getMedicineListFromName ()
 	{
+        header ("Access-Control-Allow-Origin: *");
+        header ("Access-Control-Allow-Headers: *");
+
 		$name = Request::get ('name');
 		$order = Request::get ('ord' , 'ASC');
 		if ($name != "")
@@ -2589,6 +2710,9 @@ class MedicineController extends BaseController
 	public
 	function postAddNewMedicine ()
 	{
+        header ("Access-Control-Allow-Origin: *");
+        header ("Access-Control-Allow-Headers: *");
+
 		$name = Request::get ('name');
 		$user_id = 0;
 		$email = 'Not Available';
@@ -2630,6 +2754,9 @@ class MedicineController extends BaseController
 	public
 	function postUpload()
 	{
+        header ("Access-Control-Allow-Origin: *");
+        header ("Access-Control-Allow-Headers: *");
+
 		Log::info('Se esta subiendo el archivo' . Request::file('file'));
 
 		try {
@@ -2689,6 +2816,9 @@ class MedicineController extends BaseController
 
 	public function anyCreateOrder(PreOrder $preOrder, Request $request)
 	{
+        header ("Access-Control-Allow-Origin: *");
+        header ("Access-Control-Allow-Headers: *");
+
 	    $allowedPaymentMethods = config('payment-methods.enabled');
 
 	    $request->validate([
@@ -2713,6 +2843,9 @@ class MedicineController extends BaseController
 
 	protected function generatePaymentGateway($paymentMethod, Order $order) : string
 	{
+        header ("Access-Control-Allow-Origin: *");
+        header ("Access-Control-Allow-Headers: *");
+
 	    $method = new \App\PaymentMethods\MercadoPago;
 
 		$return = $method->setupPaymentAndGetRedirectURL($order);
