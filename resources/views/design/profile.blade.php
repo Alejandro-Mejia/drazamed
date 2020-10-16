@@ -21,9 +21,9 @@
 
 <section class="profile">
     <div class="mx auto"> 
-        <a class="d-flex p-1 btn btn-outline-success justify-content-center" href="/my-cart" style="margin-top: 35px">
+        <a class="d-flex p-1 btn btn-outline-success justify-content-center" href="/my-cart" style="margin-top: 35px ">
             <span class="mr-10 fa fa-shopping-cart"></span>
-            Ve a tu  <strong> carrito de Compras </strong>
+            Ve a tu &nbsp<strong> carrito de Compras </strong>
         </a>
     </div>
     <div class="profile-body">

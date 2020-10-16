@@ -76,7 +76,8 @@
               Nosotros identificaremos los medicamentos y procesaremos
               tu orden. --}}
           </p>
-          <div class="table-responsive-md">
+
+          <div class="d-sm-none d-md-block" id ="tableBig" >
             <table class="table table-striped my-4">
               <thead>
                   <tr>
@@ -264,6 +265,188 @@
               @endif
             </table>
           </div>
+
+          <div class="d-sm-block d-md-none">
+            <table class="table table-striped my-4">
+              <thead>
+                  <tr>
+                      <th scope="col">ITEM</th>
+                      <th scope="col">CANTIDAD</th>
+                      <th scope="col">PRECIO POR UNIDAD</th>
+                  </tr>
+              </thead>
+              <tbody>
+                <input type="hidden" name="_token" id="_token" value="<?php echo csrf_token(); ?>">
+                <?php $subtotal= $first_medicine = $pres_required = 0; ?>
+                @if(count($current_orders)>0)
+                <?php
+                  $first_medicine = $current_orders[0]->medicine_id;
+                  $shipping = 0;
+
+                ?>
+                @foreach($current_orders as $cart_item)
+                    <?php
+
+                          $medicine = App\Medicine::medicines($cart_item->medicine_id);
+                          if($cart_item->is_pres_required == 1)
+                            $pres_required = 1;
+                      ?>
+
+                    <tr>
+                        <td class="txt-green col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                            <div class="cart-td1">
+                              <!-- <input type="checkbox" class="checkbox" id="agree"> -->
+                              {{--<a href="{{URL::to('medicine/view-item-info/'.$cart_item->item_code)}}"><label class="cart-item">{{ $cart_item->medicine_name }}</label></a>--}}
+                              <a><label class="cart-item" onclick="get_medicine_data('{{ $cart_item->medicine_id }}')">
+                                {{ $medicine['item_name'] }}</label>
+                              </a>
+                              <a href="{{ URL::to('medicine/remove-from-cart/'.$cart_item->id) }}" class="remove-item">
+                                Eliminar
+                              </a>
+                            <div>
+                        </td>
+                        <td>
+                          <input type="number" style="width:40px; border: 1px solid #ABADB3; text-align: center;" item_code="{{ $cart_item->item_code }}" value="{{$cart_item->medicine_count}}" onchange="change_count(this);">
+                        </td>
+                        <td class="text-right col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                            <p>{{ '$' . $mrp = number_format($cart_item->unit_price,0, ',', '.')}}</p>
+                        </td>
+
+
+                        <?php  // $total = ((int)$cart_item->unit_price * (int)$cart_item->medicine_count); ?>
+                        <?php $total=$cart_item->unit_price * $cart_item->medicine_count ?>
+
+                        <?php $subtotal += $total;  ?>
+                    </tr>
+                    @endforeach
+
+                    <tr>
+                      <td class="text-right" style="text-align:right" colspan="2">
+                        <h4 style="padding-right: 10px;">Sub-Total <span style="font-size: 12px"></span> : </h4>
+                      </td>
+                      <td>
+                        <h4 id="subTotal" data-value={{$subtotal}} >{{ '$' . number_format($subtotal, 0, ',', '.')  }}</h4>
+                        {{--   money_format("%.2n", $subtotal)--}}
+                      </td>
+                    </tr>
+
+                    <tr>
+                      <td colspan="2" class="col-lg-12 col-md-12 col-sm-12">
+                        <div id="shipping_options" >
+                          <style type="text/css">
+                            fieldset {
+                              overflow: hidden
+                            }
+
+                            .shipping_method {
+                              float: left;
+                              clear: none;
+                            }
+
+                            label {
+                              float: left;
+                              clear: none;
+                              display: block;
+                              padding: 0px 1em 0px 8px;
+                            }
+
+                            input[type=radio],
+                            input.radio {
+                              float: left;
+                              clear: none;
+                              margin: 2px 0 0 2px;
+                            }
+                          </style>
+                          <fieldset id="shipping_method" >
+                            <div class="shipping_method">
+                              <label for="farmacia">
+                                <input type="radio" class="radio" name="shipping" value=0 id="farmacia"> Recoger en la farmacia (Gratis)
+                              </label>
+                              <label for="mensajero">
+                                <input type="radio" class="radio"  name="shipping" value=2000 id="mensajero"> Domicilio ($ 2.000)
+                              </label>
+                            </div>
+                          </fieldset>
+                        </div>
+                      </td>
+                      <td class="text-right">
+                        <h5 id="shipping_value" value={{$shipping}}>{{ '$' . number_format($shipping,0, ',', '.')}}</h5>
+                      </td>
+                    </tr>
+                    
+                    <tr>
+                      <td class="text-right" style="text-align:right" colspan="2">
+                        <h4 style="padding-right: 40px;">Total <span style="font-size: 12px">({{ __('this is an approximate total, price may change')}})</span> : </h4>
+                      </td>
+                      <td nowrap>
+                        <h4 class="text-right" id="totalOrder" value={{$subtotal+$shipping}}>{{ '$' . number_format($subtotal+$shipping, 0, ',', '.')   }}</h4>
+                        {{-- number_format($subtotal+$shipping,2)--}}
+                      </td>
+                    </tr>
+
+                <!-- Si el carrito esta vacio -->
+                @else
+                  <?php $pres_required = 1; ?>
+                  <h4 style="color: red;" align="center">{{ __('Cart is empty')}}</h4>
+                @endif
+              </tbody>
+              @if($pres_required != 1)
+                <tfoot>
+                  <tr>
+                    <td colspan=4>
+          
+                      <div id="send_formula" class="">
+                        <form method="post" action="/medicine/store-prescription/1" enctype="multipart/form-data" novalidate class="" id="noformula">
+                          <input type="" name="shipping_cost" id="shippingForm" value="" hidden required />
+                          <input type="" name="is_pres_required" id="is_pres_required" value="{{$pres_required}}" hidden/>
+                          <input type="" name="sub_total" id="sub_total_form" value="{{$subtotal}}" hidden/>
+                          <!-- Flexbox container for aligning the toasts -->
+                          <!-- <button type="submit" class="box__button">Upload</button> -->
+                          <button  type="submit" class="float-right mt-4 dra-button btn" data-color="#40E0BC" id="uploadBtnNF" data-loading-text="<i class='fa fa-spinner fa-spin '></i> Procesando tu orden">
+                            <img class="mail_loader" style="display: none;" src="./assets/images/loader1.gif"> {{ __('Place Order')}}
+                          </button>
+                          <div style="text-align: center;">
+
+                            <div class="box__uploading" style="color: green; font-weigth:bold">
+                              Enviando tu orden....&hellip; <br>
+                            </div>
+
+                            <div class="box__success" style="color: green">
+                                <br> En unos segundos seras redirigido a tu perfil, una vez la verifiquemos, cambiara su estado a "verificado" y podrás realizar el pago!  
+                            </div>
+
+                            <div class="box__error" style="color: red; font-weigth:bold" id="errorMsg" style="display:none">
+                              <span class="box__error__msg" id ="box__error__msg" style="color:red"></span>. <br>
+                              {{-- <a href="https://css-tricks.com/examples/DragAndDropFileUploading//?" class="box__restart" role="button">Intente de nuevo!</a> --}}
+                            </div>
+                          </div>
+
+                        </form>
+                      </div>
+                      <div aria-live="polite" aria-atomic="true" class="d-flex justify-content-center align-items-center" style="min-height: 200px;">
+                        <div class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+                          <div class="toast-header">
+                            {{-- <img src="..." class="rounded mr-2" alt="..."> --}}
+                            <strong class="mr-auto">Drazamed</strong>
+                            <small class="text-muted">Ahora</small>
+                            <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                            </button>
+                          </div>
+                          <div class="toast-body">
+                            Orden enviada! En unos segundos sera redirigido a su perfil para realizar el pago
+                          </div>
+                        </div>
+                      </div>
+
+                    {{-- <button class="float-right mt-4 dra-button" data-color="#40E0BC" id="uploadBtnNoFormula" >{{ __('Place Order')}}</button> --}}
+                    </td>
+                  </tr>
+                </tfoot>
+              @endif
+            </table>
+          </div>
+
           <!-- Envio de formulas medicas mediante drag & drop -->
           <div class="p3">
             @if($pres_required == 1)
