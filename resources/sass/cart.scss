@@ -103,3 +103,14 @@ main {
         clear: both;
     }
 }
+@media(max-width: 767px){
+  .cart{
+    border-radius: 20px;
+    padding: 0px !important;
+    background-color: #ffffff;
+  }
+  #tableBig{
+    display: none;
+  }
+}
+
