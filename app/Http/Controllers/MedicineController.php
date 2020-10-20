@@ -428,15 +428,22 @@ class MedicineController extends BaseController
                           ->where ('user_id' , '=' , $user_id)
                           ->get ();
 
-        // foreach($prescriptions as $prescription) {
-        //     foreach($prescription['getCart'] as $cart) {
-        //         Log::info('Medicina:' . print_r(Medicine::medicineCode($cart->item_code)));
-        //         $cart['name'] = Medicine::medicineCode($cart->item_code);
-        //     }
-        // }
+
+        foreach($prescriptions as $prescription) {
+            foreach($prescription['getCart'] as $cart) {
+
+                // dd(Medicine::medicines($cart->medicine));
+                $item_name =  Medicine::medicines($cart->medicine)["item_name"];
+                $item_code =  Medicine::medicines($cart->medicine)["item_code"];
+                Log::info('Medicina:' . Medicine::medicines($cart->medicine)["item_name"]);
+                $cart['item_name'] = Medicine::medicines($cart->medicine)["item_name"];
+                $cart['item_code'] = Medicine::medicines($cart->medicine)["item_code"];
+                $cart['composition'] = Medicine::medicines($cart->medicine)["composition"];
+            }
+        }
 
         // dd($prescriptions);
-		return json_encode($prescriptions);
+		return $prescriptions;
 
 	}
 
