@@ -965,7 +965,21 @@ class MedicineController extends BaseController
 
 				$medPath = (is_file($path)) ? $medPath : "/images/products/default.png";
 
-				$medicineNameArray[$i] = array("id" => $med->id ,'item_code' => $med->item_code,  "name" => $med->item_name , 'mrp' => $sellprice ,'quantity' => $med->quantity, 'lab' => $med->manufacturer , 'composition' => $med->composition, 'image-url' => $med->photo_url, 'is_pres_required' => $pres_required, 'group' => $med->group, 'url_img' => $medPath);
+				$medicineNameArray[$i] = array(
+                    "id" => $med->id ,
+                    'item_code' => $med->item_code,
+                    "name" => $med->item_name ,
+                    'mrp' => $sellprice ,
+                    'quantity' => $med->quantity,
+                    'lab' => $med->manufacturer ,
+                    'tax' => $med->tax,
+                    'tax_type' => $med->tax_type,
+                    'composition' => $med->composition,
+                    'image-url' => $med->photo_url,
+                    'is_pres_required' => $pres_required,
+                    'group' => $med->group,
+                    'url_img' => $medPath
+                );
 				$i++;
 			}
 			$result = array('result' => array('status' => 'sucess' , 'msg' => $medicineNameArray));
