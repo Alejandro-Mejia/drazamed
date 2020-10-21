@@ -432,13 +432,15 @@ class MedicineController extends BaseController
         foreach($prescriptions as $prescription) {
             foreach($prescription['getCart'] as $cart) {
 
-                // dd(Medicine::medicines($cart->medicine));
+                //dd($cart);
                 $item_name =  Medicine::medicines($cart->medicine)["item_name"];
                 $item_code =  Medicine::medicines($cart->medicine)["item_code"];
+                $tax = $cart->unit_price - ceil(($cart->unit_price / (1+(Medicine::medicines($cart->medicine)['tax']/100))));
                 Log::info('Medicina:' . Medicine::medicines($cart->medicine)["item_name"]);
                 $cart['item_name'] = Medicine::medicines($cart->medicine)["item_name"];
                 $cart['item_code'] = Medicine::medicines($cart->medicine)["item_code"];
                 $cart['composition'] = Medicine::medicines($cart->medicine)["composition"];
+                $cart['tax'] = $tax;
             }
         }
 
@@ -1202,6 +1204,8 @@ class MedicineController extends BaseController
 					'mrp' => $data['sell_price'],
                     'sp' => $data['show_priority'],
                     'quantity' => $data['quantity'],
+                    'tax' => $data['tax'],
+					'tax_type' => $data['tax_type'],
                     'imgUrl' => $imagenUrl
 				);
 			}
