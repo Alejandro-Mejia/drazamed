@@ -31,6 +31,7 @@ use App\PresRulesProd;
 use App\Prescription;
 use App\SessionsData;
 use App\NewMedicine;
+use App\SessionData;
 use App\Favorite;
 use App\Pricerule;
 use App\Prodrule;
@@ -1579,7 +1580,7 @@ class MedicineController extends BaseController
         header ("Access-Control-Allow-Headers: *");
 
 		$email = Request::get ('email');
-		$current_orders = DB::table ('sessions')->where ('user_id' , '=' , $email)->get ();
+		$current_orders = SessionsData::with('medicine')->where ('user_id' , '=' , $email)->get ();
         return Response::json (['status' => 'SUCCESS' , 'items' => $current_orders]);
 
     }

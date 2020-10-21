@@ -217,6 +217,10 @@
 
 		public function carts () {
 			return $this->hasMany('App\ItemList','medicine','id');
+        }
+
+        public function sessionsdata () {
+			return $this->hasMany('App\SessionsData','medicine_id','id');
 		}
 
 
