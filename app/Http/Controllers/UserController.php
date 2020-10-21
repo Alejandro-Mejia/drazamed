@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 
+use App\DraLog;
 use App\User;
 use App\UserType;
 use App\UserStatus;
@@ -31,6 +32,8 @@ use Redirect;
 use View;
 use Hash;
 use Mail;
+
+
 
 use Exception;
 use Illuminate\Auth\AuthenticationException;
@@ -286,6 +289,24 @@ class UserController extends BaseController
     }
 
 
+    public function getUserIpAddr(){
+        $ipaddress = '';
+        if (isset($_SERVER['HTTP_CLIENT_IP']))
+            $ipaddress = $_SERVER['HTTP_CLIENT_IP'];
+        else if(isset($_SERVER['HTTP_X_FORWARDED_FOR']))
+            $ipaddress = $_SERVER['HTTP_X_FORWARDED_FOR'];
+        else if(isset($_SERVER['HTTP_X_FORWARDED']))
+            $ipaddress = $_SERVER['HTTP_X_FORWARDED'];
+        else if(isset($_SERVER['HTTP_FORWARDED_FOR']))
+            $ipaddress = $_SERVER['HTTP_FORWARDED_FOR'];
+        else if(isset($_SERVER['HTTP_FORWARDED']))
+            $ipaddress = $_SERVER['HTTP_FORWARDED'];
+        else if(isset($_SERVER['REMOTE_ADDR']))
+            $ipaddress = $_SERVER['REMOTE_ADDR'];
+        else
+            $ipaddress = 'UNKNOWN';
+        return $ipaddress;
+    }
 
 	/**
 	 * User Login
@@ -298,6 +319,11 @@ class UserController extends BaseController
 	{
         header ("Access-Control-Allow-Origin: *");
         header ("Access-Control-Allow-Headers: *");
+
+        // $userIp = $this->server->get('REMOTE_ADDR');
+
+        $userIp = '';
+        $userIp = $this->getUserIpAddr();
 
 		try {
 			$email = Request::get ('email' , '');
@@ -325,7 +351,8 @@ class UserController extends BaseController
 								$result = array(array('result' => array('status' => 'success' , 'page' => 'yes')));
 							} else {
 								$result = array(array('result' => array('status' => 'success' , 'page' => 'no')));
-							}
+                            }
+
 						} else {
 							$result = array(array('result' => array('status' => 'failure')));
 						}
@@ -346,7 +373,7 @@ class UserController extends BaseController
 					//dd($status);
 					Session::put ('user_id' , $email);
 					Log::info('Email: '.$email);
-					Log::info('Passwd: '.$password);
+					// Log::info('Passwd: '.$password);
 					Log::info('Status: '.$status);
 					// $pres_status = PrescriptionStatus::status ();
 					// $invoice_status = InvoiceStatus::status ();
@@ -365,7 +392,16 @@ class UserController extends BaseController
 				} else {
 					throw new Exception('Invalid Login Credientials' , 401);
 				}
-			}
+            }
+            DB::table('logs')->insert(
+                [
+                    'email' => $email,
+                    'msg' => $result[0]['result']['status'],
+                    'extra' => $userIp,
+                    "created_at" =>  \Carbon\Carbon::now(), # new \Datetime()
+                    "updated_at" => \Carbon\Carbon::now(),  # new \Datetime()
+                ]
+            );
 			return Response::json ($result);
 		}
 		catch (Exception $e) {
