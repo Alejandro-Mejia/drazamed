@@ -1580,7 +1580,15 @@ class MedicineController extends BaseController
         header ("Access-Control-Allow-Headers: *");
 
 		$email = Request::get ('email');
-		$current_orders = SessionsData::with('medicine')->where ('user_id' , '=' , $email)->get ();
+        $current_orders = SessionsData::with('medicine')->where ('user_id' , '=' , $email)->get()->toArray();
+
+        $i = 0;
+        foreach ($current_orders as $item) {
+                Log::info('Order:' . print_r($item["medicine"]["tax"], true));
+                $current_orders[$i]["tax"] = $item["medicine"]["tax"];
+
+        }
+
         return Response::json (['status' => 'SUCCESS' , 'items' => $current_orders]);
 
     }
