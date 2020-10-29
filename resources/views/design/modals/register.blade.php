@@ -63,7 +63,7 @@
                                 <label for="account-type-input"
                                     >Tipo de Cuenta</label
                                 >
-                                <select class="form-control" id="sel1" name="user_type">
+                                <select class="form-control" id="sel1" name="user_type" onchange="DivSelector(this)">
                                  <option value="0">{{_('Select')}}</option>
                                  <?php
                                     $user_type = UserType::users();
@@ -84,7 +84,12 @@
                             <p style="display: none;" id="user_type_error"></p>
                         </div>
                     </div>
-
+                    <div id = "medSel" style="display: none">
+                        
+                    </div>
+                    <div id = "centMedSel" style="display: none">
+                       
+                    </div>
                     <div class="form-group">
                         <label for="address-input">Dirección</label>
                         <input
@@ -163,3 +168,11 @@
         </div>
     </div>
 </div>
+
+<script>
+    function DivSelector(element){
+        document.getElementById("medSel").style.display = element.value == 2 ? 'block' : 'none';
+        document.getElementById("centMedSel").style.display = element.value == 4 ? 'block' : 'none';
+        
+    }
+</script>
