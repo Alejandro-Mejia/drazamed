@@ -388,7 +388,7 @@ class UserController extends BaseController
 					//
 					$result = ['status' => 'SUCCESS' , 'msg' => 'User Logged In', 'email' => $email, 'name'=> $user,  'data' => ['status' => $status, 'user_id'=>$user_id ]];
 					//dd($result);
-					// Log::info('result: '. print_f($result, true));
+				    Log::info('result: '. print_f($result, true));
 				} else {
 					throw new Exception('Invalid Login Credientials' , 401);
 				}
@@ -396,7 +396,7 @@ class UserController extends BaseController
             DB::table('logs')->insert(
                 [
                     'email' => $email,
-                    'msg' => $result[0]['result']['status'],
+                    'msg' => $result,
                     'extra' => $userIp,
                     "created_at" =>  \Carbon\Carbon::now(), # new \Datetime()
                     "updated_at" => \Carbon\Carbon::now(),  # new \Datetime()
