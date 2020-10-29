@@ -793,6 +793,19 @@ class UserController extends BaseController
 
 	}
 
+    /**
+     * Get User Data
+     */
+    public function getUserData($isWeb = 0) {
+        header ("Access-Control-Allow-Origin: *");
+        header ("Access-Control-Allow-Headers: *");
+        if(!$isWeb) {
+            $email = Request::get ('email');
+            $user = Customer::where('mail', '=', $email)->first();
+        }
+        return json_encode($user);
+    }
+
 	/**
 	 * Store profile pic
 	 */

@@ -96,6 +96,7 @@ use MercadoPago;
     Route::any('/user/pres-delete/{pres_id}', 'UserController@anyPresDelete');
     Route::any('/user/reset-password', 'UserController@anyResetPassword');
     Route::get('/user/is-actual-user/{user_js}', 'UserController@getIsActualUser');
+    Route::get('/user/get-user-data/{is_web}', 'UserController@getUserData');
 
 
 
