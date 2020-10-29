@@ -1585,7 +1585,8 @@ class MedicineController extends BaseController
         $i = 0;
         foreach ($current_orders as $item) {
                 Log::info('Order:' . print_r($item["medicine"]["tax"], true));
-                $current_orders[$i]["tax"] = $item["medicine"]["tax"];
+                $current_orders[$i]["tax"] = (isset($item["medicine"]["tax"])) ? $item["medicine"]["tax"] : 0;
+                $i++;
 
         }
 
