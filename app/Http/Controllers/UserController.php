@@ -396,7 +396,7 @@ class UserController extends BaseController
             DB::table('logs')->insert(
                 [
                     'email' => $email,
-                    'msg' => $result,
+                    'msg' => print_r($result, true),
                     'extra' => $userIp,
                     "created_at" =>  \Carbon\Carbon::now(), # new \Datetime()
                     "updated_at" => \Carbon\Carbon::now(),  # new \Datetime()
