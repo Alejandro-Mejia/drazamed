@@ -52,7 +52,7 @@ class MedicinesImport implements ToModel, WithHeadingRow, WithBatchInserts , Wit
             'item_name'     => isset($row['denominacion']) ?  $this->cleanDenomination($row['denominacion']) : "ND",
             'denomination'  => isset($row['denominacion']) ? $row['denominacion'] : "ND",
             'batch_no'      => isset($row['lote']) ? $row['lote'] : "ND",
-            'units'         => isset($row['und']) ? $row['und'] : "ND",
+            'units'         => isset($row['denominacion']) ? $this->setUnits($row['denominacion']) : "ND",
             'units_value'   => isset($row['denominacion']) ? $this->setUnitVal($row['denominacion']) : 0,
             'quantity'      => isset($row['cantidad']) ? $row['cantidad'] : 0,
 
@@ -181,44 +181,115 @@ class MedicinesImport implements ToModel, WithHeadingRow, WithBatchInserts , Wit
         return $iva;
     }
 
+    public function setUnits($value) {
+
+        $value = $this->cleanDenomination($value);
+
+        $unit = 'NoD';
+
+        if (Str::contains($value,  ' ML' )) {
+            $unit = "ML";
+        }
+
+        if (Str::contains($value,  ' GR' )) {
+            $unit = "GR";
+        }
+
+        if (Str::contains($value,  ' CAP' )) {
+            $unit = "CAP";
+        }
+
+        if (Str::contains($value,  ' AMPOLLAS' )) {
+            $unit = "AMP";
+        }
+
+        if (Str::contains($value,  ' TABLETAS' )) {
+            $unit = "TAB";
+        }
+
+        if (Str::contains($value,  ' TBS' )) {
+            $unit = "TAB";
+        }
+
+        if (Str::contains($value,  ' GRAGEAS' )) {
+            $unit = "GRA";
+        }
+
+        return $unit;
+
+    }
+
 
     public function setUnitVal($value) {
 
         $value = $this->cleanDenomination($value);
 
-        if(Str::contains($value,  ' CAP' )) {
-            preg_match_all('!\d+!', $value, $matches);
-            Log::info('$value :' . $value . ', unidades : CAPSULAS,  cantidad:' . print_r($matches, true)) ;
+        $unit_val = 0;
+
+        if(Str::contains($value,  ' ML' )) {
+            preg_match_all('/(\d+) (?:ML)/', $value, $matches);
+            if (isset($matches[1][0])) {
+                Log::info('$value :' . $value . ', unidades : MILILITROS,  cantidad:' . print_r($matches[1][0], true)) ;
+                $unit_val = $matches[1][0];
+            }
         }
+
+        if(Str::contains($value,  ' CAP' )) {
+            preg_match_all('/(\d+) (?:CAP|CAPSULAS)/', $value, $matches);
+            if (isset($matches[1][0])) {
+                Log::info('$value :' . $value . ', unidades : CAPSULAS,  cantidad:' . print_r($matches[1][0], true)) ;
+                $unit_val = $matches[1][0];
+            }
+
+        }
+
+        if(Str::contains($value,  ' GR' )) {
+            preg_match_all('/(\d+) (?:GR)/', $value, $matches);
+            if (isset($matches[1][0])) {
+                Log::info('$value :' . $value . ', unidades : GRAMOS,  cantidad:' . print_r($matches[1][0], true)) ;
+                $unit_val = $matches[1][0];
+            }
+
+        }
+
+
         if(Str::contains($value,  'AMPOLLAS' )) {
-            preg_match_all('!\d+!', $value, $matches);
-            Log::info('$value :' . $value . ', unidades : AMPOLLAS,  cantidad:' . print_r($matches, true)) ;
+            preg_match_all('/(\d+) (?:AMP|AMPOLLAS)/', $value, $matches);
+            if (isset($matches[1][0])) {
+                Log::info('$value :' . $value . ', unidades : AMPOLLAS,  cantidad:' . print_r($matches[1][0], true)) ;
+                $unit_val = $matches[1][0];
+            }
+
         }
 
         if(Str::contains($value,  'TABLETAS' )) {
-            preg_match_all('!\d+!', $value, $matches);
-            Log::info('$value :' . $value . ', unidades : TABLETAS,  cantidad:' . print_r($matches, true)) ;
+            preg_match_all('/(\d+) (?:TAB|TABLETAS)/', $value, $matches);
+            if (isset($matches[1][0])) {
+                Log::info('$value :' . $value . ', unidades : TABLETAS,  cantidad:' . print_r($matches[1][0], true)) ;
+                $unit_val = $matches[1][0];
+            }
+
         }
 
         if(Str::contains($value,  ' TBS' )) {
-            preg_match_all('!\d+!', $value, $matches);
-            Log::info('$value :' . $value . ', unidades : TABLETAS,  cantidad:' . print_r($matches, true)) ;
+            preg_match_all('/(\d+) (?:TBS)/', $value, $matches);
+            if (isset($matches[1][0])) {
+                Log::info('$value :' . $value . ', unidades : TABLETAS,  cantidad:' . print_r($matches[1][0], true)) ;
+                $unit_val = $matches[1][0];
+            }
+
         }
 
         if(Str::contains($value,  'GRAGEAS' )) {
-            preg_match_all('!\d+!', $value, $matches);
-            Log::info('$value :' . $value . ', unidades : GRAGEAS,  cantidad:' . print_r($matches, true)) ;
-        }
-        if(Str::contains($value,  ' GR' )) {
-            preg_match_all('!\d+!', $value, $matches);
-            Log::info('$value :' . $value . ', unidades : GRAMOS,  cantidad:' . print_r($matches, true)) ;
-        }
-        if(Str::contains($value,  ' ML' )) {
-            preg_match_all('!\d+!', $value, $matches);
-            Log::info('$value :' . $value . ', unidades : MILILITROS,  cantidad:' . print_r($matches, true)) ;
+            preg_match_all('/(\d+) (?:GRAGEAS)/', $value, $matches);
+            if (isset($matches[1][0])) {
+                Log::info('$value :' . $value . ', unidades : GRAGEAS,  cantidad:' . print_r($matches[1][0], true)) ;
+                $unit_val = $matches[1][0];
+            }
+
         }
 
-        return null;
+        return $unit_val;
 
     }
 

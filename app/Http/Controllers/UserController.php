@@ -218,12 +218,14 @@ class UserController extends BaseController
 				$email = Auth::user ()->email;
 				$user_type = Auth::user ()->user_type_id;
 				$first_name = Request::get ('first_name' , '');
-				$last_name = Request::get ('last_name');
+                $last_name = Request::get ('last_name');
+                $idn = Request::get ('idn' , '');
 			} else {
 				$email = Auth::user ()->email;
 				$user_type = Auth::user ()->user_type_id;
 				$first_name = Request::get ('first_name' , '');
-				$last_name = Request::get ('last_name' , '');
+                $last_name = Request::get ('last_name' , '');
+                $idn = Request::get ('idn' , '');
 
 			}
 
@@ -236,7 +238,8 @@ class UserController extends BaseController
 						'prof_last_name' => $last_name ,
 						'prof_address' => $address ,
 						'prof_phone' => $phone ,
-						'prof_pincode' => $pincode
+                        'prof_pincode' => $pincode,
+                        'idn' => $idn
 					);
 					$affectedRows = MedicalProfessional::where ('prof_mail' , '=' , $email)->update ($medicalProfDetails);
 					break;
@@ -245,7 +248,8 @@ class UserController extends BaseController
 						'last_name' => $last_name ,
 						'address' => $address ,
 						'phone' => $phone ,
-						'pincode' => $pincode
+                        'pincode' => $pincode,
+                        'idn' => $idn
 					);
 					$affectedRows = Customer::where ('mail' , '=' , $email)->update ($customerDetails);
 					break;
