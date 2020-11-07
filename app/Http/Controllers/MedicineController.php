@@ -1238,7 +1238,7 @@ class MedicineController extends BaseController
                     'tax' => $data['tax'],
                     'tax_type' => $data['tax_type'],
                     'units' => $data['units'],
-                    'units-value' => $data['units-value'],
+                    'units_value' => $data['units_value'],
                     'imgUrl' => $imagenUrl
 				);
 			}
@@ -1269,7 +1269,7 @@ class MedicineController extends BaseController
 					'tax' => $data['tax'],
                     'tax_type' => $data['tax_type'],
                     'units' => $data['units'],
-                    'units-value' => $data['units-value'],
+                    'units_value' => $data['units_value'],
                     'sp' => $data['show_priority'],
                     'is_pres_required' => $data['is_pres_required']
 				);
