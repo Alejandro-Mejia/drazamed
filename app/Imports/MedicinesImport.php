@@ -199,7 +199,7 @@ class MedicinesImport implements ToModel, WithHeadingRow, WithBatchInserts , Wit
             $unit = "CAP";
         }
 
-        if (Str::contains($value,  ' AMPOLLAS' )) {
+        if (Str::contains($value,  ' AMPOLLA' )) {
             $unit = "AMP";
         }
 
@@ -207,8 +207,32 @@ class MedicinesImport implements ToModel, WithHeadingRow, WithBatchInserts , Wit
             $unit = "TAB";
         }
 
+        if (Str::contains($value,  ' COMPRIMIDOS' )) {
+            $unit = "COM";
+        }
+
+        if (Str::contains($value,  ' DOSIS' )) {
+            $unit = "DOS";
+        }
+
+        if (Str::contains($value,  ' OVULOS' )) {
+            $unit = "OVU";
+        }
+
         if (Str::contains($value,  ' TBS' )) {
             $unit = "TAB";
+        }
+
+        if (Str::contains($value,  ' SBS' )) {
+            $unit = "SBS";
+        }
+
+        if (Str::contains($value,  ' UDS' )) {
+            $unit = "UDS";
+        }
+
+        if (Str::contains($value,  ' SUPOS' )) {
+            $unit = "SUP";
         }
 
         if (Str::contains($value,  ' GRAGEAS' )) {
@@ -243,6 +267,15 @@ class MedicinesImport implements ToModel, WithHeadingRow, WithBatchInserts , Wit
 
         }
 
+        if(Str::contains($value,  ' UDS' )) {
+            preg_match_all('/(\d+) (?:UDS)/', $value, $matches);
+            if (isset($matches[1][0])) {
+                Log::info('$value :' . $value . ', unidades : UNIDADES,  cantidad:' . print_r($matches[1][0], true)) ;
+                $unit_val = $matches[1][0];
+            }
+
+        }
+
         if(Str::contains($value,  ' GR' )) {
             preg_match_all('/(\d+) (?:GR)/', $value, $matches);
             if (isset($matches[1][0])) {
@@ -253,10 +286,55 @@ class MedicinesImport implements ToModel, WithHeadingRow, WithBatchInserts , Wit
         }
 
 
-        if(Str::contains($value,  'AMPOLLAS' )) {
-            preg_match_all('/(\d+) (?:AMP|AMPOLLAS)/', $value, $matches);
+        if(Str::contains($value,  'AMPOLLA' )) {
+            preg_match_all('/(\d+) (?:AMP|AMPOLLA)/', $value, $matches);
             if (isset($matches[1][0])) {
                 Log::info('$value :' . $value . ', unidades : AMPOLLAS,  cantidad:' . print_r($matches[1][0], true)) ;
+                $unit_val = $matches[1][0];
+            }
+
+        }
+
+        if(Str::contains($value,  'COMPRIMIDOS' )) {
+            preg_match_all('/(\d+) (?:COMP|COMPRIMIDOS)/', $value, $matches);
+            if (isset($matches[1][0])) {
+                Log::info('$value :' . $value . ', unidades : COMPRIMIDOS,  cantidad:' . print_r($matches[1][0], true)) ;
+                $unit_val = $matches[1][0];
+            }
+
+        }
+
+        if(Str::contains($value,  'SUPOS' )) {
+            preg_match_all('/(\d+) (?:SUPOS|SUPOSITO)/', $value, $matches);
+            if (isset($matches[1][0])) {
+                Log::info('$value :' . $value . ', unidades : SUPOSITORIOS,  cantidad:' . print_r($matches[1][0], true)) ;
+                $unit_val = $matches[1][0];
+            }
+
+        }
+
+        if(Str::contains($value,  'DOSIS' )) {
+            preg_match_all('/(\d+) (?:DOSIS)/', $value, $matches);
+            if (isset($matches[1][0])) {
+                Log::info('$value :' . $value . ', unidades : DOSIS,  cantidad:' . print_r($matches[1][0], true)) ;
+                $unit_val = $matches[1][0];
+            }
+
+        }
+
+        if(Str::contains($value,  'SBS' )) {
+            preg_match_all('/(\d+) (?:SBS)/', $value, $matches);
+            if (isset($matches[1][0])) {
+                Log::info('$value :' . $value . ', unidades : SOBRES,  cantidad:' . print_r($matches[1][0], true)) ;
+                $unit_val = $matches[1][0];
+            }
+
+        }
+
+        if(Str::contains($value,  'OVULOS' )) {
+            preg_match_all('/(\d+) (?:OVULOS)/', $value, $matches);
+            if (isset($matches[1][0])) {
+                Log::info('$value :' . $value . ', unidades : OVULOS,  cantidad:' . print_r($matches[1][0], true)) ;
                 $unit_val = $matches[1][0];
             }
 
