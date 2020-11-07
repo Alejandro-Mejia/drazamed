@@ -235,6 +235,10 @@ class MedicinesImport implements ToModel, WithHeadingRow, WithBatchInserts , Wit
             $unit = "SUP";
         }
 
+        if (Str::contains($value,  ' PARCHE' )) {
+            $unit = "PCH";
+        }
+
         if (Str::contains($value,  ' GRAGEAS' )) {
             $unit = "GRA";
         }
@@ -287,13 +291,22 @@ class MedicinesImport implements ToModel, WithHeadingRow, WithBatchInserts , Wit
 
 
         if(Str::contains($value,  'AMPOLLA' )) {
-            preg_match_all('/(\d+) (?:AMP|AMPOLLA)/', $value, $matches);
+
+            Log::info('$value :' . $value . ', unidades : AMPOLLA,  cantidad:' . 1) ;
+            $unit_val = 1;
+
+        }
+
+        if(Str::contains($value,  'AMPOLLAS' )) {
+            preg_match_all('/(\d+) (?:AMPOLLAS)/', $value, $matches);
             if (isset($matches[1][0])) {
                 Log::info('$value :' . $value . ', unidades : AMPOLLAS,  cantidad:' . print_r($matches[1][0], true)) ;
                 $unit_val = $matches[1][0];
             }
 
         }
+
+
 
         if(Str::contains($value,  'COMPRIMIDOS' )) {
             preg_match_all('/(\d+) (?:COMP|COMPRIMIDOS)/', $value, $matches);
@@ -312,6 +325,22 @@ class MedicinesImport implements ToModel, WithHeadingRow, WithBatchInserts , Wit
             }
 
         }
+
+        if(Str::contains($value,  'PARCHE' )) {
+            Log::info('$value :' . $value . ', unidades : PARCHE,  cantidad:' . 1) ;
+            $unit_val = 1;
+
+        }
+
+        if(Str::contains($value,  'PARCHES' )) {
+            preg_match_all('/(\d+) (?:PARCHES)/', $value, $matches);
+            if (isset($matches[1][0])) {
+                Log::info('$value :' . $value . ', unidades : PARCHES,  cantidad:' . print_r($matches[1][0], true)) ;
+                $unit_val = $matches[1][0];
+            }
+
+        }
+
 
         if(Str::contains($value,  'DOSIS' )) {
             preg_match_all('/(\d+) (?:DOSIS)/', $value, $matches);
@@ -340,6 +369,15 @@ class MedicinesImport implements ToModel, WithHeadingRow, WithBatchInserts , Wit
 
         }
 
+        if(Str::contains($value,  ' TAB' )) {
+            preg_match_all('/(\d+) (?:TAB)/', $value, $matches);
+            if (isset($matches[1][0])) {
+                Log::info('$value :' . $value . ', unidades : TABLETAS,  cantidad:' . print_r($matches[1][0], true)) ;
+                $unit_val = $matches[1][0];
+            }
+
+        }
+
         if(Str::contains($value,  'TABLETAS' )) {
             preg_match_all('/(\d+) (?:TAB|TABLETAS)/', $value, $matches);
             if (isset($matches[1][0])) {
@@ -357,6 +395,8 @@ class MedicinesImport implements ToModel, WithHeadingRow, WithBatchInserts , Wit
             }
 
         }
+
+
 
         if(Str::contains($value,  'GRAGEAS' )) {
             preg_match_all('/(\d+) (?:GRAGEAS)/', $value, $matches);
