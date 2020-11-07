@@ -979,7 +979,10 @@ class MedicineController extends BaseController
                     'image-url' => $med->photo_url,
                     'is_pres_required' => $pres_required,
                     'group' => $med->group,
-                    'url_img' => $medPath
+                    'url_img' => $medPath,
+                    'units' => $med->units,
+                    'units_value' => $med->units_value
+
                 );
 				$i++;
 			}
@@ -1233,7 +1236,9 @@ class MedicineController extends BaseController
                     'sp' => $data['show_priority'],
                     'quantity' => $data['quantity'],
                     'tax' => $data['tax'],
-					'tax_type' => $data['tax_type'],
+                    'tax_type' => $data['tax_type'],
+                    'units' => $data['units'],
+                    'units-value' => $data['units-value'],
                     'imgUrl' => $imagenUrl
 				);
 			}
@@ -1262,7 +1267,9 @@ class MedicineController extends BaseController
                     'discount_type' => $data['discount_type'],
                     'quantity' => $data['quantity'],
 					'tax' => $data['tax'],
-					'tax_type' => $data['tax_type'],
+                    'tax_type' => $data['tax_type'],
+                    'units' => $data['units'],
+                    'units-value' => $data['units-value'],
                     'sp' => $data['show_priority'],
                     'is_pres_required' => $data['is_pres_required']
 				);
