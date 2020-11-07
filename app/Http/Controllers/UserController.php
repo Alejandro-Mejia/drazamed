@@ -221,8 +221,8 @@ class UserController extends BaseController
                 $last_name = Request::get ('last_name');
                 $idn = Request::get ('idn' , '');
 			} else {
-				$email = Auth::user ()->email;
-				$user_type = Auth::user ()->user_type_id;
+				$email =  Request::get ('email', '');
+				$user_type =  Request::get ('user_type','');
 				$first_name = Request::get ('first_name' , '');
                 $last_name = Request::get ('last_name' , '');
                 $idn = Request::get ('idn' , '');
