@@ -257,16 +257,21 @@ class UserController extends BaseController
 						'phone' => $phone ,
                         // 'pincode' => $pincode,
                         'idn' => $idn
-					);
-					$affectedRows = Customer::where ('mail' , '=' , $email)->update ($customerDetails);
+                    );
+                    DB::enableQueryLog();
+                    $affectedRows = Customer::where ('mail' , '=' , $email)->update ($customerDetails);
+                    $query = DB::getQueryLog();
+                    Log::info('query: ' . print_r($query));
+                    Log::info('rows: ' . print_r($affectedRows));
+                    // dd($query);
 					break;
 			}
 			if (is_array($affectedRows) AND count ($affectedRows) == 1) {
 				$result = array(array('result' => array('status' => 'success')));
 				$result = ['status' => 'SUCCESS' , 'msg' => 'User profile updated !'];
 			} else {
-                throw new Exception('Profile not updated ! due to some technical error' , 500);
-                // $result = ['status' => 'FAILURE' , 'msg' => 'User profile not updated !'];
+                // throw new Exception('Profile not updated ! due to some technical error' , 500);
+                $result = ['status' => 'FAILURE' , 'msg' => 'User profile not updated !'];
 			}
 
 			return Response::json ($result);

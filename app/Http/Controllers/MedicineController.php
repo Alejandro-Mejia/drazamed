@@ -1033,6 +1033,8 @@ class MedicineController extends BaseController
                     'composition' => $med->composition,
                     'is_pres_required' => $med->is_pres_required,
                     'group' => $med->group,
+                    'units' => $med->units,
+                    'units_value' => $med->units_value,
                     'url_img' => $medPath
                 );
 				$i++;
@@ -1593,6 +1595,8 @@ class MedicineController extends BaseController
         foreach ($current_orders as $item) {
                 Log::info('Order:' . print_r($item["medicine"]["tax"], true));
                 $current_orders[$i]["tax"] = (isset($item["medicine"]["tax"])) ? $item["medicine"]["tax"] : 0;
+                $current_orders[$i]["units"] = (isset($item["medicine"]["units"])) ? $item["medicine"]["units"] :'NoD';
+                $current_orders[$i]["units_value"] = (isset($item["medicine"]["units_value"])) ? $item["medicine"]["units_value"] : 0;
                 $i++;
 
         }
