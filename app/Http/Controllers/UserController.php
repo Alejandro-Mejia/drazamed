@@ -221,17 +221,23 @@ class UserController extends BaseController
                 $last_name = Request::get ('last_name');
                 $idn = Request::get ('idn' , '');
 			} else {
-				$email =  Request::get ('email', '');
-				$user_type =  Request::get ('user_type','');
-				$first_name = Request::get ('first_name' , '');
-                $last_name = Request::get ('last_name' , '');
-                $idn = Request::get ('idn' , '');
+                $post = 0;
+                if(!empty(Request::json()->all())) {
+                    $email = Request::input ('email');
+                    $user_type = Request::input ('user_type');
+                    $address = Request::input ('address');
+                    $phone = Request::input ('phone');
+                    $first_name = Request::input ('first_name');
+                    $last_name = Request::input ('last_name');
+                    $idn = Request::input ('idn');
+
+                }
 
 			}
 
-			$address = Request::get ('address' , '');
-			$pincode = Request::get ('pincode' , '');
-			$phone = Request::get ('phone' , '');
+			// $address = Request::get ('address' , '');
+			// $pincode = Request::get ('pincode' , '');
+			// $phone = Request::get ('phone' , '');
 			switch ($user_type) {
 				case UserType::MEDICAL_PROFESSIONAL ():
 					$medicalProfDetails = array('prof_first_name' => $first_name ,
@@ -244,7 +250,8 @@ class UserController extends BaseController
 					$affectedRows = MedicalProfessional::where ('prof_mail' , '=' , $email)->update ($medicalProfDetails);
 					break;
 				case UserType::CUSTOMER ():
-					$customerDetails = array('first_name' => $first_name ,
+					$customerDetails = array(
+                        'first_name' => $first_name ,
 						'last_name' => $last_name ,
 						'address' => $address ,
 						'phone' => $phone ,
