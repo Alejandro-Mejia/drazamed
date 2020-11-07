@@ -323,8 +323,8 @@ class MedicinesImport implements ToModel, WithHeadingRow, WithBatchInserts , Wit
 
 
 
-        if(Str::contains($value,  'COMPR' )) {
-            preg_match_all('/(\d+) (?:COMP|COMPR|COMPRIMIDOS)/', $value, $matches);
+        if(Str::contains($value,  'COMP' )) {
+            preg_match_all('/(\d+)(?:COMP|COMPR|COMPRIMIDOS)/', $value, $matches);
             if (isset($matches[1][0])) {
                 Log::info('$value :' . $value . ', unidades : COMPRIMIDOS,  cantidad:' . print_r($matches[1][0], true)) ;
                 $unit_val = $matches[1][0];
