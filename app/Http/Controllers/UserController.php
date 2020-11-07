@@ -255,17 +255,18 @@ class UserController extends BaseController
 						'last_name' => $last_name ,
 						'address' => $address ,
 						'phone' => $phone ,
-                        'pincode' => $pincode,
+                        // 'pincode' => $pincode,
                         'idn' => $idn
 					);
 					$affectedRows = Customer::where ('mail' , '=' , $email)->update ($customerDetails);
 					break;
 			}
-			if (count ($affectedRows) == 1) {
+			if (is_array($affectedRows) AND count ($affectedRows) == 1) {
 				$result = array(array('result' => array('status' => 'success')));
 				$result = ['status' => 'SUCCESS' , 'msg' => 'User profile updated !'];
 			} else {
-				throw new Exception('Profile not updated ! due to some technical error' , 500);
+                throw new Exception('Profile not updated ! due to some technical error' , 500);
+                // $result = ['status' => 'FAILURE' , 'msg' => 'User profile not updated !'];
 			}
 
 			return Response::json ($result);
