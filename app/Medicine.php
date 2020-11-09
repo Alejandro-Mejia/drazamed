@@ -165,6 +165,8 @@
 					$medicines['discount_type'] = $list['discount_type'];
 					$medicines['tax'] = $list['tax'];
 					$medicines['tax_type'] = $list['tax_type'];
+					$medicines['units'] = $list['units'];
+					$medicines['units_value'] = $list['units_value'];
 					$medicines['manufacturer'] = $list['manufacturer'];
 					$medicines['group'] = $list['group'];
 					$medicines['is_delete'] = $list['is_delete'];

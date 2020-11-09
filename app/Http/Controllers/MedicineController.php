@@ -433,7 +433,7 @@ class MedicineController extends BaseController
         foreach($prescriptions as $prescription) {
             foreach($prescription['getCart'] as $cart) {
 
-                //dd($cart);
+                dd( Medicine::medicines($cart->medicine));
                 $item_name =  Medicine::medicines($cart->medicine)["item_name"];
                 $item_code =  Medicine::medicines($cart->medicine)["item_code"];
                 $tax = $cart->unit_price - ceil(($cart->unit_price / (1+(Medicine::medicines($cart->medicine)['tax']/100))));
