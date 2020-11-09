@@ -441,6 +441,8 @@ class MedicineController extends BaseController
                 $cart['item_name'] = Medicine::medicines($cart->medicine)["item_name"];
                 $cart['item_code'] = Medicine::medicines($cart->medicine)["item_code"];
                 $cart['composition'] = Medicine::medicines($cart->medicine)["composition"];
+                $cart['units'] = Medicine::medicines($cart->medicine)["units"];
+                $cart['units_value'] = Medicine::medicines($cart->medicine)["units_value"];
                 $cart['tax'] = $tax;
             }
         }

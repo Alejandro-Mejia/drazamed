@@ -254,14 +254,25 @@ class MedicinesImport implements ToModel, WithHeadingRow, WithBatchInserts , Wit
 
         $unit_val = 0;
 
-        if(Str::contains($value,  ' ML' )) {
-            preg_match_all('/(\d+)(?:ML)/', $value, $matches);
+        if(Str::contains($value,  'ML' )) {
+            preg_match_all('/(\d+) (?: ML|ML)/', $value, $matches);
             if (isset($matches[1][0])) {
                 Log::info('$value :' . $value . ', unidades : MILILITROS,  cantidad:' . print_r($matches[1][0], true)) ;
                 $unit_val = $matches[1][0];
             }
+        }
 
-            preg_match_all('/(\d+) (?:ML)/', $value, $matches);
+        if(Str::contains($value,  'DO' )) {
+            preg_match_all('/(\d+) (?: DO|DO| DOSIS|DOSIS)/', $value, $matches);
+            if (isset($matches[1][0])) {
+                // Log::info('$value :' . $value . ', unidades : DOSIS,  cantidad:' . print_r($matches[1][0], true)) ;
+                $unit_val = $matches[1][0];
+            }
+
+        }
+
+        if(Str::contains($value,  'MILILITRO' )) {
+            preg_match_all('/(\d+) (?:MILILITRO)/', $value, $matches);
             if (isset($matches[1][0])) {
                 Log::info('$value :' . $value . ', unidades : MILILITROS,  cantidad:' . print_r($matches[1][0], true)) ;
                 $unit_val = $matches[1][0];
@@ -270,15 +281,15 @@ class MedicinesImport implements ToModel, WithHeadingRow, WithBatchInserts , Wit
 
         if(Str::contains($value,  ' CAP' )) {
 
-            preg_match_all('/(\d+)(?:CAP|CAPSULAS)/', $value, $matches);
+            preg_match_all('/(\d+) (?:CAP|CAPSULAS)/', $value, $matches);
             if (isset($matches[1][0])) {
-                Log::info('$value :' . $value . ', unidades : CAPSULAS,  cantidad:' . print_r($matches[1][0], true)) ;
+                // Log::info('$value :' . $value . ', unidades : CAPSULAS,  cantidad:' . print_r($matches[1][0], true)) ;
                 $unit_val = $matches[1][0];
             }
 
             preg_match_all('/(\d+) (?:CAP|CAPSULAS)/', $value, $matches);
             if (isset($matches[1][0])) {
-                Log::info('$value :' . $value . ', unidades : CAPSULAS,  cantidad:' . print_r($matches[1][0], true)) ;
+                // Log::info('$value :' . $value . ', unidades : CAPSULAS,  cantidad:' . print_r($matches[1][0], true)) ;
                 $unit_val = $matches[1][0];
             }
 
@@ -291,37 +302,48 @@ class MedicinesImport implements ToModel, WithHeadingRow, WithBatchInserts , Wit
             //     $unit_val = $matches[1][0];
             // }
 
-            preg_match_all('/(\d+)(?:UDS)/', $value, $matches);
+            preg_match_all('/(\d+) (?:UDS)/', $value, $matches);
             if (isset($matches[1][0])) {
-                Log::info('$value :' . $value . ', unidades : UNIDADES,  cantidad:' . print_r($matches[1][0], true)) ;
+                // Log::info('$value :' . $value . ', unidades : UNIDADES,  cantidad:' . print_r($matches[1][0], true)) ;
                 $unit_val = $matches[1][0];
             }
 
             preg_match_all('/(\d+) (?:UDS)/', $value, $matches);
             if (isset($matches[1][0])) {
-                Log::info('$value :' . $value . ', unidades : UNIDADES,  cantidad:' . print_r($matches[1][0], true)) ;
+                // Log::info('$value :' . $value . ', unidades : UNIDADES,  cantidad:' . print_r($matches[1][0], true)) ;
                 $unit_val = $matches[1][0];
             }
 
+        }
+
+        if(Str::contains($value,  'UNIDADES' )) {
+
+            preg_match_all('/(\d+) (?:UNIDADES)/', $value, $matches);
+            if (isset($matches[1][0])) {
+                // Log::info('$value :' . $value . ', unidades : UNIDADES,  cantidad:' . print_r($matches[1][0], true)) ;
+                $unit_val = $matches[1][0];
+            }
         }
 
         if(Str::contains($value,  ' GR' )) {
-            preg_match_all('/(\d+)(?:GR)/', $value, $matches);
+            preg_match_all('/(\d+) (?: GR|GR)/', $value, $matches);
             if (isset($matches[1][0])) {
-                Log::info('$value :' . $value . ', unidades : GRAMOS,  cantidad:' . print_r($matches[1][0], true)) ;
-                $unit_val = $matches[1][0];
-            }
-
-            preg_match_all('/(\d+) (?:GR)/', $value, $matches);
-            if (isset($matches[1][0])) {
-                Log::info('$value :' . $value . ', unidades : GRAMOS,  cantidad:' . print_r($matches[1][0], true)) ;
+                // Log::info('$value :' . $value . ', unidades : GRAMOS,  cantidad:' . print_r($matches[1][0], true)) ;
                 $unit_val = $matches[1][0];
             }
 
         }
 
+        if(Str::contains($value,  ' MILIGRAMOS' )) {
+            preg_match_all('/(\d+) (?: MILIGRAMOS|MILIGRAMOS)/', $value, $matches);
+            if (isset($matches[1][0])) {
+                // Log::info('$value :' . $value . ', unidades : MILIGRAMOS,  cantidad:' . print_r($matches[1][0], true)) ;
+                $unit_val = $matches[1][0];
+            }
+        }
+
         // if(Str::contains($value,  ' G(' )) {
-        //     preg_match_all('/(\d+)(?:G/()/', $value, $matches);
+        //     preg_match_all('/(\d+) (?:G/()/', $value, $matches);
         //     if (isset($matches[1][0])) {
         //         Log::info('$value :' . $value . ', unidades : GRAMOS,  cantidad:' . print_r($matches[1][0], true)) ;
         //         $unit_val = $matches[1][0];
@@ -332,15 +354,15 @@ class MedicinesImport implements ToModel, WithHeadingRow, WithBatchInserts , Wit
 
         if(Str::contains($value,  'AMPOLLA' )) {
 
-            Log::info('$value :' . $value . ', unidades : AMPOLLA,  cantidad:' . 1) ;
+            // Log::info('$value :' . $value . ', unidades : AMPOLLA,  cantidad:' . 1) ;
             $unit_val = 1;
 
         }
 
         if(Str::contains($value,  'AMPOLLAS' )) {
-            preg_match_all('/(\d+) (?:AMPOLLAS)/', $value, $matches);
+            preg_match_all('/(\d+) (?: AMPOLLAS|AMPOLLAS)/', $value, $matches);
             if (isset($matches[1][0])) {
-                Log::info('$value :' . $value . ', unidades : AMPOLLAS,  cantidad:' . print_r($matches[1][0], true)) ;
+                // Log::info('$value :' . $value . ', unidades : AMPOLLAS,  cantidad:' . print_r($matches[1][0], true)) ;
                 $unit_val = $matches[1][0];
             }
 
@@ -349,71 +371,112 @@ class MedicinesImport implements ToModel, WithHeadingRow, WithBatchInserts , Wit
 
 
         if(Str::contains($value,  'COMP' )) {
-            preg_match_all('/(\d+)(?:COMP|COMPR|COMPRIMIDOS)/', $value, $matches);
+            preg_match_all('/(\d+) (?:COMP| COMP|COMPR| COMPR|COMPRIMIDOS| COMPRIMIDOS)/', $value, $matches);
             if (isset($matches[1][0])) {
-                Log::info('$value :' . $value . ', unidades : COMPRIMIDOS,  cantidad:' . print_r($matches[1][0], true)) ;
-                $unit_val = $matches[1][0];
-            }
-
-            preg_match_all('/(\d+) (?:COMP|COMPR|COMPRIMIDOS)/', $value, $matches);
-            if (isset($matches[1][0])) {
-                Log::info('$value :' . $value . ', unidades : COMPRIMIDOS,  cantidad:' . print_r($matches[1][0], true)) ;
+                // Log::info('$value :' . $value . ', unidades : COMPRIMIDOS,  cantidad:' . print_r($matches[1][0], true)) ;
                 $unit_val = $matches[1][0];
             }
 
         }
 
         if(Str::contains($value,  'SUPOS' )) {
-            preg_match_all('/(\d+) (?:SUPOS|SUPOSITO)/', $value, $matches);
+            preg_match_all('/(\d+) (?:SUPOS| SUPOS|SUPOSITO)/', $value, $matches);
             if (isset($matches[1][0])) {
-                Log::info('$value :' . $value . ', unidades : SUPOSITORIOS,  cantidad:' . print_r($matches[1][0], true)) ;
+                // Log::info('$value :' . $value . ', unidades : SUPOSITORIOS,  cantidad:' . print_r($matches[1][0], true)) ;
                 $unit_val = $matches[1][0];
             }
 
         }
 
         if(Str::contains($value,  'PARCHE' )) {
-            Log::info('$value :' . $value . ', unidades : PARCHE,  cantidad:' . 1) ;
+            // Log::info('$value :' . $value . ', unidades : PARCHE,  cantidad:' . 1) ;
             $unit_val = 1;
 
         }
 
+        if(Str::contains($value,  'KIT' )) {
+            // Log::info('$value :' . $value . ', unidades : KIT,  cantidad:' . 1) ;
+            $unit_val = 1;
+
+        }
+
+
         if(Str::contains($value,  'CANULA' )) {
-            Log::info('$value :' . $value . ', unidades : CANULA,  cantidad:' . 1) ;
+            // Log::info('$value :' . $value . ', unidades : CANULA,  cantidad:' . 1) ;
             $unit_val = 1;
 
         }
 
         if(Str::contains($value,  'PARCHES' )) {
-            preg_match_all('/(\d+) (?:PARCHES)/', $value, $matches);
+            preg_match_all('/(\d+) (?: PARCHES|PARCHES)/', $value, $matches);
             if (isset($matches[1][0])) {
-                Log::info('$value :' . $value . ', unidades : PARCHES,  cantidad:' . print_r($matches[1][0], true)) ;
+                // Log::info('$value :' . $value . ', unidades : PARCHES,  cantidad:' . print_r($matches[1][0], true)) ;
                 $unit_val = $matches[1][0];
             }
 
         }
 
 
-        if(Str::contains($value,  'DOSIS' )) {
-            preg_match_all('/(\d+) (?:DOSIS)/', $value, $matches);
-            if (isset($matches[1][0])) {
-                Log::info('$value :' . $value . ', unidades : DOSIS,  cantidad:' . print_r($matches[1][0], true)) ;
-                $unit_val = $matches[1][0];
-            }
 
-        }
 
         if(Str::contains($value,  'SBS' )) {
-            preg_match_all('/(\d+)(?:SBS)/', $value, $matches);
+            // preg_match_all('/(\d+) (?:SBS)/', $value, $matches);
+            // if (isset($matches[1][0])) {
+            //     Log::info('$value :' . $value . ', unidades : SOBRES,  cantidad:' . print_r($matches[1][0], true)) ;
+            //     $unit_val = $matches[1][0];
+            // }
+
+            preg_match_all('/(\d+) (?:SBS)/', $value, $matches);
             if (isset($matches[1][0])) {
                 Log::info('$value :' . $value . ', unidades : SOBRES,  cantidad:' . print_r($matches[1][0], true)) ;
                 $unit_val = $matches[1][0];
             }
 
+
+        }
+
+        if(Str::contains($value,  'SOBRES' )) {
+            preg_match_all('/(\d+) (?:SOBRES)/', $value, $matches);
+            if (isset($matches[1][0])) {
+                Log::info('$value :' . $value . ', unidades : SOBRES,  cantidad:' . print_r($matches[1][0], true)) ;
+                $unit_val = $matches[1][0];
+            }
+        }
+
+        if(Str::contains($value,  'SOFTGEL' )) {
+            preg_match_all('/(\d+) (?:SOFTGEL)/', $value, $matches);
+            if (isset($matches[1][0])) {
+                Log::info('$value :' . $value . ', unidades : SOFTGELS,  cantidad:' . print_r($matches[1][0], true)) ;
+                $unit_val = $matches[1][0];
+            }
+        }
+
+        if(Str::contains($value,  'APLICADOR' )) {
+            preg_match_all('/(\d+) (?:APLICADOR)/', $value, $matches);
+            if (isset($matches[1][0])) {
+                Log::info('$value :' . $value . ', unidades : APLICADORES,  cantidad:' . print_r($matches[1][0], true)) ;
+                $unit_val = $matches[1][0];
+            }
         }
 
         if(Str::contains($value,  'OVULO' )) {
             Log::info('$value :' . $value . ', unidades : OVULO,  cantidad:' . 1) ;
+            $unit_val = 1;
+
+        }
+
+        if(Str::contains($value,  'CASSETTE' )) {
+            Log::info('$value :' . $value . ', unidades : CASSETTE,  cantidad:' . 1) ;
+            $unit_val = 1;
+
+        }
+        if(Str::contains($value,  'TIRA' )) {
+            Log::info('$value :' . $value . ', unidades : TIRA,  cantidad:' . 1) ;
+            $unit_val = 1;
+
+        }
+        if(Str::contains($value,  'MIDSTREAM' )) {
+            Log::info('$value :' . $value . ', unidades : MIDSTREAM,  cantidad:' . 1) ;
             $unit_val = 1;
 
         }
@@ -438,7 +501,8 @@ class MedicinesImport implements ToModel, WithHeadingRow, WithBatchInserts , Wit
 
 
         if(Str::contains($value,  ' TAB' )) {
-            preg_match_all('/(\d+) (?:TAB)/', $value, $matches);
+            preg_match_all('/([\d]+) (?: TAB|TAB)/', $value, $matches);
+
             if (isset($matches[1][0])) {
                 Log::info('$value :' . $value . ', unidades : TABLETAS,  cantidad:' . print_r($matches[1][0], true)) ;
                 $unit_val = $matches[1][0];
@@ -447,7 +511,7 @@ class MedicinesImport implements ToModel, WithHeadingRow, WithBatchInserts , Wit
         }
 
         if(Str::contains($value,  'TABLETAS' )) {
-            preg_match_all('/(\d+) (?:TAB|TABLETAS)/', $value, $matches);
+            preg_match_all('/(\d+) (?:TAB|TABLETAS| TABLETAS)/', $value, $matches);
             if (isset($matches[1][0])) {
                 Log::info('$value :' . $value . ', unidades : TABLETAS,  cantidad:' . print_r($matches[1][0], true)) ;
                 $unit_val = $matches[1][0];
@@ -455,8 +519,8 @@ class MedicinesImport implements ToModel, WithHeadingRow, WithBatchInserts , Wit
 
         }
 
-        if(Str::contains($value,  ' TBS' )) {
-            preg_match_all('/(\d+) (?:TBS)/', $value, $matches);
+        if(Str::contains($value,  'TB' )) {
+            preg_match_all('/(\d+) (?: TB|TB)/', $value, $matches);
             if (isset($matches[1][0])) {
                 Log::info('$value :' . $value . ', unidades : TABLETAS,  cantidad:' . print_r($matches[1][0], true)) ;
                 $unit_val = $matches[1][0];
@@ -464,8 +528,16 @@ class MedicinesImport implements ToModel, WithHeadingRow, WithBatchInserts , Wit
 
         }
 
-        if(Str::contains($value,  ' TB' )) {
-            preg_match_all('/(\d+)(?:TB)/', $value, $matches);
+        if(Str::contains($value,  'TBS' )) {
+
+            // preg_match_all('/(\d+) (?:TBS)/', $value, $matches);
+            // if (isset($matches[1][0])) {
+            //     Log::info('$value :' . $value . ', unidades : TABLETAS,  cantidad:' . print_r($matches[1][0], true)) ;
+            //     $unit_val = $matches[1][0];
+            // }
+
+
+            preg_match_all('/(\d+) (?: TBS|TBS)/', $value, $matches);
             if (isset($matches[1][0])) {
                 Log::info('$value :' . $value . ', unidades : TABLETAS,  cantidad:' . print_r($matches[1][0], true)) ;
                 $unit_val = $matches[1][0];
@@ -473,10 +545,19 @@ class MedicinesImport implements ToModel, WithHeadingRow, WithBatchInserts , Wit
 
         }
 
+
+        if(Str::contains($value,  'PASTILLA' )) {
+            preg_match_all('/(\d+) (?: PASTILLA|PASTILLA)/', $value, $matches);
+            if (isset($matches[1][0])) {
+                Log::info('$value :' . $value . ', unidades : PASTILLAS,  cantidad:' . print_r($matches[1][0], true)) ;
+                $unit_val = $matches[1][0];
+            }
+
+        }
 
 
         if(Str::contains($value,  'GRAGEAS' )) {
-            preg_match_all('/(\d+) (?:GRAGEAS)/', $value, $matches);
+            preg_match_all('/(\d+) (?: GRAGEAS|GRAGEAS)/', $value, $matches);
             if (isset($matches[1][0])) {
                 Log::info('$value :' . $value . ', unidades : GRAGEAS,  cantidad:' . print_r($matches[1][0], true)) ;
                 $unit_val = $matches[1][0];
@@ -485,7 +566,7 @@ class MedicinesImport implements ToModel, WithHeadingRow, WithBatchInserts , Wit
         }
 
         if(Str::contains($value,  'PERLAS' )) {
-            preg_match_all('/(\d+) (?:PERLAS)/', $value, $matches);
+            preg_match_all('/(\d+) (?: PERLAS|PERLAS)/', $value, $matches);
             if (isset($matches[1][0])) {
                 Log::info('$value :' . $value . ', unidades : PERLAS,  cantidad:' . print_r($matches[1][0], true)) ;
                 $unit_val = $matches[1][0];
@@ -494,7 +575,7 @@ class MedicinesImport implements ToModel, WithHeadingRow, WithBatchInserts , Wit
         }
 
         if(Str::contains($value,  'JERI' )) {
-            preg_match_all('/(\d+) (?:JERI)/', $value, $matches);
+            preg_match_all('/(\d+) (?: JERI|JERI)/', $value, $matches);
             if (isset($matches[1][0])) {
                 Log::info('$value :' . $value . ', unidades : JERINGAS PRELLENADAS,  cantidad:' . print_r($matches[1][0], true)) ;
                 $unit_val = $matches[1][0];
