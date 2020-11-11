@@ -66,7 +66,8 @@ class TreatmentController extends Controller
             'frequency' => $freq,
             'start_time' => $start_time,
             'dosis' => $dosis,
-            'obs' => $obs
+            'obs' => $obs,
+            'active' => true
         ];
 
         $result = Treatment::create($treatment);
@@ -114,6 +115,38 @@ class TreatmentController extends Controller
         } else {
             return Response::json (['status' => 'FAILURE' , 'msg' => 'Tu tratamiento NO ha sido actualizado.']);
         }
+
+    }
+
+    public function postUpdateActiveTreatment() {
+        header ("Access-Control-Allow-Origin: *");
+        header ("Access-Control-Allow-Headers: *");
+
+        if(!empty(Request::json()->all())) {
+            $email = Request::input ('email');
+            $item_code = Request::input ('item_code');
+            $active = Request::input ('active');
+        }
+
+        $user = User::where('email', '=', $email)->with('customer')->get();
+
+        $customer_id =  $user[0]['customer']['id'];
+
+        $treatment = Treatment::where('customer_id', '=', $customer_id)->where('item_code', '=', $item_code)->first();
+
+        $treatment->active = $active;
+
+        $updated = $treatment->toArray();
+
+        $result = $treatment->update($updated);
+        // dd($result);
+
+        if ($result) {
+            return Response::json (['status' => 'SUCCESS' , 'msg' => 'Tu tratamiento ha sido actualizado correctamente.']);
+        } else {
+            return Response::json (['status' => 'FAILURE' , 'msg' => 'Tu tratamiento NO ha sido actualizado.']);
+        }
+
 
     }
 }

@@ -106,6 +106,7 @@ use MercadoPago;
      */
     Route::post('/treatment/create-treatment', 'TreatmentController@postCreateTreatment');
     Route::post('/treatment/update-treatment', 'TreatmentController@postUpdateTreatmentTaken');
+    Route::post('/treatment/update-active-status', 'TreatmentController@postUpdateActiveTreatment');
 
 
     /**
