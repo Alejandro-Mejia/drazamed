@@ -23,13 +23,22 @@ class TreatmentController extends Controller
 		// if (!Auth::check ())
 		// 	return Redirect::to ('/');
         $email = Request::get ('email', '');
+        $isDel = Request::get ('isDel', 0);
 
-        $user = User::where('email','=', $email)->with('customer', 'customer.treatments', 'customer.treatments.medicines')->get();
+        $user = User::where('email', '=', $email)->with('customer')->get();
 
-        $treatments = $user->toArray();
+        $customer_id =  $user[0]['customer']['id'];
 
-        // dd($treatments[0]['customer']['treatments']);
-        return json_encode($treatments[0]['customer']['treatments']);
+        if($isDel == 0) {
+            $treatments = Treatment::where('customer_id', '=', $customer_id)->get();
+        } else {
+            $treatments = Treatment::where('customer_id', '=', $customer_id)->withTrashed()->get();
+        }
+
+        // $treatments = $user->toArray();
+
+        // dd($treatments);
+        return json_encode($treatments);
 
 
 		// return View::make('/users/my_order');
