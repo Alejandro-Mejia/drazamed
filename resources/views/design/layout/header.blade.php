@@ -24,7 +24,7 @@
                     </li>
                     <li id="navlistitems" class="nave-item">
                         <a class="nav-link" href="/about">
-                            Quienes Somos
+                            Quiénes Somos
                         </a>
                     </li>
                     <li id="navlistitems" class="nave-item">
