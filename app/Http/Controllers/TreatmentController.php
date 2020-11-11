@@ -149,4 +149,29 @@ class TreatmentController extends Controller
 
 
     }
+
+
+    public function postDeleteTreatment() {
+        header ("Access-Control-Allow-Origin: *");
+        header ("Access-Control-Allow-Headers: *");
+
+        if(!empty(Request::json()->all())) {
+            $email = Request::input ('email');
+            $item_code = Request::input ('item_code');
+        }
+
+        $user = User::where('email', '=', $email)->with('customer')->get();
+
+        $customer_id =  $user[0]['customer']['id'];
+
+        $treatment = Treatment::where('customer_id', '=', $customer_id)->where('item_code', '=', $item_code)->first();
+
+        $result = $treatment->delete();
+
+        if ($result) {
+            return Response::json (['status' => 'SUCCESS' , 'msg' => 'Tu tratamiento ha sido borrado correctamente.']);
+        } else {
+            return Response::json (['status' => 'FAILURE' , 'msg' => 'Tu tratamiento NO ha sido borrado.']);
+        }
+    }
 }

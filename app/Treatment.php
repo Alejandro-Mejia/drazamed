@@ -4,24 +4,26 @@ namespace App;
 
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Treatment extends Model
 {
     protected $table = 'treatment';
+    use SoftDeletes;
 
     /**
-		 * Fillable fields
-		 */
-		protected $fillable = [
-			'item_code' ,
-			'customer_id',
-			'total',
-			'dosis',
-			'taken',
-			'start_time',
-			'frequency',
-            'obs',
-		];
+     * Fillable fields
+     */
+    protected $fillable = [
+        'item_code' ,
+        'customer_id',
+        'total',
+        'dosis',
+        'taken',
+        'start_time',
+        'frequency',
+        'obs',
+    ];
 
 
     public function medicines () {
