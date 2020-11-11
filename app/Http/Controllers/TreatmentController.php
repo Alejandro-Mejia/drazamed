@@ -30,9 +30,9 @@ class TreatmentController extends Controller
         $customer_id =  $user[0]['customer']['id'];
 
         if($isDel == 0) {
-            $treatments = Treatment::where('customer_id', '=', $customer_id)->get();
+            $treatments = Treatment::where('customer_id', '=', $customer_id)->with('medicines')->get();
         } else {
-            $treatments = Treatment::where('customer_id', '=', $customer_id)->withTrashed()->get();
+            $treatments = Treatment::where('customer_id', '=', $customer_id)->with('medicines')->withTrashed()->get();
         }
 
         // $treatments = $user->toArray();
