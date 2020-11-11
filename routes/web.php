@@ -81,6 +81,7 @@ use MercadoPago;
     Route::get('/my-prescriptions', 'MedicineController@getMyPrescriptions');
     Route::get('/medicine-detail/{item_code}', 'MedicineController@getMedicineDetail');
     Route::get('/account-page', 'UserController@getAccountPage');
+    Route::get('/my-treatments', 'treatmentController@getMyTreatments');
 
     /**
      * User routes
@@ -99,6 +100,12 @@ use MercadoPago;
     Route::get('/user/get-user-data/{is_web}', 'UserController@getUserData');
     Route::post('/user/post-user-data/{is_web}', 'UserController@postUpdateDetailsUser');
 
+
+    /**
+     * Treatment routes
+     */
+    Route::post('/treatment/create-treatment', 'TreatmentController@postCreateTreatment');
+    Route::post('/treatment/update-treatment', 'TreatmentController@postUpdateTreatmentTaken');
 
 
     /**
