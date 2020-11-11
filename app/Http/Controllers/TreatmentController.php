@@ -97,12 +97,17 @@ class TreatmentController extends Controller
 
         $customer_id =  $user[0]['customer']['id'];
 
-        $treatment = Treatment::where('customer_id', '=', $customer_id)->where('item_code', '=', $item_code);
+        $treatment = Treatment::where('customer_id', '=', $customer_id)->where('item_code', '=', $item_code)->first();
 
-        $treatment['taken'] += $taken;
 
-        $result = $treatment->update($treatment);
+        $treatment->taken += $taken;
 
+        // dd($treatment);
+
+        $updated = $treatment->toArray();
+
+        $result = $treatment->update($updated);
+        // dd($result);
 
         if ($result) {
             return Response::json (['status' => 'SUCCESS' , 'msg' => 'Tu tratamiento ha sido actualizado correctamente.']);
