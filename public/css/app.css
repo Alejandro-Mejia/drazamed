@@ -16311,7 +16311,7 @@ main {
   }
 
   #tableBig {
-    display: none;
+    display: block;
   }
 }
 

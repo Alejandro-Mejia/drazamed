@@ -131,7 +131,7 @@
 
                         <?php  // $total = ((int)$cart_item->unit_price * (int)$cart_item->medicine_count); ?>
                         <?php $total=$cart_item->unit_price * $cart_item->medicine_count ?>
-                        <td class="text-right col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                        <td class="text-right col-lg-2 col-md-2 col-sm-0 col-xs-0">
                           {{ '$' . number_format($total, 0, ',', '.')  }}
                         </td>
 
@@ -493,7 +493,7 @@
     $.ajax({
           url:url,
           type: method,
-          data: form.serialize(),
+          data: form.serialize(), // coje los valores del formulario y los transmite
           cache: false,
           statusCode:{
               400:function(data){
