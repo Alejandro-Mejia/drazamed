@@ -116,6 +116,7 @@ use MercadoPago;
     Route::get('/professional/get-customer-list/{key}', 'ProfessionalController@getCustomersList');
     Route::post('/professional/assign-professional', 'ProfessionalController@postAssignProfessional');
     Route::post('/professional/remove-professional', 'ProfessionalController@postRemoveProfessional');
+    Route::any('/professional/medical-account-page', 'ProfessionalController@anyMedicalAccountPage');
 
 
     /**

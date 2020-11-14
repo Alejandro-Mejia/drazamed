@@ -760,8 +760,10 @@ class UserController extends BaseController
 		// return json_encode($invoices);
 
 		switch ($user_type) {
-			case (UserType::MEDICAL_PROFESSIONAL ()):  //for medical professionals
-				return View::make ('users.account_page' , array('user_data' => Auth::user()->professional));
+            case (UserType::MEDICAL_PROFESSIONAL ()):  //for medical professionals
+                $user_data = Auth::user()->professional()->first();
+                // dd($user_data->first()->toArray());
+				return View::make ('design.medicalprofile' , array('user_data' => $user_data, 'user_type_name' => 'Médico'));
 				break;
 			case (UserType::CUSTOMER ()):  //for customers
 
