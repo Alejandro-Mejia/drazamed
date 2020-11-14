@@ -6,6 +6,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use App\Customer;
+use App\Professional;
 
 class User extends Authenticatable
 {
@@ -56,7 +57,7 @@ class User extends Authenticatable
      */
     public function professional()
     {
-        return $this->hasOne('MedicalProfessional', 'id', 'user_id');
+        return $this->hasOne('App\Professional', 'id', 'user_id');
     }
 
     /**
