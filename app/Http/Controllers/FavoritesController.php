@@ -27,7 +27,7 @@ class FavoritesController extends Controller
 
 		($request->has('id_min')) ? $id_min = $request->query('id_min') : $id_min = null;
 		($request->has('n')) ? $n = $request->query('n') : $n = 9;
-		
+
 		// dd($id_min, $n);
 
 		if ($id_min != null && $n != null) {
@@ -35,8 +35,8 @@ class FavoritesController extends Controller
 		} else {
 			$favorites = Favorite::select ('*')->get();
 		}
-		
-		
+
+
 		// dd($favorites);
 
 		// if (count ($favorites) > 0) {
@@ -61,8 +61,8 @@ class FavoritesController extends Controller
 				// dd($med['id']);
 				// $sellprice = app(Medicine::class)->anyCalculateMRP($med['id']) ? $this->anyCalculateMRP($med['id']) : 0;
 				// $sellprice = app()->call('App\Http\Controllers\MedicineController@anyCalculateMRP', ['id' => $med['id']]);
-				
-		        $medImagen = isset($med['item_code']) ? $med['item_code'].'.png' : 'default.png';
+
+		        $medImagen = isset($med['item_code']) ? $med['item_code'].'.jpg' : 'default.png';
 				$medPath = "/images/products/" . $medImagen;
 
 
@@ -74,7 +74,7 @@ class FavoritesController extends Controller
 
 				$medicineNameArray[$i] = array("id" => $med->id ,'item_code' => $med->item_code,  "name" => $med->item_name , 'mrp' => $med->sellprice() ,'quantity' => $med->quantity, 'lab' => $med->manufacturer , 'composition' => $med->composition, 'image-url' => $med->photo_url, 'is_pres_required' => $med->is_pres_required, 'group' => $med->group, 'url_img' => $medPath);
 				}
-				
+
 				$i++;
 			}
 			$result = array('result' => array('status' => 'sucess' , 'msg' => $medicineNameArray));

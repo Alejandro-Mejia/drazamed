@@ -57,6 +57,20 @@ window.Echo = new Echo({
 //     .listen('MessageSent', (e) => {
 //     console.log('notif arrived', e);
 // })
+// window.Echo.channel('Drazamed')
+// //   .listen('.MessageSent', (e) => {
+// //     console.log(e);
+// //     app.messages.push({
+// //       message: e.message.message,
+// //       user: e.user
+// //     });
+// //   })
+//   .listen('.orderStatus', (e) => {
+//     console.log('Orden verificada : ' );
+//     console.log(e);
+//     // console.log(e.user.id);
+//     httpGetAsync('/user/is-actual-user/' + e.user.id, checkedUser);
+//   });
 
 // import 'jquery-ui/ui/widgets/autocomplete.js';
 

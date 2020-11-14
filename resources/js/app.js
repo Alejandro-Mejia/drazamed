@@ -78,9 +78,10 @@ window.Echo.channel('Drazamed')
 //     });
 //   })
   .listen('.orderStatus', (e) => {
-    console.log('Orden verificada : ' );
+    console.log('Orden verificada ....: ' );
     console.log(e);
     // console.log(e.user.id);
+    console.log("Verificando que sea para el usuario");
     httpGetAsync('/user/is-actual-user/' + e.user.id, checkedUser);
   });
 
@@ -89,21 +90,34 @@ function httpGetAsync(theUrl, callback)
     var xmlHttp = new XMLHttpRequest();
     xmlHttp.onreadystatechange = function() {
         if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
+        {
+            console.log(xmlHttp.responseText);
             callback(xmlHttp.responseText);
+        }
+
     }
     xmlHttp.open("GET", theUrl, true); // true for asynchronous
-    xmlHttp.send(null);
+    xmlHttp.send();
 }
 
+function IsJsonString(str) {
+    try {
+        JSON.parse(str);
+    } catch (e) {
+        return false;
+    }
+    return true;
+}
 
 function checkedUser(data) {
 
     console.log("Usuario : ");
 
+    console.log("isJson:" + IsJsonString(data));
+
     var dataJson = JSON.parse(data);
     // dataJson = data;
-    console.log(data);
-    // console.log(data.status);
+    // console.log('Status' + data['status']);
     console.log(dataJson.status);
 
     if (dataJson.status == "SUCCESS") {

@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 
+use App\DraLog;
 use App\User;
 use App\UserType;
 use App\UserStatus;
@@ -32,13 +33,15 @@ use View;
 use Hash;
 use Mail;
 
+
+
 use Exception;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 
 
 
-header ("Access-Control-Allow-Origin: *");
+//header ("Access-Control-Allow-Origin: *");
 
 class UserController extends BaseController
 {
@@ -78,6 +81,8 @@ class UserController extends BaseController
 //			return Response::make (['status' => 'FAILURE' , 'msg' => 'Invalid Request made'] , 401);
 //
 //		}
+        header ("Access-Control-Allow-Origin: *");
+        header ("Access-Control-Allow-Headers: *");
 		try {
 			$email = Request::get ('email' , '');
 			$last_name = Request::get ('last_name' , '');
@@ -202,7 +207,8 @@ class UserController extends BaseController
 	 */
 	public function postUpdateDetailsUser ($isWeb = 0)
 	{
-
+        header ("Access-Control-Allow-Origin: *");
+        header ("Access-Control-Allow-Headers: *");
 //		if (!$this->isCsrfAccepted ()) {
 //			$result = array(array('result' => array('status' => 'failed')));
 //			return Response::json ($result);
@@ -212,43 +218,60 @@ class UserController extends BaseController
 				$email = Auth::user ()->email;
 				$user_type = Auth::user ()->user_type_id;
 				$first_name = Request::get ('first_name' , '');
-				$last_name = Request::get ('last_name');
+                $last_name = Request::get ('last_name');
+                $idn = Request::get ('idn' , '');
 			} else {
-				$email = Auth::user ()->email;
-				$user_type = Auth::user ()->user_type_id;
-				$first_name = Request::get ('first_name' , '');
-				$last_name = Request::get ('last_name' , '');
+                $post = 0;
+                if(!empty(Request::json()->all())) {
+                    $email = Request::input ('email');
+                    $user_type = Request::input ('user_type');
+                    $address = Request::input ('address');
+                    $phone = Request::input ('phone');
+                    $first_name = Request::input ('first_name');
+                    $last_name = Request::input ('last_name');
+                    $idn = Request::input ('idn');
+
+                }
 
 			}
 
-			$address = Request::get ('address' , '');
-			$pincode = Request::get ('pincode' , '');
-			$phone = Request::get ('phone' , '');
+			// $address = Request::get ('address' , '');
+			// $pincode = Request::get ('pincode' , '');
+			// $phone = Request::get ('phone' , '');
 			switch ($user_type) {
 				case UserType::MEDICAL_PROFESSIONAL ():
 					$medicalProfDetails = array('prof_first_name' => $first_name ,
 						'prof_last_name' => $last_name ,
 						'prof_address' => $address ,
 						'prof_phone' => $phone ,
-						'prof_pincode' => $pincode
+                        'prof_pincode' => $pincode,
+                        'idn' => $idn
 					);
 					$affectedRows = MedicalProfessional::where ('prof_mail' , '=' , $email)->update ($medicalProfDetails);
 					break;
 				case UserType::CUSTOMER ():
-					$customerDetails = array('first_name' => $first_name ,
+					$customerDetails = array(
+                        'first_name' => $first_name ,
 						'last_name' => $last_name ,
 						'address' => $address ,
 						'phone' => $phone ,
-						'pincode' => $pincode
-					);
-					$affectedRows = Customer::where ('mail' , '=' , $email)->update ($customerDetails);
+                        // 'pincode' => $pincode,
+                        'idn' => $idn
+                    );
+                    DB::enableQueryLog();
+                    $affectedRows = Customer::where ('mail' , '=' , $email)->update ($customerDetails);
+                    $query = DB::getQueryLog();
+                    Log::info('query: ' . print_r($query));
+                    Log::info('rows: ' . print_r($affectedRows));
+                    // dd($query);
 					break;
 			}
-			if (count ($affectedRows) == 1) {
+			if (is_array($affectedRows) AND count ($affectedRows) == 1) {
 				$result = array(array('result' => array('status' => 'success')));
 				$result = ['status' => 'SUCCESS' , 'msg' => 'User profile updated !'];
 			} else {
-				throw new Exception('Profile not updated ! due to some technical error' , 500);
+                // throw new Exception('Profile not updated ! due to some technical error' , 500);
+                $result = ['status' => 'FAILURE' , 'msg' => 'User profile not updated !'];
 			}
 
 			return Response::json ($result);
@@ -262,16 +285,45 @@ class UserController extends BaseController
 	}
 
     public function getIsActualUser($user_js) {
+
+        header ("Access-Control-Allow-Origin: *");
+        header ("Access-Control-Allow-Headers: *");
+
+        Log::info('User id : ' . $user_js);
         $user = Auth::user();
-        if ($user->id == $user_js) {
-            return Response::make (['status' => 'SUCCESS' , 'msg' => 'User matched'] ,200);
+        Log::info('User : ' . $user);
+        if (isset($user)) {
+            if ($user->id == $user_js) {
+                return Response::make(['status' => 'SUCCESS' , 'msg' => 'Usuario actual'] ,200);
+                return Response::json ($result);
+            } else {
+                return Response::make (['status' => 'FAILURE' , 'msg' => 'Different user'] ,401);
+            }
         } else {
-            return Response::make (['status' => 'FAILURE' , 'msg' => 'Different user'] ,401);
+            return Response::make (['status' => 'FAILURE' , 'msg' => 'User not logged'] ,401);
         }
 
     }
 
 
+    public function getUserIpAddr(){
+        $ipaddress = '';
+        if (isset($_SERVER['HTTP_CLIENT_IP']))
+            $ipaddress = $_SERVER['HTTP_CLIENT_IP'];
+        else if(isset($_SERVER['HTTP_X_FORWARDED_FOR']))
+            $ipaddress = $_SERVER['HTTP_X_FORWARDED_FOR'];
+        else if(isset($_SERVER['HTTP_X_FORWARDED']))
+            $ipaddress = $_SERVER['HTTP_X_FORWARDED'];
+        else if(isset($_SERVER['HTTP_FORWARDED_FOR']))
+            $ipaddress = $_SERVER['HTTP_FORWARDED_FOR'];
+        else if(isset($_SERVER['HTTP_FORWARDED']))
+            $ipaddress = $_SERVER['HTTP_FORWARDED'];
+        else if(isset($_SERVER['REMOTE_ADDR']))
+            $ipaddress = $_SERVER['REMOTE_ADDR'];
+        else
+            $ipaddress = 'UNKNOWN';
+        return $ipaddress;
+    }
 
 	/**
 	 * User Login
@@ -282,6 +334,13 @@ class UserController extends BaseController
 	 */
 	public function anyUserLogin ($isWeb = 0)
 	{
+        header ("Access-Control-Allow-Origin: *");
+        header ("Access-Control-Allow-Headers: *");
+
+        // $userIp = $this->server->get('REMOTE_ADDR');
+
+        $userIp = '';
+        $userIp = $this->getUserIpAddr();
 
 		try {
 			$email = Request::get ('email' , '');
@@ -309,7 +368,8 @@ class UserController extends BaseController
 								$result = array(array('result' => array('status' => 'success' , 'page' => 'yes')));
 							} else {
 								$result = array(array('result' => array('status' => 'success' , 'page' => 'no')));
-							}
+                            }
+
 						} else {
 							$result = array(array('result' => array('status' => 'failure')));
 						}
@@ -322,13 +382,15 @@ class UserController extends BaseController
 
 			} else {
 				if (Auth::attempt (array('email' => $email , 'password' => $password))) {
-					$status = User::where ('email' , '=' , $email)->join ('user_status as us' , 'us.id' , '=' , 'user_status')->first ()->name;
-					$user = User::select('name')->where('email' , '=' , $email)->first()->name;
+                    $status = User::where ('email' , '=' , $email)->join ('user_status as us' , 'us.id' , '=' , 'user_status')->first ()->name;
+                    // $user_id = User::where ('email' , '=' , $email)->join ('user_status as us' , 'us.id' , '=' , 'user_status')->first ()->id;
+                    $user = User::select('name')->where('email' , '=' , $email)->first()->name;
+                    $user_id = User::select('id')->where('email' , '=' , $email)->first()->id;
 					// dd($user);
 					//dd($status);
 					Session::put ('user_id' , $email);
 					Log::info('Email: '.$email);
-					Log::info('Passwd: '.$password);
+					// Log::info('Passwd: '.$password);
 					Log::info('Status: '.$status);
 					// $pres_status = PrescriptionStatus::status ();
 					// $invoice_status = InvoiceStatus::status ();
@@ -341,13 +403,24 @@ class UserController extends BaseController
 					// $result = ['status' => 'SUCCESS' , 'msg' => 'User Logged In' , 'data' => ['status' => $status , 'pres_status' => $pres_status ,
 					// 	'invoice_status' => $invoice_status , 'payment_status' => $payment_status , 'shipping_status' => $shipping_status]];
 					//
-					$result = ['status' => 'SUCCESS' , 'msg' => 'User Logged In', 'email' => $email, 'name'=> $user,  'data' => ['status' => $status ]];
+					$result = ['status' => 'SUCCESS' , 'msg' => 'User Logged In', 'email' => $email, 'name'=> $user,  'data' => ['status' => $status, 'user_id'=>$user_id ]];
 					//dd($result);
-					// Log::info('result: '. print_f($result, true));
+				    Log::info('result: '. print_r($result, true));
 				} else {
 					throw new Exception('Invalid Login Credientials' , 401);
 				}
-			}
+            }
+            // dd($result);
+            DB::table('logs')->insert(
+                [
+                    'email' => $email,
+                    'msg' => ($isWeb == 0) ? $result['status'] : $result[0]['result']['status'],
+
+                    'extra' => $userIp,
+                    "created_at" =>  \Carbon\Carbon::now(), # new \Datetime()
+                    "updated_at" => \Carbon\Carbon::now(),  # new \Datetime()
+                ]
+            );
 			return Response::json ($result);
 		}
 		catch (Exception $e) {
@@ -365,6 +438,9 @@ class UserController extends BaseController
 	 */
 	public function anyActivateAccount ()
 	{
+        header ("Access-Control-Allow-Origin: *");
+        header ("Access-Control-Allow-Headers: *");
+
 		try {
 			$email = Request::get ('email' , '');
 			$user = User::where ('email' , '=' , $email)->first ();
@@ -402,6 +478,9 @@ class UserController extends BaseController
 	 */
 	public function anyWebActivateAccount ($code)
 	{
+        header ("Access-Control-Allow-Origin: *");
+        header ("Access-Control-Allow-Headers: *");
+
 		$user = User::where ('security_code' , '=' , $code)->first ();
 
 		if (count ((array)$user)) {
@@ -421,6 +500,9 @@ class UserController extends BaseController
 	 */
 	public function anyUserDetails ()
 	{
+        header ("Access-Control-Allow-Origin: *");
+        header ("Access-Control-Allow-Headers: *");
+
 		try {
 
 			if (!Auth::check ())
@@ -477,11 +559,26 @@ class UserController extends BaseController
 	 */
 	public function anyResetPassword ()
 	{
+        header ("Access-Control-Allow-Origin: *");
+        header ("Access-Control-Allow-Headers: *");
 		try {
-			$email = Request::get ('email' , '');
-			if (Request::has ('email') && Request::has ('security_code') && Request::has ('new_password')) {
+            $email = Request::get ('email' , '');
+
+            $post = 0;
+            if(!empty(Request::json()->all())) {
+                $email_json = Request::input ('email');
+                $security_code = Request::input ('security_code');
+                $new_password = Request::input ('new_password');
+                $confirm_password = Request::input ('confirm_password');
+                $post=1;
+            }
+
+            Log::info('email:' . $email);
+
+
+			if ($email && $security_code && $new_password) {
 				$security_code = Request::get ('security_code');
-				dd($security_code);
+				// dd($security_code);
 				$password = Request::get ('new_password');
 				$confirm_password = Request::get ('confirm_password');
 				$user = User::where ('email' , '=' , $email)->where ('security_code' , '=' , $security_code)->first ();
@@ -499,15 +596,16 @@ class UserController extends BaseController
 				if (User::where ('email' , '=' , $email)->count () == 1) {
 					$digits = 4;
 					$randomValue = rand (pow (10 , $digits - 1) , pow (10 , $digits) - 1);
-					$updatedValues = array('security_code' => $randomValue);
-					$user = User::where ('email' , '=' , $email)->update ($updatedValues);
-					Mail::later (10 , 'emails.reset_password' , array('code' => $randomValue) , function ($message) use ($email) {
-						$message->to ($email)->subject ('Activate Account');
+                    $updatedValues = array('security_code' => $randomValue);
+                    $user = User::where ('email' , '=' , $email)->update ($updatedValues);
+                    Mail::send ('emails.reset_password' , array('code' => $randomValue) , function ($message) use ($email) {
+						$message->to ($email)->subject ('Utiliza este codigo para restableceer tu contraseña ' . Setting::param ('site' , 'app_name')['value']);
 					});
-//					$result = array(array('result' => array('status' => 'reset_success')));
-					$result = ['status' => 'SUCCESS' , 'msg' => 'Password Reset'];
+// //					$result = array(array('result' => array('status' => 'reset_success')));
+					$result = ['status' => 'SUCCESS' , 'msg' => 'Enviando correo de recuperacion de email'];
 				} else {
-					throw new Exception('No User Found' , 404);
+                    $result = ['status' => 'FAILURE' , 'msg' => 'Usuario no encontrado'];
+					// throw new Exception('No User Found' , 404);
 				}
 
 			}
@@ -527,6 +625,8 @@ class UserController extends BaseController
 	 */
 	public function anyCheckUserName ()
 	{
+        header ("Access-Control-Allow-Origin: *");
+        header ("Access-Control-Allow-Headers: *");
 		try {
 			$current_mail = Request::get ('u_name');
 			$regex = "^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$^";
@@ -556,6 +656,9 @@ class UserController extends BaseController
 	 */
 	public function getAccountPage ()
 	{
+        header ("Access-Control-Allow-Origin: *");
+        header ("Access-Control-Allow-Headers: *");
+
 		$user_type = Auth::user ()->user_type_id;
 		$email = Session::get ('user_id');
 		$path = 'URL' . '/public/images/prescription/' . $email . '/';
@@ -675,6 +778,9 @@ class UserController extends BaseController
 	 */
 	public function anyChangePassword ()
 	{
+        header ("Access-Control-Allow-Origin: *");
+        header ("Access-Control-Allow-Headers: *");
+
 		$old_password = Request::get ('old_password');
 		$new_password = Request::get ('new_password');
 		$re_password = Request::get ('re_password');
@@ -704,11 +810,26 @@ class UserController extends BaseController
 
 	}
 
+    /**
+     * Get User Data
+     */
+    public function getUserData($isWeb = 0) {
+        header ("Access-Control-Allow-Origin: *");
+        header ("Access-Control-Allow-Headers: *");
+        if(!$isWeb) {
+            $email = Request::get ('email');
+            $user = Customer::where('mail', '=', $email)->first();
+        }
+        return json_encode($user);
+    }
+
 	/**
 	 * Store profile pic
 	 */
 	public function anyStoreProfilePic ()
 	{
+        header ("Access-Control-Allow-Origin: *");
+        header ("Access-Control-Allow-Headers: *");
 
 		$email = Auth::user ()->email;
 		$path = base_path () . '/public/images/prescription/' . $email . '/';
@@ -733,31 +854,44 @@ class UserController extends BaseController
 	 *
 	 * @return int
 	 */
-	public function anyContactUs ()
+	public function anyContactUs (Request $request)
 	{
+        // header ("Access-Control-Allow-Origin: http://localhost");
+        header ("Access-Control-Allow-Origin: *");
+        header ("Access-Control-Allow-Headers: *");
+
 		$client_name = Request::get ('name');
 		$client_mail = Request::get ('email');
 		$client_msg = Request::get ('msg');
-		$mail_id = Setting::param ('site' , 'mail')['value'];
+        $mail_id = Setting::param ('site' , 'mail')['value'];
 
-		Mail::send ('emails.customer_query' , array('client_name' => $client_name , 'client_mail' => $client_mail , 'client_msg' => $client_msg) , function ($message) use ($client_mail) {
-			$message->to($client_mail)->subject ('Has enviado un mensaje por Contactenos de Drazamed');
-		});
-		$client_name = Request::get ('name');
-		$client_mail = Request::get ('email');
-		$client_msg = Request::get ('msg');
-		$mail_id = Setting::param ('site' , 'mail')['value'];
+        Log::info('Mensaje recibido');
+        Log::info('Name : ' . $client_name);
+        Log::info('Mail : ' . $client_mail);
+        Log::info('Msg : ' . $client_msg);
 
-		Mail::send ('emails.customer_query' , array('client_name' => $client_name , 'client_mail' => $client_mail , 'client_msg' => $client_msg) , function ($message) use ($mail_id) {
-			$message->to ($mail_id)->subject ('Ha recibido un mensaje de un cliente');
-		});
+        if (filter_var($client_mail, FILTER_VALIDATE_EMAIL)) {
+            Mail::send ('emails.customer_query' , array('client_name' => $client_name , 'client_mail' => $client_mail , 'client_msg' => $client_msg) , function ($message) use ($client_mail) {
+                $message->to($client_mail)->subject ('Has enviado un mensaje por Contactenos de Drazamed');
+            });
+            $client_name = Request::get ('name');
+            $client_mail = Request::get ('email');
+            $client_msg = Request::get ('msg');
+            $mail_id = Setting::param ('site' , 'mail')['value'];
 
-		if (count (Mail::failures ()) > 0) {
-			$errors = 0; //Failed to send email, please try again
-			return $errors;
-		} else {
-			return 1;
-		}
+            Mail::send ('emails.customer_query' , array('client_name' => $client_name , 'client_mail' => $client_mail , 'client_msg' => $client_msg) , function ($message) use ($mail_id) {
+                $message->to ($mail_id)->subject ('Ha recibido un mensaje de un cliente');
+            });
+
+            if (count (Mail::failures ()) > 0) {
+                $errors = 0; //Failed to send email, please try again
+                return $errors;
+            } else {
+                return Response::make (['status' => 'SUCCESS' , 'msg' => ['client' => $client_name, 'email' => $client_mail, 'msg'=> $client_msg]]);
+            }
+        } else {
+            return Response::make (['status' => 'FAILURE' , 'msg' => ['client' => $client_name, 'email' => $client_mail, 'msg'=> $client_msg]]);
+        }
 
 	}
 
@@ -768,6 +902,9 @@ class UserController extends BaseController
 	 */
 	public function getCheckSession ()
 	{
+        header ("Access-Control-Allow-Origin: *");
+        header ("Access-Control-Allow-Headers: *");
+
 		if (Auth::check ()) {
 			$login = 1;
 		} else {
@@ -783,6 +920,9 @@ class UserController extends BaseController
 	 */
 	public function postFacebookLogin ()
 	{
+        header ("Access-Control-Allow-Origin: *");
+        header ("Access-Control-Allow-Headers: *");
+
 		try {
 			$data = Request::all ();
 			// Check Form Variable Is Empty
@@ -868,6 +1008,9 @@ class UserController extends BaseController
 	 */
 	public function anyPresDelete ($pres_id)
 	{
+        header ("Access-Control-Allow-Origin: *");
+        header ("Access-Control-Allow-Headers: *");
+
 		try {
 			if (!Auth::check ())
 				throw new Exception('UNAUTHORISED : User not logged in ' , 401);

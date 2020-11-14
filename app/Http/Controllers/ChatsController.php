@@ -55,4 +55,26 @@ class ChatsController extends Controller
 
         return ['status' => 'Message Sent!'];
     }
+
+
+    /**
+     * Persist message to database
+     *
+     * @param  Request $request
+     * @return Response
+     */
+    public function sendTestMessage(Request $request)
+    {
+        $user = Auth::user();
+
+        //$user = User::where('id', $request->input('user_id'))->first();
+
+        $message = $user->messages()->create([
+            'message' => $request->input('message')
+        ]);
+
+        broadcast(new MessageSent($user, $message))->toOthers();
+
+        return ['status' => 'Message Sent!'];
+    }
 }

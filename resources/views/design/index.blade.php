@@ -50,11 +50,11 @@
                  <p class="text-center">
                     Si lo prefieres llámanos <strong><u>(1) 879-3999</u></strong>
                 </p>
-                <p id="wppbutton" class="text-center mx-auto"> 
-                    <a id="wppbutton" class="btn btn-outline-success"
-                        ref="https://api.whatsapp.com/send?phone=573208671998&texto=Quisiera%20consultar%20sobre%20la%20venta%20de%20productos%20de%20%drogueria`">
-                         <img src="/images/whatsapp-icon.png" width="36px" > <strong><u>(320) 867-1998</u></strong> 
-                    </a> 
+                <p id="wppbutton" class="text-center mx-auto">
+                    <a id="wppbutton" class="btn btn-outline-success" target="_blank"
+                        href="https://api.whatsapp.com/send?phone=573208671998&texto=Quisiera%20consultar%20sobre%20la%20venta%20de%20productos%20de%20%drogueria`">
+                         <img src="/images/whatsapp-icon.png" width="36px" > <strong><u>(320) 867-1998</u></strong>
+                    </a>
                 </p>
             </form>
         </div>
@@ -146,10 +146,28 @@
 
         })
         .autocomplete("instance")._renderItem = function(ul, item) {
-        return $("<li>")
-            .append("<div>" + item.label + "</div>")
-            .appendTo(ul);
-         };
+            //console.log(item);
+            availability = (item.quantity >= 50) ? "Disponible" : "No Disponible";
+            color = (item.quantity >= 50) ? "green" : "Red";
+
+            card = "<div class='card'>" +
+                        "<div class='row no-gutters'>" +
+                            "<div class='col-auto'>" +
+                                "<img width='100px' src='" + item.imgUrl + "' class='img-fluid' >" +
+                            "</div>" +
+                            "<div class='col'>" +
+                                "<div class='card-block px-2'>" +
+                                    "<h4 class='card-title'>" + item.value + "</h4>" +
+                                    "<p class='card-text'>" + item.composition + "</p>" +
+                                    "<p class='card-text' style='color:" + color + "'>" + availability + "</p>" +
+                                "</div>" +
+                            "</div>" +
+                        "</div>" +
+                    "</div>";
+            return $("<li>")
+                .append(card)
+                .appendTo(ul);
+            };
     /**
      * Busqueda de categorias
      */
@@ -179,6 +197,7 @@
             }
         })
         .autocomplete("instance")._renderItem = function(ul, item) {
+        // console.log(item);
         return $("<li>")
             .append("<div>" + item.label + "</div>")
             .appendTo(ul);

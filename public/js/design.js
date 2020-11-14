@@ -861,7 +861,7 @@ $(".add_to_cart").click(function() {
     if (med_quantity.length > 0 && med_quantity > 0) {
         $.ajax({
             type: "GET",
-            url: "medicine/add-cart/0",
+            url: "medicine/add-cart/1",
             data:
                 "id=" +
                 id +
@@ -880,10 +880,11 @@ $(".add_to_cart").click(function() {
             datatype: "json",
             complete: function(data) {},
             success: function(data) {
-                if (data == 0) {
+                console.log(data);
+                if (data.msg == 0) {
                     $("#loginModal").click();
                 }
-                if (data == "updated") {
+                if (data.msg == "Updated") {
                     $(".med_detailes_alert").css("display", "block");
                     $(".med_detailes_alert").html(
                         "Your cart has been successfully updated."
@@ -894,7 +895,7 @@ $(".add_to_cart").click(function() {
 
                     // alert("your order is updated");
                 }
-                if (data == "inserted") {
+                if (data.msg == "Inserted") {
                     $(".med_detailes_alert").css("display", "block");
                     $(".med_detailes_alert").html(
                         "Your cart has been successfully updated."
@@ -905,7 +906,7 @@ $(".add_to_cart").click(function() {
                     window.location = "my-cart/";
                 }
 
-                if (data == "sin_usuario") {
+                if (data.msg == "Sin usuario o usuario invalido") {
                     window.location = "/?msg=please_login";
                     console.log("Debe ingresar usuario y contraseña")
                 }

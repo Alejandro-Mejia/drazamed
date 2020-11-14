@@ -50,13 +50,13 @@
 				<!--                password while logging in to  -->
 				<?php //echo Setting::param('site', 'app_name')['value']; ?><!--.</p>-->
 
-				<p>De acuero a su solicitud, si desea reestablecer su contraseña, haga click en el enlace:
+				<p>De acuero a tu solicitud, si deseas reestablecer tu contraseña, haz click en el enlace:
 					<a href="<?php echo URL::to ('/') . '?reset_code=' . $code; ?>">reset link </a>
 				</p>
 
-				<p style="text-align: center">or</p>
+				<p style="text-align: center">o</p>
 
-				<!-- <p> {{ __('Enter the security code in your mobile app')}} : <strong><?= $code; ?></strong></p> -->
+				<p> Utiliza este codigo para reestablecer tu contraseña : <strong><?= $code; ?></strong></p>
 
 				<p>Si usted piensa que alguien mas ha intentado cambiar la contraseña de su usuario, por favor comuniquese con nosotros lo mas pronto posible.</p>
 

@@ -17,7 +17,7 @@ class CreateEdProfessionalTable extends Migration {
 			$table->integer('prof_id');
 			$table->string('prof_first_name', 25);
 			$table->string('prof_last_name', 25);
-			$table->string('facebook_id', 255);
+
 			$table->text('prof_address', 65535);
 			$table->string('prof_phone', 15);
 			$table->string('prof_mail', 255);

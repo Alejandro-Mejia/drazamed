@@ -1,6 +1,6 @@
 <header>
     <div class="header-content d-flex border-bottom">
-        <nav class="navbar navbar-expand-lg navbar-light" id="NavSettings" style="width: 100%"> 
+        <nav class="navbar navbar-expand-lg navbar-light" id="NavSettings" style="width: 100%">
             <a href="/">
                 <img id="dra-logo-1" src="/assets/images/logo.png" alt="" width="300px"/>
                 <img id="dra-logo-2" src="/assets/images/logo2.png" alt="" width="100px"/>
@@ -10,8 +10,9 @@
                 data-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent"
                 aria-expanded="false"
-                aria-label="{{ __('Toggle navigation') }}
-            ">
+                aria-label="{{ __('Toggle navigation') }}"
+                id="side-menu-btn"
+            >
             <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
@@ -23,7 +24,7 @@
                     </li>
                     <li id="navlistitems" class="nave-item">
                         <a class="nav-link" href="/about">
-                            Quienes Somos
+                            Quiénes Somos
                         </a>
                     </li>
                     <li id="navlistitems" class="nave-item">
@@ -36,15 +37,15 @@
                             si estoy acá
                         @endif
                     </li> --}}
-                    @auth    
+                    @auth
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle border border-primary border border-primary rounded-pill" 
+                            <a class="nav-link dropdown-toggle border border-primary border border-primary rounded-pill"
                                 href="#"
-                                id="navbarDropdownMenuLink" 
-                                data-toggle="dropdown" 
-                                aria-haspopup="true" 
+                                id="navbarDropdownMenuLink"
+                                data-toggle="dropdown"
+                                aria-haspopup="true"
                                 aria-expanded="false"
-                                style="background-color: #3490dc; color: #ffff">   
+                                style="background-color: #3490dc; color: #ffff">
                                 <?php
                                     if(Auth::user()->user_type_id==UserType::CUSTOMER())
                                     {
@@ -89,25 +90,27 @@
                                             class="mr-10 fas fa-sign-out-alt"
                                         ></span
                                         >Cerrar sesión
-                                </a>                                
+                                </a>
                             </div>
                         </li>
                     @else
                         <li id="navlistitems" class="nav-item">
-                            <a 
+                            <a
                                 class="nav-link border border-primary border border-primary rounded-pill"
                                 href="#"
                                 data-toggle="modal"
                                 data-target="#login-modal"
                                 style="background-color: #3490dc; color: #ffff">
                                 Ingresar
-                                
+
                             </a>
                         </li>
                     @endauth
                 </ul>
             </div>
-            
+
         </nav>
     </div>
+
+
 </header>

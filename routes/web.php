@@ -4,9 +4,9 @@ namespace App;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
-use App\Http\Requests;
 use App\Setting;
 use Redirect;
+use Request;
 use Mail;
 use URL;
 use View;
@@ -19,6 +19,8 @@ use App\Mail\NewMail;
 use Elasticquent\ElasticquentTrait;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Sitemap\SitemapGenerator;
+use App\Events\OrderStatusSent;
+
 
 // use App\MercadoPago\SDK;
 use MercadoPago;
@@ -69,13 +71,17 @@ use MercadoPago;
      * General Routes
      */
     Route::get('/my-cart', 'MedicineController@getMyCart');
+    Route::get('/my-cart-app', 'MedicineController@getMyCartApp');
     Route::get('/my-cart1', 'MedicineController@getMyCart1');
+    Route::get('/empty-cart', 'MedicineController@anyEmptyCart');
     Route::get('/my-prescription/{option?}', 'MedicineController@getMyPrescription');
     Route::get('/paid-prescription', 'MedicineController@getPaidPrescription');
     Route::get('/my-order', 'MedicineController@getMyOrder');
     Route::get('/my-orders', 'MedicineController@getMyOrders');
+    Route::get('/my-prescriptions', 'MedicineController@getMyPrescriptions');
     Route::get('/medicine-detail/{item_code}', 'MedicineController@getMedicineDetail');
     Route::get('/account-page', 'UserController@getAccountPage');
+    Route::get('/my-treatments', 'TreatmentController@getMyTreatments');
 
     /**
      * User routes
@@ -85,11 +91,43 @@ use MercadoPago;
     Route::any('/user/check-user-name', 'UserController@anyCheckUserName');
     Route::any('/user/user-login/{is_web}', 'UserController@anyUserLogin');
     Route::any('/user/activate-account', 'UserController@anyActivateAccount');
-    Route::any('/user/contact-us', 'UserController@anyContactUs')->middleware("cors");;
+    Route::any('/user/contact-us', 'UserController@anyContactUs');
     Route::any('/user/store-profile-pic', 'UserController@anyStoreProfilePic');
     Route::any('/user/web-activate-account/{code}', 'UserController@anyWebActivateAccount');
     Route::any('/user/pres-delete/{pres_id}', 'UserController@anyPresDelete');
+    Route::any('/user/reset-password', 'UserController@anyResetPassword');
     Route::get('/user/is-actual-user/{user_js}', 'UserController@getIsActualUser');
+    Route::get('/user/get-user-data/{is_web}', 'UserController@getUserData');
+    Route::post('/user/post-user-data/{is_web}', 'UserController@postUpdateDetailsUser');
+
+
+    /**
+     * Treatment routes
+     */
+    Route::post('/treatment/create-treatment', 'TreatmentController@postCreateTreatment');
+    Route::post('/treatment/update-treatment', 'TreatmentController@postUpdateTreatmentTaken');
+    Route::post('/treatment/update-active-status', 'TreatmentController@postUpdateActiveTreatment');
+    Route::post('/treatment/delete-treatment', 'TreatmentController@postDeleteTreatment');
+
+    /**
+     * Professional routes
+     */
+    Route::get('/professional/get-professional-list', 'ProfessionalController@getProfessionalsList');
+    Route::get('/professional/get-customer-list/{key}', 'ProfessionalController@getCustomersList');
+    Route::post('/professional/assign-professional', 'ProfessionalController@postAssignProfessional');
+    Route::post('/professional/remove-professional', 'ProfessionalController@postRemoveProfessional');
+
+
+    /**
+     * Test cors
+     */
+    Route::get('/my-api-endpoint',  function  (Request $request)  {
+
+        return response()->json(['Hello Laravel 7']);
+
+      });
+
+
 
     /**
      * Medicine routes
@@ -103,6 +141,8 @@ use MercadoPago;
     Route::any('/medicine/load-medicine-cats/{is_web}', 'MedicineController@anyLoadMedicineCategories');
     Route::any('/medicine/load-medicine-labs/{is_web}', 'MedicineController@anyLoadMedicineLabs');
     Route::any('/medicine/add-cart/{is_web}', 'MedicineController@anyAddCart');
+    Route::any('/medicine/get-cart/{is_web}', 'MedicineController@anyGetCart');
+    Route::any('/medicine/remove-from-cart-app', 'MedicineController@anyRemoveFromCartApp');
     Route::any('/medicine/remove-from-cart/{item_id}', 'MedicineController@anyRemoveFromCart');
     Route::any('/medicine/load-sub-medicine', 'MedicineController@anyLoadSubMedicine');
     Route::any('/medicine/store-prescription/{is_web}', 'MedicineController@anyStorePrescription');
@@ -114,6 +154,7 @@ use MercadoPago;
     Route::any('/medicine/admin-pay-success/{invoice}', 'MedicineController@anyAdminPaySuccess');
     Route::any('/medicine/create-order/{invoice}/{request}', 'MedicineController@anyCreateOrder');
     Route::any('/medicine/audit-database', 'MedicineController@anyAuditDatabase');
+    Route::any('/medicine/update-cart/{is_web}', 'MedicineController@anyUpdateCart');
     Route::any('/medicine/update-cart', 'MedicineController@anyUpdateCart');
     Route::get('/medicine/medicine-list-from-name', 'MedicineController@getMedicineListFromName');
     Route::get('/medicine/selling-price/{item_code}', 'MedicineController@getSellingPrice');
@@ -154,12 +195,41 @@ use MercadoPago;
     Route::post('/admin/pay-invoice', 'AdminController@postUpdateInvoice');
 
 
+
     /**
      * Messages
     */
-    Route::get('messages/chats', 'ChatsController@index');
+    Route::get('/messages/test', 'ChatsController@sendTestMessage');
+    Route::get('/messages/chats', 'ChatsController@index');
     Route::get('messages', 'ChatsController@fetchMessages');
     Route::post('messages', 'ChatsController@sendMessage');
+
+    Route::get('msgtest', function () {
+        echo "Enviando mensaje";
+        event(new OrderStatusSent(1,'Mensaje'));
+        return "Event has been sent!";
+    });
+
+
+    Route::get('/send-notification', function () {
+        echo("Notificaciones");
+        $sms = \AWS::createClient('sns');
+        $sms->publish([
+            'Message' => 'Primer publicación SNS',
+            'TargetArn' => 'arn:aws:sns:us-east-1:611609623675:DrazamedNotification',
+            'name' => 'updated',
+            'MessageAttributes' => [
+                'Information' => [
+                    'DataType' => 'String',
+                    'StringValue' => json_encode([
+                        'nicho' => 'mexicans',
+                        'id' => '123456',
+                        'status' => 'updated'
+                    ], true),
+                ]
+           ],
+       ]);
+    });
 
     /**
      * PriceRules

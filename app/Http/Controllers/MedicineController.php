@@ -6,6 +6,7 @@ use Intervention\Image\ImageManagerStatic as Image;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
+use DateTime;
 use Exception;
 use Storage;
 use Session;
@@ -30,6 +31,7 @@ use App\PresRulesProd;
 use App\Prescription;
 use App\SessionsData;
 use App\NewMedicine;
+use App\SessionData;
 use App\Favorite;
 use App\Pricerule;
 use App\Prodrule;
@@ -41,6 +43,7 @@ use App\Medicine;
 use App\Invoice;
 use App\Customer;
 use App\Cache;
+use App\User;
 
 use Maatwebsite\Excel\Facades\Excel;
 use Maatwebsite\Excel\HeadingRowImport;
@@ -89,6 +92,10 @@ class MedicineController extends BaseController
 	 */
 	public function anyStorePrescription ($isWeb = 0)
 	{
+        header ("Access-Control-Allow-Origin: *");
+        header ("Access-Control-Allow-Headers: *");
+
+        Log::info('isWeb : ' . $isWeb ? 'true' : 'false');
 
 		if ($isWeb) {
 
@@ -112,7 +119,7 @@ class MedicineController extends BaseController
 				}
 
 				$path = base_path () . '/public/images/prescription/' . $email . '/';
-//				if($is_pres_required)
+
 
 				$file_name = "";
 				// dd(Request::all());
@@ -150,7 +157,7 @@ class MedicineController extends BaseController
 				// ($is_pres_required == 1) ? 1 : 2;
 				// Save Prescription
 				$prescription = new Prescription;
-				$user_id = Auth::user ()->id;
+				$user_id = Auth::user()->id;
 				$prescription->path = $file_name;
 				$prescription->created_at = date ('Y-m-d H:i:s');
 				$prescription->user_id = $user_id;
@@ -192,6 +199,7 @@ class MedicineController extends BaseController
 						$itemList = new ItemList;
 						$itemList->invoice_id = $invoice_id;
 						$itemList->medicine = $medicine['medicine_id'];
+						$itemList->item_code = $medicine['item_code'];
 						$itemList->quantity = $medicine['medicine_count'];
 						$itemList->unit_price = $medicine_details['mrp'];
 						$itemList->discount_percentage = $medicine_details['discount'];
@@ -244,13 +252,18 @@ class MedicineController extends BaseController
 
 		} else {
 			try {
-				if (!Auth::check ())
-					throw new Exception("No esta autorizado para esta acción" , 401);
+				// if (!Auth::check ())
+				// 	throw new Exception("No esta autorizado para esta acción" , 401);
 
-				$email = Auth::user ()->email;
-
+				// $email = Auth::user ()->email;
+                $email = Request::get ('email' , '');
 				$prescription = Request::get ('prescription' , '');
-				$is_pres_required = Request::get ('is_pres_required' , 1);
+                $is_pres_required = Request::get ('is_pres_required' , 1);
+
+                Log::info('email:' . $email);
+                Log::info('prescription:' . $prescription);
+                Log::info('is_pres_required:' . $is_pres_required);
+
 
 				if (empty($email))
 					throw new Exception('Email is empty' , 400);
@@ -259,10 +272,10 @@ class MedicineController extends BaseController
 				if ($is_pres_required && empty($prescription))
 					throw new Exception('Se requiere formula médica para esta orden' , 412);
 
-				$path = base_path () . '/public/images/prescription/' . $email . '/';
-				$date = new DateTime();
+                $path = base_path () . '/public/images/prescription/' . $email . '/';
+                $date = new \DateTime();
 
-				$file_name = "";
+                $file_name = "";
 
 				if (!empty($prescription)) {
 					$file_name = $date->getTimestamp ();
@@ -299,15 +312,17 @@ class MedicineController extends BaseController
 				$invoice_id = $invoice->id;
 
 				if ($cart_length > 0) {
-
+                    $item_codes = Request::get ('item_code' , null);
+                    $quantities = Request::get ('quantity' , null);
 					for ($i = 0; $i < $cart_length; $i++) {
-						$item_id = Request::get ('id' . $i , null);
-						$quantity = Request::get ('quantity' . $i , null);
-						if (is_null ($item_id) || empty($item_id) || is_null ($quantity))
+
+                        $item_code = $item_codes[$i];
+						$quantity = $quantities[$i];
+						if (is_null ($item_code) || empty($item_code) || is_null ($quantity))
 							continue;
 
-						$medicine_details = Medicine::medicines ($item_id);
-
+						// $medicine_details = Medicine::where ('item_code', '=', $item_code)->first();
+                        $medicine_details = Medicine::medicineCode($item_code);
 						// Medicine Details
 						if (is_null ($medicine_details) || empty($medicine_details))
 							continue;
@@ -316,7 +331,7 @@ class MedicineController extends BaseController
 						$total_price = ($medicine_details['mrp'] * $quantity) - $total_discount;
 						$itemList = new ItemList;
 						$itemList->invoice_id = $invoice_id;
-						$itemList->medicine = $item_id;
+						$itemList->medicine = $medicine_details['id'];
 						$itemList->quantity = $quantity;
 						$itemList->unit_price = $medicine_details['mrp'];
 						$itemList->discount_percentage = $medicine_details['discount'];
@@ -352,6 +367,9 @@ class MedicineController extends BaseController
 	 */
 	public function getMyOrder ()
 	{
+        header ("Access-Control-Allow-Origin: *");
+        header ("Access-Control-Allow-Headers: *");
+
 		if (!Auth::check ())
 			return Redirect::to ('/');
 		$email = Session::get ('user_id');
@@ -371,6 +389,9 @@ class MedicineController extends BaseController
 	 */
 	public function getMyOrders ()
 	{
+        header ("Access-Control-Allow-Origin: *");
+        header ("Access-Control-Allow-Headers: *");
+
 		if (!Auth::check ())
 			return Redirect::to ('/');
 
@@ -378,12 +399,57 @@ class MedicineController extends BaseController
 		$path = 'URL' . '/public/images/prescription/' . $email . '/';
 		$user_id = Auth::user ()->id;
 		$invoices = Invoice::where ('user_id' , '=' , $user_id)->where ('shipping_status' , '=' , ShippingStatus::SHIPPED ())->get ();
-
+        //dd($invoices);
 		return json_encode($invoices);
 
 		// return View::make ('/users/my_order' , array('invoices' => $invoices , 'email' => $email , 'default_img' => url ('/') . "/assets/images/no_pres_square.png"));
 
 		// return View::make('/users/my_order');
+    }
+
+    /**
+	 * Get Prescriptions
+	 *     * @return mixed
+     *      Retorna las prescripciones activas
+	 */
+	public function getMyPrescriptions ()
+	{
+		// if (!Auth::check ())
+        // 	return Redirect::to ('/');
+        header ("Access-Control-Allow-Origin: *");
+        header ("Access-Control-Allow-Headers: *");
+
+
+        $email = Request::get ('email' , '');
+
+		$user_id = User::where('email', "=", $email)->first()->id;
+		$path = 'URL' . '/public/images/prescription/' . $email . '/';
+		// $user_id = Auth::user ()->id;
+        $prescriptions  = Prescription::with('getCart')
+                          ->where ('user_id' , '=' , $user_id)
+                          ->get ();
+
+
+        foreach($prescriptions as $prescription) {
+            foreach($prescription['getCart'] as $cart) {
+
+                // dd( Medicine::medicines($cart->medicine));
+                $item_name =  Medicine::medicines($cart->medicine)["item_name"];
+                $item_code =  Medicine::medicines($cart->medicine)["item_code"];
+                $tax = $cart->unit_price - ceil(($cart->unit_price / (1+(Medicine::medicines($cart->medicine)['tax']/100))));
+                Log::info('Medicina:' . Medicine::medicines($cart->medicine)["item_name"]);
+                $cart['item_name'] = Medicine::medicines($cart->medicine)["item_name"];
+                $cart['item_code'] = Medicine::medicines($cart->medicine)["item_code"];
+                $cart['composition'] = Medicine::medicines($cart->medicine)["composition"];
+                $cart['units'] = Medicine::medicines($cart->medicine)["units"];
+                $cart['units_value'] = Medicine::medicines($cart->medicine)["units_value"];
+                $cart['tax'] = $tax;
+            }
+        }
+
+        // dd($prescriptions);
+		return $prescriptions;
+
 	}
 
 	/**
@@ -391,6 +457,9 @@ class MedicineController extends BaseController
 	 */
 	public function createPrescriptionList ($invoice)
 	{
+        header ("Access-Control-Allow-Origin: *");
+        header ("Access-Control-Allow-Headers: *");
+
 		$medicines = Medicine::medicines ();
 		$items = [];
 		foreach ($invoice->cartList () as $cart) {
@@ -430,6 +499,9 @@ class MedicineController extends BaseController
 	 */
 	public function getMyPrescription ($is_category = 0)
 	{
+        header ("Access-Control-Allow-Origin: *");
+        header ("Access-Control-Allow-Headers: *");
+
 		if (!Auth::check ())
 			return Redirect::to ('/');
 		$email = Session::get ('user_id');
@@ -505,6 +577,9 @@ class MedicineController extends BaseController
 	 */
 	public function getPaidPrescription ()
 	{
+        header ("Access-Control-Allow-Origin: *");
+        header ("Access-Control-Allow-Headers: *");
+
 		if (!Auth::check ())
 			return Redirect::to ('/');
 		// Prescriptions
@@ -523,6 +598,9 @@ class MedicineController extends BaseController
 	 */
 	public function anyGetPrescriptionThumb ()
 	{
+        header ("Access-Control-Allow-Origin: *");
+        header ("Access-Control-Allow-Headers: *");
+
 		try {
 
 			if (!Auth::check ())
@@ -630,7 +708,8 @@ class MedicineController extends BaseController
 	public
 	function anyLoadMedicine ()
 	{
-		header ("Access-Control-Allow-Origin: *");
+        header ("Access-Control-Allow-Origin: *");
+        header ("Access-Control-Allow-Headers: *");
 		$medicineName = Request::get ('medicine' , '');
 		$medicine = Medicine::where ('item_name' , 'LIKE' , $medicineName . '%')->take (4)->get ();
 		$i = 0;
@@ -654,7 +733,8 @@ class MedicineController extends BaseController
 	 */
 	function anySearchCategories ($isWeb)
 	{
-		header ("Access-Control-Allow-Origin: *");
+        header ("Access-Control-Allow-Origin: *");
+        header ("Access-Control-Allow-Headers: *");
 		$term = Request::get ('term' , null);
 		$limitResutls = Request::get ('limit' , 10);
 
@@ -690,6 +770,8 @@ class MedicineController extends BaseController
 
 	public function anyCalculateMRP($id)
 	{
+        header ("Access-Control-Allow-Origin: *");
+        header ("Access-Control-Allow-Headers: *");
 		$med = Medicine::where ('id' , '=' , $id)->first ();
 
 		if($med->marked_price == 0) {
@@ -780,7 +862,10 @@ class MedicineController extends BaseController
 	public
 	function anySearchMedicine ()
 	{
-		header ("Access-Control-Allow-Origin: *");
+        header ("Access-Control-Allow-Origin: *");
+        header ("Access-Control-Allow-Headers: *");
+
+
 		$term = Request::get ('term' , null);
 		$xterm = Request::get ('xterm' , null);
 		$limitResutls = Request::get ('limit' , 200);
@@ -883,7 +968,24 @@ class MedicineController extends BaseController
 
 				$medPath = (is_file($path)) ? $medPath : "/images/products/default.png";
 
-				$medicineNameArray[$i] = array("id" => $med->id ,'item_code' => $med->item_code,  "name" => $med->item_name , 'mrp' => $sellprice ,'quantity' => $med->quantity, 'lab' => $med->manufacturer , 'composition' => $med->composition, 'image-url' => $med->photo_url, 'is_pres_required' => $pres_required, 'group' => $med->group, 'url_img' => $medPath);
+				$medicineNameArray[$i] = array(
+                    "id" => $med->id ,
+                    'item_code' => $med->item_code,
+                    "name" => $med->item_name ,
+                    'mrp' => $sellprice ,
+                    'quantity' => $med->quantity,
+                    'lab' => $med->manufacturer ,
+                    'tax' => $med->tax,
+                    'tax_type' => $med->tax_type,
+                    'composition' => $med->composition,
+                    'image-url' => $med->photo_url,
+                    'is_pres_required' => $pres_required,
+                    'group' => $med->group,
+                    'url_img' => $medPath,
+                    'units' => $med->units,
+                    'units_value' => $med->units_value
+
+                );
 				$i++;
 			}
 			$result = array('result' => array('status' => 'sucess' , 'msg' => $medicineNameArray));
@@ -899,6 +1001,9 @@ class MedicineController extends BaseController
 	 */
 	public function anyShowFavorites($value='')
 	{
+        header ("Access-Control-Allow-Origin: *");
+        header ("Access-Control-Allow-Headers: *");
+
 		$favorites = Favorite::get();
 		$notfound = [];
 		//dd($favorites);
@@ -918,7 +1023,22 @@ class MedicineController extends BaseController
 
 				$medPath = (is_file($path)) ? $medPath : "/images/products/default.png";
 				//dd($med);
-				$medicines[$i] = array("id" => $med->id ,'item_code' => $med->item_code,  "name" => $med->item_name , 'mrp' => $sellprice ,'quantity' => $med->quantity, 'lab' => $med->manufacturer , 'composition' => $med->composition, 'is_pres_required' => $med->is_pres_required, 'group' => $med->group, 'url_img' => $medPath);
+				$medicines[$i] = array(
+                    "id" => $med->id ,
+                    'item_code' => $med->item_code,
+                    "name" => $med->item_name ,
+                    'mrp' => $sellprice ,
+                    'quantity' => $med->quantity,
+                    'lab' => $med->manufacturer ,
+                    'tax' => $med->tax,
+                    'tax_type' => $med->tax_type,
+                    'composition' => $med->composition,
+                    'is_pres_required' => $med->is_pres_required,
+                    'group' => $med->group,
+                    'units' => $med->units,
+                    'units_value' => $med->units_value,
+                    'url_img' => $medPath
+                );
 				$i++;
 				} else {
 					array_push($notfound, $fav->item_code);
@@ -942,6 +1062,9 @@ class MedicineController extends BaseController
 	public
 	function getSellingPrice($item_code)
 	{
+
+        header ("Access-Control-Allow-Origin: *");
+        header ("Access-Control-Allow-Headers: *");
 
 		$medicine = Medicine::where ('item_code', $item_code)->get ();
 		$i = 0;
@@ -1020,6 +1143,7 @@ class MedicineController extends BaseController
 	function anyLoadMedicineCategories ()
 	{
 		header ("Access-Control-Allow-Origin: *");
+        header ("Access-Control-Allow-Headers: *");
 
 		$cats = Medicine::select('group')->distinct()->orderBy('group')->get();
 
@@ -1044,6 +1168,7 @@ class MedicineController extends BaseController
 	function anyLoadMedicineLabs ()
 	{
 		header ("Access-Control-Allow-Origin: *");
+        header ("Access-Control-Allow-Headers: *");
 
 		$labs = Medicine::select('marketed_by')->distinct()->orderBy('marketed_by')->get();
 
@@ -1066,6 +1191,7 @@ class MedicineController extends BaseController
 	function anyLoadMedicineWeb ($isWeb = 0)
 	{
 		header ("Access-Control-Allow-Origin: *");
+        header ("Access-Control-Allow-Headers: *");
 		if ($isWeb) {
 			$key = Request::get ('term' , '');
 		} else {
@@ -1102,13 +1228,22 @@ class MedicineController extends BaseController
 		if ($isWeb) {
 			$json = [];
 			foreach ($medicines as $data) {
+                $imagenUrl = (file_exists( public_path().'/images/products/' . $data['item_code'] . '.jpg' )) ? '/images/products/' . $data['item_code'] . '.jpg' : '/images/products/default.png';
+
 				$json[] = array(
 					'id' => $data['item_code'],
 					'value' => $data['item_name'] ,
-					'label' => $data['item_name'] ,
+                    'label' => $data['item_name'] ,
+                    'composition' => $data['composition'] ,
 					'item_code' => $data['item_code'] ,
 					'mrp' => $data['sell_price'],
-					'sp' => $data['show_priority']
+                    'sp' => $data['show_priority'],
+                    'quantity' => $data['quantity'],
+                    'tax' => $data['tax'],
+                    'tax_type' => $data['tax_type'],
+                    'units' => $data['units'],
+                    'units_value' => $data['units_value'],
+                    'imgUrl' => $imagenUrl
 				);
 			}
 
@@ -1119,7 +1254,8 @@ class MedicineController extends BaseController
 			return Response::json ($json);
 
 		} else {
-			$medicines = array_slice ($medicines , 0 , 10);
+            $medicines = array_slice ($medicines , 0 , 10);
+            // Log::info('Medicines'. print_r());
 			// 'id' , 'item_code' , 'item_name' , 'item_name as value' , 'item_name as label' , 'item_code' , 'composition' , 'discount' , 'discount_type' , 'tax' , 'tax_type' , 'manufacturer' , 'group' , 'is_delete' , 'is_pres_required')->get()->toArray ();
 			foreach ($medicines as $data) {
 				$json[] = array(
@@ -1132,9 +1268,12 @@ class MedicineController extends BaseController
 					'group' => $data['group'] ,
 					'mrp' => $data['sell_price'],
 					'discount' => $data['discount'],
-					'discount_type' => $data['discount_type'],
+                    'discount_type' => $data['discount_type'],
+                    'quantity' => $data['quantity'],
 					'tax' => $data['tax'],
-					'tax_type' => $data['tax_type'],
+                    'tax_type' => $data['tax_type'],
+                    'units' => $data['units'],
+                    'units_value' => $data['units_value'],
                     'sp' => $data['show_priority'],
                     'is_pres_required' => $data['is_pres_required']
 				);
@@ -1212,6 +1351,9 @@ class MedicineController extends BaseController
 	public
 	function anyLoadSubMedicine ()
 	{
+        header ("Access-Control-Allow-Origin: *");
+        header ("Access-Control-Allow-Headers: *");
+
 		try {
 
 
@@ -1265,7 +1407,7 @@ class MedicineController extends BaseController
 	}
 
 	/**
-	 * Update Medicine cart list
+	 * Update Medicine list
 	 *
 	 * @return mixed
 	 */
@@ -1273,6 +1415,9 @@ class MedicineController extends BaseController
 	public
 	function anyUpdateBuyMedicine ()
 	{
+        header ("Access-Control-Allow-Origin: *");
+        header ("Access-Control-Allow-Headers: *");
+
 		$updatedRows = 0;
 		$deletedRow = 0;
 		header ("Access-Control-Allow-Origin: *");
@@ -1308,6 +1453,9 @@ class MedicineController extends BaseController
 	public
 	function anyUpdateBuy ()
 	{
+        header ("Access-Control-Allow-Origin: *");
+        header ("Access-Control-Allow-Headers: *");
+
 		$updatedRows = 0;
 		$deletedRow = 0;
 		header ("Access-Control-Allow-Origin: *");
@@ -1342,6 +1490,9 @@ class MedicineController extends BaseController
 	public
 	function anyAddMedicine ()
 	{
+        header ("Access-Control-Allow-Origin: *");
+        header ("Access-Control-Allow-Headers: *");
+
 		$name = Request::get ('name' , '');
 		$oldMed = NewMedicine::where ('name' , '=' , $name)->get ();
 		if ($oldMed->count () > 0) {
@@ -1378,6 +1529,9 @@ class MedicineController extends BaseController
 	public
 	function postGetPresImg ()
 	{
+        header ("Access-Control-Allow-Origin: *");
+        header ("Access-Control-Allow-Headers: *");
+
 		$pres_id = Request::get ('pres_id');
 		$u = User::join ('prescription' , 'prescription.user_id' , '=' , 'users.id')->where ('id' , '=' , $pres_id)->first ();
 		$path = url('/') . '/public/images/prescription/' . $u->email . '/' . $u->path;
@@ -1397,6 +1551,9 @@ class MedicineController extends BaseController
 	public
 	function getMedicineDetail ($searched_medicine)
 	{
+        header ("Access-Control-Allow-Origin: *");
+        header ("Access-Control-Allow-Headers: *");
+
 		$med_info = Medicine::select ('*')
 			->where ('item_code' , '=' , $searched_medicine)
 			->get ();
@@ -1418,6 +1575,9 @@ class MedicineController extends BaseController
 	public
 	function getMyCart1()
 	{
+        header ("Access-Control-Allow-Origin: *");
+        header ("Access-Control-Allow-Headers: *");
+
 		$email = Session::get ('user_id');
 		$current_orders = DB::table ('sessions')->where ('user_id' , '=' , $email)->get ();
 
@@ -1425,9 +1585,34 @@ class MedicineController extends BaseController
 
 	}
 
+    function getMyCartApp()
+	{
+        header ("Access-Control-Allow-Origin: *");
+        header ("Access-Control-Allow-Headers: *");
+
+		$email = Request::get ('email');
+        $current_orders = SessionsData::with('medicine')->where ('user_id' , '=' , $email)->get()->toArray();
+
+        $i = 0;
+        foreach ($current_orders as $item) {
+                Log::info('Order:' . print_r($item["medicine"]["tax"], true));
+                $current_orders[$i]["tax"] = (isset($item["medicine"]["tax"])) ? $item["medicine"]["tax"] : 0;
+                $current_orders[$i]["units"] = (isset($item["medicine"]["units"])) ? $item["medicine"]["units"] :'NoD';
+                $current_orders[$i]["units_value"] = (isset($item["medicine"]["units_value"])) ? $item["medicine"]["units_value"] : 0;
+                $i++;
+
+        }
+
+        return Response::json (['status' => 'SUCCESS' , 'items' => $current_orders]);
+
+    }
+
 
 	function getMyCart()
 	{
+        header ("Access-Control-Allow-Origin: *");
+        header ("Access-Control-Allow-Headers: *");
+
 		$email = Session::get ('user_id');
 		$current_orders = DB::table ('sessions')->where ('user_id' , '=' , $email)->get ();
 
@@ -1443,9 +1628,40 @@ class MedicineController extends BaseController
 	public
 	function anyRemoveFromCart ($item_id)
 	{
+        header ("Access-Control-Allow-Origin: *");
+        header ("Access-Control-Allow-Headers: *");
+
 		DB::table ('sessions')->where ('id' , '=' , $item_id)->delete ();
 
 		return Redirect::back ()->withErrors (['msg' , 'Item has been removed']);
+
+    }
+
+    /*
+	 * remove item from cart from app
+	 * deletes row from 'sessions'  table
+	 * */
+
+	public
+	function anyRemoveFromCartApp ()
+	{
+        header ("Access-Control-Allow-Origin: *");
+        header ("Access-Control-Allow-Headers: *");
+
+        $email = Request::get ('email');
+        $item_code = Request::get ('item_code');
+
+
+        // dd(DB::table ('sessions')->where ('user_id' , '=' , $email)->where('item_code' , '=' , $item_code)->toSql());
+        $delete =  DB::table ('sessions')->where ('user_id' , '=' , $email)->where('item_code' , '=' , $item_code)->delete ();
+
+
+        if($delete) {
+            return Response::json (['status' => 'SUCCESS' , 'msg' => 'Se elimino el item']);
+        } else {
+            return Response::json (['status' => 'FAILURE' , 'msg' => 'No se pudo eliminar el item']);
+        }
+
 
 	}
 
@@ -1456,6 +1672,9 @@ class MedicineController extends BaseController
 	public
 	function anyViewItemInfo ($item_code)
 	{
+        header ("Access-Control-Allow-Origin: *");
+        header ("Access-Control-Allow-Headers: *");
+
 		$item_details = DB::table ('medicine')
 			->where ('item_code' , '=' , $item_code)
 			->get ();
@@ -1473,38 +1692,76 @@ class MedicineController extends BaseController
 	 * */
 
 	public
-	function anyAddCart ($is_web = 0)
+	function anyAddCart ($is_web = 1)
 	{
+        header ("Access-Control-Allow-Origin: *");
+        header ("Access-Control-Allow-Headers: *");
+
 //            if (!$this->isCsrfAccepted()) {
 //                return 0;
 //            }
 //
+        if($is_web==1)
+        {
+            $medicine = (Session::get ('medicine') == "") ? Request::get ('medicine') : Session::get ('medicine');
+            $med_quantity = (Session::get ('med_quantity') == "") ? Request::get ('med_quantity') : Session::get ('med_quantity');
+            // $med_mrp = Request::get ('hidden_selling_price') ;
 
-		$medicine = (Session::get ('medicine') == "") ? Request::get ('medicine') : Session::get ('medicine');
-		$med_quantity = (Session::get ('med_quantity') == "") ? Request::get ('med_quantity') : Session::get ('med_quantity');
-		// $med_mrp = Request::get ('hidden_selling_price') ;
+            $item_code = (Session::get ('item_code') == "") ? Request::get ('hidden_item_code') : Session::get ('item_code');
+            $item_id = (Session::get ('item_id') == "") ? Request::get ('id') : Session::get ('item_id');
 
-		$item_code = (Session::get ('item_code') == "") ? Request::get ('hidden_item_code') : Session::get ('item_code');
-		$item_id = (Session::get ('item_id') == "") ? Request::get ('id') : Session::get ('item_id');
-		$med_mrp = $this->anyCalculateMRP($item_id);
+            $med_mrp = $this->anyCalculateMRP($item_id);
 
-		$pres_required = (Session::get ('pres_required') == "") ? Request::get ('pres_required') : Session::get ('pres_required');
+            $pres_required = (Session::get ('pres_required') == "") ? Request::get ('pres_required') : Session::get ('pres_required');
 
-		Session::put ('medicine' , $medicine);
-		Session::put ('med_quantity' , $med_quantity);
-		Session::put ('med_mrp' , $med_mrp);
-		Session::put ('item_code' , $item_code);
-		Session::put ('item_id' , $item_id);
-		Session::put ('pres_required' , $pres_required);
-		$email = "";
+            Session::put ('medicine' , $medicine);
+            Session::put ('med_quantity' , $med_quantity);
+            Session::put ('med_mrp' , $med_mrp);
+            Session::put ('item_code' , $item_code);
+            Session::put ('item_id' , $item_id);
+            Session::put ('pres_required' , $pres_required);
+            $email = "";
+            $user_id=1;
+        } else {
+            $medicine = Request::get ('medicine');
+            $med_quantity = Request::get ('med_quantity');
+            $item_code = Request::get ('hidden_item_code');
+            $item_id = Request::get ('id');
+            $med_mrp = $this->anyCalculateMRP($item_id);
+            $pres_required = Request::get ('pres_required');
+            $user_id = Request::get ('user_id');
+
+            $data = [
+                'medicine' => $medicine,
+                'quantity' => $med_quantity,
+                'item_code' => $item_code,
+                'item_id' => $item_id,
+                'mrp' => $med_mrp,
+                'pres_required' => $pres_required,
+                'user_id' => $user_id
+            ];
+
+            Log::info('Data:' . print_r($data, true));
+
+        }
+
 		try {
-			if (!Auth::check ())
+			if (!Auth::check () && !isset($user_id))
 					throw new Exception("You are not authorized to do this action" , 401);
-			if (Auth::check ()) {
-				$email = Session::get ('user_id' , '');
-				$medicine_exist = DB::table ('sessions')->select ('medicine_name')->where ('user_id' , '=' , $email)->where ('medicine_name' , '=' , $medicine)->get ();
+			if (Auth::check () || isset($user_id)) {
+
+                if(!$is_web) {
+                    $email = User::select('email')->where('id' , '=' , $user_id)->first()->email;
+                } else {
+                    $email = Session::get ('user_id' , '');
+                }
+                Log::info('email:' . $email);
+                //$email = Session::get ('user_id' , '');
+                //$email = 'santysierra0@gmail.com';
+				$medicine_exist = DB::table ('sessions')->select ('medicine_name')->where ('user_id' , '=' , $email)->where ('item_code' , '=' , $item_code)->get ();
 				if (count ($medicine_exist) > 0) {
-					$increment = DB::table ('sessions')->increment ('medicine_count' , $med_quantity);
+                    $increment = DB::table ('sessions')->where ('user_id' , '=' , $email)->where ('item_code' , '=' , $item_code)->increment ('medicine_count' , $med_quantity);
+                    Log::info('increment:' . $increment);
 					if ($increment) {
 						Session::forget ('medicine');
 						Session::forget ('med_quantity');
@@ -1514,9 +1771,10 @@ class MedicineController extends BaseController
 
 						Session::forget ('pres_required');
 						if ($is_web == 1) {
-							return Redirect::to ("medicine/my-cart");
+                            // return Redirect::to ("medicine/my-cart");
+                            return Response::json (['status' => 'SUCCESS' , 'msg' => 'Inserted']);
 						} else {
-							return "updated";
+                            return Response::json (['status' => 'SUCCESS' , 'msg' => 'Updated']);
 						}
 					}
 
@@ -1533,9 +1791,10 @@ class MedicineController extends BaseController
 
 						Session::forget ('pres_required');
 						if ($is_web == 1) {
-							return Redirect::to ("my-cart");
+							return Response::json (['status' => 'SUCCESS' , 'msg' => 'Inserted']);
 						} else {
-							return "inserted";
+                            return Response::json (['status' => 'SUCCESS' , 'msg' => 'Inserted']);
+							// return "inserted";
 						}
 					}
 				}
@@ -1546,8 +1805,9 @@ class MedicineController extends BaseController
 			}
 
 		} catch (Exception $e) {
-			// $message = $this->catchException ($e);
-			return 'sin_usuario';
+            // $message = $this->catchException ($e);
+            return Response::json (['status' => 'FAILURE' , 'msg' => 'Sin usuario o usuario invalido']);
+			// return 'sin_usuario';
 		}
 
 
@@ -1558,23 +1818,72 @@ class MedicineController extends BaseController
 	 */
 
 	public
-	function anyUpdateCart ()
+	function anyUpdateCart ($is_web)
 	{
+        header ("Access-Control-Allow-Origin: *");
+        header ("Access-Control-Allow-Headers: *");
+
 		// Update Item
 		$item_code = Request::get ('item_code');
 		$new_qty = Request::get ('new_qty');
-		$email = Session::get ('user_id');
+        $email = Request::get ('email');
+
+        Log::info('item_code:' . $item_code);
+        Log::info('new_qty:' . $new_qty);
+        Log::info('email:' . $email);
+
 		$qty_updt = DB::table ('sessions')
 			->where ('user_id' , '=' , $email)
 			->where ('item_code' , '=' , $item_code)
-			->update (array('medicine_count' => $new_qty));
-		if ($qty_updt) {
-			echo 1;
-		} else {
-			echo 0;
-		}
+            ->update (array('medicine_count' => $new_qty));
+
+        Log::info('Update:' . $qty_updt);
+
+        if($is_web) {
+            if ($qty_updt) {
+                echo 1;
+            } else {
+                echo 0;
+            }
+        } else {
+            if ($qty_updt) {
+                return Response::json (['status' => 'SUCCESS' , 'msg' => 'Updated']);
+            } else {
+                return Response::json (['status' => 'FAILURE' , 'msg' => 'Error actualizando cantidades']);
+            }
+        }
+
+
+    }
+
+    /**
+	 * Empty Cart
+	 */
+
+	public
+	function anyEmptyCart ()
+	{
+
+        header ("Access-Control-Allow-Origin: *");
+        header ("Access-Control-Allow-Headers: *");
+
+        $email = Request::get ('email');
+
+        Log::info('email:' . $email);
+
+		$empty = DB::table('sessions')->where('user_id', $email)->delete();
+
+        Log::info('Empty:' . $empty);
+
+        if($empty) {
+            return Response::json (['status' => 'SUCCESS' , 'msg' => 'Vacio']);
+        } else {
+            return Response::json (['status' => 'FAILURE' , 'msg' => 'Error vaciando carrito']);
+        }
+
 
 	}
+
 
 	/**
 	 * Download Prescription
@@ -1587,6 +1896,10 @@ class MedicineController extends BaseController
 	public
 	function anyDownloading ($file_name)
 	{
+        header ("Access-Control-Allow-Origin: *");
+        header ("Access-Control-Allow-Headers: *");
+
+
 		$email = Session::get ('user_id');
 		$pathToFile = base_path () . '/public/images/prescription/' . $email . '/' . $file_name;
 
@@ -1604,6 +1917,9 @@ class MedicineController extends BaseController
 	public
 	function anyMakePayment ($invoice , $isMobile = 0)
 	{
+        header ("Access-Control-Allow-Origin: *");
+        header ("Access-Control-Allow-Headers: *");
+
 		// If User Authenticated
 		if (!Auth::check ())
 			return Redirect::to ('/');
@@ -1665,6 +1981,9 @@ class MedicineController extends BaseController
 	public
 	function anyMakePaypalPayment ($invoice , $isMobile = 0)
 	{
+        header ("Access-Control-Allow-Origin: *");
+        header ("Access-Control-Allow-Headers: *");
+
 		// If User Authenticated
 		if (!Auth::check ())
 			return Redirect::to ('/');
@@ -1719,13 +2038,24 @@ class MedicineController extends BaseController
 
 	public function anyMakeMercadoPagoPayment($invoice_id, $isMobile=0) {
 
+        header ("Access-Control-Allow-Origin: *");
+        header ("Access-Control-Allow-Headers: *");
+
 		// $invoice_id = Request::get ('invoice_id' , '');
 		// $isMobile = Request::get ('isMobile' , '');
 
-		// Datos del usuario
-		$email = Session::get ('user_id');
-		$user = Auth::user ();
-		$type = $user->user_type_id;
+        // Datos del usuario
+        if ($isMobile == 0) {
+            $email = Session::get ('user_id');
+            $user = Auth::user ();
+		    $type = $user->user_type_id;
+        } else {
+            $email = Request::get ('email');
+            $type =  UserType::CUSTOMER ();
+            $user = User::where('email', "=", $email)->first();
+        }
+
+
 
 		// Inicializacion de variables para post
 		$data = array();
@@ -1823,7 +2153,18 @@ class MedicineController extends BaseController
 			array_push ($items, $item);
 
 
-		}
+        }
+
+        if($invoice->shipping > 0) {
+            $item = new MercadoPago\Item();
+			$item->title = "Domicilio";
+			$item->quantity = 1;
+			// $item->picture_url = 'https://drazamed.com/images/products/' . $medicine['item_code'] . '.jpg';
+			$item->unit_price = $invoice->shipping;
+            $item->currency_id = 'COP';
+            array_push ($items, $item);
+			// $item->id = 1;
+        }
 
 		// if($invoice_id == 6) {
 		// 	dd($items);
@@ -1845,12 +2186,12 @@ class MedicineController extends BaseController
 
 		// $preference->items = array($item);
 
-		$shipments = new MercadoPago\Shipments();
-		$shipments->cost = $invoice->shipping;
-		$shipments->mode = "custom";
+		// $shipments = new MercadoPago\Shipments();
+		// $shipments->cost = $invoice->shipping;
+		// $shipments->mode = "custom";
 
 		$preference->payer = $payer;
-		$preference->shipments = $shipments;
+		// $preference->shipments = $shipments;
 		$preference->external_reference = $invoice->id;
 
 
@@ -1892,6 +2233,10 @@ class MedicineController extends BaseController
 
 
 	public function anyProcessMercadopagoResponse() {
+
+        header ("Access-Control-Allow-Origin: *");
+        header ("Access-Control-Allow-Headers: *");
+
 		$preference_id = Request::get ('preference_id' , '');
 		$payment_id = Request::get ('payment_id' , '');
 		$payment_status = Request::get ('payment_status' , '');
@@ -2150,6 +2495,10 @@ class MedicineController extends BaseController
 	public
 	function anyPaySuccess ($invoice, $transaction_id)
 	{
+
+        header ("Access-Control-Allow-Origin: *");
+        header ("Access-Control-Allow-Headers: *");
+
 		// $transaction_id = Request::get ('payuMoneyId' , '');             // Save Return Transaction Id of Payment Gateway
 		// Update Invoice
 		//$invoice = Invoice::find ($invoice);
@@ -2188,6 +2537,9 @@ class MedicineController extends BaseController
 	public
 	function anyPaypalSuccess ()
 	{
+        header ("Access-Control-Allow-Origin: *");
+        header ("Access-Control-Allow-Headers: *");
+
 		session_start ();
 		session_destroy ();
 		$invoice = Request::get ('pay_id' , '');
@@ -2234,6 +2586,9 @@ class MedicineController extends BaseController
 	public
 	function anyMercadoPagoSuccess ()
 	{
+        header ("Access-Control-Allow-Origin: *");
+        header ("Access-Control-Allow-Headers: *");
+
 		session_start ();
 		session_destroy ();
 		$invoice = Request::get ('pay_id' , '');
@@ -2281,6 +2636,9 @@ class MedicineController extends BaseController
 	public
 	function anyAdminPaySuccess ($invoice)
 	{
+        header ("Access-Control-Allow-Origin: *");
+        header ("Access-Control-Allow-Headers: *");
+
 		// Update Invoice
 		$invoice = Invoice::find ($invoice);
 		$invoice->status_id = InvoiceStatus::PAID ();
@@ -2337,6 +2695,9 @@ class MedicineController extends BaseController
 	public
 	function getMedicineData ()
 	{
+        header ("Access-Control-Allow-Origin: *");
+        header ("Access-Control-Allow-Headers: *");
+
 		try {
 			$mid = Request::get ('id' , 0);
 
@@ -2367,6 +2728,9 @@ class MedicineController extends BaseController
 	public
 	function getMedicineListFromName ()
 	{
+        header ("Access-Control-Allow-Origin: *");
+        header ("Access-Control-Allow-Headers: *");
+
 		$name = Request::get ('name');
 		$order = Request::get ('ord' , 'ASC');
 		if ($name != "")
@@ -2407,6 +2771,9 @@ class MedicineController extends BaseController
 	public
 	function postAddNewMedicine ()
 	{
+        header ("Access-Control-Allow-Origin: *");
+        header ("Access-Control-Allow-Headers: *");
+
 		$name = Request::get ('name');
 		$user_id = 0;
 		$email = 'Not Available';
@@ -2448,6 +2815,9 @@ class MedicineController extends BaseController
 	public
 	function postUpload()
 	{
+        header ("Access-Control-Allow-Origin: *");
+        header ("Access-Control-Allow-Headers: *");
+
 		Log::info('Se esta subiendo el archivo' . Request::file('file'));
 
 		try {
@@ -2507,6 +2877,9 @@ class MedicineController extends BaseController
 
 	public function anyCreateOrder(PreOrder $preOrder, Request $request)
 	{
+        header ("Access-Control-Allow-Origin: *");
+        header ("Access-Control-Allow-Headers: *");
+
 	    $allowedPaymentMethods = config('payment-methods.enabled');
 
 	    $request->validate([
@@ -2531,6 +2904,9 @@ class MedicineController extends BaseController
 
 	protected function generatePaymentGateway($paymentMethod, Order $order) : string
 	{
+        header ("Access-Control-Allow-Origin: *");
+        header ("Access-Control-Allow-Headers: *");
+
 	    $method = new \App\PaymentMethods\MercadoPago;
 
 		$return = $method->setupPaymentAndGetRedirectURL($order);
