@@ -12,7 +12,7 @@
                 </p>
 
 
-                <p class="text-justify text-white"> Haz un comentario o siguenos en nuestras redes</p>
+                <p class="text-justify text-white"> Haz un comentario o síguenos en nuestras redes</p>
                 @include('components.share', [
                     'url' => request()->fullUrl(),
                     'description' => 'Que buena idea!!',
