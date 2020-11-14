@@ -109,6 +109,14 @@ use MercadoPago;
     Route::post('/treatment/update-active-status', 'TreatmentController@postUpdateActiveTreatment');
     Route::post('/treatment/delete-treatment', 'TreatmentController@postDeleteTreatment');
 
+    /**
+     * Professional routes
+     */
+    Route::get('/professional/get-professional-list', 'ProfessionalController@getProfessionalsList');
+    Route::get('/professional/get-customer-list/{key}', 'ProfessionalController@getCustomersList');
+    Route::post('/professional/assign-professional', 'ProfessionalController@postAssignProfessional');
+    Route::post('/professional/remove-professional', 'ProfessionalController@postRemoveProfessional');
+
 
     /**
      * Test cors

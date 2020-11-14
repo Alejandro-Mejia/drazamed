@@ -1,3 +1,4 @@
+
 <footer>
 	<div class="container">
 		<div class="row">
@@ -7,8 +8,19 @@
 					Droguerías Mini Farma S.A.S. <br>
 					Nit : 901.166.732-4 <br>
 					Dirección: CARRERA 6 # 1-20, Cajicá, Cundinamarca <br>
-					Telefono : (1) 879-3999
-				</p>
+                    Telefono : (1) 879-3999
+                </p>
+
+
+                <p class="text-justify text-white"> Haz un comentario o siguenos en nuestras redes</p>
+                @include('components.share', [
+                    'url' => request()->fullUrl(),
+                    'description' => 'Que buena idea!!',
+                    'image' => 'http://placehold.it/300x300?text=Cool+link'
+                ])
+
+
+
 			</div>
 
 			<div class="col-sm" style="text-align: center">

@@ -25,4 +25,9 @@
 
         }
 
+        public function professionals()
+        {
+            return $this->belongsToMany('App\Professional', 'customer_professional');
+        }
+
     }
