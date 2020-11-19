@@ -85,7 +85,78 @@
                         </div>
                     </div>
                     <div id = "medSel" style="display: none">
-                        
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <label for="name-input">Especialidad</label>
+                                    <input
+                                        type="text"
+                                        class="form-control input-modal"
+                                        id="speciality"
+                                        name="especialidad"
+                                        placeholder="Ingrese su especialidad"
+                                    />
+                                </div>
+                                <p style="display: none;" id="especialidad_error"></p> 
+                                <!-- @toDo crear el error de especialidad -->
+                            </div>
+                            <div class="col">
+                                <div class="form-group">
+                                    <label for="lastname-input">Sub Especialidad</label>
+                                    <input
+                                        type="text"
+                                        class="form-control input-modal"
+                                        id="sub_speciality"
+                                        name="sub_especialidad"
+                                        placeholder="Ingrese su sub especialidad"
+                                    />
+                                </div>
+                                <p style="display: none;" id="sub_especialidad_error"></p>
+                                <!-- @toDo crear el error de sub_especialidad -->
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <label for="name-input">Dirección Consultorio</label>
+                                    <input
+                                        type="text"
+                                        class="form-control input-modal"
+                                        id="office_address"
+                                        name="office_address"
+                                        placeholder="Ingrese la dirección del consultorio"
+                                    />
+                                </div>
+                                <p style="display: none;" id="office_adr_error"></p> 
+                                <!-- @toDo crear el error de dirección de consultorio -->
+                            </div>
+                            <div class="col">
+                                <div class="form-group">
+                                    <label for="lastname-input">Telefono Consultorio</label>
+                                    <input
+                                        type="tel"
+                                        class="form-control input-modal"
+                                        id="office_phone"
+                                        name="office_phone"
+                                        placeholder="Ingrese el telefono del consultorio"
+                                    />
+                                </div>
+                                <p style="display: none;" id="office_phone_error"></p>
+                                <!-- @toDo crear el error de telefono para consultorio -->
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="lastname-input">Número tarjeta profesional</label>
+                            <input
+                                type="number"
+                                class="form-control input-modal"
+                                id="professional_id"
+                                name="tarjeta_profesional"
+                                placeholder="Ingrese el número de su tarjeta profesional"
+                            />
+                        </div>
+                        <p style="display: none;" id="tarjeta_profesional_error"></p>
+                        <!-- @toDo crear el error de sub_especialidad -->
                     </div>
                     <div id = "centMedSel" style="display: none">
                        

@@ -37,7 +37,7 @@
                             si estoy acá
                         @endif
                     </li> --}}
-                    @auth
+                    @auth 
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle border border-primary border border-primary rounded-pill"
                                 href="#"
