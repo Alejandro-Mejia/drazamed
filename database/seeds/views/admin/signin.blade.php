@@ -70,7 +70,7 @@ exit;
     </div>
   </footer>
   <!-- / footer -->
-  <script src="{{url('/')}}/assets/adminFiles/js/jquery.min.js"></script>
+  {{-- <script src="{{url('/')}}/assets/adminFiles/js/jquery.min.js"></script> --}}
   <!-- Bootstrap -->
   <script src="{{url('/')}}/assets/adminFiles/js/bootstrap.js"></script>
   <!-- App -->

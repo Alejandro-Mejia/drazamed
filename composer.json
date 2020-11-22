@@ -23,6 +23,7 @@
         "laravel/helpers": "^1.2",
         "laravel/socialite": "^4.4",
         "laravel/tinker": "^2.0",
+        "laravel/ui": "^3.1",
         "laravelcollective/html": "^6.1",
         "maatwebsite/excel": "^3.1",
         "mariuzzo/laravel-js-localization": "^1.6",
@@ -30,16 +31,16 @@
         "mews/captcha": "^3.1",
         "patosmack/mercado-pago": "^1.0@beta",
         "pusher/pusher-php-server": "^4.1",
-        "sentry/sentry-laravel": "^1.9",
+        "sentry/sentry-laravel": "^1.8",
         "spatie/laravel-cookie-consent": "^2.12",
-        "spatie/laravel-sitemap": "^5.7"
+        "spatie/laravel-sitemap": "^5.7",
+        "illuminate/filesystem":"^8.0"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.2",
         "facade/ignition": "^2.0",
         "fzaninotto/faker": "^1.9.1",
         "kint-php/kint": "^3.3",
-        "laravel/ui": "^2.0",
         "mockery/mockery": "^1.3.1",
         "nunomaduro/collision": "^4.1",
         "phpunit/phpunit": "^8.5"

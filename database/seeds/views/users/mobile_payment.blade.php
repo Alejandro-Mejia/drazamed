@@ -16,8 +16,8 @@
     <script src="{{url('/')}}/assets/javascripts/jquery.min.js"></script>
 
     <link rel="stylesheet" href="{{url('/')}}/assets/javascripts/jquery-ui.css">
-    <script src="{{url('/')}}/assets/javascripts/jquery-1.10.2.js"></script>
-    <script src="{{url('/')}}/assets/javascripts/jquery-ui.js"></script>
+    {{-- <script src="{{url('/')}}/assets/javascripts/jquery-1.10.2.js"></script> --}}
+    {{-- <script src="{{url('/')}}/assets/javascripts/jquery-ui.js"></script> --}}
     {{--<script src="assets/js/jquery.form.js"></script>--}}
 
 

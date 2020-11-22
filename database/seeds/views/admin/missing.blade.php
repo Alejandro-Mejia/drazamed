@@ -51,9 +51,9 @@
     </div>
   </footer>
   <!-- / footer -->
-  <script src="{{url('/')}}/assets/adminFiles/js/jquery.min.js"></script>
+  {{-- <script src="{{url('/')}}/assets/adminFiles/js/jquery.min.js"></script> --}}
   <!-- Bootstrap -->
-  <script src="{{url('/')}}/assets/adminFiles/js/bootstrap.js"></script>
+  {{-- <script src="{{url('/')}}/assets/adminFiles/js/bootstrap.js"></script> --}}
   <!-- App -->
   <script src="{{url('/')}}/assets/adminFiles/js/app.js"></script>
   <script src="{{url('/')}}/assets/adminFiles/js/slimscroll/jquery.slimscroll.min.js"></script>

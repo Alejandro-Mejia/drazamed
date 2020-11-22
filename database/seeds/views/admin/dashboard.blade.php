@@ -118,7 +118,7 @@
               </section>
 
 
-             <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
+             {{-- <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.2.min.js"></script> --}}
                        	<script>
                         	var not = '<?php echo URL::to('admin/today-pres-dash'); ?>';
 				$(document).ready(function(e){

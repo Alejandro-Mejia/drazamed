@@ -11,9 +11,10 @@
 
 
         {{-- Cargar los js de la aplicacion --}}
-        <script src="/js/app.js"></script>
+        <script src="/dist/app.js"></script>
+        <script src="/js/design.js"></script>
 
-        <!-- Money format for JS -->
+        {{-- <!-- Money format for JS -->
         <script src="/js/simple.money.format.js"></script>
 
         <!-- Tooltip & Popover -->
@@ -21,8 +22,8 @@
 
         <!-- Bootstrap 4 -->
         <script src="/js/bootstrap.min.js"></script>
-        <script src="/js/bootbox.all.min.js"></script>
-        <link rel="stylesheet" href="/css/app.css">
+        <script src="/js/bootbox.all.min.js"></script> --}}
+        <link rel="stylesheet" href="/dist/app.css">
         <link rel="stylesheet" href="/assets/fonts/fontawesome/css/solid.css">
         <script async src="https://www.googletagmanager.com/gtag/js?id=G-C32TYXD8C1"></script>
         <script>
@@ -99,7 +100,7 @@
 
         @yield('custom-js')
 
-        <script src="/js/design.js"></script>
+        {{-- <script src="/js/design.js"></script> --}}
     </body>
 
 

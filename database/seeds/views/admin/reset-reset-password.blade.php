@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>Reset</title>
 
-<script type="text/javascript" src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
+{{-- <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.2.min.js"></script> --}}
 <script src="http://jqueryvalidation.org/files/dist/jquery.validate.min.js"></script>
 
 </head>
