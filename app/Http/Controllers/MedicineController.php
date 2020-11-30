@@ -1800,7 +1800,8 @@ class MedicineController extends BaseController
 
 						Session::forget ('pres_required');
 						if ($is_web == 1) {
-							return Response::json (['status' => 'SUCCESS' , 'msg' => 'Inserted']);
+                            return Redirect::to ("medicine/my-cart");
+							//return Response::json (['status' => 'SUCCESS' , 'msg' => 'Inserted']);
 						} else {
                             return Response::json (['status' => 'SUCCESS' , 'msg' => 'Inserted']);
 							// return "inserted";
