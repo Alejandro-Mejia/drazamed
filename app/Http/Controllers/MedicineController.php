@@ -1780,8 +1780,8 @@ class MedicineController extends BaseController
 
 						Session::forget ('pres_required');
 						if ($is_web == 1) {
-                            return Redirect::to ("medicine/my-cart");
-                            //return Response::json (['status' => 'SUCCESS' , 'msg' => 'Inserted']);
+                            //return Redirect::to ("medicine/my-cart");
+                            return Response::json (['status' => 'SUCCESS' , 'msg' => 'Inserted']);
 						} else {
                             return Response::json (['status' => 'SUCCESS' , 'msg' => 'Updated']);
 						}
@@ -1800,8 +1800,9 @@ class MedicineController extends BaseController
 
 						Session::forget ('pres_required');
 						if ($is_web == 1) {
-                            return Redirect::to ("medicine/my-cart");
-							//return Response::json (['status' => 'SUCCESS' , 'msg' => 'Inserted']);
+                            //return Redirect::to ("medicine/my-cart");
+                            // https://drazamed.com/account-page
+							return Response::json (['status' => 'SUCCESS' , 'msg' => 'Inserted']);
 						} else {
                             return Response::json (['status' => 'SUCCESS' , 'msg' => 'Inserted']);
 							// return "inserted";
