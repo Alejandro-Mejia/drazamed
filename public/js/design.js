@@ -671,7 +671,7 @@ function show_detail_modal(data) {
         success: function(data) {
             if (data.result.msg[0].units_value > 0) {
                 priceperunit = (data.result.msg[0].mrp / data.result.msg[0].units_value).toFixed(2);
-                textPrice = "<p> Precio por Unidad </p> <p> <span style='color=green'>" + data.result.msg[0].units + "</span> a $ <span>" + priceperunit + "</span> pesos </p> ";
+                textPrice = "<p> Precio por Unidad </p> <p> <span style='color:green'>" + data.result.msg[0].units + "</span> a $ <span>" + priceperunit + "</span> pesos </p> ";
             } else {
                 priceperunit = 0;
                 textPrice = "";
