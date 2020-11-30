@@ -669,6 +669,15 @@ function show_detail_modal(data) {
         url: "/medicine/search-medicine/1",
         data: "term=" + encodeURIComponent(data.value),
         success: function(data) {
+            if (data.result.msg[0].units_value > 0) {
+                priceperunit = (data.result.msg[0].mrp / data.result.msg[0].units_value).toFixed(2);
+                textPrice = "<p> Precio por Unidad </p> <p>" + data.result.msg[0].units + " a $ " + priceperunit + " pesos </p> ";
+            } else {
+                priceperunit = 0;
+                textPrice = "";
+            }
+
+            //priceperunit = 0;
             console.log(data.result);
             $("#hidden_medicine_id").val(data.result.msg[0].id);
             $("#hidden_item_code").val(data.result.msg[0].item_code);
@@ -679,6 +688,23 @@ function show_detail_modal(data) {
             $("#pi-med-name")
                 .empty()
                 .append(data.result.msg[0].name);
+
+            if (data.result.msg[0].units != 'NoD') {
+                $("#pi-med-units-price")
+                    .empty()
+                    .append(textPrice);
+                // $("#pi-med-unit-value")
+                //     .empty()
+                //     .append(data.result.msg[0].units);
+
+                // $("#pi-med-unit-price")
+                //     .empty()
+                //     .append(priceperunit);
+            } else {
+                $("#pi-med-units-price")
+                .empty();
+            }
+
             $("#pi-med-description")
                 .empty()
                 .append(data.result.msg[0].composition);

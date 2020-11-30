@@ -106,6 +106,17 @@
                             src="/images/products/default.png"
                             alt=""
                         />
+                        <br>
+                        <br>
+
+
+                        <p id="pi-med-units-price" style="text-align:center" >
+                            {{-- <p style="text-align:center">
+                                <span id="pi-med-unit-value" style="color: green"> </span> a $ <span id="pi-med-unit-price"> </span> pesos
+                            </p> --}}
+
+                        </p>
+
                     </div>
 
                     <div class="pi-shop-box">
