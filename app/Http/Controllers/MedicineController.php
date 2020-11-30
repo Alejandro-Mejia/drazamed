@@ -928,7 +928,16 @@ class MedicineController extends BaseController
 				// dd($med);
 				$sellprice = ($this->anyCalculateMRP($med['id'])) ? $this->anyCalculateMRP($med['id']) : 0;
 
-				$presRule = PresRulesCats::Where('category',  'LIKE', '%' . $med->group . '%')->get()->first()->toArray();
+                $presRule = PresRulesCats::Where('category',  'LIKE', '%' . $med->group . '%')->get()->first();
+
+                if (!is_null($presRule) ) {
+                    $presRule = $presRule->toArray();
+                } else {
+                    $presRule = [
+                        'is_pres_required' => 0,
+                        'is_by_product' => 0
+                    ];
+                }
 
 				$pres_required = false;
 
@@ -1720,8 +1729,8 @@ class MedicineController extends BaseController
             Session::put ('item_code' , $item_code);
             Session::put ('item_id' , $item_id);
             Session::put ('pres_required' , $pres_required);
-            $email = "";
-            $user_id=1;
+            // $email = "";
+            // $user_id=1;
         } else {
             $medicine = Request::get ('medicine');
             $med_quantity = Request::get ('med_quantity');
@@ -1771,8 +1780,8 @@ class MedicineController extends BaseController
 
 						Session::forget ('pres_required');
 						if ($is_web == 1) {
-                            // return Redirect::to ("medicine/my-cart");
-                            return Response::json (['status' => 'SUCCESS' , 'msg' => 'Inserted']);
+                            return Redirect::to ("medicine/my-cart");
+                            //return Response::json (['status' => 'SUCCESS' , 'msg' => 'Inserted']);
 						} else {
                             return Response::json (['status' => 'SUCCESS' , 'msg' => 'Updated']);
 						}
