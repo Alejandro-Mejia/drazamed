@@ -99,7 +99,7 @@ use MercadoPago;
     Route::get('/user/is-actual-user/{user_js}', 'UserController@getIsActualUser');
     Route::get('/user/get-user-data/{is_web}', 'UserController@getUserData');
     Route::post('/user/post-user-data/{is_web}', 'UserController@postUpdateDetailsUser');
-    Route::post('/user/post-fcm-data/', 'UserController@postUpdateUserToken');
+    Route::any('/user/post-fcm-data/', 'UserController@postUpdateUserToken');
 
 
     /**
