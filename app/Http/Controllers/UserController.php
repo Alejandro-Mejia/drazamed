@@ -331,8 +331,8 @@ class UserController extends BaseController
                     DB::enableQueryLog();
                     $affectedRows = Customer::where ('mail' , '=' , $email)->update ($customerDetails);
                     $query = DB::getQueryLog();
-                    Log::info('query: ' . print_r($query));
-                    Log::info('rows: ' . print_r($affectedRows));
+                    // Log::info('query: ' . print_r($query));
+                    // Log::info('rows: ' . print_r($affectedRows));
                     // dd($query);
 					break;
 			}
