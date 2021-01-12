@@ -282,6 +282,76 @@ class UserController extends BaseController
 		}
 
 
+    }
+
+    /**
+	 * @brief Update User Details
+	 *
+	 * @param int $isWeb
+	 *
+	 * @return mixed
+	 */
+	public function postUpdateUserToken ()
+	{
+        header ("Access-Control-Allow-Origin: *");
+        header ("Access-Control-Allow-Headers: *");
+//		if (!$this->isCsrfAccepted ()) {
+//			$result = array(array('result' => array('status' => 'failed')));
+//			return Response::json ($result);
+//		}
+		try {
+
+            $post = 0;
+            if(!empty(Request::json()->all())) {
+                $email = Request::input ('email');
+                $user_type = Request::input ('user_type');
+                $token = Request::input ('token');
+                $apnstoken = Request::input ('apnstoken');
+                $isAndroid = Request::input ('isAndroid');
+
+            }
+
+
+			// $address = Request::get ('address' , '');
+			// $pincode = Request::get ('pincode' , '');
+			// $phone = Request::get ('phone' , '');
+			switch ($user_type) {
+				case UserType::MEDICAL_PROFESSIONAL ():
+					$medicalProfDetails = array(
+                        'token' => $token,
+                        'apnstoken' => $apnstoken,
+					);
+					$affectedRows = MedicalProfessional::where ('prof_mail' , '=' , $email)->update ($medicalProfDetails);
+					break;
+				case UserType::CUSTOMER ():
+					$customerDetails = array(
+                        'token' => $token,
+                        'apnstoken' => $apnstoken,
+                    );
+                    DB::enableQueryLog();
+                    $affectedRows = Customer::where ('mail' , '=' , $email)->update ($customerDetails);
+                    $query = DB::getQueryLog();
+                    Log::info('query: ' . print_r($query));
+                    Log::info('rows: ' . print_r($affectedRows));
+                    // dd($query);
+					break;
+			}
+			if (is_array($affectedRows) AND count ($affectedRows) == 1) {
+				$result = array(array('result' => array('status' => 'success')));
+				$result = ['status' => 'SUCCESS' , 'msg' => 'User profile updated !'];
+			} else {
+                // throw new Exception('Profile not updated ! due to some technical error' , 500);
+                $result = ['status' => 'FAILURE' , 'msg' => 'User profile not updated !'];
+			}
+
+			return Response::json ($result);
+		}
+		catch (Exception $e) {
+			$message = $e;
+			return Response::make (['status' => 'FAILURE' , 'msg' => $e->getMessage()] ,$e->getCode());
+		}
+
+
 	}
 
     public function getIsActualUser($user_js) {
