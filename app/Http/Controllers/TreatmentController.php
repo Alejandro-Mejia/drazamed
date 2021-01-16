@@ -12,9 +12,95 @@ use Carbon\Carbon;
 use App\User;
 use App\Customer;
 use App\Treatment;
+use Kreait\Firebase\Messaging\CloudMessage;
+use Kreait\Firebase\Messaging\AndroidConfig;
 
 class TreatmentController extends Controller
 {
+    /**
+     * Esta funcion se ejecuta cada minuto verificando los tratamientos que deban ser
+     * notificados
+     */
+    public function check()
+    {
+        Log::info("tic tac...");
+        error_log('tic tac.');
+        $treatments = json_decode($this->getTreatmentsByTime(), true);
+        foreach($treatments as $treatment) {
+            Log::info("Actualizando proxima toma");
+            error_log('Actualizando proxima toma');
+            $this->UpdateNextTime($treatment["customer_id"], $treatment["item_code"]);
+
+            $user = Customer::where('id', '=', $treatment["customer_id"])->first();
+            error_log($user);
+            Log::info($user);
+
+            if ($user["token"] != "") {
+                // Log::info("Verificando token");
+                // $result = $messaging->validateRegistrationTokens([$user["token"]]);
+                //Log::info($result);
+                Log::info("Enviando notificación");
+                error_log('Enviando notificación');
+                // $result = $this->sendFCM($user["token"]);
+                // Log::info($result);
+                //$result = $this->FireAndroidMsg();
+            }
+        }
+
+
+
+
+    }
+
+    /**
+     * Envia mensajes usando la libreria firebase-php a dispositivos Android
+     */
+    public function FireAndroidMsg()
+    {
+        $config = AndroidConfig::fromArray([
+            'ttl' => '3600s',
+            'priority' => 'normal',
+            'notification' => [
+                'title' => '$GOOG up 1.43% on the day',
+                'body' => '$GOOG gained 11.80 points to close at 835.67, up 1.43% on the day.',
+                'icon' => 'stock_ticker_update',
+                'color' => '#f45342',
+                'sound' => 'default',
+            ],
+        ]);
+
+        $message = $message->withAndroidConfig($config);
+
+        return $message;
+    }
+
+    /**
+     * Envia mensajes usando la libreria firebase-php a dispositivos Android
+     */
+    public function FireIosMsg()
+    {
+        $config = ApnsConfig::fromArray([
+            'headers' => [
+                'apns-priority' => '10',
+            ],
+            'payload' => [
+                'aps' => [
+                    'alert' => [
+                        'title' => '$GOOG up 1.43% on the day',
+                        'body' => '$GOOG gained 11.80 points to close at 835.67, up 1.43% on the day.',
+                    ],
+                    'badge' => 42,
+                    'sound' => 'default',
+                ],
+            ],
+        ]);
+
+        $message = $message->withApnsConfig($config);
+
+        return $message;
+
+    }
+
     /**
 	 * Get Treatments
 	 *     * @return mixed
@@ -47,6 +133,7 @@ class TreatmentController extends Controller
 
 		// return View::make('/users/my_order');
     }
+
 
     /**
 	 * Get Treatments
@@ -172,29 +259,7 @@ class TreatmentController extends Controller
 
     }
 
-    public function check()
-    {
-        Log::info("tic tac...");
-        error_log('tic tac.');
-        $treatments = json_decode($this->getTreatmentsByTime(), true);
-        foreach($treatments as $treatment) {
-            Log::info("Actualizando proxima toma");
-            $this->UpdateNextTime($treatment["customer_id"], $treatment["item_code"]);
 
-            $user = Customer::where('id', '=', $treatment["customer_id"])->first();
-            Log::info($user);
-
-            if ($user["token"] != "") {
-                Log::info("Enviando notificación");
-                $result = $this->sendFCM($user["token"]);
-                Log::info($result);
-            }
-        }
-
-
-
-
-    }
 
     public function postUpdateActiveTreatment() {
         header ("Access-Control-Allow-Origin: *");

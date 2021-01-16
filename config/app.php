@@ -193,6 +193,9 @@ return [
         // Amazon AWS
         Aws\Laravel\AwsServiceProvider::class,
 
+        // Firebase-php
+        Kreait\Laravel\Firebase\ServiceProvider::class
+
     ],
 
     /*
