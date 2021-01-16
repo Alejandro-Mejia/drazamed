@@ -168,7 +168,7 @@ class TreatmentController extends Controller
 
             DB::enableQueryLog();
             $treatments = $treatments = Treatment::with('medicines')
-            ->whereRaw('ABS(TIMESTAMPDIFF(MINUTE, next_time, ?)) < 1', [$today])
+            ->whereRaw('ABS(TIMESTAMPDIFF(MINUTE, next_time, ?)) < 1', [$today->format('Y-m-d H:i')])
             ->get();
             $query = DB::getQueryLog();
             Log::info($query);
