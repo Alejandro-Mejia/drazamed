@@ -145,7 +145,7 @@ class TreatmentController extends Controller
         header ("Access-Control-Allow-Headers: *");
 
         $localtime = new Datetime();
-
+        Log::info("Hora servdor : " . $localtime);
 
         // dd($localtime);
 		// if (!Auth::check ())
