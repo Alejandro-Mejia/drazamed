@@ -162,9 +162,17 @@ class TreatmentController extends Controller
         // echo $today->format('Y-m-d H:i');
 
         if($isDel == 0) {
-            $treatments = Treatment::with('medicines')
+            // $treatments = Treatment::with('medicines')
+            // ->whereRaw('ABS(TIMESTAMPDIFF(MINUTE, next_time, ?)) < 1', [$today])
+            // ->get();
+
+            DB::enableQueryLog();
+            $treatments = $treatments = Treatment::with('medicines')
             ->whereRaw('ABS(TIMESTAMPDIFF(MINUTE, next_time, ?)) < 1', [$today])
             ->get();
+            $query = DB::getQueryLog();
+            Log::info($query);
+
             Log::info($treatments);
         } else {
             $treatments = Treatment::with('medicines')
