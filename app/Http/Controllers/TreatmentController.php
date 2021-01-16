@@ -5,6 +5,10 @@ namespace App\Http\Controllers;
 // use Illuminate\Http\Request;
 use Request;
 use Response;
+use DB;
+use Log;
+use DateTime;
+use Carbon\Carbon;
 use App\User;
 use App\Customer;
 use App\Treatment;
@@ -44,6 +48,47 @@ class TreatmentController extends Controller
 		// return View::make('/users/my_order');
     }
 
+    /**
+	 * Get Treatments
+	 *     * @return mixed
+	 */
+	public function getTreatmentsByTime()
+	{
+        header ("Access-Control-Allow-Origin: *");
+        header ("Access-Control-Allow-Headers: *");
+
+        $localtime = new Datetime();
+
+
+        // dd($localtime);
+		// if (!Auth::check ())
+		// 	return Redirect::to ('/');
+        $time = Request::get ('actualTime', $localtime);
+        $isDel = Request::get ('isDel', 0);
+        $isActive = Request::get ('isActive', 0);
+
+        $today = Carbon::now();
+
+        // echo $today->format('Y-m-d H:i');
+
+        if($isDel == 0) {
+            $treatments = Treatment::with('medicines')
+            ->whereRaw('ABS(TIMESTAMPDIFF(MINUTE, next_time, ?)) < 1', [$today])
+            ->get();
+        } else {
+            $treatments = Treatment::with('medicines')
+            ->whereRaw('ABS(TIMESTAMPDIFF(MINUTE, next_time, ?)) < 1', [$today])
+            ->withTrashed()->get();
+        }
+
+        // $treatments = $user->toArray();
+
+        // dd($treatments);
+        return json_encode($treatments);
+
+
+		// return View::make('/users/my_order');
+    }
 
     /**
      * Create Treatment
@@ -127,6 +172,30 @@ class TreatmentController extends Controller
 
     }
 
+    public function check()
+    {
+        Log::info("tic tac...");
+        error_log('tic tac.');
+        $treatments = json_decode($this->getTreatmentsByTime(), true);
+        foreach($treatments as $treatment) {
+            Log::info("Actualizando proxima toma");
+            $this->UpdateNextTime($treatment["customer_id"], $treatment["item_code"]);
+
+            $user = Customer::where('id', '=', $treatment["customer_id"])->first();
+            Log::info($user);
+
+            if ($user["token"] != "") {
+                Log::info("Enviando notificación");
+                $result = $this->sendFCM($user["token"]);
+                Log::info($result);
+            }
+        }
+
+
+
+
+    }
+
     public function postUpdateActiveTreatment() {
         header ("Access-Control-Allow-Origin: *");
         header ("Access-Control-Allow-Headers: *");
@@ -160,6 +229,144 @@ class TreatmentController extends Controller
     }
 
 
+    public function postUpdateNextTime() {
+        header ("Access-Control-Allow-Origin: *");
+        header ("Access-Control-Allow-Headers: *");
+
+        if(!empty(Request::json()->all())) {
+            $email = Request::input ('email');
+            $item_code = Request::input ('item_code');
+        }
+
+        $user = User::where('email', '=', $email)->with('customer')->get();
+
+        $customer_id =  $user[0]['customer']['id'];
+
+        $treatment = Treatment::where('customer_id', '=', $customer_id)->where('item_code', '=', $item_code)->first();
+
+        // DB::enableQueryLog();
+        // $treatment = Treatment::where('customer_id', '=', $customer_id)->where('item_code', '=', $item_code)->first();
+        // dd($treatment);
+        // $query = DB::getQueryLog();
+        // dd($query);
+
+        if ($treatment != null) {
+            // $localtime = date();
+            $localtime = new DateTime();
+
+            $deltaT = strval($treatment->frequency) . " hours";
+
+            $nextTake = date_add($localtime, date_interval_create_from_date_string($deltaT));
+
+            $nextTake = $nextTake->format('Y-m-d H:i');
+
+            $treatment->next_time = $nextTake;
+
+            $updated = $treatment->toArray();
+
+            $result = $treatment->update($updated);
+            // dd($result);
+
+            if ($result) {
+                return Response::json (['status' => 'SUCCESS' , 'msg' => 'Tu tratamiento ha sido actualizado correctamente.']);
+            } else {
+                return Response::json (['status' => 'FAILURE' , 'msg' => 'Tu tratamiento NO ha sido actualizado.']);
+            }
+        }
+
+
+
+    }
+
+    public function UpdateNextTime($customer_id, $item_code) {
+        header ("Access-Control-Allow-Origin: *");
+        header ("Access-Control-Allow-Headers: *");
+
+
+        $treatment = Treatment::where('customer_id', '=', $customer_id)->where('item_code', '=', $item_code)->first();
+
+        Log::info($treatment);
+
+        // DB::enableQueryLog();
+        // $treatment = Treatment::where('customer_id', '=', $customer_id)->where('item_code', '=', $item_code)->first();
+        // dd($treatment);
+        // $query = DB::getQueryLog();
+        // dd($query);
+
+        if ($treatment != null) {
+            // $localtime = date();
+            $localtime = new DateTime();
+
+            $deltaT = strval($treatment->frequency) . " minutes";
+
+            $nextTake = date_add($localtime, date_interval_create_from_date_string($deltaT));
+
+            $nextTake = $nextTake->format('Y-m-d H:i');
+
+            $treatment->next_time = $nextTake;
+
+            $updated = $treatment->toArray();
+
+            $result = $treatment->update($updated);
+            // dd($result);
+
+            if ($result) {
+                return Response::json (['status' => 'SUCCESS' , 'msg' => 'Tu tratamiento ha sido actualizado correctamente.']);
+            } else {
+                return Response::json (['status' => 'FAILURE' , 'msg' => 'Tu tratamiento NO ha sido actualizado.']);
+            }
+        }
+
+
+
+    }
+
+    public function sendFCM($id) {
+        $API_KEY = "AIzaSyBYqnQJbhFijfWVCcyeiU2VNTPAsXepSHI";
+        // $url = 'https://fcm.googleapis.com/fcm/send';
+        $url = 'https://fcm.googleapis.com/v1/projects/DrazamedApp/messages:send';
+
+        $message = [
+            'body'              =>  'Hola, es hora de tomarte un medicamento!',
+            'title'             =>  'Drazamed',
+            'notification_type' =>  'Test'
+        ];
+
+        $notification = [
+            'body' => 'Hola soy Drazamed
+            .',
+            'title' => 'Hola',
+
+        ];
+        $fields = array (
+            'registration_ids' => array (
+                    $id
+            ),
+            'notification'      => $notification,
+            'data'              => $message,
+            'priority'          => 'high',
+        );
+        $fields = json_encode ( $fields );
+        $headers = array (
+            'Authorization: key=' . $API_KEY,
+            'Content-Type: application/json'
+        );
+
+        // Log::info($headers, $fields);
+
+        $ch = curl_init ();
+        curl_setopt ( $ch, CURLOPT_URL, $url );
+        curl_setopt ( $ch, CURLOPT_POST, true );
+        curl_setopt ( $ch, CURLOPT_HTTPHEADER, $headers );
+        curl_setopt ( $ch, CURLOPT_RETURNTRANSFER, true );
+        curl_setopt ( $ch, CURLOPT_POSTFIELDS, $fields );
+
+        $result = curl_exec ( $ch );
+
+        curl_close ( $ch );
+        return $result;
+    }
+
     public function postDeleteTreatment() {
         header ("Access-Control-Allow-Origin: *");
         header ("Access-Control-Allow-Headers: *");
@@ -183,4 +390,7 @@ class TreatmentController extends Controller
             return Response::json (['status' => 'FAILURE' , 'msg' => 'Tu tratamiento NO ha sido borrado.']);
         }
     }
+
+
+
 }

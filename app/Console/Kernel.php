@@ -25,6 +25,9 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         // $schedule->command('inspire')->hourly();
+        // $schedule->command('treatments:check')->everyMinute();
+        $schedule->call('App\Http\Controllers\TreatmentController@check')->everyMinute();
+
     }
 
     /**

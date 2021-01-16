@@ -109,6 +109,8 @@ use MercadoPago;
     Route::post('/treatment/update-treatment', 'TreatmentController@postUpdateTreatmentTaken');
     Route::post('/treatment/update-active-status', 'TreatmentController@postUpdateActiveTreatment');
     Route::post('/treatment/delete-treatment', 'TreatmentController@postDeleteTreatment');
+    Route::get('/treatment/treatment-time', 'TreatmentController@getTreatmentsByTime');
+    Route::post('/treatment/next-time', 'TreatmentController@postUpdateNextTime');
 
     /**
      * Professional routes
