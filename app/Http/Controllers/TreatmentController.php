@@ -165,6 +165,7 @@ class TreatmentController extends Controller
             $treatments = Treatment::with('medicines')
             ->whereRaw('ABS(TIMESTAMPDIFF(MINUTE, next_time, ?)) < 1', [$today])
             ->get();
+            Log::info($treatments);
         } else {
             $treatments = Treatment::with('medicines')
             ->whereRaw('ABS(TIMESTAMPDIFF(MINUTE, next_time, ?)) < 1', [$today])
