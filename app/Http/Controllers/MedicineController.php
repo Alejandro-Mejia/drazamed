@@ -237,6 +237,7 @@ class MedicineController extends BaseController
                     });
                 } catch (Exception $e) {
                     Log::info('Error enviando correo :' . $e);
+                    echo "Error enviando correo";
                 }
 
 
