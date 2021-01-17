@@ -12,8 +12,22 @@ use Carbon\Carbon;
 use App\User;
 use App\Customer;
 use App\Treatment;
-use Kreait\Firebase\Messaging\CloudMessage;
-use Kreait\Firebase\Messaging\AndroidConfig;
+// use Kreait\Firebase\Messaging;
+// use Kreait\Firebase\Messaging\CloudMessage;
+// use Kreait\Firebase\Messaging\AndroidConfig;
+// use Kreait\Firebase\Factory;
+// use Kreait\Laravel\Firebase\Facades\Firebase;
+// use Kreait\Firebase\Database;
+// use Kreait\Firebase\ServiceAccount;
+// use Kreait\Firebase\Exception\Auth\EmailExists as FirebaseEmailExists;
+use LaravelFCM\Message\OptionsBuilder;
+use LaravelFCM\Message\PayloadDataBuilder;
+use LaravelFCM\Message\PayloadNotificationBuilder;
+use FCM;
+
+
+// use Monolog\Logger;
+// use Monolog\Handler\StreamHandler;
 
 class TreatmentController extends Controller
 {
@@ -23,9 +37,21 @@ class TreatmentController extends Controller
      */
     public function check()
     {
+
+
         Log::info("tic tac...");
         error_log('tic tac.');
+        // $factory = $factory->withHttpLogger($httpLogger);
+        // $serviceAccount = ServiceAccount::fromFile('/Users/amejia/Sites/drazamed/drazamedapp-c7769e876c6e.json');
+        // // $factory = $factory->withServiceAccount(config('firebase.projects.app.credentials.file'));
+        // error_log($serviceAccount);
+
+        // Log::info($optionBuilder);
+        // error_log($data);
+        // $messaging = app('firebase.messaging');
+        // error_log($messaging);
         $treatments = json_decode($this->getTreatmentsByTime(), true);
+
         foreach($treatments as $treatment) {
             Log::info("Actualizando proxima toma");
             error_log('Actualizando proxima toma');
@@ -36,11 +62,19 @@ class TreatmentController extends Controller
             Log::info($user);
 
             if ($user["token"] != "") {
-                Log::info("Verificando token");
-                $result = $messaging->validateRegistrationTokens([$user["token"]]);
-                Log::info($result);
+                // Log::info("Verificando token");
+                // $result = $messaging->validateRegistrationTokens([$user["token"]]);
+                // Log::info($result);
                 Log::info("Enviando notificación");
                 error_log('Enviando notificación');
+                $title = "Drazamed te acompaña en tu tratamiento";
+                $body = "Hola " . $user["first_name"] . " es hora de tomarte una medicina, " . $treatment["item_code"];
+                $result = $this->send_fcm(
+                    $user["token"],
+                    $title,
+                    'Hora de tomarte una medicina'
+                );
+
                 // $result = $this->sendFCM($user["token"]);
                 // Log::info($result);
                 //$result = $this->FireAndroidMsg();
@@ -51,6 +85,7 @@ class TreatmentController extends Controller
         return;
 
     }
+
 
     /**
      * Envia mensajes usando la libreria firebase-php a dispositivos Android
@@ -172,7 +207,7 @@ class TreatmentController extends Controller
             ->get();
             $query = DB::getQueryLog();
             // Log::info($query);
-            // Log::info($treatments);
+            Log::info($treatments);
         } else {
             $treatments = Treatment::with('medicines')
             ->whereRaw('ABS(TIMESTAMPDIFF(MINUTE, next_time, ?)) < 1', [$today])
@@ -395,6 +430,44 @@ class TreatmentController extends Controller
 
 
 
+    }
+
+    public function send_fcm($id, $title, $body) {
+        $optionBuilder = new OptionsBuilder();
+        $optionBuilder->setTimeToLive(60*20);
+        $notificationBuilder = new PayloadNotificationBuilder($title);
+        $notificationBuilder->setBody($body)
+                    ->setSound('default');
+
+        $dataBuilder = new PayloadDataBuilder();
+        $dataBuilder->addData(['a_data' => 'my_data']);
+
+        $option = $optionBuilder->build();
+        $notification = $notificationBuilder->build();
+        $data = $dataBuilder->build();
+
+        // $tokenid = "eCfSNQP8Rl4:APA91bEY0MR_7kyRL6MIZuo29GzuU8FN92JJBZsw5BYxudZyNP-7PKiVWxBtdESVUrEMMIsjTT5qK0OJKbESlNvE8CVqKXGQH6gKVBkQNPnmedMEFBKhEUg5n0YhK2rYLNWtV7Zfv6O7";
+        $token = $id;
+
+        $downstreamResponse = FCM::sendTo($token, $option, $notification, $data);
+
+        $downstreamResponse->numberSuccess();
+
+        // Log::info($downstreamResponse);
+        $downstreamResponse->numberFailure();
+        $downstreamResponse->numberModification();
+
+        // return Array - you must remove all this tokens in your database
+        $downstreamResponse->tokensToDelete();
+
+        // return Array (key : oldToken, value : new token - you must change the token in your database)
+        $downstreamResponse->tokensToModify();
+
+        // return Array - you should try to resend the message to the tokens in the array
+        $downstreamResponse->tokensToRetry();
+
+        // return Array (key:token, value:error) - in production you should remove from your database the tokens
+        $downstreamResponse->tokensWithError();
     }
 
     public function sendFCM($id) {

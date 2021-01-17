@@ -194,7 +194,10 @@ return [
         Aws\Laravel\AwsServiceProvider::class,
 
         // Firebase-php
-        Kreait\Laravel\Firebase\ServiceProvider::class
+        Kreait\Laravel\Firebase\ServiceProvider::class,
+        // App\Providers\FirebaseServiceProvider::class,
+
+        // LaravelFCM\FCMServiceProvider::class,
 
     ],
 
@@ -265,6 +268,8 @@ return [
         'AWS' => Aws\Laravel\AwsFacade::class,
         // Mercadopago
         //'MP' => Patosmack\MercadoPago\Facades\MP::Class,
+        'FCM'      => LaravelFCM\Facades\FCM::class,
+        'FCMGroup' => LaravelFCM\Facades\FCMGroup::class, // Optional
 
     ],
 

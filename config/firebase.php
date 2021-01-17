@@ -6,7 +6,7 @@ return [
      * Default Firebase project
      * ------------------------------------------------------------------------
      */
-    'default' => env('FIREBASE_PROJECT', 'app'),
+    'default' => env('FIREBASE_PROJECT', 'drazamedapp'),
 
     /**
      * ------------------------------------------------------------------------
@@ -14,7 +14,7 @@ return [
      * ------------------------------------------------------------------------
      */
     'projects' => [
-        'app' => [
+        'drazamedapp' => [
             /**
              * ------------------------------------------------------------------------
              * Credentials / Service Account
@@ -45,14 +45,14 @@ return [
              *
              */
             'credentials' => [
-                'file' => env('FIREBASE_CREDENTIALS', env('GOOGLE_APPLICATION_CREDENTIALS')),
+                'file' => env('FIREBASE_CREDENTIALS', '/Users/amejia/Sites/drazamed/drazamedapp-firebase-adminsdk-bztyd-dd6e66da45.json'),
 
                 /**
                  * If you want to prevent the auto discovery of credentials, set the
                  * following parameter to false. If you disable it, you must
                  * provide a credentials file.
                  */
-                'auto_discovery' => true,
+                'auto_discovery' => false,
             ],
 
             /**

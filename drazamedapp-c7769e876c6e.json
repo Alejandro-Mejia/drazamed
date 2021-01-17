@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "drazamedapp",
+  "private_key_id": "c7769e876c6e1575edf2998b39b0f8cb4e3cd153",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQCFYqP74pDidVOV\n0P0HwsKUWpIbgfD0QDbSDbscSNMIoJI4BkbvMYUaoKj3P1w4OgWk3/nwmNh3WmQa\nMnSf/aqXMeXjj3qExQkJSOG+9zXMc6KCmzG+nCHa6Nomoj/UelKccJw3LhPrxVpp\njX2FaBTj9pq9Wh3EoaTOCLK1RoYXAGOcveyfxCUqGAIcTDMn9P52oyUKXCitc+B7\nGJSLW/XbglqgFNhi06wTpM2qAWpYVvxVuN0ubYZgjq9BzHT86TiY/U4Zr07oThS3\ncXaF8DVisq8/ncZoBLG9jl4PyjFU9DTRxXS1ciCboV4SbsUOz0wwgwlr+Bl6+B73\nXFwPaOOdAgMBAAECggEAI0XxnaPNssVaJE1PDKVZdYf6CWI0iTMODEBrUdCEVky4\nPi6SxaBv1ZnU9QWBarEVWwOMAi85V17FCBR9uO2JFlCwvZvsx32fpR/r6udPB9Ew\nkZ9e6Uw6u7xGLF9Nx+/NNuekuAbsZ7YZ8b3kCsp6c8p8I0TYiG5CueWc9MlAnoYv\nEhgiiGTuzv2Sy0H5+cUajtylPGO534Z5NgeuyZ2jtZ3xnLjBaky0Y8BEGL68k6Uh\nBPZwZNEy2u9bS1+H1mC4qtcBf/8J7xtFUFv2qSMDbwzYaC13LBbcMDFpJOfXXHRY\nPyLcm3F8jK7ju1P5hY8EZXtojyR5gZB+18PomHSNlQKBgQC72TVNeTjafISACXiY\nO4L0NcbvM9NhKHg8271lQEei4/XLK3HTfZCRm1mU5NUqty+hQeMZfbZo5jvRBTJ5\nRJYQC9nP6eRBOp/dlO7eS6cWn3EgnCsiiRgCeNr54U/Y5uSuAdu1vk7BNmARlhN4\nriOquKtUWChaqPqKYiVxJBh3qwKBgQC1xw+bSZbejchr+nFULFg3Edrse89d/XtA\naVqrogvIEcXp49Q/5BfqvMN2NBtvJJPevyykud1c2CmBW/poHNHo2Xsre4v7Oh9M\nMHM3rndQ7MJTb2GS/m5baU9L7CuNQyAEBUtui95CGgiV/7ivKN8ftdrltfv1+bXY\naJCWoRYp1wKBgEnjK/YnQleeNrfuAcNPVTkdlfwslG5Y7sJxZFPZLtRBekLJ+eHI\nN/8t7dSFFdvRZii1s9ApBIDKXqjetHXCpov1PV1skF2f45XSqQpDE5vwZxz+kHDr\nH8iJJQi4uSGF4FkZXgRksLGK48rHDy2ewWS7cpigfG78nF+mLzgLjJw1AoGBAK6l\ngJMcEv3kjylfR78tk9vlJceL9OJDBkYOcvTwDg29Nb/QCz8PcQMxNUK+MZWJOSEL\n4GKryMjJTqdgraeV+P+U5EgUvZs0bpmO+0QGNdDkiJgNLVxDY9gjx/IUCIwCcCIs\nzBp7+6DazmD/fnub8zPOT2/gdyIPNu2jGTf/sQGlAoGBAIHc7EPaGzbFVWLOqfMk\nhYacdPMNSUIxdH4yFx88I4jwNvJ5EsPda+qZew9G35SDOLkS9q48tO7a+0I/PCbT\nrizrv9xb2KRdQMA/GE+2v7IfK7KzTEXVUhMgyRihkfGn99U/VVoUsM0NmJkl0Rwi\nAS9CbAZRVcFTYa8w2sQzstaA\n-----END PRIVATE KEY-----\n",
+  "client_email": "drazamedapp@appspot.gserviceaccount.com",
+  "client_id": "109102113528556883352",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/drazamedapp%40appspot.gserviceaccount.com"
+}
