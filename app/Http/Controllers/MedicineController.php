@@ -432,8 +432,8 @@ class MedicineController extends BaseController
 
         foreach($prescriptions as $prescription) {
             foreach($prescription['getCart'] as $cart) {
-
-                // dd( Medicine::medicines($cart->medicine));
+                //dd($cart);
+                //dd( Medicine::medicines($cart->medicine));
                 $item_name =  Medicine::medicines($cart->medicine)["item_name"];
                 $item_code =  Medicine::medicines($cart->medicine)["item_code"];
                 $tax = $cart->unit_price - ceil(($cart->unit_price / (1+(Medicine::medicines($cart->medicine)['tax']/100))));
@@ -530,8 +530,6 @@ class MedicineController extends BaseController
 			$medicines = Medicine::medicines ();
 			if (!is_null ($result->id) || !empty($result->id)) {
 				$carts = ItemList::where ('invoice_id' , '=' , $result->id)->get ();
-
-
 
 				foreach ($carts as $cart) {
 					// dd($cart, $medicines, $results);
