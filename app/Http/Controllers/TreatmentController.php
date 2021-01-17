@@ -427,7 +427,7 @@ class TreatmentController extends Controller
 
         $treatment = Treatment::where('customer_id', '=', $customer_id)->where('item_code', '=', $item_code)->first();
 
-        Log::info($treatment);
+        // Log::info($treatment);
 
         // DB::enableQueryLog();
         // $treatment = Treatment::where('customer_id', '=', $customer_id)->where('item_code', '=', $item_code)->first();
