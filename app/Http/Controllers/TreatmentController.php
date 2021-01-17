@@ -72,7 +72,7 @@ class TreatmentController extends Controller
                 $result = $this->send_fcm(
                     $user["token"],
                     $title,
-                    'Hora de tomarte una medicina'
+                    $body
                 );
 
                 // $result = $this->sendFCM($user["token"]);
@@ -204,6 +204,7 @@ class TreatmentController extends Controller
             DB::enableQueryLog();
             $treatments = $treatments = Treatment::with('medicines')
             ->whereRaw('ABS(TIMESTAMPDIFF(MINUTE, next_time, ?)) < 1', [$today->format('Y-m-d H:i')])
+            ->with("medicine")
             ->get();
             $query = DB::getQueryLog();
             // Log::info($query);
@@ -211,6 +212,7 @@ class TreatmentController extends Controller
         } else {
             $treatments = Treatment::with('medicines')
             ->whereRaw('ABS(TIMESTAMPDIFF(MINUTE, next_time, ?)) < 1', [$today])
+            ->with("medicine")
             ->withTrashed()->get();
         }
 
