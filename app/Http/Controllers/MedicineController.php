@@ -356,6 +356,7 @@ class MedicineController extends BaseController
 			catch (Exception $e) {
 				// $message = $this->catchException ($e);
                 // return Response::make (['status' => 'FAILURE' , 'msg' => $message['msg']] , $message['code']);
+                Log::info('Error Medicine Controller anyStorePrescription :' . $e);
                 return Response::make (['status' => 'FAILURE' , 'msg' => $e]);
 			}
 
@@ -2724,7 +2725,8 @@ class MedicineController extends BaseController
 			return Response::json (['status' => 'SUCCESS' , 'msg' => 'Medicine data obtained !' , 'data' => $medicine , 'currency' => Setting::param ('site' , 'currency')['value'] , 'data' => $medicine , 'currency_position' => Setting::param ('site' , 'curr_position')['value']]);
 		}
 		catch (Exception $e) {
-			// $message = $this->catchException ($e);
+            // $message = $this->catchException ($e);
+            Log::info('Error Medicine Controller getMedicineData :' . $e);
 			return Response::make (['status' => 'FAILURE' , 'msg' => $e]);
 		}
 
