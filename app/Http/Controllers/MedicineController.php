@@ -231,9 +231,14 @@ class MedicineController extends BaseController
 				// 	$message->to ($data['email'])->subject ('New order has been submitted to ' . Setting::param ('site' , 'app_name')['value']);
 				// });
 
-				Mail::send ('emails.admin_prescription_upload' , array('name' => $name) , function ($message) use ($data) {
-					$message->to (Setting::param ('site' , 'mail')['value'])->subject ('Una nueva orden de compra!! ' . Setting::param ('site' , 'app_name')['value']);
-				});
+                try {
+                    Mail::send ('emails.admin_prescription_upload' , array('name' => $name) , function ($message) use ($data) {
+                        $message->to (Setting::param ('site' , 'mail')['value'])->subject ('Una nueva orden de compra!! ' . Setting::param ('site' , 'app_name')['value']);
+                    });
+                } catch (Exception $e) {
+                    Log::info('Error enviando correo :' . $e);
+                }
+
 
 				DB::table ('sessions')->where ('user_id' , '=' , $email)->delete ();
 				Session::flash ('flash_message' , '<b>Exitoso !</b> tu orden ha sido enviada correctamente. Por favor haz seguimiento en tu perfil.');
