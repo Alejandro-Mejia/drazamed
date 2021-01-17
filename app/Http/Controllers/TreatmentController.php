@@ -51,6 +51,8 @@ class TreatmentController extends Controller
         // $messaging = app('firebase.messaging');
         // error_log($messaging);
         $treatments = json_decode($this->getTreatmentsByTime(), true);
+        Log::info('Tratamientos:');
+        Log::info($treatments);
 
         foreach($treatments as $treatment) {
             Log::info("Actualizando proxima toma");
@@ -69,7 +71,7 @@ class TreatmentController extends Controller
                 error_log('Enviando notificación');
                 $title = "Drazamed te acompaña en tu tratamiento";
 
-                $body = "Hola " . $user["first_name"] . " es hora de tomarte una medicina, " . (array_key_exists('medicines', $treatment) && isset($treatment["medicines"]["item_name"])) ? $treatment["medicines"]["item_name"] : "" ;
+                $body = "Hola " . $user["first_name"] . " es hora de tomarte una medicina, " ;
                 $result = $this->send_fcm(
                     $user["token"],
                     $title,
@@ -205,15 +207,13 @@ class TreatmentController extends Controller
             DB::enableQueryLog();
             $treatments = $treatments = Treatment::with('medicines')
             ->whereRaw('ABS(TIMESTAMPDIFF(MINUTE, next_time, ?)) < 1', [$today->format('Y-m-d H:i')])
-            ->with("medicines")
             ->get();
             $query = DB::getQueryLog();
             // Log::info($query);
-            Log::info($treatments);
+            // Log::info($treatments);
         } else {
             $treatments = Treatment::with('medicines')
             ->whereRaw('ABS(TIMESTAMPDIFF(MINUTE, next_time, ?)) < 1', [$today])
-            ->with("medicines")
             ->withTrashed()->get();
         }
 
