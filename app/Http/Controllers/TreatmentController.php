@@ -85,7 +85,32 @@ class TreatmentController extends Controller
                 // Log::info($result);
                 //$result = $this->FireAndroidMsg();
             }
+
+            if ($user["apnstoken"] != "") {
+                // Log::info("Verificando token");
+                // $result = $messaging->validateRegistrationTokens([$user["token"]]);
+                // Log::info($result);
+                $medicina = Medicine::medicineCode($treatment["item_code"])["item_name"];
+                Log::info('Medicina: ' . $medicina);
+                Log::info("Enviando notificación");
+                error_log('Enviando notificación');
+                $title = "Drazamed te acompaña en tu tratamiento";
+
+                $body = "Hola " . $user["first_name"] . " es hora de tomarte una medicina, " . $medicina ;
+                $result = $this->send_fcm(
+                    $user["apnstoken"],
+                    $title,
+                    $body
+                );
+
+                // $result = $this->sendFCM($user["token"]);
+                // Log::info($result);
+                //$result = $this->FireAndroidMsg();
+            }
+
         }
+
+    }
 
         Log::info('Finalizando cron');
         return;
