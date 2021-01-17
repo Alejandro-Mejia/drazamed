@@ -62,7 +62,7 @@ class TreatmentController extends Controller
 
             $user = Customer::where('id', '=', $treatment["customer_id"])->first();
             error_log($user);
-            Log::info(json_decode($user));
+            Log::info($user->toArray());
 
             if ($user["token"] != "") {
                 // Log::info("Verificando token");
