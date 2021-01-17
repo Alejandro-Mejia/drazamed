@@ -36,8 +36,8 @@ class TreatmentController extends Controller
             Log::info($user);
 
             if ($user["token"] != "") {
-                // Log::info("Verificando token");
-                // $result = $messaging->validateRegistrationTokens([$user["token"]]);
+                Log::info("Verificando token");
+                $result = $messaging->validateRegistrationTokens([$user["token"]]);
                 //Log::info($result);
                 Log::info("Enviando notificación");
                 error_log('Enviando notificación');
