@@ -204,7 +204,7 @@ class TreatmentController extends Controller
             DB::enableQueryLog();
             $treatments = $treatments = Treatment::with('medicines')
             ->whereRaw('ABS(TIMESTAMPDIFF(MINUTE, next_time, ?)) < 1', [$today->format('Y-m-d H:i')])
-            ->with("medicine")
+            ->with("medicines")
             ->get();
             $query = DB::getQueryLog();
             // Log::info($query);
@@ -212,7 +212,7 @@ class TreatmentController extends Controller
         } else {
             $treatments = Treatment::with('medicines')
             ->whereRaw('ABS(TIMESTAMPDIFF(MINUTE, next_time, ?)) < 1', [$today])
-            ->with("medicine")
+            ->with("medicines")
             ->withTrashed()->get();
         }
 
