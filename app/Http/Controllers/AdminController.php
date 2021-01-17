@@ -218,7 +218,7 @@ class AdminController extends BaseController
 	 */
 	public function getLoadMedicines ()
 	{
-		header ("Access-Control-Allow-Origin: *");
+		// header ("Access-Control-Allow-Origin: *");
 		$medicines = Medicine::select
 		('id' , 'item_name as name' , 'batch_no' , 'marketed_by as mfg' , 'group' , 'item_code' , 'selling_price as mrp' , 'composition' , 'is_pres_required')->where ('is_delete' , '=' , 0)->orderBy ('item_name' , 'ASC')->paginate (30);
 
@@ -237,7 +237,7 @@ class AdminController extends BaseController
 	 */
 	public function getLoadCustomers ()
 	{
-		header ("Access-Control-Allow-Origin: *");
+		// header ("Access-Control-Allow-Origin: *");
 		$customers = Customer::select('customer.*')->where ('is_delete' , '!=' , 1)->join ('users' , 'users.user_id' , '=' , DB::raw ('customer.id AND user_type_id=' . UserType::CUSTOMER ()))->paginate (30);
 
 		return View::make ('admin.customerlist')->with ('customers' , $customers);
@@ -251,7 +251,7 @@ class AdminController extends BaseController
 	 */
 	public function getLoadMedicalprof ()
 	{
-		header ("Access-Control-Allow-Origin: *");
+		// header ("Access-Control-Allow-Origin: *");
 		$mprof = MedicalProfessional::select('ed_professional.*')->where ('prof_is_delete' , '!=' , 1)->join ('users' , 'users.user_id' , '=' , DB::raw ('ed_professional.id AND user_type_id=' . UserType::MEDICAL_PROFESSIONAL ()))->paginate (30);
 
 		return View::make ('admin.mproflist')->with ('mprof' , $mprof);
@@ -265,7 +265,7 @@ class AdminController extends BaseController
 	 */
 	public function getLoadPrescription ()
 	{
-		header ("Access-Control-Allow-Origin: *");
+		// header ("Access-Control-Allow-Origin: *");
 		$email = Request::get ('email' , '');
 		$status = Request::get ('status' , '');
 		$pres = Prescription::select ('prescription.status' , 'email' , 'path' , 'id as pres_id')->join ('users' , 'users.id' , '=' , 'prescription.user_id');
@@ -324,7 +324,7 @@ class AdminController extends BaseController
 	 */
 	public function getLoadPrescriptionPaid ()
 	{
-		header ("Access-Control-Allow-Origin: *");
+		// header ("Access-Control-Allow-Origin: *");
 		$email = Request::get ('email' , '');
 		$status = Request::get ('status' , '');
 		$pres = Prescription::select ('prescription.status' , 'email' , 'path' , 'prescription.id as pres_id')->join ('users' , 'users.id' , '=' , 'prescription.user_id');
@@ -383,7 +383,7 @@ class AdminController extends BaseController
 	 */
 	public function getLoadPrescriptionShipped ()
 	{
-		header ("Access-Control-Allow-Origin: *");
+		// header ("Access-Control-Allow-Origin: *");
 		$email = Request::get ('email' , '');
 		$status = Request::get ('status' , '');
 		$pres = Prescription::select ('prescription.status' , 'email' , 'path' , 'id as pres_id')->join ('users' , 'users.id' , '=' , 'prescription.user_id')->where ('prescription.status' , '=' , 'shipped');
@@ -443,7 +443,7 @@ class AdminController extends BaseController
 	 */
 	public function getLoadPrescriptionToBePaid ()
 	{
-		header ("Access-Control-Allow-Origin: *");
+		// header ("Access-Control-Allow-Origin: *");
 		$email = Request::get ('email' , '');
 		$status = Request::get ('status' , '');
 		$pres = Prescription::select ('prescription.status' , 'email' , 'path' , 'id as pres_id')->join ('users' , 'users.id' , '=' , 'prescription.user_id')->where ('prescription.status' , '=' , 'pending');
@@ -1207,7 +1207,7 @@ class AdminController extends BaseController
 	 */
 	public function anyLoadMedicineWeb ()
 	{
-		header ("Access-Control-Allow-Origin: *");
+		// header ("Access-Control-Allow-Origin: *");
 		$key = Request::get ('query' , '');
 		$medicines = Medicine::medicines ();
 		if (!empty($key)) {

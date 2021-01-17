@@ -81,8 +81,8 @@ class UserController extends BaseController
 //			return Response::make (['status' => 'FAILURE' , 'msg' => 'Invalid Request made'] , 401);
 //
 //		}
-        header ("Access-Control-Allow-Origin: *");
-        header ("Access-Control-Allow-Headers: *");
+        // header ("Access-Control-Allow-Origin: *");
+        // header ("Access-Control-Allow-Headers: *");
 		try {
 			$email = Request::get ('email' , '');
 			$last_name = Request::get ('last_name' , '');
@@ -207,8 +207,8 @@ class UserController extends BaseController
 	 */
 	public function postUpdateDetailsUser ($isWeb = 0)
 	{
-        header ("Access-Control-Allow-Origin: *");
-        header ("Access-Control-Allow-Headers: *");
+        // header ("Access-Control-Allow-Origin: *");
+        // header ("Access-Control-Allow-Headers: *");
 //		if (!$this->isCsrfAccepted ()) {
 //			$result = array(array('result' => array('status' => 'failed')));
 //			return Response::json ($result);
@@ -293,8 +293,8 @@ class UserController extends BaseController
 	 */
 	public function postUpdateUserToken ()
 	{
-        header ("Access-Control-Allow-Origin: *");
-        header ("Access-Control-Allow-Headers: *");
+        // header ("Access-Control-Allow-Origin: *");
+        // header ("Access-Control-Allow-Headers: *");
 
 		try {
 
@@ -349,8 +349,8 @@ class UserController extends BaseController
 
     public function getIsActualUser($user_js) {
 
-        header ("Access-Control-Allow-Origin: *");
-        header ("Access-Control-Allow-Headers: *");
+        // header ("Access-Control-Allow-Origin: *");
+        // header ("Access-Control-Allow-Headers: *");
 
         Log::info('User id : ' . $user_js);
         $user = Auth::user();
@@ -397,8 +397,8 @@ class UserController extends BaseController
 	 */
 	public function anyUserLogin ($isWeb = 0)
 	{
-        header ("Access-Control-Allow-Origin: *");
-        header ("Access-Control-Allow-Headers: *");
+        // header ("Access-Control-Allow-Origin: *");
+        // header ("Access-Control-Allow-Headers: *");
 
         // $userIp = $this->server->get('REMOTE_ADDR');
 
@@ -501,8 +501,8 @@ class UserController extends BaseController
 	 */
 	public function anyActivateAccount ()
 	{
-        header ("Access-Control-Allow-Origin: *");
-        header ("Access-Control-Allow-Headers: *");
+        // header ("Access-Control-Allow-Origin: *");
+        // header ("Access-Control-Allow-Headers: *");
 
 		try {
 			$email = Request::get ('email' , '');
@@ -541,8 +541,8 @@ class UserController extends BaseController
 	 */
 	public function anyWebActivateAccount ($code)
 	{
-        header ("Access-Control-Allow-Origin: *");
-        header ("Access-Control-Allow-Headers: *");
+        // header ("Access-Control-Allow-Origin: *");
+        // header ("Access-Control-Allow-Headers: *");
 
 		$user = User::where ('security_code' , '=' , $code)->first ();
 
@@ -563,8 +563,8 @@ class UserController extends BaseController
 	 */
 	public function anyUserDetails ()
 	{
-        header ("Access-Control-Allow-Origin: *");
-        header ("Access-Control-Allow-Headers: *");
+        // header ("Access-Control-Allow-Origin: *");
+        // header ("Access-Control-Allow-Headers: *");
 
 		try {
 
@@ -622,8 +622,8 @@ class UserController extends BaseController
 	 */
 	public function anyResetPassword ()
 	{
-        header ("Access-Control-Allow-Origin: *");
-        header ("Access-Control-Allow-Headers: *");
+        // header ("Access-Control-Allow-Origin: *");
+        // header ("Access-Control-Allow-Headers: *");
 		try {
             $email = Request::get ('email' , '');
 
@@ -688,8 +688,8 @@ class UserController extends BaseController
 	 */
 	public function anyCheckUserName ()
 	{
-        header ("Access-Control-Allow-Origin: *");
-        header ("Access-Control-Allow-Headers: *");
+        // header ("Access-Control-Allow-Origin: *");
+        // header ("Access-Control-Allow-Headers: *");
 		try {
 			$current_mail = Request::get ('u_name');
 			$regex = "^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$^";
@@ -719,8 +719,8 @@ class UserController extends BaseController
 	 */
 	public function getAccountPage ()
 	{
-        header ("Access-Control-Allow-Origin: *");
-        header ("Access-Control-Allow-Headers: *");
+        // header ("Access-Control-Allow-Origin: *");
+        // header ("Access-Control-Allow-Headers: *");
 
 		$user_type = Auth::user ()->user_type_id;
 		$email = Session::get ('user_id');
@@ -843,8 +843,8 @@ class UserController extends BaseController
 	 */
 	public function anyChangePassword ()
 	{
-        header ("Access-Control-Allow-Origin: *");
-        header ("Access-Control-Allow-Headers: *");
+        // header ("Access-Control-Allow-Origin: *");
+        // header ("Access-Control-Allow-Headers: *");
 
 		$old_password = Request::get ('old_password');
 		$new_password = Request::get ('new_password');
@@ -879,8 +879,8 @@ class UserController extends BaseController
      * Get User Data
      */
     public function getUserData($isWeb = 0) {
-        header ("Access-Control-Allow-Origin: *");
-        header ("Access-Control-Allow-Headers: *");
+        // header ("Access-Control-Allow-Origin: *");
+        // header ("Access-Control-Allow-Headers: *");
         if(!$isWeb) {
             $email = Request::get ('email');
             $user = Customer::where('mail', '=', $email)->first();
@@ -893,8 +893,8 @@ class UserController extends BaseController
 	 */
 	public function anyStoreProfilePic ()
 	{
-        header ("Access-Control-Allow-Origin: *");
-        header ("Access-Control-Allow-Headers: *");
+        // header ("Access-Control-Allow-Origin: *");
+        // header ("Access-Control-Allow-Headers: *");
 
 		$email = Auth::user ()->email;
 		$path = base_path () . '/public/images/prescription/' . $email . '/';
@@ -922,8 +922,8 @@ class UserController extends BaseController
 	public function anyContactUs (Request $request)
 	{
         // header ("Access-Control-Allow-Origin: http://localhost");
-        header ("Access-Control-Allow-Origin: *");
-        header ("Access-Control-Allow-Headers: *");
+        // header ("Access-Control-Allow-Origin: *");
+        // header ("Access-Control-Allow-Headers: *");
 
 		$client_name = Request::get ('name');
 		$client_mail = Request::get ('email');
@@ -967,8 +967,8 @@ class UserController extends BaseController
 	 */
 	public function getCheckSession ()
 	{
-        header ("Access-Control-Allow-Origin: *");
-        header ("Access-Control-Allow-Headers: *");
+        // header ("Access-Control-Allow-Origin: *");
+        // header ("Access-Control-Allow-Headers: *");
 
 		if (Auth::check ()) {
 			$login = 1;
@@ -985,8 +985,8 @@ class UserController extends BaseController
 	 */
 	public function postFacebookLogin ()
 	{
-        header ("Access-Control-Allow-Origin: *");
-        header ("Access-Control-Allow-Headers: *");
+        // header ("Access-Control-Allow-Origin: *");
+        // header ("Access-Control-Allow-Headers: *");
 
 		try {
 			$data = Request::all ();
@@ -1073,8 +1073,8 @@ class UserController extends BaseController
 	 */
 	public function anyPresDelete ($pres_id)
 	{
-        header ("Access-Control-Allow-Origin: *");
-        header ("Access-Control-Allow-Headers: *");
+        // header ("Access-Control-Allow-Origin: *");
+        // header ("Access-Control-Allow-Headers: *");
 
 		try {
 			if (!Auth::check ())
