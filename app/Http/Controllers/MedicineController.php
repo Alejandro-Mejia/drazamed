@@ -353,9 +353,18 @@ class MedicineController extends BaseController
 				$data['email'] = $email;
 //				$name_array = DB::table ('customer')->select ('first_name')->where ('mail' , '=' , $email)->first ();
 //				$name = $name_array->first_name;
-				Mail::send ('emails.admin_prescription_upload' , array('name' => '') , function ($message) use ($data) {
-					$message->to (Setting::param ('site' , 'mail')['value'])->subject ('Nueva orden enviada a ' . Setting::param ('site' , 'app_name')['value']);
-				});
+				// Mail::send ('emails.admin_prescription_upload' , array('name' => '') , function ($message) use ($data) {
+				// 	$message->to (Setting::param ('site' , 'mail')['value'])->subject ('Nueva orden enviada a ' . Setting::param ('site' , 'app_name')['value']);
+                // });
+                try {
+                    Mail::send ('emails.admin_prescription_upload' , array('name' => $name) , function ($message) use ($data) {
+                        $message->to (Setting::param ('site' , 'mail')['value'])->subject ('Una nueva orden de compra!! ' . Setting::param ('site' , 'app_name')['value']);
+                    });
+                } catch (Exception $e) {
+                    Log::info('Error enviando correo :' . $e);
+                    echo "Error enviando correo";
+                }
+
 
 				return Response::json (['status' => 'SUCCESS' , 'msg' => 'Tu orden ha sido enviada correctamente ']);
 			}
