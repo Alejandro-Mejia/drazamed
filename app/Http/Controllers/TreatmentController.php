@@ -110,7 +110,7 @@ class TreatmentController extends Controller
 
         }
 
-    }
+
 
         Log::info('Finalizando cron');
         return;
