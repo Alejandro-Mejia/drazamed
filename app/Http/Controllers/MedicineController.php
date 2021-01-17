@@ -361,11 +361,11 @@ class MedicineController extends BaseController
                         $message->to (Setting::param ('site' , 'mail')['value'])->subject ('Una nueva orden de compra!! ' . Setting::param ('site' , 'app_name')['value']);
                     });
                 } catch (Exception $e) {
-                    Log::info('Error enviando correo :' . $e);
+                    Log::info('Error enviando correo :' );
                     echo "Error enviando correo";
                 }
 
-
+                Log::info("Enviando respuesta a la app");
 				return Response::json (['status' => 'SUCCESS' , 'msg' => 'Tu orden ha sido enviada correctamente ']);
 			}
 			catch (Exception $e) {
