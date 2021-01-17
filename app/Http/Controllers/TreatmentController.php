@@ -12,6 +12,7 @@ use Carbon\Carbon;
 use App\User;
 use App\Customer;
 use App\Treatment;
+use App\Medicine;
 // use Kreait\Firebase\Messaging;
 // use Kreait\Firebase\Messaging\CloudMessage;
 // use Kreait\Firebase\Messaging\AndroidConfig;
