@@ -142,8 +142,8 @@ class TreatmentController extends Controller
 	 */
 	public function getMyTreatments()
 	{
-        header ("Access-Control-Allow-Origin: *");
-        header ("Access-Control-Allow-Headers: *");
+        // header ("Access-Control-Allow-Origin: *");
+        // header ("Access-Control-Allow-Headers: *");
 
 		// if (!Auth::check ())
 		// 	return Redirect::to ('/');
@@ -176,8 +176,8 @@ class TreatmentController extends Controller
 	 */
 	public function getTreatmentsByTime()
 	{
-        header ("Access-Control-Allow-Origin: *");
-        header ("Access-Control-Allow-Headers: *");
+        // header ("Access-Control-Allow-Origin: *");
+        // header ("Access-Control-Allow-Headers: *");
 
         $localtime = new Datetime();
         $lt_string = $localtime->format('Y-m-d H:i:s');
@@ -227,8 +227,8 @@ class TreatmentController extends Controller
      * Create Treatment
      */
     public function postCreateTreatment() {
-        header ("Access-Control-Allow-Origin: *");
-        header ("Access-Control-Allow-Headers: *");
+        // header ("Access-Control-Allow-Origin: *");
+        // header ("Access-Control-Allow-Headers: *");
 
         if(!empty(Request::json()->all())) {
             $email = Request::input ('email');
@@ -272,8 +272,8 @@ class TreatmentController extends Controller
      */
 
     public function postUpdateTreatmentTaken() {
-        header ("Access-Control-Allow-Origin: *");
-        header ("Access-Control-Allow-Headers: *");
+        // header ("Access-Control-Allow-Origin: *");
+        // header ("Access-Control-Allow-Headers: *");
 
         if(!empty(Request::json()->all())) {
             $email = Request::input ('email');
@@ -308,8 +308,8 @@ class TreatmentController extends Controller
 
 
     public function postUpdateActiveTreatment() {
-        header ("Access-Control-Allow-Origin: *");
-        header ("Access-Control-Allow-Headers: *");
+        // header ("Access-Control-Allow-Origin: *");
+        // header ("Access-Control-Allow-Headers: *");
 
         if(!empty(Request::json()->all())) {
             $email = Request::input ('email');
@@ -341,8 +341,8 @@ class TreatmentController extends Controller
 
 
     public function postUpdateNextTime() {
-        header ("Access-Control-Allow-Origin: *");
-        header ("Access-Control-Allow-Headers: *");
+        // header ("Access-Control-Allow-Origin: *");
+        // header ("Access-Control-Allow-Headers: *");
 
         if(!empty(Request::json()->all())) {
             $email = Request::input ('email');
@@ -390,8 +390,8 @@ class TreatmentController extends Controller
     }
 
     public function UpdateNextTime($customer_id, $item_code) {
-        header ("Access-Control-Allow-Origin: *");
-        header ("Access-Control-Allow-Headers: *");
+        // header ("Access-Control-Allow-Origin: *");
+        // header ("Access-Control-Allow-Headers: *");
 
 
         $treatment = Treatment::where('customer_id', '=', $customer_id)->where('item_code', '=', $item_code)->first();
@@ -517,8 +517,8 @@ class TreatmentController extends Controller
     }
 
     public function postDeleteTreatment() {
-        header ("Access-Control-Allow-Origin: *");
-        header ("Access-Control-Allow-Headers: *");
+        // header ("Access-Control-Allow-Origin: *");
+        // header ("Access-Control-Allow-Headers: *");
 
         if(!empty(Request::json()->all())) {
             $email = Request::input ('email');

@@ -29,8 +29,8 @@ class ProfessionalController extends Controller
     }
 
     public function postAssignProfessional() {
-        header ("Access-Control-Allow-Origin: *");
-        header ("Access-Control-Allow-Headers: *");
+        // header ("Access-Control-Allow-Origin: *");
+        // header ("Access-Control-Allow-Headers: *");
 
         // dd(Request::json());
         if(!empty(Request::json()->all())) {
@@ -59,8 +59,8 @@ class ProfessionalController extends Controller
     }
 
     public function postRemoveProfessional() {
-        header ("Access-Control-Allow-Origin: *");
-        header ("Access-Control-Allow-Headers: *");
+        // header ("Access-Control-Allow-Origin: *");
+        // header ("Access-Control-Allow-Headers: *");
 
         // dd(Request::json());
         if(!empty(Request::json()->all())) {
@@ -95,8 +95,8 @@ class ProfessionalController extends Controller
 	 */
 	public function anyMedicalAccountPage ()
 	{
-        header ("Access-Control-Allow-Origin: *");
-        header ("Access-Control-Allow-Headers: *");
+        // header ("Access-Control-Allow-Origin: *");
+        // header ("Access-Control-Allow-Headers: *");
 
         $user_type = Auth::user ()->user_type_id;
         $email = Auth::user()->email;
