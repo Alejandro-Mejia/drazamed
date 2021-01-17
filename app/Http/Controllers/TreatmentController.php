@@ -68,7 +68,7 @@ class TreatmentController extends Controller
                 Log::info("Enviando notificación");
                 error_log('Enviando notificación');
                 $title = "Drazamed te acompaña en tu tratamiento";
-                $body = "Hola " . $user["first_name"] . " es hora de tomarte una medicina, " . $treatment["item_code"];
+                $body = "Hola " . $user["first_name"] . " es hora de tomarte una medicina, " . $treatment["medicine"]["item_name"];
                 $result = $this->send_fcm(
                     $user["token"],
                     $title,
