@@ -38,7 +38,7 @@ class TreatmentController extends Controller
             if ($user["token"] != "") {
                 Log::info("Verificando token");
                 $result = $messaging->validateRegistrationTokens([$user["token"]]);
-                //Log::info($result);
+                Log::info($result);
                 Log::info("Enviando notificación");
                 error_log('Enviando notificación');
                 // $result = $this->sendFCM($user["token"]);
