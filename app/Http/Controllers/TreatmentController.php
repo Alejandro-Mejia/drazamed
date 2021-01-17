@@ -171,9 +171,8 @@ class TreatmentController extends Controller
             ->whereRaw('ABS(TIMESTAMPDIFF(MINUTE, next_time, ?)) < 1', [$today->format('Y-m-d H:i')])
             ->get();
             $query = DB::getQueryLog();
-            Log::info($query);
-
-            Log::info($treatments);
+            // Log::info($query);
+            // Log::info($treatments);
         } else {
             $treatments = Treatment::with('medicines')
             ->whereRaw('ABS(TIMESTAMPDIFF(MINUTE, next_time, ?)) < 1', [$today])
