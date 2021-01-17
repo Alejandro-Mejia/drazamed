@@ -68,7 +68,7 @@ class TreatmentController extends Controller
                 // Log::info("Verificando token");
                 // $result = $messaging->validateRegistrationTokens([$user["token"]]);
                 // Log::info($result);
-                $medicina = Medicine::medicines($treatmen["item_code"])["item_name"];
+                $medicina = Medicine::medicines($treatment["item_code"])["item_name"];
                 Log::info('Medicina: ' . $medicina);
                 Log::info("Enviando notificación");
                 error_log('Enviando notificación');
