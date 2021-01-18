@@ -102,7 +102,7 @@ class TreatmentController extends Controller
                     $user["apnstoken"],
                     $title,
                     $body,
-                    $treatment_id
+                    $treatment["id"]
                 );
 
                 // $result = $this->sendFCM($user["token"]);
