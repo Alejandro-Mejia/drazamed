@@ -78,7 +78,8 @@ class TreatmentController extends Controller
                 $result = $this->send_fcm(
                     $user["token"],
                     $title,
-                    $body
+                    $body,
+                    $treatment["id"]
                 );
 
                 // $result = $this->sendFCM($user["token"]);
@@ -463,7 +464,7 @@ class TreatmentController extends Controller
 
     }
 
-    public function send_fcm($id, $title, $body) {
+    public function send_fcm($id, $title, $body, $treatment_id) {
         $optionBuilder = new OptionsBuilder();
         $optionBuilder->setTimeToLive(60*20);
         $notificationBuilder = new PayloadNotificationBuilder($title);
@@ -472,7 +473,7 @@ class TreatmentController extends Controller
                     ->setSound('default');
 
         $dataBuilder = new PayloadDataBuilder();
-        $dataBuilder->addData(['a_data' => 'my_data']);
+        $dataBuilder->addData(['a_data' => $treatment_id]);
 
         $option = $optionBuilder->build();
         $notification = $notificationBuilder->build();
