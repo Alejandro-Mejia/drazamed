@@ -98,10 +98,11 @@ class TreatmentController extends Controller
                 $title = "Drazamed te acompaña en tu tratamiento";
 
                 $body = "Hola " . $user["first_name"] . " es hora de tomarte una medicina, " . $medicina ;
-                $result = $this->send_fcm(
+                $result = $this->send_fcm_ios(
                     $user["apnstoken"],
                     $title,
-                    $body
+                    $body,
+                    $treatment_id
                 );
 
                 // $result = $this->sendFCM($user["token"]);
@@ -201,6 +202,26 @@ class TreatmentController extends Controller
 		// return View::make('/users/my_order');
     }
 
+    /**
+	 * Get Treatments
+	 *     * @return mixed
+	 */
+	public function getMyTreatmentsById()
+	{
+
+        $id = Request::get ('id', '');
+
+
+        $treatments = Treatment::where('id', '=', $id)->with('medicines')->get();
+
+        // $treatments = $user->toArray();
+
+        // dd($treatments);
+        return json_encode($treatments);
+
+
+		// return View::make('/users/my_order');
+    }
 
     /**
 	 * Get Treatments
@@ -501,6 +522,59 @@ class TreatmentController extends Controller
 
         // return Array (key:token, value:error) - in production you should remove from your database the tokens
         $downstreamResponse->tokensWithError();
+    }
+
+    public function send_fcm_ios($id, $title, $body, $treatment_id)
+    {
+        try
+        {
+            $sound = 'default';
+            if (!empty($notification_sound)) {
+                $sound = $notification_sound;
+            }
+
+            $ttl = 15;
+            if (!empty($time_to_live)) {
+                $ttl = $time_to_live;
+            }
+
+
+            $notificationBuilder = new PayloadNotificationBuilder();
+            $notificationBuilder
+                ->setTitle($title)
+                ->setSound($sound)
+                //                ->setIcon(FAV_ICON)
+                //                ->setColor('#fc547f')
+            ;
+
+            $dataBuilder = new PayloadDataBuilder();
+            $dataBuilder->addData([
+                'custom' => $body //sending custom data
+            ]);
+
+            $optionBuilder = new OptionsBuilder();
+            $optionBuilder->setTimeToLive($ttl);
+
+
+            $notification = $notificationBuilder->build();
+            $data = $dataBuilder->build();
+            $option = $optionBuilder->build();
+
+            Log::debug( ' Push $notification' .  json_encode($notification->toArray()));
+            Log::debug( ' Push $option' .  json_encode($option->toArray()));
+            Log::debug( '  Push $data' .  json_encode($data->toArray()));
+
+            $downstreamResponse = FCM::sendTo($id, $option, $notification, $data);
+
+            return $downstreamResponse;
+
+        } catch (\Exception $e) {
+
+            Log::debug(' Error message Push  ' . $e->getMessage());
+            Log::debug(' Error message Push  ' . $e->getFile());
+            Log::debug(' Error message Push  ' . $e->getLine());
+            return $e->getMessage();
+        }
     }
 
     public function sendFCM($id) {
