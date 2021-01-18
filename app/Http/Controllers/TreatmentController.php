@@ -468,6 +468,7 @@ class TreatmentController extends Controller
         $optionBuilder->setTimeToLive(60*20);
         $notificationBuilder = new PayloadNotificationBuilder($title);
         $notificationBuilder->setBody($body)
+                    ->setClickAction("FCM_PLUGIN_ACTIVITY")
                     ->setSound('default');
 
         $dataBuilder = new PayloadDataBuilder();
