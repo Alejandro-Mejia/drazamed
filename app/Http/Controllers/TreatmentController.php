@@ -105,7 +105,7 @@ class TreatmentController extends Controller
                 //     $treatment["id"]
                 // );
 
-                $this->send_ios_curl();
+                $this->send_ios_curl($user["apnstoken"]);
                 // $result = $this->sendFCM($user["token"]);
                 // Log::info($result);
                 //$result = $this->FireAndroidMsg();
