@@ -629,8 +629,12 @@ class TreatmentController extends Controller
 
         // go...
         $result = curl_exec($http2ch);
+
+        Log::info($result);
+
         if ($result === FALSE) {
-          throw new Exception("Curl failed: " .  curl_error($http2ch));
+            Log::info(curl_error($http2ch));
+        //   throw new Exception("Curl failed: " .  curl_error($http2ch));
         }
 
         // get response
