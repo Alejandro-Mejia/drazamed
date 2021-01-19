@@ -91,20 +91,21 @@ class TreatmentController extends Controller
                 // Log::info("Verificando token");
                 // $result = $messaging->validateRegistrationTokens([$user["token"]]);
                 // Log::info($result);
-                $medicina = Medicine::medicineCode($treatment["item_code"])["item_name"];
-                Log::info('Medicina: ' . $medicina);
-                Log::info("Enviando notificación");
-                error_log('Enviando notificación');
-                $title = "Drazamed te acompaña en tu tratamiento";
+                // $medicina = Medicine::medicineCode($treatment["item_code"])["item_name"];
+                // Log::info('Medicina: ' . $medicina);
+                // Log::info("Enviando notificación");
+                // error_log('Enviando notificación');
+                // $title = "Drazamed te acompaña en tu tratamiento";
 
-                $body = "Hola " . $user["first_name"] . " es hora de tomarte una medicina, " . $medicina ;
-                $result = $this->send_fcm_ios(
-                    $user["apnstoken"],
-                    $title,
-                    $body,
-                    $treatment["id"]
-                );
+                // $body = "Hola " . $user["first_name"] . " es hora de tomarte una medicina, " . $medicina ;
+                // $result = $this->send_fcm_ios(
+                //     $user["apnstoken"],
+                //     $title,
+                //     $body,
+                //     $treatment["id"]
+                // );
 
+                $this->send_ios_curl();
                 // $result = $this->sendFCM($user["token"]);
                 // Log::info($result);
                 //$result = $this->FireAndroidMsg();
@@ -577,50 +578,65 @@ class TreatmentController extends Controller
         }
     }
 
-    public function sendFCM($id) {
-        $API_KEY = "AIzaSyBYqnQJbhFijfWVCcyeiU2VNTPAsXepSHI";
-        // $url = 'https://fcm.googleapis.com/fcm/send';
-        $url = 'https://fcm.googleapis.com/v1/projects/DrazamedApp/messages:send';
+    public function send_ios_curl()
+    {
+        // open connection
+        $http2ch = curl_init();
+        curl_setopt($http2ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_2_0);
 
-        $message = [
-            'body'              =>  'Hola, es hora de tomarte un medicamento!',
-            'title'             =>  'Drazamed',
-            'notification_type' =>  'Test'
-        ];
+        // send push
+        $apple_cert = 'push_notification.p12';
+        $message = '{"aps":{"alert":"Hi!","sound":"default"}}';
+        $token = 'a6de3b225eee86d3979eb0a00e9f44c92261ecb7a864310a44702776db2565c1';
+        $http2_server = 'https://api.push.apple.com'; // or 'api.push.apple.com' if production
+        $app_bundle_id = 'com.draz.drazamedh';
 
-        $notification = [
-            'body' => 'Hola soy Drazamed
-            .',
-            'title' => 'Hola',
+        $status = sendHTTP2Push($http2ch, $http2_server, $apple_cert, $app_bundle_id, $message, $token);
+        echo "Response from apple -> {$status}\n";
 
-        ];
-        $fields = array (
-            'registration_ids' => array (
-                    $id
-            ),
-            'notification'      => $notification,
-            'data'              => $message,
-            'priority'          => 'high',
+        // close connection
+        curl_close($http2ch);
+    }
+
+
+    function sendHTTP2Push($http2ch, $http2_server, $apple_cert, $app_bundle_id, $message, $token) {
+
+        // url (endpoint)
+        $url = "{$http2_server}/3/device/{$token}";
+
+        // certificate
+        $cert = realpath($apple_cert) . ":DrazameD21";
+
+        // headers
+        $headers = array(
+            "apns-topic: {$app_bundle_id}",
+            "User-Agent: My Sender"
         );
-        $fields = json_encode ( $fields );
-        $headers = array (
-            'Authorization: key=' . $API_KEY,
-            'Content-Type: application/json'
-        );
 
-        // Log::info($headers, $fields);
+        // other curl options
+        curl_setopt_array($http2ch, array(
+            CURLOPT_URL => $url,
+            CURLOPT_PORT => 443,
+            CURLOPT_HTTPHEADER => $headers,
+            CURLOPT_POST => TRUE,
+            CURLOPT_POSTFIELDS => $message,
+            CURLOPT_RETURNTRANSFER => TRUE,
+            CURLOPT_TIMEOUT => 30,
+            CURLOPT_SSL_VERIFYPEER => false,
+            CURLOPT_SSLCERT => $cert,
+            CURLOPT_HEADER => 1
+        ));
 
-        $ch = curl_init ();
-        curl_setopt ( $ch, CURLOPT_URL, $url );
-        curl_setopt ( $ch, CURLOPT_POST, true );
-        curl_setopt ( $ch, CURLOPT_HTTPHEADER, $headers );
-        curl_setopt ( $ch, CURLOPT_RETURNTRANSFER, true );
-        curl_setopt ( $ch, CURLOPT_POSTFIELDS, $fields );
+        // go...
+        $result = curl_exec($http2ch);
+        if ($result === FALSE) {
+          throw new Exception("Curl failed: " .  curl_error($http2ch));
+        }
 
-        $result = curl_exec ( $ch );
+        // get response
+        $status = curl_getinfo($http2ch, CURLINFO_HTTP_CODE);
 
-        curl_close ( $ch );
-        return $result;
+        return $status;
     }
 
     public function postDeleteTreatment() {
