@@ -605,7 +605,7 @@ class TreatmentController extends Controller
         $url = "{$http2_server}/3/device/{$token}";
 
         // certificate
-        $cert = realpath($apple_cert) . ":DrazameD21";
+        $cert = realpath($apple_cert);
 
         // headers
         $headers = array(
@@ -624,6 +624,8 @@ class TreatmentController extends Controller
             CURLOPT_TIMEOUT => 30,
             CURLOPT_SSL_VERIFYPEER => false,
             CURLOPT_SSLCERT => $cert,
+            CURLOPT_SSLCERTTYPE => "P12",
+            CURLOPT_SSLCERTPASSWD => "DrazameD21",
             CURLOPT_HEADER => 1
         ));
 
