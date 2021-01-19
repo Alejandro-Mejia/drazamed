@@ -631,7 +631,7 @@ class TreatmentController extends Controller
         ));
 
 
-        Log::info($http2ch);
+        // Log::info($http2ch);
         // go...
         $result = curl_exec($http2ch);
 
