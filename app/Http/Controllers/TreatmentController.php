@@ -462,7 +462,7 @@ class TreatmentController extends Controller
             // $localtime = date();
             $localtime = new DateTime();
 
-            $deltaT = strval($treatment->frequency) . " minutes";
+            $deltaT = strval($treatment->frequency) . " hours";
 
             $nextTake = date_add($localtime, date_interval_create_from_date_string($deltaT));
 
