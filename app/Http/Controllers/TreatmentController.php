@@ -578,7 +578,7 @@ class TreatmentController extends Controller
         }
     }
 
-    public function send_ios_curl()
+    public function send_ios_curl($device_id)
     {
         // open connection
         $http2ch = curl_init();
@@ -587,7 +587,8 @@ class TreatmentController extends Controller
         // send push
         $apple_cert = 'push_notification.p12';
         $message = '{"aps":{"alert":"Hi!","sound":"default"}}';
-        $token = 'a6de3b225eee86d3979eb0a00e9f44c92261ecb7a864310a44702776db2565c1';
+        // $token = 'a6de3b225eee86d3979eb0a00e9f44c92261ecb7a864310a44702776db2565c1';
+        $token = $device_id;
         $http2_server = 'https://api.push.apple.com'; // or 'api.push.apple.com' if production
         $app_bundle_id = 'com.draz.drazamedh';
 
@@ -622,13 +623,15 @@ class TreatmentController extends Controller
             CURLOPT_POSTFIELDS => $message,
             CURLOPT_RETURNTRANSFER => TRUE,
             CURLOPT_TIMEOUT => 30,
-            CURLOPT_SSL_VERIFYPEER => false,
+
             CURLOPT_SSLCERT => $cert,
             CURLOPT_SSLCERTTYPE => "P12",
             CURLOPT_SSLCERTPASSWD => "DrazameD21",
             CURLOPT_HEADER => 1
         ));
 
+
+        Log::info($http2ch);
         // go...
         $result = curl_exec($http2ch);
 
