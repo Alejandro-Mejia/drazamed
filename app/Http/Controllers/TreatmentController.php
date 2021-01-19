@@ -590,7 +590,7 @@ class TreatmentController extends Controller
         // $token = 'a6de3b225eee86d3979eb0a00e9f44c92261ecb7a864310a44702776db2565c1';
         $token = $device_id;
         $http2_server = 'https://api.push.apple.com'; // or 'api.push.apple.com' if production
-        $app_bundle_id = 'com.draz.drazamedh';
+        $app_bundle_id = 'com.draz.drazamed';
 
         $status = $this->sendHTTP2Push($http2ch, $http2_server, $apple_cert, $app_bundle_id, $message, $token);
         echo "Response from apple -> {$status}\n";
