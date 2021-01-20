@@ -365,9 +365,6 @@ class MedicineController extends BaseController
                     // echo "Error enviando correo";
                 }
 
-                try {
-
-                }
 
                 Log::info("Enviando respuesta a la app");
 				return Response::json (['status' => 'SUCCESS' , 'msg' => 'Tu orden ha sido enviada correctamente ']);
