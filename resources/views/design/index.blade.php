@@ -261,6 +261,9 @@
         getCategories();
         show_favorites(1,30);
     });
+    $(element).on("click mousedown mouseup focus blur keydown change",function(e){
+        console.log(e);
+    });
 
 </script>
 

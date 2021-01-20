@@ -823,7 +823,7 @@ $("#catList").on("click", function(e) {
     show_our_products(cat_value);
 });
 
-$("#catList").on("click", "li", function(e) {
+$("#catList").on("click","li", function(e) {
     // alert($(this).html());
     console.log("itemCat=" + $(this).html());
     cat_value = $(this).html();

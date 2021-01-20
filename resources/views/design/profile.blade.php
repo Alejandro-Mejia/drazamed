@@ -5,6 +5,7 @@
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap3-dialog/1.34.5/css/bootstrap-dialog.min.css">
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap3-dialog/1.34.5/js/bootstrap-dialog.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/4.4.0/bootbox.min.js"></script>
 
 @endsection
 
@@ -20,7 +21,7 @@
 
 
 <section class="profile">
-    <div class="mx auto"> 
+    <div class="mx auto">
         <a class="d-flex p-1 btn btn-outline-success justify-content-center" href="/my-cart" style="margin-top: 35px ">
             <span class="mr-10 fa fa-shopping-cart"></span>
             Ve a tu &nbsp<strong> carrito de Compras </strong>
@@ -91,7 +92,7 @@
                     </nav>
                 </div>
             </div>
-            
+
             <div class="col-lg-9 col-md-12" style="max-height: 90%; overflow: auto;">
                 <div class="panel profile-panel">
                     <h2 class="panel-title">Mi Perfil</h2>
