@@ -21,6 +21,8 @@ class Treatment extends Model
         'dosis',
         'taken',
         'start_time',
+        'next_time',
+        'buy_time',
         'frequency',
         'obs',
     ];

@@ -294,9 +294,25 @@ class TreatmentController extends Controller
             $obs = Request::input ('obs');
         }
 
+        $medicina = Medicine::medicineCode($item_code);
+
         $user = User::where('email', '=', $email)->with('customer')->get();
 
         $customer_id = $user[0]['customer']['id'];
+
+        // Calclo de Next_time
+        // $localtime = new DateTime();
+        $deltaT = strval($freq) . " hours";
+        $nextTake = date_add($start_time, date_interval_create_from_date_string($deltaT));
+        $nextTake = $nextTake->format('Y-m-d H:i');
+        // $treatment->next_time = $nextTake;
+
+        // Calculo de fecha de reorden
+        $units = $medicina["units_value"];
+        $unitsperday = 24 / $freq;
+        $days = (int)($units / $unitsperday);
+        $deltaT = strval($days) . " days";
+        $buy_time = date_add($start_time, date_interval_create_from_date_string($deltaT));
 
 
         $treatment = [
@@ -306,6 +322,8 @@ class TreatmentController extends Controller
             'taken' => 0,
             'frequency' => $freq,
             'start_time' => $start_time,
+            'next_time' => $nextTake,
+            'buy_time' => $buy_time,
             'dosis' => $dosis,
             'obs' => $obs,
             'active' => true
@@ -314,7 +332,7 @@ class TreatmentController extends Controller
         $result = Treatment::create($treatment);
 
         if ($result) {
-            return Response::json (['status' => 'SUCCESS' , 'msg' => 'Tu tratamiento ha sido creado correctamente.']);
+            return Response::json (['status' => 'SUCCESS' , 'msg' => 'Tu tratamiento ha sido creado correctamente.', 'data' => $tratment]);
         } else {
             return Response::json (['status' => 'FAILURE' , 'msg' => 'Tu tratamiento NO ha sido creado.']);
         }
