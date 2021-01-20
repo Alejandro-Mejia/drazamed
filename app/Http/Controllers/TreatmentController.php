@@ -330,7 +330,7 @@ class TreatmentController extends Controller
             'taken' => 0,
             'frequency' => $freq,
             'start_time' => $start_time,
-            'next_time' => $nextTake,
+            'next_time' => $start_time,
             'buy_time' => $buy_time,
             'dosis' => $dosis,
             'obs' => $obs,
