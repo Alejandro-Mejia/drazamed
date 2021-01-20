@@ -192,7 +192,7 @@
                         <h5 id="shipping_value" value={{$shipping}}>{{ '$' . number_format($shipping,0, ',', '.')}}</h5>
                       </td>
                     </tr>
-                    
+
                     <tr>
                       <td class="text-right" style="text-align:right" colspan="3">
                         <h4 style="padding-right: 40px;">Total <span style="font-size: 12px">({{ __('this is an approximate total, price may change')}})</span> : </h4>
@@ -213,7 +213,7 @@
                 <tfoot>
                   <tr>
                     <td colspan=4>
-          
+
                       <div id="send_formula" class="">
                         <form method="post" action="/medicine/store-prescription/1" enctype="multipart/form-data" novalidate class="" id="noformula">
                           <input type="" name="shipping_cost" id="shippingForm" value="" hidden required />
@@ -231,7 +231,7 @@
                             </div>
 
                             <div class="box__success" style="color: green">
-                                <br> En unos segundos seras redirigido a tu perfil, una vez la verifiquemos, cambiara su estado a "verificado" y podrás realizar el pago!  
+                                <br> En unos segundos seras redirigido a tu perfil, una vez la verifiquemos, cambiara su estado a "verificado" y podrás realizar el pago!
                             </div>
 
                             <div class="box__error" style="color: red; font-weigth:bold" id="errorMsg" style="display:none">
@@ -373,7 +373,7 @@
                         <h5 id="shipping_value" value={{$shipping}}>{{ '$' . number_format($shipping,0, ',', '.')}}</h5>
                       </td>
                     </tr>
-                    
+
                     <tr>
                       <td class="text-right" style="text-align:right" colspan="2">
                         <h4 style="padding-right: 40px;">Total <span style="font-size: 12px">({{ __('this is an approximate total, price may change')}})</span> : </h4>
@@ -394,7 +394,7 @@
                 <tfoot>
                   <tr>
                     <td colspan=4>
-          
+
                       <div id="send_formula" class="">
                         <form method="post" action="/medicine/store-prescription/1" enctype="multipart/form-data" novalidate class="" id="noformula">
                           <input type="" name="shipping_cost" id="shippingForm" value="" hidden required />
@@ -412,7 +412,7 @@
                             </div>
 
                             <div class="box__success" style="color: green">
-                                <br> En unos segundos seras redirigido a tu perfil, una vez la verifiquemos, cambiara su estado a "verificado" y podrás realizar el pago!  
+                                <br> En unos segundos seras redirigido a tu perfil, una vez la verifiquemos, cambiara su estado a "verificado" y podrás realizar el pago!
                             </div>
 
                             <div class="box__error" style="color: red; font-weigth:bold" id="errorMsg" style="display:none">
@@ -551,7 +551,7 @@
   );
 
   function convertToMoney(text) {
-      return '$ ' + text.replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1.");
+      return '$ ' + text.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1.");
   }
 
   function goto_detail_page(){
