@@ -374,6 +374,7 @@ class TreatmentController extends Controller
             $deltaT = "10 minutes";
             $nextTake = date_add($startTime, date_interval_create_from_date_string($deltaT));
             $nextTake = $nextTake->format('Y-m-d H:i');
+            $treatment->next_time = $nextTake;
         }
 
 
