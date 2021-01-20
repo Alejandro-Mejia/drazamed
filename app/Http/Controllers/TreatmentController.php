@@ -333,7 +333,7 @@ class TreatmentController extends Controller
         $result = Treatment::create($treatment);
 
         if ($result) {
-            return Response::json (['status' => 'SUCCESS' , 'msg' => 'Tu tratamiento ha sido creado correctamente.', 'data' => $tratment]);
+            return Response::json (['status' => 'SUCCESS' , 'msg' => 'Tu tratamiento ha sido creado correctamente.', 'data' => $treatment]);
         } else {
             return Response::json (['status' => 'FAILURE' , 'msg' => 'Tu tratamiento NO ha sido creado.']);
         }
