@@ -318,7 +318,7 @@ class TreatmentController extends Controller
             $deltaT = strval($days) . " days";
             Log::info('deltaT :' .$deltaT);
             $buy_time = date_add($startTime, date_interval_create_from_date_string($deltaT));
-            Log::info('Buy Time :' .$buy_time);
+            Log::info('Buy Time :' .$buy_time->format('Y-m-d H:i'));
         } else {
             $buy_time = null;
         }
