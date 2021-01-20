@@ -334,7 +334,7 @@ class TreatmentController extends Controller
             'buy_time' => $buy_time,
             'dosis' => $dosis,
             'obs' => $obs,
-            'active' => true
+            'active' => 1
         ];
 
         $result = Treatment::create($treatment);
@@ -367,8 +367,15 @@ class TreatmentController extends Controller
 
         $treatment = Treatment::where('customer_id', '=', $customer_id)->where('item_code', '=', $item_code)->first();
 
+        if($taken > 0) {
+            $treatment->taken += $taken;
+        } else {
+            $startTime = new Datetime();
+            $deltaT = "10 minutes";
+            $nextTake = date_add($startTime, date_interval_create_from_date_string($deltaT));
+            $nextTake = $nextTake->format('Y-m-d H:i');
+        }
 
-        $treatment->taken += $taken;
 
         // dd($treatment);
 
