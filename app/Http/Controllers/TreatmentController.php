@@ -310,11 +310,15 @@ class TreatmentController extends Controller
 
         // Calculo de fecha de reorden
         $units = $medicina["units_value"];
-        $unitsperday = 24 / $freq;
-        $days = (int)($units / $unitsperday);
-        $deltaT = strval($days) . " days";
-        $buy_time = date_add($startTime, date_interval_create_from_date_string($deltaT));
-
+        Log::info('units:' .$units);
+        if ($freq > 0) {
+            $unitsperday = 24 / $freq;
+            $days = (int)($units / $unitsperday);
+            $deltaT = strval($days) . " days";
+            $buy_time = date_add($startTime, date_interval_create_from_date_string($deltaT));
+        } else {
+            $buy_time = null;
+        }
 
         $treatment = [
             'customer_id' => $customer_id,
