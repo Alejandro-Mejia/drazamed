@@ -302,8 +302,9 @@ class TreatmentController extends Controller
 
         // Calclo de Next_time
         // $localtime = new DateTime();
+        $startTime = new Datetime($start_time);
         $deltaT = strval($freq) . " hours";
-        $nextTake = date_add($start_time, date_interval_create_from_date_string($deltaT));
+        $nextTake = date_add($startTime, date_interval_create_from_date_string($deltaT));
         $nextTake = $nextTake->format('Y-m-d H:i');
         // $treatment->next_time = $nextTake;
 
@@ -312,7 +313,7 @@ class TreatmentController extends Controller
         $unitsperday = 24 / $freq;
         $days = (int)($units / $unitsperday);
         $deltaT = strval($days) . " days";
-        $buy_time = date_add($start_time, date_interval_create_from_date_string($deltaT));
+        $buy_time = date_add($startTime, date_interval_create_from_date_string($deltaT));
 
 
         $treatment = [
