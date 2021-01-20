@@ -210,6 +210,7 @@
 					$medicines['photo_url'] = $list['photo_url'];
 					$medicines['sell_price'] = $list['sell_price'];
 					$medicines['mrp'] = $list['sell_price'];
+					$medicines['units_value'] = $list['sell_price'];
 					$medicines['show_priority'] = $list['show_priority'];
 				}
 				// //Cache::put ('CACHE_PARAM_MEDICINE' , $medicines , 1440);
