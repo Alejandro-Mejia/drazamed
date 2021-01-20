@@ -315,7 +315,7 @@ class TreatmentController extends Controller
             $unitsperday = 24 / $freq;
             $days = (int)($units / $unitsperday);
             Log::info('days for box :' .$days);
-            $deltaT = strval($days) . " days";
+            $deltaT = strval($days-2) . " days";
             Log::info('deltaT :' .$deltaT);
             $buy_time = date_add($startTime, date_interval_create_from_date_string($deltaT));
             Log::info('Buy Time :' .$buy_time->format('Y-m-d H:i'));
