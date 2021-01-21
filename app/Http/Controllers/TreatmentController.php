@@ -354,12 +354,15 @@ class TreatmentController extends Controller
     public function postUpdateTreatmentTaken() {
         // header ("Access-Control-Allow-Origin: *");
         // header ("Access-Control-Allow-Headers: *");
-
+        Log::info('Actualizando tratamiento');
         if(!empty(Request::json()->all())) {
             $email = Request::input ('email');
             $item_code = Request::input ('item_code');
             $taken = Request::input ('taken');
         }
+        Log::info('email:' . $email);
+        Log::info('item_code:' . $item_code);
+        Log::info('taken:' . $taken);
 
         $user = User::where('email', '=', $email)->with('customer')->get();
 
@@ -382,11 +385,14 @@ class TreatmentController extends Controller
 
         $updated = $treatment->toArray();
 
+        Log::info('Nuevos datos:');
+        Log::info($updated);
+
         $result = $treatment->update($updated);
         // dd($result);
 
         if ($result) {
-            return Response::json (['status' => 'SUCCESS' , 'msg' => 'Tu tratamiento ha sido actualizado correctamente.']);
+            return Response::json (['status' => 'SUCCESS' , 'msg' => 'Tu tratamiento ha sido actualizado correctamente.', 'data' => $updated]);
         } else {
             return Response::json (['status' => 'FAILURE' , 'msg' => 'Tu tratamiento NO ha sido actualizado.']);
         }
