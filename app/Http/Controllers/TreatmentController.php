@@ -88,7 +88,7 @@ class TreatmentController extends Controller
             }
 
             if ($user["apnstoken"] != "") {
-                Log::info("Verificando token IOS");
+                Log::info("Enviando a apnstoken IOS");
 
 
                 $this->send_ios_curl(
@@ -594,7 +594,7 @@ class TreatmentController extends Controller
         curl_setopt($http2ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_2_0);
 
         // send push
-        $apple_cert = 'push_notification_dev.p12';
+        $apple_cert = 'push_notification.p12';
         $message = '{"aps":{"alert":{"title": $title, "body":$body},"sound":"default"}}';
         // $token = 'e63bce390702b9648d5f46c15e1a7e18f67b3ac38bb5795903cbc93eb75798fb';
         $token = $device_id;
@@ -605,14 +605,14 @@ class TreatmentController extends Controller
         $status = $this->sendHTTP2Push($http2ch, $http2_server, $apple_cert, $app_bundle_id, $message, $token);
         echo "Response from apple -> {$status}\n";
 
-        // Send to production environment
-        $apple_cert = 'push_notification.p12';
-        $status = $this->sendHTTP2Push($http2ch, $http2_server, $apple_cert, $app_bundle_id, $message, $token);
-        echo "Response from apple -> {$status}\n";
+        // // Send to production environment
+        // $apple_cert = 'push_notification.p12';
+        // $status = $this->sendHTTP2Push($http2ch, $http2_server, $apple_cert, $app_bundle_id, $message, $token);
+        // echo "Response from apple -> {$status}\n";
 
 
         // send push
-        $apple_cert = 'push_notification.p12';
+        // $apple_cert = 'push_notification.p12';
 
 
         // Close connection
