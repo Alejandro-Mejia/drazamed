@@ -369,12 +369,12 @@ class TreatmentController extends Controller
             $treatment->taken += $taken;
         } else {
             $startTime = new Datetime();
-            $startTime = $startTime->format('Y-md H:i:s');
+            $startTimeSt = $startTime->format('Y-md H:i:s');
             $deltaT = "10 minutes";
             $nextTake = date_add($startTime, date_interval_create_from_date_string($deltaT));
             $nextTake = $nextTake->format('Y-m-d H:i:s');
             Log::info("nextTake:" . $nextTake);
-            Log::info("nextTake1:" , date('Y-m-d H:i',strtotime('+10 minutes',strtotime($startTime))));
+            Log::info("nextTake1:" , date('Y-m-d H:i',strtotime('+10 minutes',strtotime($startTimeSt))));
             $treatment->taken += $taken;
             $treatment->next_time = $nextTake;
         }
