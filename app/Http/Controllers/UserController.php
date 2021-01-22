@@ -306,11 +306,14 @@ class UserController extends BaseController
                 $isAndroid = Request::input ('isAndroid');
             }
 
+            Log::info('email:'. $email);
+            Log::info('user_type:'. $user_type);
+            Log::info('token:'. $token);
+            Log::info('apnstoken:'. $apnstoken);
+            Log::info('isAndroid:'. $isAndroid);
 
 			switch ($user_type) {
 				case UserType::MEDICAL_PROFESSIONAL ():
-
-
                     $medicalProfDetails = array(
                         'token' => $token,
                         'apnstoken' => $apnstoken
@@ -319,15 +322,17 @@ class UserController extends BaseController
 					$affectedRows = MedicalProfessional::where ('prof_mail' , '=' , $email)->update ($medicalProfDetails);
 					break;
                 case UserType::CUSTOMER ():
-
-                    $medicalProfDetails = array(
+                    $customerDetails = array(
                         'token' => $token,
                         'apnstoken' => $apnstoken
                     );
+                    Log::info($customerDetails);
 
                     DB::enableQueryLog();
                     $affectedRows = Customer::where ('mail' , '=' , $email)->update ($customerDetails);
                     $query = DB::getQueryLog();
+                    // Log::info('query: ' . print_r($query));
+                    // Log::info('rows: ' . print_r($affectedRows));
 					break;
 			}
 			if ($affectedRows == 1) {
@@ -341,7 +346,9 @@ class UserController extends BaseController
 			return Response::json ($result);
 		}
 		catch (Exception $e) {
-			$message = $e;
+            $message = $e;
+            Log::info('Error message:');
+            Log::info($e);
 			return Response::make (['status' => 'FAILURE' , 'msg' => $e->getMessage()] ,$e->getCode());
 		}
 
