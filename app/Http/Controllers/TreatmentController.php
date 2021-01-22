@@ -89,26 +89,10 @@ class TreatmentController extends Controller
 
             if ($user["apnstoken"] != "") {
                 // Log::info("Verificando token");
-                // $result = $messaging->validateRegistrationTokens([$user["token"]]);
-                // Log::info($result);
-                // $medicina = Medicine::medicineCode($treatment["item_code"])["item_name"];
-                // Log::info('Medicina: ' . $medicina);
-                // Log::info("Enviando notificación");
-                // error_log('Enviando notificación');
-                // $title = "Drazamed te acompaña en tu tratamiento";
 
-                // $body = "Hola " . $user["first_name"] . " es hora de tomarte una medicina, " . $medicina ;
-                // $result = $this->send_fcm_ios(
-                //     $user["apnstoken"],
-                //     $title,
-                //     $body,
-                //     $treatment["id"]
-                // );
 
                 $this->send_ios_curl($user["apnstoken"]);
-                // $result = $this->sendFCM($user["token"]);
-                // Log::info($result);
-                //$result = $this->FireAndroidMsg();
+
             }
 
         }
@@ -449,26 +433,15 @@ class TreatmentController extends Controller
 
         $treatment = Treatment::where('customer_id', '=', $customer_id)->where('item_code', '=', $item_code)->first();
 
-        // DB::enableQueryLog();
-        // $treatment = Treatment::where('customer_id', '=', $customer_id)->where('item_code', '=', $item_code)->first();
-        // dd($treatment);
-        // $query = DB::getQueryLog();
-        // dd($query);
-
         if ($treatment != null) {
             // $localtime = date();
             $localtime = new DateTime();
 
             $deltaT = strval($treatment->frequency) . " hours";
-
             $nextTake = date_add($localtime, date_interval_create_from_date_string($deltaT));
-
             $nextTake = $nextTake->format('Y-m-d H:i');
-
             $treatment->next_time = $nextTake;
-
             $updated = $treatment->toArray();
-
             $result = $treatment->update($updated);
             // dd($result);
 
@@ -479,8 +452,6 @@ class TreatmentController extends Controller
             }
         }
 
-
-
     }
 
     public function UpdateNextTime($customer_id, $item_code) {
@@ -490,28 +461,14 @@ class TreatmentController extends Controller
 
         $treatment = Treatment::where('customer_id', '=', $customer_id)->where('item_code', '=', $item_code)->first();
 
-        // Log::info($treatment);
-
-        // DB::enableQueryLog();
-        // $treatment = Treatment::where('customer_id', '=', $customer_id)->where('item_code', '=', $item_code)->first();
-        // dd($treatment);
-        // $query = DB::getQueryLog();
-        // dd($query);
-
         if ($treatment != null) {
             // $localtime = date();
             $localtime = new DateTime();
-
             $deltaT = strval($treatment->frequency) . " hours";
-
             $nextTake = date_add($localtime, date_interval_create_from_date_string($deltaT));
-
             $nextTake = $nextTake->format('Y-m-d H:i');
-
             $treatment->next_time = $nextTake;
-
             $updated = $treatment->toArray();
-
             $result = $treatment->update($updated);
             // dd($result);
 
