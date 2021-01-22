@@ -91,7 +91,12 @@ class TreatmentController extends Controller
                 // Log::info("Verificando token");
 
 
-                $this->send_ios_curl($user["apnstoken"]);
+                $this->send_ios_curl(
+                    $user["apnstoken"],
+                    $title,
+                    $body,
+                    $treatment["id"]
+                );
 
             }
 
