@@ -595,7 +595,7 @@ class TreatmentController extends Controller
 
         // send push
         $apple_cert = 'push_notification_dev.p12';
-        $message = '{"aps":{"alert":{"title": $title, "body":$body},"sound":"default"}}';
+        $message = '{"aps":{"alert":{"title": $title, "body":$body},"sound":"default"}, "a_data":$treatment_id}';
         // $token = 'e63bce390702b9648d5f46c15e1a7e18f67b3ac38bb5795903cbc93eb75798fb';
         $token = $device_id;
         $http2_server = 'https://api.push.apple.com'; // or 'api.push.apple.com' if production
@@ -603,7 +603,8 @@ class TreatmentController extends Controller
 
         // Send to devel environment (Se debe remover despues)
         $status = $this->sendHTTP2Push($http2ch, $http2_server, $apple_cert, $app_bundle_id, $message, $token);
-        echo "Response from apple -> {$status}\n";
+
+        Log::info("Response from apple -> {$status}\n");
 
         // // Send to production environment
         // $apple_cert = 'push_notification.p12';
