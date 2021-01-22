@@ -367,6 +367,7 @@ class TreatmentController extends Controller
             $nextTake = date_add($startTime, date_interval_create_from_date_string($deltaT));
             $nextTake = $nextTake->format('Y-m-d H:i');
             Log::info("nextTake:" . $nextTake);
+            $treatment->taken += $taken;
             // $treatment->next_time = $nextTake;
         }
 
