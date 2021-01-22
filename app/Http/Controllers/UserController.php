@@ -310,28 +310,21 @@ class UserController extends BaseController
 			switch ($user_type) {
 				case UserType::MEDICAL_PROFESSIONAL ():
 
-                        if ($isAndroid) {
-                            $medicalProfDetails = array(
-                                'token' => $token
-                            );
-                        } else {
-                            $medicalProfDetails = array(
-                                'apnstoken' => $apnstoken
-                            );
-                        }
+
+                    $medicalProfDetails = array(
+                        'token' => $token,
+                        'apnstoken' => $apnstoken
+                    );
+
+
 
 					$affectedRows = MedicalProfessional::where ('prof_mail' , '=' , $email)->update ($medicalProfDetails);
 					break;
                 case UserType::CUSTOMER ():
-                    if ($isAndroid) {
-                        $customerDetails = array(
-                            'token' => $token
-                        );
-                    } else {
-                        $customerDetails = array(
-                            'apnstoken' => $apnstoken
-                        );
-                    }
+                    $medicalProfDetails = array(
+                        'token' => $token,
+                        'apnstoken' => $apnstoken
+                    );
                     DB::enableQueryLog();
                     $affectedRows = Customer::where ('mail' , '=' , $email)->update ($customerDetails);
                     $query = DB::getQueryLog();
