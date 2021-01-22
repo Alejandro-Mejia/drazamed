@@ -316,15 +316,15 @@ class UserController extends BaseController
                         'apnstoken' => $apnstoken
                     );
 
-
-
 					$affectedRows = MedicalProfessional::where ('prof_mail' , '=' , $email)->update ($medicalProfDetails);
 					break;
                 case UserType::CUSTOMER ():
+
                     $medicalProfDetails = array(
                         'token' => $token,
                         'apnstoken' => $apnstoken
                     );
+
                     DB::enableQueryLog();
                     $affectedRows = Customer::where ('mail' , '=' , $email)->update ($customerDetails);
                     $query = DB::getQueryLog();
