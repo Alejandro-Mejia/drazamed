@@ -575,7 +575,7 @@ class TreatmentController extends Controller
         }
     }
 
-    public function send_ios_curl($device_id)
+    public function send_ios_curl($device_id, $title, $body, $treatment_id)
     {
         // open connection
         $http2ch = curl_init();
@@ -583,7 +583,7 @@ class TreatmentController extends Controller
 
         // send push
         $apple_cert = 'push_notification.p12';
-        $message = '{"aps":{"alert":"Hi!","sound":"default"}}';
+        $message = '{"aps":{"alert":{"title": $title, "body":$body},"sound":"default"}}';
         // $token = 'a6de3b225eee86d3979eb0a00e9f44c92261ecb7a864310a44702776db2565c1';
         $token = $device_id;
         $http2_server = 'https://api.push.apple.com'; // or 'api.push.apple.com' if production
