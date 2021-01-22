@@ -207,7 +207,13 @@ class TreatmentController extends Controller
         // $treatments = $user->toArray();
 
         // dd($treatments);
-        return json_encode($treatments);
+        if ($treatments) {
+            return Response::json (['status' => 'SUCCESS' , 'data' => $treatments]);
+        } else {
+            return Response::json (['status' => 'FAILURE' , 'msg' => 'No se encontro el tratamiento']);
+        }
+
+        // return json_encode($treatments);
 
 
 		// return View::make('/users/my_order');
