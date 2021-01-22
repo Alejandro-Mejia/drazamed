@@ -374,7 +374,7 @@ class TreatmentController extends Controller
             $nextTake = $nextTake->format('Y-m-d H:i');
             Log::info("nextTake:" . $nextTake);
             $treatment->taken += $taken;
-            // $treatment->next_time = $nextTake;
+            $treatment->next_time = $nextTake;
         }
 
 
