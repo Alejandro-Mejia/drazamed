@@ -595,11 +595,23 @@ class TreatmentController extends Controller
         $http2_server = 'https://api.push.apple.com'; // or 'api.push.apple.com' if production
         $app_bundle_id = 'com.draz.drazamed';
 
+        // Send to devel environment (Se debe remover despues)
         $status = $this->sendHTTP2Push($http2ch, $http2_server, $apple_cert, $app_bundle_id, $message, $token);
         echo "Response from apple -> {$status}\n";
 
-        // close connection
+        // Send to production environment
+        $apple_cert = 'push_notification.p12';
+        $status = $this->sendHTTP2Push($http2ch, $http2_server, $apple_cert, $app_bundle_id, $message, $token);
+        echo "Response from apple -> {$status}\n";
+
+
+        // send push
+        $apple_cert = 'push_notification.p12';
+
+
+        // Close connection
         curl_close($http2ch);
+
     }
 
 
