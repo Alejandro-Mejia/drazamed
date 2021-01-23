@@ -594,7 +594,7 @@ class TreatmentController extends Controller
         curl_setopt($http2ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_2_0);
 
         // send push
-        $apple_cert = 'push_notification_dev.p12';
+        $apple_cert = 'push_notification.p12';
         $message = '{"aps":{"alert":{"title": $title, "body":$body},"sound":"default"}, "a_data":$treatment_id}';
         // $token = 'e63bce390702b9648d5f46c15e1a7e18f67b3ac38bb5795903cbc93eb75798fb';
         $token = $device_id;
@@ -653,8 +653,8 @@ class TreatmentController extends Controller
         ));
 
         Log::info('Curl setop:');
-        Log::info($http2ch);
-
+        //Log::info($http2ch);
+        print_r($http2ch, true);
 
         $result = curl_exec($http2ch);
 
