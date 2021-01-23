@@ -657,16 +657,16 @@ class TreatmentController extends Controller
         // go...
         $result = curl_exec($http2ch);
 
-        if (!curl_errno($http2ch)) {
-            $info = curl_getinfo($http2ch);
-            Log::info( 'Curl Took ', $info['total_time'], ' seconds to send a request to ', $info['url'], "\n");
-        }
+        // if (!curl_errno($http2ch)) {
+        //     $info = curl_getinfo($http2ch);
+        //     Log::info( 'Curl Took ', $info['total_time'], ' seconds to send a request to ', $info['url'], "\n");
+        // }
 
 
         Log::info($result);
 
         if ($result === FALSE) {
-            Log::info(curl_error($http2ch));
+            Log::info("Error de curl:" . curl_error($http2ch));
         //   throw new Exception("Curl failed: " .  curl_error($http2ch));
         }
 
