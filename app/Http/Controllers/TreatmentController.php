@@ -654,7 +654,7 @@ class TreatmentController extends Controller
 
         Log::info('Curl setop:');
         //Log::info($http2ch);
-        print_r($http2ch, true);
+        // print_r($http2ch, true);
 
         $result = curl_exec($http2ch);
 
