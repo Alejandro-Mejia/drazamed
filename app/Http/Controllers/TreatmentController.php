@@ -659,7 +659,7 @@ class TreatmentController extends Controller
 
         if (!curl_errno($ch)) {
             $info = curl_getinfo($ch);
-            echo 'Took ', $info['total_time'], ' seconds to send a request to ', $info['url'], "\n";
+            Log::info( 'Curl Took ', $info['total_time'], ' seconds to send a request to ', $info['url'], "\n");
         }
 
 
