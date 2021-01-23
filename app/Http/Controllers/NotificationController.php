@@ -1,7 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
-use Illuminate\Http\Request;
+// use Illuminate\Http\Request;
+use Request;
 use Response;
 use App\Models\Custommer;
 use Notification;
@@ -39,21 +40,32 @@ class NotificationController extends Controller
         dd('Task completed!');
     }
 
-    public function sendIosNotification($device_id) //, $title, $body, $treatment_id
+    public function sendIosNotification() //
     {
+
+        if(!empty(Request::json()->all())) {
+            $device_id = Request::input ('device_id');
+            $title = Request::input ('title');
+            $body = Request::input ('body');
+            $data = Request::input ('data');
+        } else {
+            return Response::json (['status' => 'FAILURE' , 'msg' => 'No data' ]);
+        }
+
+
         // open connection
         $http2ch = curl_init();
         curl_setopt($http2ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_2_0);
         curl_setopt($http2ch, CURLOPT_VERBOSE, true);
 
-        $title = "Drazamed";
-        $body = "Notificacion desde el servidor";
-        $treatment_id = 11;
+        // $title = "Drazamed";
+        // $body = "Notificacion desde el servidor";
+        // $treatment_id = 11;
 
 
         // send push
         $apple_cert = '../push_notification.p12';
-        $message = '{"aps":{"alert":{"title":"' . $title . '", "body": "' . $body . '"},"sound":"default"}}';
+        $message = '{"aps":{"alert":{"title":"' . $title . '", "body": "' . $body . '"},"sound":"default"},"a_data":' . $data . '}';
         // $token = 'e63bce390702b9648d5f46c15e1a7e18f67b3ac38bb5795903cbc93eb75798fb';
         Log::info('message:'. $message);
         $token = $device_id;

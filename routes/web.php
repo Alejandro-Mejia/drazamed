@@ -126,7 +126,7 @@ use MercadoPago;
     /**
      * Notificaciones
      */
-    Route::get('/send-notification/{device_id}', [NotificationController::class, 'sendIosNotification']);
+    Route::post('/send-ios-notification', [NotificationController::class, 'sendIosNotification']);
 
     /**
      * Test cors
