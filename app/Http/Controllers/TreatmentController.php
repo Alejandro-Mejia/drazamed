@@ -32,6 +32,19 @@ use FCM;
 
 class TreatmentController extends Controller
 {
+    // use Notifiable;
+
+    /**
+     * Specifies the user's FCM token
+     *
+     * @return string
+     */
+    public function routeNotificationForFcm()
+    {
+        return $this->fcm_token;
+    }
+
+
     /**
      * Esta funcion se ejecuta cada minuto verificando los tratamientos que deban ser
      * notificados
@@ -47,6 +60,8 @@ class TreatmentController extends Controller
         // // $factory = $factory->withServiceAccount(config('firebase.projects.app.credentials.file'));
         // error_log($serviceAccount);
 
+        // $tr = new Treatment();
+        // $tr->notify(new MedicineTime);
         // Log::info($optionBuilder);
         // error_log($data);
         // $messaging = app('firebase.messaging');
@@ -534,58 +549,58 @@ class TreatmentController extends Controller
         $downstreamResponse->tokensWithError();
     }
 
-    // public function send_fcm_ios($id, $title, $body, $treatment_id)
-    // {
-    //     try
-    //     {
-    //         $sound = 'default';
-    //         if (!empty($notification_sound)) {
-    //             $sound = $notification_sound;
-    //         }
+    public function send_fcm_ios($id, $title, $body, $treatment_id)
+    {
+        try
+        {
+            $sound = 'default';
+            if (!empty($notification_sound)) {
+                $sound = $notification_sound;
+            }
 
-    //         $ttl = 15;
-    //         if (!empty($time_to_live)) {
-    //             $ttl = $time_to_live;
-    //         }
-
-
-    //         $notificationBuilder = new PayloadNotificationBuilder();
-    //         $notificationBuilder
-    //             ->setTitle($title)
-    //             ->setSound($sound)
-    //             //                ->setIcon(FAV_ICON)
-    //             //                ->setColor('#fc547f')
-    //         ;
-
-    //         $dataBuilder = new PayloadDataBuilder();
-    //         $dataBuilder->addData([
-    //             'custom' => $body //sending custom data
-    //         ]);
-
-    //         $optionBuilder = new OptionsBuilder();
-    //         $optionBuilder->setTimeToLive($ttl);
+            $ttl = 15;
+            if (!empty($time_to_live)) {
+                $ttl = $time_to_live;
+            }
 
 
-    //         $notification = $notificationBuilder->build();
-    //         $data = $dataBuilder->build();
-    //         $option = $optionBuilder->build();
+            $notificationBuilder = new PayloadNotificationBuilder();
+            $notificationBuilder
+                ->setTitle($title)
+                ->setSound($sound)
+                //                ->setIcon(FAV_ICON)
+                //                ->setColor('#fc547f')
+            ;
 
-    //         Log::debug( ' Push $notification' .  json_encode($notification->toArray()));
-    //         Log::debug( ' Push $option' .  json_encode($option->toArray()));
-    //         Log::debug( '  Push $data' .  json_encode($data->toArray()));
+            $dataBuilder = new PayloadDataBuilder();
+            $dataBuilder->addData([
+                'custom' => $body //sending custom data
+            ]);
 
-    //         $downstreamResponse = FCM::sendTo($id, $option, $notification, $data);
+            $optionBuilder = new OptionsBuilder();
+            $optionBuilder->setTimeToLive($ttl);
 
-    //         return $downstreamResponse;
 
-    //     } catch (\Exception $e) {
+            $notification = $notificationBuilder->build();
+            $data = $dataBuilder->build();
+            $option = $optionBuilder->build();
 
-    //         Log::debug(' Error message Push  ' . $e->getMessage());
-    //         Log::debug(' Error message Push  ' . $e->getFile());
-    //         Log::debug(' Error message Push  ' . $e->getLine());
-    //         return $e->getMessage();
-    //     }
-    // }
+            Log::debug( ' Push $notification' .  json_encode($notification->toArray()));
+            Log::debug( ' Push $option' .  json_encode($option->toArray()));
+            Log::debug( '  Push $data' .  json_encode($data->toArray()));
+
+            $downstreamResponse = FCM::sendTo($id, $option, $notification, $data);
+
+            return $downstreamResponse;
+
+        } catch (\Exception $e) {
+
+            Log::debug(' Error message Push  ' . $e->getMessage());
+            Log::debug(' Error message Push  ' . $e->getFile());
+            Log::debug(' Error message Push  ' . $e->getLine());
+            return $e->getMessage();
+        }
+    }
 
     public function send_ios_curl($device_id, $title, $body, $treatment_id)
     {
@@ -595,7 +610,8 @@ class TreatmentController extends Controller
 
         // send push
         $apple_cert = 'push_notification.p12';
-        $message = '{"aps":{"alert":{"title": $title, "body":$body},"sound":"default"}, "a_data":$treatment_id}';
+        $message = '{"aps":{"alert":{"title":"' . $title . '", "body": "' . $body . '"},"sound":"default"},"a_data":' . $treatment_id .'}';
+        // $message = '{"aps":{"alert":{"title": $title, "body":$body},"sound":"default"}, "a_data":$treatment_id}';
         // $token = 'e63bce390702b9648d5f46c15e1a7e18f67b3ac38bb5795903cbc93eb75798fb';
         $token = $device_id;
         $http2_server = 'https://api.push.apple.com'; // or 'api.push.apple.com' if production
@@ -605,16 +621,6 @@ class TreatmentController extends Controller
         $status = $this->sendHTTP2Push($http2ch, $http2_server, $apple_cert, $app_bundle_id, $message, $token);
 
         Log::info("Response from apple -> {$status}\n");
-
-        // // Send to production environment
-        // $apple_cert = 'push_notification.p12';
-        // $status = $this->sendHTTP2Push($http2ch, $http2_server, $apple_cert, $app_bundle_id, $message, $token);
-        // echo "Response from apple -> {$status}\n";
-
-
-        // send push
-        // $apple_cert = 'push_notification.p12';
-
 
         // Close connection
         curl_close($http2ch);

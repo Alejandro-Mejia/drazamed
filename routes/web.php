@@ -20,6 +20,7 @@ use Elasticquent\ElasticquentTrait;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Sitemap\SitemapGenerator;
 use App\Events\OrderStatusSent;
+use App\Http\Controllers\NotificationController;
 
 
 // use App\MercadoPago\SDK;
@@ -121,6 +122,11 @@ use MercadoPago;
     Route::post('/professional/remove-professional', 'ProfessionalController@postRemoveProfessional');
     Route::any('/professional/medical-account-page', 'ProfessionalController@anyMedicalAccountPage');
 
+
+    /**
+     * Notificaciones
+     */
+    Route::get('/send-notification/{device_id}', [NotificationController::class, 'sendIosNotification']);
 
     /**
      * Test cors
