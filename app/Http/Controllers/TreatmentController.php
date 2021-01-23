@@ -652,18 +652,13 @@ class TreatmentController extends Controller
             CURLOPT_HEADER => 1
         ));
 
+        Log::info('Curl setop:');
+        Log::info($http2ch);
 
-        // Log::info($http2ch);
-        // go...
+
         $result = curl_exec($http2ch);
 
-        // if (!curl_errno($http2ch)) {
-        //     $info = curl_getinfo($http2ch);
-        //     Log::info( 'Curl Took ', $info['total_time'], ' seconds to send a request to ', $info['url'], "\n");
-        // }
-
-
-        Log::info($result);
+        Log::info('Result curl:' . $result);
 
         if ($result === FALSE) {
             Log::info("Error de curl:" . curl_error($http2ch));
