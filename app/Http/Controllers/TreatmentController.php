@@ -657,6 +657,12 @@ class TreatmentController extends Controller
         // go...
         $result = curl_exec($http2ch);
 
+        if (!curl_errno($ch)) {
+            $info = curl_getinfo($ch);
+            echo 'Took ', $info['total_time'], ' seconds to send a request to ', $info['url'], "\n";
+        }
+
+
         Log::info($result);
 
         if ($result === FALSE) {
