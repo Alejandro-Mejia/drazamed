@@ -519,7 +519,7 @@ class TreatmentController extends Controller
                     ->setSound('default');
 
         $dataBuilder = new PayloadDataBuilder();
-        $dataBuilder->addData(['a_data' => $treatment_id]);
+        $dataBuilder->addData(['a_data' => ["treatment_id" => $treatment_id, "msg_type" => 1 ]]);
 
         $option = $optionBuilder->build();
         $notification = $notificationBuilder->build();
