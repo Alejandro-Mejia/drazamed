@@ -9,6 +9,13 @@ use Notification;
 use Log;
 // use App\Notifications\OffersNotification;
 
+use LaravelFCM\Message\OptionsBuilder;
+use LaravelFCM\Message\PayloadDataBuilder;
+use LaravelFCM\Message\PayloadNotificationBuilder;
+use FCM;
+
+
+
 class NotificationController extends Controller
 {
     var $result;
@@ -150,6 +157,69 @@ class NotificationController extends Controller
 
         return $status;
         // return Response::json (['status'=>$status, 'result'=>$result]);
+    }
+
+    public function sendAndroidNotification() {
+
+        if(!empty(Request::json()->all())) {
+            $device_id = Request::input ('device_id');
+            $title = Request::input ('title');
+            $body = Request::input ('body');
+            $data = Request::input ('data');
+        } else {
+            return Response::json (['status' => 'FAILURE' , 'msg' => 'No data' ]);
+        }
+
+
+        $optionBuilder = new OptionsBuilder();
+        $optionBuilder->setTimeToLive(60*20);
+        $notificationBuilder = new PayloadNotificationBuilder($title);
+        $notificationBuilder->setBody($body)
+                    ->setClickAction("FCM_PLUGIN_ACTIVITY")
+                    ->setSound('default');
+
+        $dataBuilder = new PayloadDataBuilder();
+        $dataBuilder->addData(['a_data' => $data]);
+
+        $option = $optionBuilder->build();
+        $notification = $notificationBuilder->build();
+        $data = $dataBuilder->build();
+
+        // $tokenid = "eCfSNQP8Rl4:APA91bEY0MR_7kyRL6MIZuo29GzuU8FN92JJBZsw5BYxudZyNP-7PKiVWxBtdESVUrEMMIsjTT5qK0OJKbESlNvE8CVqKXGQH6gKVBkQNPnmedMEFBKhEUg5n0YhK2rYLNWtV7Zfv6O7";
+        $token = $device_id;
+
+        $downstreamResponse = FCM::sendTo($token, $option, $notification, $data);
+
+
+
+        // Log::info($downstreamResponse);
+        $downstreamResponse->numberFailure();
+        $downstreamResponse->numberModification();
+
+        // return Array - you must remove all this tokens in your database
+        $downstreamResponse->tokensToDelete();
+
+        // return Array (key : oldToken, value : new token - you must change the token in your database)
+        $downstreamResponse->tokensToModify();
+
+        // return Array - you should try to resend the message to the tokens in the array
+        $downstreamResponse->tokensToRetry();
+
+        // return Array (key:token, value:error) - in production you should remove from your database the tokens
+        $downstreamResponse->tokensWithError();
+
+        $downstreamResponse->numberSuccess();
+
+        // dd($downstreamResponse);
+
+        if ($downstreamResponse->numberSuccess() > 0)
+        {
+            return Response::json (['status' => 'SUCCESS' ]);
+        } else {
+            return Response::json (['status' => 'FAILURE'  ]);
+        }
+
+
     }
 
 

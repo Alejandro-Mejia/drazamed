@@ -127,6 +127,7 @@ use MercadoPago;
      * Notificaciones
      */
     Route::post('/send-ios-notification', [NotificationController::class, 'sendIosNotification']);
+    Route::post('/send-android-notification', [NotificationController::class, 'sendAndroidNotification']);
 
     /**
      * Test cors
