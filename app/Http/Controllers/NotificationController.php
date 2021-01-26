@@ -55,6 +55,7 @@ class NotificationController extends Controller
             $title = Request::input ('title');
             $body = Request::input ('body');
             $data = Request::input ('data');
+            $isDevel = Request::input ('is_devel');
         } else {
             return Response::json (['status' => 'FAILURE' , 'msg' => 'No data' ]);
         }
@@ -71,12 +72,22 @@ class NotificationController extends Controller
 
 
         // send push
-        $apple_cert = '../push_notification.p12';
+        if($isDevel) {
+            $apple_cert = '../push_notification_dev.p12';
+        } else {
+            $apple_cert = '../push_notification.p12';
+        }
+
         $message = '{"aps":{"alert":{"title":"' . $title . '", "body": "' . $body . '"},"sound":"default"},"a_data":' . json_encode($data) . '}';
         // $token = 'e63bce390702b9648d5f46c15e1a7e18f67b3ac38bb5795903cbc93eb75798fb';
         Log::info('message:'. $message);
         $token = $device_id;
-        $http2_server = 'https://api.push.apple.com'; // or 'api.push.apple.com' if production
+        if($isDevel) {
+            $http2_server = 'https://api.sandbox.push.apple.com';
+        } else {
+            $http2_server = 'https://api.push.apple.com';
+        }
+        // $http2_server = 'https://api.push.apple.com'; // or 'api.push.apple.com' if production
         $app_bundle_id = 'com.draz.drazamed';
 
         // Send to devel environment (Se debe remover despues)

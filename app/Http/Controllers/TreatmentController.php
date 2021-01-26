@@ -658,6 +658,7 @@ class TreatmentController extends Controller
         // $message = '{"aps":{"alert":{"title": $title, "body":$body},"sound":"default"}, "a_data":$treatment_id}';
         // $token = 'e63bce390702b9648d5f46c15e1a7e18f67b3ac38bb5795903cbc93eb75798fb';
         $token = $device_id;
+
         $http2_server = 'https://api.push.apple.com'; // or 'api.push.apple.com' if production
         $app_bundle_id = 'com.draz.drazamed';
 
