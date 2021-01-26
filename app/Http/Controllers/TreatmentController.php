@@ -654,7 +654,7 @@ class TreatmentController extends Controller
         $apple_cert = 'push_notification.p12';
         $message = '{"aps":{"alert":{"title":"' . $title . '", "body": "' . $body . '"},"sound":"default"},"a_data":{"treatment_id":' . $treatment_id .',"msg_type":1 }}';
 
-        Log::info('message', $message);
+        // Log::info('message', $message);
         // $message = '{"aps":{"alert":{"title": $title, "body":$body},"sound":"default"}, "a_data":$treatment_id}';
         // $token = 'e63bce390702b9648d5f46c15e1a7e18f67b3ac38bb5795903cbc93eb75798fb';
         $token = $device_id;
