@@ -481,6 +481,48 @@ class TreatmentController extends Controller
 
     }
 
+    public function postUpdateTreatment() {
+        // header ("Access-Control-Allow-Origin: *");
+        // header ("Access-Control-Allow-Headers: *");
+
+        if(!empty(Request::json()->all())) {
+            $email = Request::input ('email');
+            $item_code = Request::input ('item_code');
+            $start_time = Request::input ('start_time');
+            $dosis = Request::input ('dosis');
+            $freq = Request::input ('freq');
+        }
+
+        $user = User::where('email', '=', $email)->with('customer')->get();
+        $customer_id =  $user[0]['customer']['id'];
+
+        $treatment = Treatment::where('customer_id', '=', $customer_id)->where('item_code', '=', $item_code)->first();
+
+        if ($treatment != null) {
+            // $localtime = date();
+
+            $treatment->frequency = $freq;
+            $treatment->start_time = $start_time;
+            $treatment->next_time  = $start_time;
+            $treatment->dosis = ($dosis != null) ? $dosis : $treatment->dosis;
+
+            $localtime = new DateTime();
+
+
+            $updated = $treatment->toArray();
+            $result = $treatment->update($updated);
+            // dd($result);
+
+            if ($result) {
+                return Response::json (['status' => 'SUCCESS' , 'msg' => 'Tu tratamiento ha sido actualizado correctamente.']);
+            } else {
+                return Response::json (['status' => 'FAILURE' , 'msg' => 'Tu tratamiento NO ha sido actualizado.']);
+            }
+        }
+
+    }
+
+
     public function UpdateNextTime($customer_id, $item_code) {
         // header ("Access-Control-Allow-Origin: *");
         // header ("Access-Control-Allow-Headers: *");
