@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Route;
 Route::group(['middleware' => ['cors']], function () {
     //Rutas a las que se permitirá acceso
     Route::get('/favorites', 'MedicineController@anyShowFavorites');
+    Route::get('/testEmail');
     Route::get('/favorites/getFavorites', 'FavoritesController@getFavorites');
     Route::any('/user/contact-us', 'UserController@anyContactUs');
     Route::any('/user/user-login/{is_web}', 'UserController@anyUserLogin');

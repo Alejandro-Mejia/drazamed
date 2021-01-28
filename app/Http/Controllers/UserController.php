@@ -1085,8 +1085,8 @@ class UserController extends BaseController
         // header ("Access-Control-Allow-Headers: *");
 
 		try {
-			if (!Auth::check ())
-				throw new Exception('UNAUTHORISED : User not logged in ' , 401);
+			// if (!Auth::check ())
+			// 	throw new Exception('UNAUTHORISED : User not logged in ' , 401);
 
 			$pay_success2 = DB::table ('prescription')->where ('id' , '=' , $pres_id)->update (array('is_delete' => 1 , 'updated_at' => date ('Y-m-d H:i:s')));
 			// If Save is Success
