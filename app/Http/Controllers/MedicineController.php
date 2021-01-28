@@ -445,6 +445,7 @@ class MedicineController extends BaseController
 		// $user_id = Auth::user ()->id;
         $prescriptions  = Prescription::with('getCart')
                           ->where ('user_id' , '=' , $user_id)
+                          ->where ('is_delete', '=', 0)
                           ->get ();
 
 
