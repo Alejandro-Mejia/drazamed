@@ -367,6 +367,26 @@ class TreatmentController extends Controller
             $treatment->taken += $taken;
             if ($treatment->taken >= $treatment->total) {
                 $final = $this.finalTratamiento($treatment->id);
+
+                $result = $this->send_fcm(
+                    $user["token"],
+                    "Drazamed te acompaña!",
+                    "Tu tratamiento ha finalizado",
+                    $treatment["id"]
+                );
+
+                if ($user["apnstoken"] != "") {
+                    Log::info("Enviando a apnstoken IOS");
+
+                    $this->send_ios_curl(
+                        $user["apnstoken"],
+                        "Drazamed te acompaña!",
+                        "Tu tratamiento ha finalizado",
+                        $treatment["id"]
+                    );
+
+                }
+
             }
         } else {
             $startTime = new Datetime();
