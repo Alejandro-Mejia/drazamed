@@ -361,8 +361,13 @@ class TreatmentController extends Controller
 
         $treatment = Treatment::where('customer_id', '=', $customer_id)->where('item_code', '=', $item_code)->first();
 
+        $final = null;
+
         if($taken > 0) {
             $treatment->taken += $taken;
+            if ($treatment->taken >= $treatment->total) {
+                $final = $this.finalTratamiento($treatment->id);
+            }
         } else {
             $startTime = new Datetime();
             $nextTake = date_add($startTime, date_interval_create_from_date_string('10 minutes'));
@@ -384,14 +389,40 @@ class TreatmentController extends Controller
         // dd($result);
 
         if ($result) {
-            return Response::json (['status' => 'SUCCESS' , 'msg' => 'Tu tratamiento ha sido actualizado correctamente.', 'data' => $updated]);
+            if(!$final) {
+                return Response::json (['status' => 'SUCCESS' , 'msg' => 'Tu tratamiento ha sido actualizado correctamente.', 'data' => $updated]);
+            } else {
+                return Response::json (['status' => 'SUCCESS' , 'msg' => 'Tu tratamiento ha finalizado.', 'data' => $updated]);
+            }
+
         } else {
             return Response::json (['status' => 'FAILURE' , 'msg' => 'Tu tratamiento NO ha sido actualizado.']);
         }
 
     }
 
+    public function finalTratamiento($treatment_id) {
 
+
+        $treatment = Treatment::where('id', '=', $treatment_id)->first();
+
+        if ($treatment != null) {
+            // $localtime = date();
+            $nextTake = null;
+            $treatment->next_time = $nextTake;
+            $updated = $treatment->toArray();
+            $result = $treatment->update($updated);
+            // dd($result);
+        }
+
+        if ($result) {
+            return Response::json (['status' => 'SUCCESS' , 'msg' => 'Tu tratamiento ha finalizado.']);
+        } else {
+
+            return Response::json (['status' => 'FAILURE' , 'msg' => 'Tu tratamiento NO ha finalizado.']);
+
+        }
+    }
 
     public function postUpdateActiveTreatment() {
         // header ("Access-Control-Allow-Origin: *");
