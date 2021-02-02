@@ -51,21 +51,8 @@ class TreatmentController extends Controller
      */
     public function check()
     {
-
-
         Log::info("tic tac...");
         error_log('tic tac.');
-        // $factory = $factory->withHttpLogger($httpLogger);
-        // $serviceAccount = ServiceAccount::fromFile('/Users/amejia/Sites/drazamed/drazamedapp-c7769e876c6e.json');
-        // // $factory = $factory->withServiceAccount(config('firebase.projects.app.credentials.file'));
-        // error_log($serviceAccount);
-
-        // $tr = new Treatment();
-        // $tr->notify(new MedicineTime);
-        // Log::info($optionBuilder);
-        // error_log($data);
-        // $messaging = app('firebase.messaging');
-        // error_log($messaging);
         $treatments = json_decode($this->getTreatmentsByTime(), true);
         Log::info('Tratamientos:');
         Log::info($treatments);
@@ -73,6 +60,7 @@ class TreatmentController extends Controller
         foreach($treatments as $treatment) {
             Log::info("Actualizando proxima toma");
             error_log('Actualizando proxima toma');
+
             $this->UpdateNextTime($treatment["customer_id"], $treatment["item_code"]);
 
             $user = Customer::where('id', '=', $treatment["customer_id"])->first();
@@ -80,9 +68,7 @@ class TreatmentController extends Controller
             Log::info($user->toArray());
 
             if ($user["token"] != "") {
-                // Log::info("Verificando token");
-                // $result = $messaging->validateRegistrationTokens([$user["token"]]);
-                // Log::info($result);
+
                 $medicina = Medicine::medicineCode($treatment["item_code"])["item_name"];
                 Log::info('Medicina: ' . $medicina);
                 Log::info("Enviando notificación");
@@ -97,9 +83,6 @@ class TreatmentController extends Controller
                     $treatment["id"]
                 );
 
-                // $result = $this->sendFCM($user["token"]);
-                // Log::info($result);
-                //$result = $this->FireAndroidMsg();
             }
 
             if ($user["apnstoken"] != "") {
@@ -116,8 +99,6 @@ class TreatmentController extends Controller
             }
 
         }
-
-
 
         Log::info('Finalizando cron');
         return;
@@ -460,7 +441,7 @@ class TreatmentController extends Controller
 
         $treatment = Treatment::where('customer_id', '=', $customer_id)->where('item_code', '=', $item_code)->first();
 
-        if ($treatment != null) {
+        if ($treatment != null && ($treatment->taken < $treatment->total)) {
             // $localtime = date();
             $localtime = new DateTime();
 
@@ -471,12 +452,17 @@ class TreatmentController extends Controller
             $updated = $treatment->toArray();
             $result = $treatment->update($updated);
             // dd($result);
+        }
 
-            if ($result) {
-                return Response::json (['status' => 'SUCCESS' , 'msg' => 'Tu tratamiento ha sido actualizado correctamente.']);
+        if ($result) {
+            return Response::json (['status' => 'SUCCESS' , 'msg' => 'Tu tratamiento ha sido actualizado correctamente.']);
+        } else {
+            if ($treatment->taken >= $treatment->total) {
+                return Response::json (['status' => 'FAILURE' , 'msg' => 'Fin del tratamiento.']);
             } else {
-                return Response::json (['status' => 'FAILURE' , 'msg' => 'Tu tratamiento NO ha sido actualizado.']);
+                return Response::json (['status' => 'SUCCESS' , 'msg' => 'Tu tratamiento NO ha sido actualizado correctamente.']);
             }
+
         }
 
     }
@@ -530,7 +516,7 @@ class TreatmentController extends Controller
 
         $treatment = Treatment::where('customer_id', '=', $customer_id)->where('item_code', '=', $item_code)->first();
 
-        if ($treatment != null) {
+        if ($treatment != null && ($treatment->taken < $treatment->total)) {
             // $localtime = date();
             $localtime = new DateTime();
             $deltaT = strval($treatment->frequency) . " hours";
@@ -540,12 +526,17 @@ class TreatmentController extends Controller
             $updated = $treatment->toArray();
             $result = $treatment->update($updated);
             // dd($result);
+        }
 
-            if ($result) {
-                return Response::json (['status' => 'SUCCESS' , 'msg' => 'Tu tratamiento ha sido actualizado correctamente.']);
+        if ($result) {
+            return Response::json (['status' => 'SUCCESS' , 'msg' => 'Tu tratamiento ha sido actualizado correctamente.']);
+        } else {
+            if ($treatment->taken >= $treatment->total) {
+                return Response::json (['status' => 'FAILURE' , 'msg' => 'Fin del tratamiento.']);
             } else {
-                return Response::json (['status' => 'FAILURE' , 'msg' => 'Tu tratamiento NO ha sido actualizado.']);
+                return Response::json (['status' => 'SUCCESS' , 'msg' => 'Tu tratamiento NO ha sido actualizado correctamente.']);
             }
+
         }
 
 
