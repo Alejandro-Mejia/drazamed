@@ -757,8 +757,8 @@ class TreatmentController extends Controller
             CURLOPT_HEADER => 1
         ));
 
-        Log::info('Curl setop:');
-        Log::info($http2ch);
+        // Log::info('Curl setop:');
+        // Log::info($http2ch);
         // print_r($http2ch, true);
 
         $result = curl_exec($http2ch);
