@@ -361,9 +361,9 @@ class TreatmentController extends Controller
 
         $customer_id =  $user[0]['customer']['id'];
 
-        $treatment = Treatment::with('medicine')->where('customer_id', '=', $customer_id)->where('item_code', '=', $item_code)->first();
+        $treatment = Treatment::with('medicines')->where('customer_id', '=', $customer_id)->where('item_code', '=', $item_code)->first();
 
-        $medicina = $treatment->medicine->item_name;
+        $medicina = $treatment->medicines[0]->item_name;
         Log::info("Medicina:", $medicina);
 
         $final = null;
