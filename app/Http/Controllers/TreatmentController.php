@@ -358,7 +358,9 @@ class TreatmentController extends Controller
         $user = User::where('email', '=', $email)->with('customer')->get();
 
 
-        Log::info('user:' , $user);
+        Log::info('user:');
+        Log::info($user[0]->toArray());
+
 
         $customer_id =  $user[0]['customer']['id'];
 
@@ -377,18 +379,18 @@ class TreatmentController extends Controller
                 $title = "Drazamed te acompaña en tu tratamiento";
 
                 $body = "Hola " . $user[0]["first_name"] . " tu tratamiento con  " . $medicina . "ha finalizado";
-                // $result = $this->send_fcm(
-                //     $user[0]["token"],
-                //     $title,
-                //     $body,
-                //     $treatment["id"]
-                // );
+                $result = $this->send_fcm(
+                    $user[0]['customer']["token"],
+                    $title,
+                    $body,
+                    $treatment["id"]
+                );
 
-                if ($user["apnstoken"] != "") {
+                if ($user[0]['customer']["apnstoken"] != "") {
                     Log::info("Enviando a apnstoken IOS");
 
                     $this->send_ios_curl(
-                        $user[0]["apnstoken"],
+                        $user[0]['customer']["apnstoken"],
                         $title,
                         $body,
                         $treatment["id"]
