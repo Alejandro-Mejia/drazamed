@@ -357,6 +357,8 @@ class TreatmentController extends Controller
 
         $user = User::where('email', '=', $email)->with('customer')->get();
 
+        Log::info('token:' . $user[0]['token']);
+
         $customer_id =  $user[0]['customer']['id'];
 
         $treatment = Treatment::where('customer_id', '=', $customer_id)->where('item_code', '=', $item_code)->first();
@@ -368,10 +370,13 @@ class TreatmentController extends Controller
             if ($treatment->taken >= $treatment->total) {
                 $final = $this->finalTratamiento ($treatment->id);
 
+                $title = "Drazamed te acompaña en tu tratamiento";
+
+                $body = "Hola " . $user[0]["first_name"] . " tu tratamiento con  " . $medicina . "ha finalizado";
                 $result = $this->send_fcm(
                     $user[0]["token"],
-                    "Drazamed te acompaña!",
-                    "Tu tratamiento ha finalizado",
+                    $title,
+                    $body,
                     $treatment["id"]
                 );
 
@@ -380,8 +385,8 @@ class TreatmentController extends Controller
 
                     $this->send_ios_curl(
                         $user[0]["apnstoken"],
-                        "Drazamed te acompaña!",
-                        "Tu tratamiento ha finalizado",
+                        $title,
+                        $body,
                         $treatment["id"]
                     );
 
