@@ -706,6 +706,10 @@ class TreatmentController extends Controller
 
         // send push
         $apple_cert = 'push_notification.p12';
+
+        $contents = Storage::get('push_notification.p12');
+        Log::info("p12:" . $contents);
+
         $message = '{"aps":{"alert":{"title":"' . $title . '", "body": "' . $body . '"},"sound":"default"},"a_data":{"treatment_id":' . $treatment_id .',"msg_type":1 }}';
 
         // Log::info('message', $message);
