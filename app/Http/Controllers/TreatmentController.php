@@ -705,7 +705,7 @@ class TreatmentController extends Controller
         curl_setopt($http2ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_2_0);
 
         // send push
-        $apple_cert = '/push_notification.p12';
+        $apple_cert = 'push_notification.p12';
         $message = '{"aps":{"alert":{"title":"' . $title . '", "body": "' . $body . '"},"sound":"default"},"a_data":{"treatment_id":' . $treatment_id .',"msg_type":1 }}';
 
         // Log::info('message', $message);
