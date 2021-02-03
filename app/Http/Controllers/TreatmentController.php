@@ -366,7 +366,7 @@ class TreatmentController extends Controller
         if($taken > 0) {
             $treatment->taken += $taken;
             if ($treatment->taken >= $treatment->total) {
-                $final = $this.finalTratamiento($treatment->id);
+                $final = $this->finalTratamiento ($treatment->id);
 
                 $result = $this->send_fcm(
                     $user["token"],
