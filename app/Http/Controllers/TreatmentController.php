@@ -441,7 +441,7 @@ class TreatmentController extends Controller
 
             $updated = $treatment->toArray();
             $result = $treatment->update($updated);
-            $treatment->delete();
+            // $treatment->delete();
             // dd($result);
         }
 
