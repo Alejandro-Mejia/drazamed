@@ -361,7 +361,10 @@ class TreatmentController extends Controller
 
         $customer_id =  $user[0]['customer']['id'];
 
-        $treatment = Treatment::where('customer_id', '=', $customer_id)->where('item_code', '=', $item_code)->first();
+        $treatment = Treatment::with('medicine')->where('customer_id', '=', $customer_id)->where('item_code', '=', $item_code)->first();
+
+        $medicina = $treatment->medicine->item_name;
+        Log::info("Medicina:", $medicina);
 
         $final = null;
 
@@ -432,11 +435,13 @@ class TreatmentController extends Controller
         $treatment = Treatment::where('id', '=', $treatment_id)->first();
 
         if ($treatment != null) {
-            // $localtime = date();
+            $localtime = date();
             $nextTake = null;
             $treatment->next_time = $nextTake;
+
             $updated = $treatment->toArray();
             $result = $treatment->update($updated);
+            $treatment.delete();
             // dd($result);
         }
 
