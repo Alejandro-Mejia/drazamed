@@ -435,7 +435,7 @@ class TreatmentController extends Controller
         $treatment = Treatment::where('id', '=', $treatment_id)->first();
 
         if ($treatment != null) {
-            $localtime = date();
+            // $localtime = new DateTime();
             $nextTake = null;
             $treatment->next_time = $nextTake;
 
