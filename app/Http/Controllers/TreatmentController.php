@@ -377,7 +377,6 @@ class TreatmentController extends Controller
                 $final = $this->finalTratamiento ($treatment->id);
 
                 $title = "Drazamed te acompaña en tu tratamiento";
-
                 $body = "Hola " . $user[0]["first_name"] . " tu tratamiento con  " . $medicina . "ha finalizado";
                 $result = $this->send_fcm(
                     $user[0]['customer']["token"],
@@ -759,7 +758,7 @@ class TreatmentController extends Controller
         ));
 
         Log::info('Curl setop:');
-        //Log::info($http2ch);
+        Log::info($http2ch);
         // print_r($http2ch, true);
 
         $result = curl_exec($http2ch);
