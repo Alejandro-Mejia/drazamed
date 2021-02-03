@@ -576,7 +576,7 @@ class TreatmentController extends Controller
         // header ("Access-Control-Allow-Origin: *");
         // header ("Access-Control-Allow-Headers: *");
 
-
+        $result = false;
         $treatment = Treatment::where('customer_id', '=', $customer_id)->where('item_code', '=', $item_code)->first();
 
         if ($treatment != null && ($treatment->taken < $treatment->total)) {
@@ -707,8 +707,8 @@ class TreatmentController extends Controller
         // send push
         $apple_cert = 'push_notification.p12';
 
-        $contents = Storage::get('push_notification.p12');
-        Log::info("p12:" . $contents);
+        // $contents = Storage::get('push_notification.p12');
+        // Log::info("p12:" . $contents);
 
         $message = '{"aps":{"alert":{"title":"' . $title . '", "body": "' . $body . '"},"sound":"default"},"a_data":{"treatment_id":' . $treatment_id .',"msg_type":1 }}';
 
