@@ -369,7 +369,7 @@ class TreatmentController extends Controller
                 $final = $this->finalTratamiento ($treatment->id);
 
                 $result = $this->send_fcm(
-                    $user["token"],
+                    $user[0]["token"],
                     "Drazamed te acompaña!",
                     "Tu tratamiento ha finalizado",
                     $treatment["id"]
@@ -379,7 +379,7 @@ class TreatmentController extends Controller
                     Log::info("Enviando a apnstoken IOS");
 
                     $this->send_ios_curl(
-                        $user["apnstoken"],
+                        $user[0]["apnstoken"],
                         "Drazamed te acompaña!",
                         "Tu tratamiento ha finalizado",
                         $treatment["id"]
