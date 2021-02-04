@@ -1,11 +1,15 @@
-importScripts("https://www.gstatic.com/firebasejs/8.2.5/firebase-app.js");
-importScripts(
-    "https://www.gstatic.com/firebasejs/8.2.5/firebase-messaging.js",
-);
-// For an optimal experience using Cloud Messaging, also add the Firebase SDK for Analytics.
-importScripts(
-    "https://www.gstatic.com/firebasejs/8.2.5/firebase-analytics.js",
-);
+if( 'undefined' === typeof window){
+    importScripts("https://www.gstatic.com/firebasejs/8.2.5/firebase-app.js");
+    importScripts(
+        "https://www.gstatic.com/firebasejs/8.2.5/firebase-messaging.js",
+    );
+    // For an optimal experience using Cloud Messaging, also add the Firebase SDK for Analytics.
+    importScripts(
+        "https://www.gstatic.com/firebasejs/8.2.5/firebase-analytics.js",
+    );
+ }
+
+
 
 // Initialize the Firebase app in the service worker by passing in the
 // messagingSenderId.
