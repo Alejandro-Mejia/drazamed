@@ -28,8 +28,8 @@ messaging.setBackgroundMessageHandler(function(payload) {
     // Customize notification here
     const notificationTitle = "Background Message Title";
     const notificationOptions = {
-        body: "Background Message body.",
-        icon: "/itwonders-web-logo.png",
+        body: "Drazamed tiene un mensaje importante para ti.",
+        icon: "//assets/img/logo.png",
     };
 
     return self.registration.showNotification(
@@ -51,6 +51,7 @@ messaging.setBackgroundMessageHandler(function(payload) {
    .then(function(token) {
      // print the token on the HTML page
      TokenElem.innerHTML = "token is : " + token
+     console.log("Token FCM: " . token);
    })
    .catch(function (err) {
    ErrElem.innerHTML = ErrElem.innerHTML + "; " + err
