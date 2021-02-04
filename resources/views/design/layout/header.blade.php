@@ -112,31 +112,32 @@
         </nav>
     </div>
 
-    {{-- Loading firebase --}}
+    {{-- Loading firebase
     <!-- The core Firebase JS SDK is always required and must be listed first -->
     <script src="https://www.gstatic.com/firebasejs/8.2.5/firebase-app.js"></script>
     {{-- <script> src="https://www.gstatic.com/firebasejs/8.2.3/firebase-messaging.js"</script> --}}
-    <script src="https://www.gstatic.com/firebasejs/8.2.3/firebase-messaging.js"></script>
+    {{-- <script src="https://www.gstatic.com/firebasejs/8.2.3/firebase-messaging.js"></script>
     <!-- TODO: Add SDKs for Firebase products that you want to use
         https://firebase.google.com/docs/web/setup#available-libraries -->
-    <script src="https://www.gstatic.com/firebasejs/8.2.5/firebase-analytics.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.2.5/firebase-analytics.js"></script> --}}
 
+    <script src="firebase-messaging-sw.js"> </script>
     <script>
     // Your web app's Firebase configuration
     // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-    var firebaseConfig = {
-        apiKey: "AIzaSyBvFM0v-DCmxGBYwVU-Fi6r_rUkQRBi57U",
-        authDomain: "drazamedapp.firebaseapp.com",
-        databaseURL: "https://drazamedapp-default-rtdb.firebaseio.com",
-        projectId: "drazamedapp",
-        storageBucket: "drazamedapp.appspot.com",
-        messagingSenderId: "193162804196",
-        appId: "1:193162804196:web:5514e23878a8fb473425f1",
-        measurementId: "G-YQJ9QT2Y8Z"
-    };
+    // var firebaseConfig = {
+    //     apiKey: "AIzaSyBvFM0v-DCmxGBYwVU-Fi6r_rUkQRBi57U",
+    //     authDomain: "drazamedapp.firebaseapp.com",
+    //     databaseURL: "https://drazamedapp-default-rtdb.firebaseio.com",
+    //     projectId: "drazamedapp",
+    //     storageBucket: "drazamedapp.appspot.com",
+    //     messagingSenderId: "193162804196",
+    //     appId: "1:193162804196:web:5514e23878a8fb473425f1",
+    //     measurementId: "G-YQJ9QT2Y8Z"
+    // };
     // Initialize Firebase
-    firebase.initializeApp(firebaseConfig);
-    firebase.analytics();
+    // firebase.initializeApp(firebaseConfig);
+    // firebase.analytics();
 
     // const messaging = firebase.messaging();
 
