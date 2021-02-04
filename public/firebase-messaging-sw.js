@@ -28,23 +28,23 @@ firebase.analytics();
 // messages.
 const messaging = firebase.messaging();
 
-messaging.setBackgroundMessageHandler(function(payload) {
-    console.log(
-        "[firebase-messaging-sw.js] Received background message ",
-        payload,
-    );
-    // Customize notification here
-    const notificationTitle = "Background Message Title";
-    const notificationOptions = {
-        body: "Drazamed tiene un mensaje importante para ti.",
-        icon: "//assets/img/logo.png",
-    };
+// messaging.setBackgroundMessageHandler(function(payload) {
+//     console.log(
+//         "[firebase-messaging-sw.js] Received background message ",
+//         payload,
+//     );
+//     // Customize notification here
+//     const notificationTitle = "Background Message Title";
+//     const notificationOptions = {
+//         body: "Drazamed tiene un mensaje importante para ti.",
+//         icon: "//assets/img/logo.png",
+//     };
 
-    return self.registration.showNotification(
-        notificationTitle,
-        notificationOptions,
-    );
-});
+//     return self.registration.showNotification(
+//         notificationTitle,
+//         notificationOptions,
+//     );
+// });
 
 //  const messaging = firebase.messaging();
  messaging
@@ -65,3 +65,9 @@ messaging.setBackgroundMessageHandler(function(payload) {
    ErrElem.innerHTML = ErrElem.innerHTML + "; " + err
    console.log("Unable to get permission to notify.", err);
  });
+
+ messaging.onMessage(function(payload) {
+    console.log("Message received. ", payload);
+    // ...
+  });
+
