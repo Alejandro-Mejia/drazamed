@@ -158,7 +158,7 @@
     console.log("Unable to get permission to notify.", err);
     });
 
-    const messaging = firebase.messaging();
+    // const messaging = firebase.messaging();
 
     messaging.setBackgroundMessageHandler(function(payload) {
         console.log(
