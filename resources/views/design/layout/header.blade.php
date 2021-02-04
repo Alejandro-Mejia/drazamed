@@ -150,6 +150,26 @@
     console.log("Unable to get permission to notify.", err);
     });
 
+    const messaging = firebase.messaging();
+
+    messaging.setBackgroundMessageHandler(function(payload) {
+        console.log(
+            "[firebase-messaging-sw.js] Received background message ",
+            payload,
+        );
+        // Customize notification here
+        const notificationTitle = "Background Message Title";
+        const notificationOptions = {
+            body: "Drazamed tiene un mensaje importante para ti.",
+            icon: "/assets/img/logo.png",
+        };
+
+        return self.registration.showNotification(
+            notificationTitle,
+            notificationOptions,
+        );
+    });
+
 
     </script>
 
