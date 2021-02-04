@@ -10,19 +10,19 @@
 //     projectId: "drazamedapp",
 //     appId: "1:193162804196:web:5514e23878a8fb473425f1",
 // });
-var firebaseConfig = {
-    apiKey: "AIzaSyBvFM0v-DCmxGBYwVU-Fi6r_rUkQRBi57U",
-    authDomain: "drazamedapp.firebaseapp.com",
-    databaseURL: "https://drazamedapp-default-rtdb.firebaseio.com",
-    projectId: "drazamedapp",
-    storageBucket: "drazamedapp.appspot.com",
-    messagingSenderId: "193162804196",
-    appId: "1:193162804196:web:5514e23878a8fb473425f1",
-    measurementId: "G-YQJ9QT2Y8Z"
-};
+// var firebaseConfig = {
+//     apiKey: "AIzaSyBvFM0v-DCmxGBYwVU-Fi6r_rUkQRBi57U",
+//     authDomain: "drazamedapp.firebaseapp.com",
+//     databaseURL: "https://drazamedapp-default-rtdb.firebaseio.com",
+//     projectId: "drazamedapp",
+//     storageBucket: "drazamedapp.appspot.com",
+//     messagingSenderId: "193162804196",
+//     appId: "1:193162804196:web:5514e23878a8fb473425f1",
+//     measurementId: "G-YQJ9QT2Y8Z"
+// };
 
-firebase.initializeApp(firebaseConfig);
-firebase.analytics();
+// firebase.initializeApp(firebaseConfig);
+// firebase.analytics();
 
 // Retrieve an instance of Firebase Messaging so that it can handle background
 // messages.
