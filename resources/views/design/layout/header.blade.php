@@ -144,6 +144,14 @@
     .then(function () {
         MsgElem.innerHTML = "Notification permission granted."
         console.log("Notification permission granted.");
+
+        // get the token in the form of promise
+        return messaging.getToken()
+    })
+    .then(function(token) {
+        // print the token on the HTML page
+        TokenElem.innerHTML = "token is : " + token
+        console.log("Token FCM: " . token);
     })
     .catch(function (err) {
     ErrElem.innerHTML = ErrElem.innerHTML + "; " + err
