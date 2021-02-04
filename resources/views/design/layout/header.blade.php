@@ -141,12 +141,13 @@
         firebase.initializeApp(firebaseConfig);
         firebase.analytics();
 
+
         // Retrieve an instance of Firebase Messaging so that it can handle background
         // messages.
 
 
     </script>
-
+    <script src="/firebase-messaging-sw.js"> </script>
 
 
 
