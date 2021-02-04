@@ -125,7 +125,7 @@
     <script src="https://www.gstatic.com/firebasejs/8.2.3/firebase-messaging.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.2.5/firebase-analytics.js"></script>
 
-    <script src="/firebase-messaging-sw.js"> </script>
+    {{-- <script src="/firebase-messaging-sw.js"> </script> --}}
     <script>
         var firebaseConfig = {
             apiKey: "AIzaSyBvFM0v-DCmxGBYwVU-Fi6r_rUkQRBi57U",
