@@ -51,7 +51,7 @@ messaging.setBackgroundMessageHandler(function(payload) {
     );
 });
 
- const messaging = firebase.messaging();
+//  const messaging = firebase.messaging();
  messaging
    .requestPermission()
    .then(function () {

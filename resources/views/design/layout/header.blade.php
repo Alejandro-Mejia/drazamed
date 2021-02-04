@@ -121,7 +121,7 @@
         https://firebase.google.com/docs/web/setup#available-libraries -->
     <script src="https://www.gstatic.com/firebasejs/8.2.5/firebase-analytics.js"></script> --}}
 
-    <script src="firebase-messaging-sw.js"> </script>
+    <script src="/firebase-messaging-sw.js"> </script>
     <script>
     // Your web app's Firebase configuration
     // For Firebase JS SDK v7.20.0 and later, measurementId is optional
