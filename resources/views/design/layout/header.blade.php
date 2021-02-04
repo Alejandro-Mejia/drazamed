@@ -37,7 +37,7 @@
                             si estoy acá
                         @endif
                     </li> --}}
-                    @auth 
+                    @auth
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle border border-primary border border-primary rounded-pill"
                                 href="#"
@@ -111,6 +111,57 @@
 
         </nav>
     </div>
+
+    {{-- Loading firebase --}}
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/8.2.5/firebase-app.js"></script>
+    {{-- <script> src="https://www.gstatic.com/firebasejs/8.2.3/firebase-messaging.js"</script> --}}
+    <script src="https://www.gstatic.com/firebasejs/8.2.3/firebase-messaging.js"></script>
+    <!-- TODO: Add SDKs for Firebase products that you want to use
+        https://firebase.google.com/docs/web/setup#available-libraries -->
+    <script src="https://www.gstatic.com/firebasejs/8.2.5/firebase-analytics.js"></script>
+
+    <script>
+    // Your web app's Firebase configuration
+    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+    var firebaseConfig = {
+        apiKey: "AIzaSyBvFM0v-DCmxGBYwVU-Fi6r_rUkQRBi57U",
+        authDomain: "drazamedapp.firebaseapp.com",
+        databaseURL: "https://drazamedapp-default-rtdb.firebaseio.com",
+        projectId: "drazamedapp",
+        storageBucket: "drazamedapp.appspot.com",
+        messagingSenderId: "193162804196",
+        appId: "1:193162804196:web:5514e23878a8fb473425f1",
+        measurementId: "G-YQJ9QT2Y8Z"
+    };
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    firebase.analytics();
+
+    const messaging = firebase.messaging();
+    messaging
+    .requestPermission()
+    .then(function () {
+        MsgElem.innerHTML = "Notification permission granted."
+        console.log("Notification permission granted.");
+    })
+    .catch(function (err) {
+    ErrElem.innerHTML = ErrElem.innerHTML + "; " + err
+    console.log("Unable to get permission to notify.", err);
+    });
+
+
+    </script>
+
+    {{-- <script>
+        var config = {
+            messagingSenderId: "193162804196",
+            apiKey: "AIzaSyBvFM0v-DCmxGBYwVU-Fi6r_rUkQRBi57U",
+            projectId: "drazamedapp",
+            appId: "1:193162804196:web:5514e23878a8fb473425f1"
+        };
+        firebase.initializeApp(config);
+    </script> --}}
 
 
 </header>

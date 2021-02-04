@@ -377,7 +377,7 @@ class TreatmentController extends Controller
                 $final = $this->finalTratamiento ($treatment->id);
 
                 $title = "Drazamed te acompaña en tu tratamiento";
-                $body = "Hola " . $user[0]["first_name"] . " tu tratamiento con  " . $medicina . "ha finalizado";
+                $body = "Hola " . $user[0]["first_name"] . " tu tratamiento con  " . $medicina . " ha finalizado";
                 $result = $this->send_fcm(
                     $user[0]['customer']["token"],
                     $title,
