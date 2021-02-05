@@ -167,7 +167,7 @@
 
         messaging.onMessage(function(payload) {
             console.log("Message received. ", payload);
-            alert(payload.notification);
+            alert(payload.notification.body);
             // bootbox.confirm({
             //     title: payload.notification.title,
             //     message: payload.notification.body,
