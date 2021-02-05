@@ -188,7 +188,7 @@ class NotificationController extends Controller
 
         $optionBuilder = new OptionsBuilder();
         $optionBuilder->setTimeToLive(60*20);
-        $optionBuilder->link($webpush.fcm_options.link);
+        // $optionBuilder->link($webpush.fcm_options.link);
         $notificationBuilder = new PayloadNotificationBuilder($title);
         $notificationBuilder->setBody($body)
                     ->setClickAction("FCM_PLUGIN_ACTIVITY")
