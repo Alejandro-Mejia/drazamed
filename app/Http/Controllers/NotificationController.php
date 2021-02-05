@@ -267,6 +267,8 @@ class NotificationController extends Controller
         $dataBuilder->addData(['body' => $body]);
         $dataBuilder->addData(['title' => $title]);
         $dataBuilder->addData(['link' => $data["link"]]);
+        $dataBuilder->addData(['icon' => $data["icon"]]);
+        $dataBuilder->addData(['tag' => $data["tag"]]);
 
         $option = $optionBuilder->build();
         // $notification = $notificationBuilder->build();
