@@ -160,7 +160,7 @@
             console.log("Message received. ", payload);
             bootbox.alert({
                 title: ('notification' in payload) ? payload.notification.title : '' ,
-                message: ('notification' in payload) ? payload.notification.body : '',
+                message: ('notification' in payload) ? payload.notification.body : 'Sin datos',
             });
         });
 
