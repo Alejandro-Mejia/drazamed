@@ -159,8 +159,8 @@
         messaging.onMessage(function(payload) {
             console.log("Message received. ", payload);
             bootbox.alert({
-                title: ('title' in payload.notification) ? payload.notification.title : '' ,
-                message: ('body' in payload.notification) ? payload.notification.body : '',
+                title: ('notification' in payload) ? payload.notification.title : '' ,
+                message: ('notification' in payload) ? payload.notification.body : '',
             });
         });
 
