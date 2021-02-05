@@ -29,7 +29,7 @@ firebase.initializeApp({
 //     measurementId: "G-YQJ9QT2Y8Z"
 // };
 
-firebase.initializeApp(config);
+// firebase.initializeApp(config);
 firebase.analytics();
 
 // Retrieve an instance of Firebase Messaging so that it can handle background
