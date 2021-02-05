@@ -87,6 +87,79 @@
                 background-color: #555;
             }
         </style>
+
+        <script src="https://www.gstatic.com/firebasejs/8.2.5/firebase-app.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.2.3/firebase-messaging.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.2.5/firebase-analytics.js"></script>
+
+        {{-- <script src="/firebase-messaging-sw.js"> </script> --}}
+        <script>
+            var tokenFCM;
+            var firebaseConfig = {
+                apiKey: "AIzaSyBvFM0v-DCmxGBYwVU-Fi6r_rUkQRBi57U",
+                authDomain: "drazamedapp.firebaseapp.com",
+                databaseURL: "https://drazamedapp-default-rtdb.firebaseio.com",
+                projectId: "drazamedapp",
+                storageBucket: "drazamedapp.appspot.com",
+                messagingSenderId: "193162804196",
+                appId: "1:193162804196:web:5514e23878a8fb473425f1",
+                measurementId: "G-YQJ9QT2Y8Z"
+            };
+
+            firebase.initializeApp(firebaseConfig);
+            firebase.analytics();
+
+
+            // Retrieve an instance of Firebase Messaging so that it can handle background
+            // messages.
+            const messaging = firebase.messaging();
+            messaging
+            .requestPermission()
+            .then(function () {
+                MsgElem.innerHTML = "Notification permission granted."
+                console.log("Notification permission granted.");
+
+                // get the token in the form of promise
+                return messaging.getToken()
+            })
+            .then(function(token) {
+                // print the token on the HTML page
+                TokenElem.innerHTML = "token is : " + token
+                console.log("Token FCM: " . token);
+            })
+            .catch(function (err) {
+            ErrElem.innerHTML = ErrElem.innerHTML + "; " + err
+            console.log("Unable to get permission to notify.", err);
+            });
+
+            messaging.onMessage(function(payload) {
+                console.log("Message received. ", payload);
+                // alert(payload.notification.body);
+                // bootbox.confirm({
+                //     title: payload.notification.title,
+                //     message: payload.notification.body,
+                //     buttons: {
+                //         cancel: {
+                //             label: '<i class="fa fa-times"></i> Cancel'
+                //         },
+                //         confirm: {
+                //             label: '<i class="fa fa-check"></i> Confirm'
+                //         }
+                //     },
+                //     callback: function (result) {
+                //         console.log('This was logged in the callback: ' + result);
+                //     }
+                // });
+                // alert(payload.notification)
+                // ...
+                bootbox.alert({
+                    title: payload.notification.title,
+                    message: payload.notification.body,
+                });
+            });
+
+        </script>
+
     </head>
     <body>
         <div id="token"></div>
