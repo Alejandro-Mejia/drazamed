@@ -78,8 +78,4 @@ const messaging = firebase.messaging();
    console.log("Unable to get permission to notify.", err);
  });
 
- messaging.onMessage(function(payload) {
-    console.log("Message received. ", payload);
-    // ...
-  });
 
