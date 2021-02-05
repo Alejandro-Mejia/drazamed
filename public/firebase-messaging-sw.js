@@ -78,16 +78,33 @@ const messaging = firebase.messaging();
 // console.log("Unable to get permission to notify.", err);
 // });
 
-// const messaging = firebase.messaging();
-messaging.setBackgroundMessageHandler(function(payload) {
-console.log('[firebase-messaging-sw.js] Received background message ', payload);
-// const notificationTitle = 'Background Message from html';
-// const notificationOptions = {
-// body: 'Background Message body.'
-// // icon: '/assets/images/logo2.png'
-// };
+// // const messaging = firebase.messaging();
+// messaging.setBackgroundMessageHandler(function(payload) {
+// console.log('[firebase-messaging-sw.js] Received background message ', payload);
+// // const notificationTitle = 'Background Message from html';
+// // const notificationOptions = {
+// // body: 'Background Message body.'
+// // // icon: '/assets/images/logo2.png'
+// // };
+// alert(payload.notification.title);
+// return self.registration.showNotification(notificationTitle,
+//     notificationOptions);
+// });
 
-return self.registration.showNotification(notificationTitle,
-    notificationOptions);
+// const messaging = firebase.messaging();
+messaging.setBackgroundMessageHandler(function (payload) {
+  console.log('Handling background message ', payload);
+
+  return self.registration.showNotification(payload.data.title, {
+    body: payload.data.body,
+    icon: payload.data.icon,
+    tag: payload.data.tag,
+    data: payload.data.link
+  });
+});
+
+self.addEventListener('notificationclick', function(event) {
+  event.notification.close();
+  event.waitUntil(self.clients.openWindow(event.notification.data));
 });
 
