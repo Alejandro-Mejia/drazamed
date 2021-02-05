@@ -29,7 +29,7 @@ class Treatment extends Model
 
 
     public function medicines () {
-        return $this->hasMany('App\Medicine','item_code','item_code')->select('item_code', 'item_name', 'composition', 'units', 'units_value', 'group', 'tax');
+        return $this->hasMany('App\Medicine','item_code','item_code')->select('item_code', 'item_name', 'composition', 'units', 'units_value', 'group', 'tax','is_pres_required');
     }
 
     public function user()
