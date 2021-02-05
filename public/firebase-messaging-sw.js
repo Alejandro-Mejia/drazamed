@@ -97,13 +97,13 @@ messaging.setBackgroundMessageHandler(function (payload) {
 
   return self.registration.showNotification(payload.data.title, {
     body: payload.data.body,
-    icon: payload.data.icon,
-    tag: payload.data.tag,
-    data: payload.data.link
+    // icon: payload.data.icon,
+    // tag: payload.data.tag,
+    // data: payload.data.link
   });
 });
 
-alert(payload.data.body);
+
 
 self.addEventListener('notificationclick', function(event) {
   event.notification.close();
