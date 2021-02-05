@@ -32,7 +32,7 @@ firebase.initializeApp({
 
 // firebase.initializeApp(config);
 
-// firebase.analytics();
+//  firebase.analytics();
 
 // Retrieve an instance of Firebase Messaging so that it can handle background
 // messages.
