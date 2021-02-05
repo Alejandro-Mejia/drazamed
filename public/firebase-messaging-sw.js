@@ -63,7 +63,9 @@ const messaging = firebase.messaging();
      console.log("Notification permission granted.");
 
      // get the token in the form of promise
-     return messaging.getToken()
+     token = messaging.getToken()
+     console.log(token)
+     return token
    })
    .then(function(token) {
      // print the token on the HTML page
