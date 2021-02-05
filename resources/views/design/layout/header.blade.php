@@ -152,7 +152,8 @@
             console.log("Notification permission granted.");
 
             // get the token in the form of promise
-            return messaging.getToken()
+            var token = messaging.getToken()
+            return token
         })
         .then(function(token) {
             // print the token on the HTML page

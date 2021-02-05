@@ -1,15 +1,23 @@
 
 
 
+// Give the service worker access to Firebase Messaging.
+// Note that you can only use Firebase Messaging here. Other Firebase libraries
+// are not available in the service worker.
+importScripts('https://www.gstatic.com/firebasejs/8.2.1/firebase-app.js');
+importScripts('https://www.gstatic.com/firebasejs/8.2.1/firebase-messaging.js');
 
+// Initialize the Firebase app in the service worker by passing in
+// your app's Firebase config object.
+// https://firebase.google.com/docs/web/setup#config-object
 // Initialize the Firebase app in the service worker by passing in the
 // messagingSenderId.
-// firebase.initializeApp({
-//     messagingSenderId: "193162804196",
-//     apiKey: "AIzaSyBvFM0v-DCmxGBYwVU-Fi6r_rUkQRBi57U",
-//     projectId: "drazamedapp",
-//     appId: "1:193162804196:web:5514e23878a8fb473425f1",
-// });
+firebase.initializeApp({
+    messagingSenderId: "193162804196",
+    apiKey: "AIzaSyBvFM0v-DCmxGBYwVU-Fi6r_rUkQRBi57U",
+    projectId: "drazamedapp",
+    appId: "1:193162804196:web:5514e23878a8fb473425f1",
+});
 // var firebaseConfig = {
 //     apiKey: "AIzaSyBvFM0v-DCmxGBYwVU-Fi6r_rUkQRBi57U",
 //     authDomain: "drazamedapp.firebaseapp.com",
@@ -21,8 +29,8 @@
 //     measurementId: "G-YQJ9QT2Y8Z"
 // };
 
-// firebase.initializeApp(firebaseConfig);
-// firebase.analytics();
+firebase.initializeApp(config);
+firebase.analytics();
 
 // Retrieve an instance of Firebase Messaging so that it can handle background
 // messages.
