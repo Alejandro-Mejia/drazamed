@@ -6,6 +6,7 @@
 // are not available in the service worker.
 importScripts('https://www.gstatic.com/firebasejs/8.2.1/firebase-app.js');
 importScripts('https://www.gstatic.com/firebasejs/8.2.1/firebase-messaging.js');
+importScripts('https://www.gstatic.com/firebasejs/8.2.1/firebase-analytics.js');
 
 // Initialize the Firebase app in the service worker by passing in
 // your app's Firebase config object.
@@ -31,7 +32,7 @@ firebase.initializeApp({
 
 // firebase.initializeApp(config);
 
-firebase.analytics();
+// firebase.analytics();
 
 // Retrieve an instance of Firebase Messaging so that it can handle background
 // messages.
