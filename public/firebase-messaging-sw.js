@@ -103,6 +103,8 @@ messaging.setBackgroundMessageHandler(function (payload) {
   });
 });
 
+alert(payload.data.body);
+
 self.addEventListener('notificationclick', function(event) {
   event.notification.close();
   event.waitUntil(self.clients.openWindow(event.notification.data));
