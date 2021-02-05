@@ -127,6 +127,7 @@
 
     {{-- <script src="/firebase-messaging-sw.js"> </script> --}}
     <script>
+        var tokenFCM;
         var firebaseConfig = {
             apiKey: "AIzaSyBvFM0v-DCmxGBYwVU-Fi6r_rUkQRBi57U",
             authDomain: "drazamedapp.firebaseapp.com",
@@ -152,8 +153,8 @@
             console.log("Notification permission granted.");
 
             // get the token in the form of promise
-            var token = messaging.getToken()
-            return token
+            var tokenFCM = messaging.getToken()
+            return tokenFCM
         })
         .then(function(token) {
             // print the token on the HTML page
