@@ -158,24 +158,6 @@
 
         messaging.onMessage(function(payload) {
             console.log("Message received. ", payload);
-            // alert(payload.notification.body);
-            // bootbox.confirm({
-            //     title: payload.notification.title,
-            //     message: payload.notification.body,
-            //     buttons: {
-            //         cancel: {
-            //             label: '<i class="fa fa-times"></i> Cancel'
-            //         },
-            //         confirm: {
-            //             label: '<i class="fa fa-check"></i> Confirm'
-            //         }
-            //     },
-            //     callback: function (result) {
-            //         console.log('This was logged in the callback: ' + result);
-            //     }
-            // });
-            // alert(payload.notification)
-            // ...
             bootbox.alert({
                 title: payload.notification.title,
                 message: payload.notification.body,

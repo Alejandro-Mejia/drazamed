@@ -81,11 +81,11 @@ const messaging = firebase.messaging();
 // const messaging = firebase.messaging();
 messaging.setBackgroundMessageHandler(function(payload) {
 console.log('[firebase-messaging-sw.js] Received background message ', payload);
-// const notificationTitle = 'Background Message from html';
-// const notificationOptions = {
-// body: 'Background Message body.',
-// icon: '/firebase-logo.png'
-// };
+const notificationTitle = 'Background Message from html';
+const notificationOptions = {
+body: 'Background Message body.',
+icon: '/assets/images/logo2.png'
+};
 
 return self.registration.showNotification(notificationTitle,
     notificationOptions);
