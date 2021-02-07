@@ -335,7 +335,7 @@ class NotificationController extends Controller
             "platform" => 1,
             "topic" => "com.draz.drazamed",
             "alert" => $message,
-            "data" => $message
+            "a_data" => $message
         ];
         Log::info("Notification :");
         Log::info($notification);
