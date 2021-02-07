@@ -95,12 +95,16 @@ class TreatmentController extends Controller
                 ];
 
                 $result = app('App\Http\Controllers\NotificationController')->sendIosGorush($user["apnstoken"],$message);
+
                 // $this->send_ios_curl(
                 //     $user["apnstoken"],
                 //     $title,
                 //     $body,
                 //     $treatment["id"]
                 // );
+
+                Log::info($result);
+
 
             }
 
