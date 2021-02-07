@@ -103,7 +103,7 @@ class TreatmentController extends Controller
                 //     $treatment["id"]
                 // );
 
-                Log::info($result->toArray());
+                Log::info(json_encode($result, JSON_PRETTY_PRINT));
 
 
             }
