@@ -94,14 +94,14 @@ class TreatmentController extends Controller
                     "treatment_id" => $treatment["id"],
                 ];
 
-                $result = app('App\Http\Controllers\NotificationController')->sendIosGorush($user["apnstoken"],$message);
+                // $result = app('App\Http\Controllers\NotificationController')->sendIosGorush($user["apnstoken"],$message);
 
-                // $this->send_ios_curl(
-                //     $user["apnstoken"],
-                //     $title,
-                //     $body,
-                //     $treatment["id"]
-                // );
+                $this->send_ios_curl(
+                    $user["apnstoken"],
+                    $title,
+                    $body,
+                    $treatment["id"]
+                );
 
                 Log::info(json_encode($result, JSON_PRETTY_PRINT));
 
