@@ -25,6 +25,7 @@ use LaravelFCM\Message\OptionsBuilder;
 use LaravelFCM\Message\PayloadDataBuilder;
 use LaravelFCM\Message\PayloadNotificationBuilder;
 use FCM;
+use NotificationController;
 
 
 // use Monolog\Logger;
@@ -87,14 +88,19 @@ class TreatmentController extends Controller
 
             if ($user["apnstoken"] != "") {
                 Log::info("Enviando a apnstoken IOS");
+                $message = [
+                    "title" => $title,
+                    "body" => $body,
+                    "treatment_id" => $treatment["id"],
+                ];
 
-
-                $this->send_ios_curl(
-                    $user["apnstoken"],
-                    $title,
-                    $body,
-                    $treatment["id"]
-                );
+                $result = app('App\Http\Controllers\NotificationController')->sendIosGorush($user["apnstoken"],$message);
+                // $this->send_ios_curl(
+                //     $user["apnstoken"],
+                //     $title,
+                //     $body,
+                //     $treatment["id"]
+                // );
 
             }
 

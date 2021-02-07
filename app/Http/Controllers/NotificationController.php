@@ -13,7 +13,8 @@ use LaravelFCM\Message\OptionsBuilder;
 use LaravelFCM\Message\PayloadDataBuilder;
 use LaravelFCM\Message\PayloadNotificationBuilder;
 use FCM;
-
+use GuzzleHttp\Client;
+use GuzzleHttp;
 
 
 class NotificationController extends Controller
@@ -170,6 +171,9 @@ class NotificationController extends Controller
         // return Response::json (['status'=>$status, 'result'=>$result]);
     }
 
+
+
+
     public function sendAndroidNotification() {
 
         if(!empty(Request::json()->all())) {
@@ -308,6 +312,55 @@ class NotificationController extends Controller
         } else {
             return Response::json (['status' => 'FAILURE'  ]);
         }
+
+
+
+
+    }
+
+    public function sendIosGorush($tokens, $message ) {
+
+        $client = new Client([
+            // Base URI is used with relative requests
+            'base_uri' => 'http://drazamed.com:8088/api/push',
+            // You can set any number of default request options.
+            'timeout'  => 2.0,
+            'headers' => ['Content-Type' => 'application/json'],
+        ]);
+
+        $notification = [
+            "tokens" => [
+                $tokens
+            ],
+            "platform" => 1,
+            "topic" => "com.draz.drazamed",
+            "alert" => $message,
+            "data" => $message
+        ];
+        Log::info("Notification :");
+        Log::info($notification);
+
+        $data = [
+            "notifications" => [
+                $notification
+            ]
+        ];
+
+        // dd(json_encode($data));
+
+        $jsonObject = json_encode($data, JSON_PRETTY_PRINT);
+
+        // $jsonObject = "{\"notifications\":[{\"tokens\":[\"aba76ea39f6d056fdef0451d1df0a983bccb36227db5bb8fbe0be927f2b715bd\"],\"platform\":1,\"message\":\"Hello World Android!\"}]}";
+        Log::info($jsonObject);
+
+        try {
+            $r = $client->request('POST', '/api/push', ['body' => $jsonObject]);
+        } catch (Exception $e) {
+            $r = $e;
+        }
+
+        return $r;
+
 
 
     }
