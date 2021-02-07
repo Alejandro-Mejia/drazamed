@@ -764,7 +764,8 @@ class TreatmentController extends Controller
             "apns-topic: {$app_bundle_id}",
             "User-Agent: My Sender"
         );
-
+        curl_setopt($http2ch, CURLOPT_SSL_VERIFYHOST, false);
+        curl_setopt($http2ch, CURLOPT_SSL_VERIFYPEER, false);
         // other curl options
         curl_setopt_array($http2ch, array(
             CURLOPT_URL => $url,
@@ -778,6 +779,7 @@ class TreatmentController extends Controller
             CURLOPT_SSLCERT => $cert,
             CURLOPT_SSLCERTTYPE => "P12",
             CURLOPT_SSLCERTPASSWD => "DrazameD21",
+
             CURLOPT_HEADER => 1
         ));
 
