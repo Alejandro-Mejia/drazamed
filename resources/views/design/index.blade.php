@@ -18,8 +18,8 @@
 
     <div class="cover">
         <div class="wrapper">
-            <h1>
-                Pide Medicamentos Online en la Sabana. <br> ¡Es muy Fácil!
+            <h1 style="text-align:center; color:white">
+                ¡El aliado de tu tratamiento médico!
             </h1>
             <p class="text-center">
                 Entregamos en Guaymaral, Cota, Chía, Cajicá, Tabio, Briceño, Sopó y Tocancipá
