@@ -103,6 +103,8 @@ class TreatmentController extends Controller
 
             if ($user["apnstoken"] != "") {
                 Log::info("Enviando a apnstoken IOS");
+                $title = "Drazamed te acompaña en tu tratamiento";
+                $body = "Hola " . $user["first_name"] . " es hora de tomarte una medicina, " . $medicina ;
 
                 // $result = app('App\Http\Controllers\NotificationController')->sendIosGorush($user["apnstoken"],$message);
 
