@@ -139,7 +139,7 @@ class TreatmentController extends Controller
     public function isTimeforOrder($treatment) {
 
 
-        $consumo4dias =  $treatment['dosis']*(24/$treatment['freq']) * 4;
+        $consumo4dias =  $treatment['dosis']*(24/$treatment['frequency']) * 4;
         $reorden = (($treatment['taken'] + $consumo4dias) > $treatment['total']) ? 1 : 0;
 
         Log::info("Total: " . $treatment['total']);
