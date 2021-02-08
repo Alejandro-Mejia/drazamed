@@ -60,13 +60,15 @@ class TreatmentController extends Controller
 
         foreach($treatments as $treatment) {
             Log::info("Actualizando proxima toma");
-            error_log('Actualizando proxima toma');
+
 
             $this->UpdateNextTime($treatment["customer_id"], $treatment["item_code"]);
 
             $user = Customer::where('id', '=', $treatment["customer_id"])->first();
             error_log($user);
             Log::info($user->toArray());
+
+            $reorden = $this->isTimeforOrder($treatment);
 
             if ($user["token"] != "") {
 
@@ -76,6 +78,7 @@ class TreatmentController extends Controller
                 error_log('Enviando notificación');
                 $title = "Drazamed te acompaña en tu tratamiento";
 
+
                 $body = "Hola " . $user["first_name"] . " es hora de tomarte una medicina, " . $medicina ;
                 $result = $this->send_fcm(
                     $user["token"],
@@ -84,15 +87,22 @@ class TreatmentController extends Controller
                     $treatment["id"]
                 );
 
+                if($reorden) {
+                    $title = "Drazamed te acompaña en tu tratamiento";
+                    $body = "Hola " . $user["first_name"] . " en 4 dias se acaba tu " . $medicina . " es momento de pensar en renovar tu orden" ;
+                    $result = $this->send_fcm(
+                        $user["token"],
+                        $title,
+                        $body,
+                        $treatment["id"]
+                    );
+                }
+
+
             }
 
             if ($user["apnstoken"] != "") {
                 Log::info("Enviando a apnstoken IOS");
-                $message = [
-                    "title" => $title,
-                    "body" => $body,
-                    "treatment_id" => $treatment["id"],
-                ];
 
                 // $result = app('App\Http\Controllers\NotificationController')->sendIosGorush($user["apnstoken"],$message);
 
@@ -102,6 +112,17 @@ class TreatmentController extends Controller
                     $body,
                     $treatment["id"]
                 );
+
+                if($reorden) {
+                    $title = "Drazamed te acompaña en tu tratamiento";
+                    $body = "Hola " . $user["first_name"] . " en 4 dias se acaba tu " . $medicina . " es momento de pensar en renovar tu orden" ;
+                    $result = $this->send_ios_curl(
+                        $user["apnstoken"],
+                        $title,
+                        $body,
+                        $treatment["id"]
+                    );
+                }
 
                 Log::info(json_encode($result, JSON_PRETTY_PRINT));
 
@@ -115,6 +136,20 @@ class TreatmentController extends Controller
 
     }
 
+    public function isTimeforOrder($treatment) {
+
+
+        $consumo4dias =  $treatment['dosis']*(24/$treatment['freq']) * 4;
+        $reorden = (($treatment['taken'] + $consumo4dias) > $treatment['total']) ? 1 : 0;
+
+        Log::info("Total: " . $treatment['total']);
+        Log::info("Tomadas: " . $treatment['taken']);
+        Log::info("Por tomar en 4 dias: " . $consumo4dias);
+        Log::info("Reorden: " . $reorden ? 'Si' : 'No');
+
+        return $reorden;
+
+    }
 
     /**
      * Envia mensajes usando la libreria firebase-php a dispositivos Android
