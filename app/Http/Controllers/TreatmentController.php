@@ -140,7 +140,7 @@ class TreatmentController extends Controller
 
     public function isTimeforOrder($treatment) {
 
-        // (2 dosis) * 24 (dia) / 8 (freq) * 4(dias) = 24 cuantas pastillas para 4 dias!!
+        // (2 dosis) * 24 (dia) / 4 (freq) * 4(dias) = 2 * 4 * 4 = 32
         // 10 (tomadas) + 24 (consumo 4 dias) > total -> envia reorden
 
         $consumo4dias =  $treatment['dosis']*(24/$treatment['frequency']) * 4;
@@ -148,6 +148,8 @@ class TreatmentController extends Controller
 
         Log::info("Total: " . $treatment['total']);
         Log::info("Tomadas: " . $treatment['taken']);
+        Log::info("Dosis: " . $treatment['dosis']);
+        Log::info("Freq: " . $treatment['frequency']);
         Log::info("Por tomar en 4 dias: " . $consumo4dias);
         Log::info("Reorden: " . $reorden ? 'Si' : 'No');
 
