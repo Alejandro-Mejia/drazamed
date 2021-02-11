@@ -87,7 +87,7 @@ class TreatmentController extends Controller
                     $treatment["id"]
                 );
 
-                if($reorden) {
+                if($reorden && !$treatment['hasReorden']) {
                     $title = "Drazamed te acompaña en tu tratamiento";
                     $body = "Hola " . $user["first_name"] . " en 4 dias se acaba tu " . $medicina . " es momento de pensar en renovar tu orden" ;
                     $result = $this->send_fcm(
@@ -115,7 +115,7 @@ class TreatmentController extends Controller
                     $treatment["id"]
                 );
 
-                if($reorden) {
+                if($reorden && !$treatment['hasReorden']) {
                     $title = "Drazamed te acompaña en tu tratamiento";
                     $body = "Hola " . $user["first_name"] . " en 4 dias se acaba tu " . $medicina . " es momento de pensar en renovar tu orden" ;
                     $result = $this->send_ios_curl(
@@ -140,6 +140,8 @@ class TreatmentController extends Controller
 
     public function isTimeforOrder($treatment) {
 
+        // (2 dosis) * 24 (dia) / 8 (freq) * 4(dias) = 24 cuantas pastillas para 4 dias!!
+        // 10 (tomadas) + 24 (consumo 4 dias) > total -> envia reorden
 
         $consumo4dias =  $treatment['dosis']*(24/$treatment['frequency']) * 4;
         $reorden = (($treatment['taken'] + $consumo4dias) > $treatment['total']) ? 1 : 0;
@@ -360,8 +362,8 @@ class TreatmentController extends Controller
         $units = $medicina["units_value"];
         Log::info('units in box:' .$units);
         if ($freq > 0) {
-            $unitsperday = 24 / $freq;
-            $days = (int)($units / $unitsperday);
+            $unitsperday = 24 / $freq; // Cuantas veces por dia
+            $days = (int)($units / ($unitsperday * $dosis));
             Log::info('days for box :' .$days);
             $deltaT = strval($days-2) . " days";
             Log::info('deltaT :' .$deltaT);
