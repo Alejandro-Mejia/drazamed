@@ -838,7 +838,10 @@ document.addEventListener("click", function(event){
     element = event.target;
     cat_value = element.textContent;
     console.log("itemCat=" + cat_value);
-    show_our_products(cat_value);
+    if (element.className == "category-item") {
+        show_our_products(cat_value);
+    }
+
     //document.getElementById('myLabel').innerText=event.target.id + " was clicked";
   });
 
