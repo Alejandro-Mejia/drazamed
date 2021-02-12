@@ -26,12 +26,12 @@ class FavoritesController extends Controller
 
 
 		($request->has('id_min')) ? $id_min = $request->query('id_min') : $id_min = null;
-		($request->has('n')) ? $n = $request->query('n') : $n = 9;
+		($request->has('n')) ? $n = $request->query('n') : $n = 49;
 
 		// dd($id_min, $n);
 
 		if ($id_min != null && $n != null) {
-			$favorites = Favorite::select ('*')->where('id', '>=', $id_min)->take($n)->get();
+			$favorites = Favorite::select ('*')->where('id', '>=', $id_min)->inRandomOrder()->take($n)->get();
 		} else {
 			$favorites = Favorite::select ('*')->get();
 		}

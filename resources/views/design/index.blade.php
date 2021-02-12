@@ -259,7 +259,7 @@
 
     $(document).ready(function() {
         getCategories();
-        show_favorites(1,30);
+        show_favorites(1,48);
     });
     $(element).on("click mousedown mouseup focus blur keydown change",function(e){
         console.log(e);
