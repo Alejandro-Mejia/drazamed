@@ -92,9 +92,9 @@
                         </form>
                     </div>
 
-                    <div class="dra-box med-categories" >
-                        <h3 class="mb-4">Categorías</h3>
-                        <ul id="catList" style="max-height: 400px;  overflow: auto;">
+                    <div class="dra-box med-categories" style="z-index:1000;" >
+                        <h3 id="catTitle" class="mb-4">Categorías</h3>
+                        <ul id="catList" class="catList" style="max-height: 400px;  overflow: auto; z-index:1000;">
                         </ul>
                     </div>
                 </div>

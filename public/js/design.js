@@ -816,19 +816,31 @@ function show_our_products(cat = null) {
     });
 }
 
-// $("#catList").on("click", function(e) {
-//     // alert($(this).html());
-//     console.log("itemCat=" + $(this).html());
-//     cat_value = $(this).html();
-//     show_our_products(cat_value);
-// });
+$("#catTitle").on("click", function(e) {
+    // alert($(this).html());
+    console.log("itemCat=" + $(this).html());
+    cat_value = $(this).html();
+    show_our_products(cat_value);
+});
 
-// $("#catList").on("click","li", function(e) {
-//     alert($(this).html());
-//     console.log("itemCat=" + $(this).html());
-//     cat_value = $(this).html();
-//     show_our_products(cat_value);
-// });
+$(".catList").on("click","li", function(e) {
+    alert($(this).html());
+    console.log("itemCat=" + $(this).html());
+    cat_value = $(this).html();
+    show_our_products(cat_value);
+});
+
+
+document.addEventListener("click", function(event){
+    //this is the event handler for the click event in myButton
+    console.log ("Click : ")
+    console.log (event.target);
+    element = event.target;
+    cat_value = element.textContent;
+    console.log("itemCat=" + cat_value);
+    show_our_products(cat_value);
+    //document.getElementById('myLabel').innerText=event.target.id + " was clicked";
+  });
 
 $(".category-item").on("click", function(e){
     alert($(this).html());
