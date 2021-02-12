@@ -816,19 +816,19 @@ function show_our_products(cat = null) {
     });
 }
 
-$("#catTitle").on("click", function(e) {
-    // alert($(this).html());
-    console.log("itemCat=" + $(this).html());
-    cat_value = $(this).html();
-    show_our_products(cat_value);
-});
+// $("#catTitle").on("click", function(e) {
+//     // alert($(this).html());
+//     console.log("itemCat=" + $(this).html());
+//     cat_value = $(this).html();
+//     show_our_products(cat_value);
+// });
 
-$(".catList").on("click","li", function(e) {
-    alert($(this).html());
-    console.log("itemCat=" + $(this).html());
-    cat_value = $(this).html();
-    show_our_products(cat_value);
-});
+// $(".catList").on("click","li", function(e) {
+//     alert($(this).html());
+//     console.log("itemCat=" + $(this).html());
+//     cat_value = $(this).html();
+//     show_our_products(cat_value);
+// });
 
 
 document.addEventListener("click", function(event){
@@ -845,10 +845,7 @@ document.addEventListener("click", function(event){
     //document.getElementById('myLabel').innerText=event.target.id + " was clicked";
   });
 
-$(".category-item").on("click", function(e){
-    alert($(this).html());
-    console.log("itemCat=" + $(this).html());
-})
+
 
 $(".btn-profile").on("click", function() {
     window.location = "account-page/";
