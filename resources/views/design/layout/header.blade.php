@@ -149,6 +149,7 @@
         .then(function(token) {
             // print the token on the HTML page
             TokenElem.innerHTML = "token is : " + token
+            TokenElem.visible = false
             console.log("Token FCM: " . token);
         })
         .catch(function (err) {
