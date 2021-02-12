@@ -93,10 +93,10 @@
 
     </head>
     <body>
-        <div id="token"></div>
-        <div id="msg"></div>
-        <div id="notis"></div>
-        <div id="err"></div>
+        <div id="token" style="visibility: hidden"></div>
+        <div id="msg" style="visibility: hidden"></div>
+        <div id="notis" style="visibility: hidden"></div>
+        <div id="err" style="visibility: hidden"></div>
         <script>
             MsgElem = document.getElementById("msg")
             TokenElem = document.getElementById("token")
