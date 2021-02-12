@@ -77,7 +77,7 @@
               tu orden. --}}
           </p>
 
-          <div class="d-sm-none d-md-block" id ="tableBig" >
+          <div class="d-none d-sm-none d-md-block" id ="tableBig" >
             <table class="table table-striped my-4">
               <thead>
                   <tr>
@@ -266,7 +266,7 @@
             </table>
           </div>
 
-          <div class="d-sm-block d-md-none">
+          <div class="d-sm-block d-md-none" id=>
             <table class="table table-striped my-4">
               <thead>
                   <tr>

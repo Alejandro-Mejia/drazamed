@@ -103,7 +103,7 @@ main {
         clear: both;
     }
 }
-@media(max-width: 767px){
+@media(min-width: 767px){
   .cart{
     border-radius: 20px;
     padding: 0px !important;
@@ -112,5 +112,22 @@ main {
   #tableBig{
     display: block;
   }
+  #tableSmall{
+    display: none;
+  }
 }
+
+@media(max-width: 766px){
+    .cart{
+      border-radius: 20px;
+      padding: 0px !important;
+      background-color: #ffffff;
+    }
+    #tableBig{
+      display: none;
+    }
+    #tableSmall{
+        display: block;
+    }
+  }
 

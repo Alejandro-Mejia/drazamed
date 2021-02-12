@@ -16300,17 +16300,33 @@ main {
   clear: both;
 }
 
-@media (max-width: 767px) {
-  .cart {
-    border-radius: 20px;
-    padding: 0px !important;
-    background-color: #ffffff;
+@media(min-width: 767px){
+    .cart{
+      border-radius: 20px;
+      padding: 0px !important;
+      background-color: #ffffff;
+    }
+    #tableBig{
+      display: block;
+    }
+    #tableSmall{
+      display: none;
+    }
   }
 
-  #tableBig {
-    display: block;
-  }
-}
+  @media(max-width: 640px){
+      .cart{
+        border-radius: 20px;
+        padding: 0px !important;
+        background-color: #ffffff;
+      }
+      #tableBig{
+        display: none;
+      }
+      #tableSmall{
+          display: block;
+      }
+    }
 
 @font-face {
   font-family: "louis_george_cafe";
