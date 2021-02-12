@@ -114,6 +114,7 @@ use MercadoPago;
     Route::get('/treatment/treatment-time', 'TreatmentController@getTreatmentsByTime');
     Route::post('/treatment/next-time', 'TreatmentController@postUpdateNextTime');
     Route::get('/treatment/treatment-by-id', 'TreatmentController@getMyTreatmentsById');
+    Route::post('/treatment/update-reorden', 'TreatmentController@postUpdateReorden');
     /**
      * Professional routes
      */

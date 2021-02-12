@@ -153,6 +153,7 @@ class TreatmentController extends Controller
         Log::info("Dosis: " . $treatment['dosis']);
         Log::info("Freq: " . $treatment['frequency']);
         Log::info("Por tomar en 4 dias: " . $consumo4dias);
+        Log::info("Reorden: " . $reorden );
         Log::info("Reorden: " . $reorden ? 'Si' : 'No');
 
         return $reorden;
@@ -664,9 +665,46 @@ class TreatmentController extends Controller
             }
 
         }
+    }
 
+    public function postUpdateReorden() {
+        // header ("Access-Control-Allow-Origin: *");
+        // header ("Access-Control-Allow-Headers: *");
+        if(!empty(Request::json()->all())) {
+            $email = Request::input ('email');
+            $item_code = Request::input ('item_code');
+        }
 
+        $result = false;
+        // $customer_id = Customer::where('mail', '=', $email)->first()->customer_id;
+        $user = User::where('email', '=', $email)->with('customer')->get();
 
+        $customer_id =  $user[0]['customer']['id'];
+
+        Log::info('Customer_id:'. $customer_id);
+        Log::info('Item Code:'. $item_code);
+        \DB::enableQueryLog();
+
+        $treatment = Treatment::where('customer_id', '=', $customer_id)->where('item_code', '=', $item_code)->first();
+        $query = \DB::getQueryLog();
+
+        // $treatment = Treatment::where('item_code', '=', $item_code)->get();
+
+        Log::info("Query:" , $query);
+        Log::info("Tratamiento:" . $treatment);
+
+        if ($treatment != null ) {
+
+            $treatment->hasReorden = 1;
+            $updated = $treatment->toArray();
+            $result = $treatment->update($updated);
+        }
+
+        if ($result) {
+            return Response::json (['status' => 'SUCCESS' , 'msg' => 'Tu tratamiento ha sido actualizado correctamente.']);
+        } else {
+            return Response::json (['status' => 'SUCCESS' , 'msg' => 'Tu tratamiento NO ha sido actualizado correctamente.']);
+        }
     }
 
     public function send_fcm($id, $title, $body, $treatment_id) {

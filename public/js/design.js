@@ -816,19 +816,24 @@ function show_our_products(cat = null) {
     });
 }
 
-$("#catList").on("click", function(e) {
-    // alert($(this).html());
-    console.log("itemCat=" + $(this).html());
-    cat_value = $(this).html();
-    show_our_products(cat_value);
-});
+// $("#catList").on("click", function(e) {
+//     // alert($(this).html());
+//     console.log("itemCat=" + $(this).html());
+//     cat_value = $(this).html();
+//     show_our_products(cat_value);
+// });
 
-$("#catList").on("click","li", function(e) {
-    // alert($(this).html());
+// $("#catList").on("click","li", function(e) {
+//     alert($(this).html());
+//     console.log("itemCat=" + $(this).html());
+//     cat_value = $(this).html();
+//     show_our_products(cat_value);
+// });
+
+$(".category-item").on("click", function(e){
+    alert($(this).html());
     console.log("itemCat=" + $(this).html());
-    cat_value = $(this).html();
-    show_our_products(cat_value);
-});
+})
 
 $(".btn-profile").on("click", function() {
     window.location = "account-page/";
