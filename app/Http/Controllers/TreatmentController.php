@@ -78,7 +78,7 @@ class TreatmentController extends Controller
                 error_log('Enviando notificación');
                 $title = "Drazamed te acompaña en tu tratamiento";
 
-                Log::info("Enviando mensaje a Android");
+                Log::info("Enviando mensaje de toma medicina a Android");
                 $body = "Hola " . $user["first_name"] . " es hora de tomarte una medicina, " . $medicina ;
                 $result = $this->send_fcm(
                     $user["token"],
@@ -88,6 +88,7 @@ class TreatmentController extends Controller
                 );
 
                 if($reorden && !$treatment['hasReorden']) {
+                    Log::info("Enviando mensaje de reorden a Android");
                     $title = "Drazamed te acompaña en tu tratamiento";
                     $body = "Hola " . $user["first_name"] . " en 4 dias se acaba tu " . $medicina . " es momento de pensar en renovar tu orden" ;
                     $result = $this->send_fcm(
@@ -102,7 +103,7 @@ class TreatmentController extends Controller
             }
 
             if ($user["apnstoken"] != "") {
-                Log::info("Enviando a apnstoken IOS");
+                Log::info("Enviando mensaje de toma medicina a IOS");
                 $title = "Drazamed te acompaña en tu tratamiento";
                 $body = "Hola " . $user["first_name"] . " es hora de tomarte una medicina, " . $medicina ;
 
