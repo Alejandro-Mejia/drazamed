@@ -53,10 +53,10 @@ class TreatmentController extends Controller
     public function check()
     {
         Log::info("tic tac...");
-        error_log('tic tac.');
+        // error_log('tic tac.');
         $treatments = json_decode($this->getTreatmentsByTime(), true);
-        Log::info('Tratamientos:');
-        Log::info($treatments);
+        Log::info('Tratamientos:', $treatments);
+        // Log::info();
 
         foreach($treatments as $treatment) {
             Log::info("Actualizando proxima toma");
@@ -78,7 +78,7 @@ class TreatmentController extends Controller
                 error_log('Enviando notificación');
                 $title = "Drazamed te acompaña en tu tratamiento";
 
-
+                Log::info("Enviando mensaje a Android");
                 $body = "Hola " . $user["first_name"] . " es hora de tomarte una medicina, " . $medicina ;
                 $result = $this->send_fcm(
                     $user["token"],
@@ -116,6 +116,7 @@ class TreatmentController extends Controller
                 );
 
                 if($reorden && !$treatment['hasReorden']) {
+                    Log::info("Enviando mensaje reorden a  apnstoken IOS");
                     $title = "Drazamed te acompaña en tu tratamiento";
                     $body = "Hola " . $user["first_name"] . " en 4 dias se acaba tu " . $medicina . " es momento de pensar en renovar tu orden" ;
                     $result = $this->send_ios_curl(
