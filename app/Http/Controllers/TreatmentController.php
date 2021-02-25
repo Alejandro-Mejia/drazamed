@@ -91,7 +91,7 @@ class TreatmentController extends Controller
                 if($reorden && !$treatment['hasReorden']) {
                     Log::info("Enviando mensaje de reorden a Android");
                     $title = "Drazamed te acompaña en tu tratamiento";
-                    $body = "Hola " . $user["first_name"] . " en 4 dias se acaba tu " . $medicina . " es momento de pensar en renovar tu orden" ;
+                    $body = "Hola " . $user["first_name"] . " en 4 días se acaba tu " . $medicina . " es momento de pensar en renovar tu orden" ;
                     $result = $this->send_fcm(
                         $user["token"],
                         $title,
@@ -122,7 +122,7 @@ class TreatmentController extends Controller
                 if($reorden && !$treatment['hasReorden']) {
                     Log::info("Enviando mensaje reorden a  apnstoken IOS");
                     $title = "Drazamed te acompaña en tu tratamiento";
-                    $body = "Hola " . $user["first_name"] . " en 4 dias se acaba tu " . $medicina . " es momento de pensar en renovar tu orden" ;
+                    $body = "Hola " . $user["first_name"] . " en 4 días se acaba tu " . $medicina . " es momento de pensar en renovar tu orden" ;
                     $result = $this->send_ios_curl(
                         $user["apnstoken"],
                         $title,
@@ -158,7 +158,7 @@ class TreatmentController extends Controller
         Log::info("Tomadas: " . $treatment['taken']);
         Log::info("Dosis: " . $treatment['dosis']);
         Log::info("Freq: " . $treatment['frequency']);
-        Log::info("Por tomar en 4 dias: " . $consumo4dias);
+        Log::info("Por tomar en 4 días: " . $consumo4dias);
         Log::info("Reorden: " . $reorden );
         Log::info("Reorden: " . $reorden ? 'Si' : 'No');
 
@@ -724,7 +724,7 @@ class TreatmentController extends Controller
                     ->setSound('default');
 
         $dataBuilder = new PayloadDataBuilder();
-        $dataBuilder->addData(['a_data' => ["treatment_id" => $treatment_id, "msg_type" => ' . $message_id . ' ]]);
+        $dataBuilder->addData(['a_data' => ["treatment_id" => $treatment_id, "msg_type" => $message_id]]);
 
         $option = $optionBuilder->build();
         $notification = $notificationBuilder->build();
