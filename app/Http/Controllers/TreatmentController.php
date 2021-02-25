@@ -84,7 +84,8 @@ class TreatmentController extends Controller
                     $user["token"],
                     $title,
                     $body,
-                    $treatment["id"]
+                    $treatment["id"],
+                    1
                 );
 
                 if($reorden && !$treatment['hasReorden']) {
@@ -95,7 +96,8 @@ class TreatmentController extends Controller
                         $user["token"],
                         $title,
                         $body,
-                        $treatment["id"]
+                        $treatment["id"],
+                        2
                     );
                 }
 
@@ -113,7 +115,8 @@ class TreatmentController extends Controller
                     $user["apnstoken"],
                     $title,
                     $body,
-                    $treatment["id"]
+                    $treatment["id"],
+                    1 // Toma de medicinas
                 );
 
                 if($reorden && !$treatment['hasReorden']) {
@@ -124,7 +127,8 @@ class TreatmentController extends Controller
                         $user["apnstoken"],
                         $title,
                         $body,
-                        $treatment["id"]
+                        $treatment["id"],
+                        2 // Punto de reorden
                     );
                 }
 
@@ -448,7 +452,8 @@ class TreatmentController extends Controller
                     $user[0]['customer']["token"],
                     $title,
                     $body,
-                    $treatment["id"]
+                    $treatment["id"],
+                    3
                 );
 
                 if ($user[0]['customer']["apnstoken"] != "") {
@@ -458,7 +463,8 @@ class TreatmentController extends Controller
                         $user[0]['customer']["apnstoken"],
                         $title,
                         $body,
-                        $treatment["id"]
+                        $treatment["id"],
+                        3 // Termino de tratamiento
                     );
 
                 }
@@ -709,7 +715,7 @@ class TreatmentController extends Controller
         }
     }
 
-    public function send_fcm($id, $title, $body, $treatment_id) {
+    public function send_fcm($id, $title, $body, $treatment_id, $message_id) {
         $optionBuilder = new OptionsBuilder();
         $optionBuilder->setTimeToLive(60*20);
         $notificationBuilder = new PayloadNotificationBuilder($title);
@@ -718,7 +724,7 @@ class TreatmentController extends Controller
                     ->setSound('default');
 
         $dataBuilder = new PayloadDataBuilder();
-        $dataBuilder->addData(['a_data' => ["treatment_id" => $treatment_id, "msg_type" => 1 ]]);
+        $dataBuilder->addData(['a_data' => ["treatment_id" => $treatment_id, "msg_type" => ' . $message_id . ' ]]);
 
         $option = $optionBuilder->build();
         $notification = $notificationBuilder->build();
@@ -801,7 +807,7 @@ class TreatmentController extends Controller
         }
     }
 
-    public function send_ios_curl($device_id, $title, $body, $treatment_id)
+    public function send_ios_curl($device_id, $title, $body, $treatment_id, $message_id)
     {
         // open connection
         $http2ch = curl_init();
@@ -813,7 +819,7 @@ class TreatmentController extends Controller
         // $contents = Storage::get('push_notification.p12');
         // Log::info("p12:" . $contents);
 
-        $message = '{"aps":{"alert":{"title":"' . $title . '", "body": "' . $body . '"},"sound":"default"},"a_data":{"treatment_id":' . $treatment_id .',"msg_type":1 }}';
+        $message = '{"aps":{"alert":{"title":"' . $title . '", "body": "' . $body . '"},"sound":"default"},"a_data":{"treatment_id":' . $treatment_id .',"msg_type":' . $message_id . '}}';
 
         // Log::info('message', $message);
         // $message = '{"aps":{"alert":{"title": $title, "body":$body},"sound":"default"}, "a_data":$treatment_id}';
