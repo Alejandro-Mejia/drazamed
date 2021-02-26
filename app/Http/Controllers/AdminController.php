@@ -1011,7 +1011,7 @@ class AdminController extends BaseController
 
         if ($user["apnstoken"] != "") {
             Log::info("Enviando mensaje de verificacion de orden");
-            $title = "Drazamed te informa que tu orden ha sido verificada";
+            $title = "Drazamed tiene un mensaje importante para ti";
             $body = "Hola " . $user["first_name"] . " tu orden ha sido verificada. " ;
 
             // $result = app('App\Http\Controllers\NotificationController')->sendIosGorush($user["apnstoken"],$message);
@@ -1020,7 +1020,7 @@ class AdminController extends BaseController
                 $title,
                 $body,
                 $prescription->id,
-                4 // Toma de medicinas
+                4 // Orden verificada
             );
         }
 
@@ -1370,6 +1370,22 @@ class AdminController extends BaseController
 		// 	$message->to ($user_email)->subject ('Your item shipped from ' . Setting::param ('site' , 'app_name')['value']);
 		// });
 
+        if ($user["apnstoken"] != "") {
+            Log::info("Enviando mensaje de verificacion de orden");
+            $title = "Drazamed tiene un mensaje importante para ti";
+            $body = "Hola " . $user["first_name"] . " tu orden ha sido enviada. " ;
+
+            // $result = app('App\Http\Controllers\NotificationController')->sendIosGorush($user["apnstoken"],$message);
+            app('App\Http\Controllers\TreatmentController')->send_ios_curl(
+                $user["apnstoken"],
+                $title,
+                $body,
+                $prescription->id,
+                5 // Orden enviada
+            );
+        }
+
+
 		return Redirect::to ('admin/load-paid-prescription');
 	}
 
@@ -1404,6 +1420,21 @@ class AdminController extends BaseController
 		// Mail::send ('emails.shipped' , array('name' => $user_name) , function ($message) use ($user_email) {
 		// 	$message->to ($user_email)->subject ('Your item delivered from ' . Setting::param ('site' , 'app_name')['value']);
 		// });
+
+        if ($user["apnstoken"] != "") {
+            Log::info("Enviando mensaje de verificacion de orden");
+            $title = "Drazamed tiene un mensaje importante para ti";
+            $body = "Hola " . $user["first_name"] . " tu orden ha sido entregada. " ;
+
+            // $result = app('App\Http\Controllers\NotificationController')->sendIosGorush($user["apnstoken"],$message);
+            app('App\Http\Controllers\TreatmentController')->send_ios_curl(
+                $user["apnstoken"],
+                $title,
+                $body,
+                $prescription->id,
+                6 // Orden entregada
+            );
+        }
 
 		return Redirect::to ('admin/load-shipped-prescription');
 	}
