@@ -1020,7 +1020,7 @@ class AdminController extends BaseController
                 $user["apnstoken"],
                 $title,
                 $body,
-                $treatment["id"],
+                $prescription->id,
                 4 // Toma de medicinas
             );
         }
