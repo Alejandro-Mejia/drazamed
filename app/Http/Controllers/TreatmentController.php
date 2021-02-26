@@ -848,6 +848,8 @@ class TreatmentController extends Controller
         // certificate
         $cert = realpath($apple_cert);
 
+        Log::info("cert path : " . $apple_cert);
+
         // headers
         $headers = array(
             "apns-topic: {$app_bundle_id}",
