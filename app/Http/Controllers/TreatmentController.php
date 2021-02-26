@@ -848,7 +848,8 @@ class TreatmentController extends Controller
         // certificate
         $cert = realpath($apple_cert);
 
-        Log::info("cert path : " . $apple_cert);
+
+        Log::info("cert path : " . $cert);
 
         // headers
         $headers = array(
