@@ -1015,8 +1015,7 @@ class AdminController extends BaseController
             $body = "Hola " . $user["first_name"] . " tu orden ha sido verificada. " ;
 
             // $result = app('App\Http\Controllers\NotificationController')->sendIosGorush($user["apnstoken"],$message);
-
-            Treatment::send_ios_curl(
+            app('App\Http\Controllers\TreatmentController')->send_ios_curl(
                 $user["apnstoken"],
                 $title,
                 $body,
