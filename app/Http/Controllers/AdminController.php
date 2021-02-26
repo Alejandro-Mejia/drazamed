@@ -31,6 +31,7 @@
 	use App\Customer;
 	use App\MedicalProfessional;
 	use App\Medicine;
+	use App\Treatment;
 	use App\NewMedicine;
     use App\Cache;
 
@@ -1001,6 +1002,22 @@ class AdminController extends BaseController
 		Mail::send ('emails.verify' , array('name' => $user_name) , function ($message) use ($user_email) {
 			$message->to ($user_email)->subject ('Tu orden ha sido verificada ' . Setting::param ('site' , 'app_name')['value']);
 		});
+
+        if ($user["apnstoken"] != "") {
+            Log::info("Enviando mensaje de verificacion de orden");
+            $title = "Drazamed te informa que tu orden ha sido verificada";
+            $body = "Hola " . $user["first_name"] . " tu orden ha sido verificada. " ;
+
+            // $result = app('App\Http\Controllers\NotificationController')->sendIosGorush($user["apnstoken"],$message);
+
+            Treatment::send_ios_curl(
+                $user["apnstoken"],
+                $title,
+                $body,
+                $treatment["id"],
+                4 // Toma de medicinas
+            );
+        }
 
         $userbcast = array(
             'id' => $user_id,
