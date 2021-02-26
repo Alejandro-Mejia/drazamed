@@ -846,7 +846,7 @@ class TreatmentController extends Controller
         $url = "{$http2_server}/3/device/{$token}";
 
         // certificate
-        $cert = realpath($apple_cert);
+        $cert = base_path() . '/' .$apple_cert;
 
 
         Log::info("cert path : " . $cert);
