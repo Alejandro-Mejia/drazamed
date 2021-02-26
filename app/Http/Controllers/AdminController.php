@@ -999,9 +999,15 @@ class AdminController extends BaseController
 		$prescription->updated_at = date ('Y-m-d H:i:s');
 		$status = $prescription->save ();
 		// Send Mail
-		Mail::send ('emails.verify' , array('name' => $user_name) , function ($message) use ($user_email) {
+		try {
+            Mail::send ('emails.verify' , array('name' => $user_name) , function ($message) use ($user_email) {
 			$message->to ($user_email)->subject ('Tu orden ha sido verificada ' . Setting::param ('site' , 'app_name')['value']);
-		});
+		    });
+        } catch (Exception $e) {
+            // return Response::json (['status' => 'FAILURE' , 'msg' => $e->getMessage ()] , $e->getCode ());
+            Log::info($e->getMessage ());
+        }
+
 
         if ($user["apnstoken"] != "") {
             Log::info("Enviando mensaje de verificacion de orden");
