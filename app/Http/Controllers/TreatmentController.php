@@ -91,7 +91,7 @@ class TreatmentController extends Controller
                 if($reorden && !$treatment['hasReorden']) {
                     Log::info("Enviando mensaje de reorden a Android");
                     $title = "Drazamed te acompaña en tu tratamiento";
-                    $body = "Hola " . $user["first_name"] . " en 4 días se acaba tu " . $medicina . " es momento de pensar en renovar tu orden" ;
+                    $body = "Hola " . $user["first_name"] . " en 4 dias se acaba tu " . $medicina . " es momento de pensar en renovar tu orden" ;
                     $result = $this->send_fcm(
                         $user["token"],
                         $title,

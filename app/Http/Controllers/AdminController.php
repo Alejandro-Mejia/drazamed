@@ -1371,7 +1371,7 @@ class AdminController extends BaseController
 		// });
 
         if ($user["apnstoken"] != "") {
-            Log::info("Enviando mensaje de verificacion de orden");
+            Log::info("Enviando mensaje de envio de orden");
             $title = "Drazamed tiene un mensaje importante para ti";
             $body = "Hola " . $user["first_name"] . " tu orden ha sido enviada. " ;
 
