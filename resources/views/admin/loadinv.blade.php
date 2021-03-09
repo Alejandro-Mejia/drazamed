@@ -20,28 +20,34 @@
               <p>Invoice</p>
             </header>
             <section class="scrollable wrapper">
-              <div class="row">
-                <div class="col-xs-6">
-                   <div class="col-lg-12"><a href="{{ Setting::param('site','website')['value'] }}"> <img width='30%' style='float:left' src="{{'SYSTEM_IMAGE_URL'.Setting::param('site','logo')['value'] }}" ></a></div>
-                  <div class="col-lg-12"><p><?php $text = Setting::param('site','address')['value'];
-                    $text_array = explode(" ", $text);
-                    $chunks = array_chunk($text_array, 3);
-                    foreach ($chunks as $chunk) {
-                        $line = implode(" ", $chunk);
-                        echo $line;
-                        echo "<br>";
-                    }
 
-                    ?>
-                    {{ Setting::param('site','mail')['value'] }}
-                  </p></div>
+                <div class="row">
+                    {{-- <div class="col-lg-6"></div> --}}
+                    <div class="col-xs-6">
+                        <a href="{{ Setting::param('site','website')['value'] }}"> <img width='30%' style='float:left' src="{{Setting::param('site','logo')['value'] }}" ></a>
+                        <br>
+                        <div class="col-lg-12">
+                            <p>
+                                <?php $text = Setting::param('site','address')['value'];
+                                $text_array = explode(" ", $text);
+                                $chunks = array_chunk($text_array, 3);
+                                foreach ($chunks as $chunk) {
+                                    $line = implode(" ", $chunk);
+                                    echo $line;
+                                    echo "<br>";
+                                }
+
+                                ?>
+                                {{ Setting::param('site','mail')['value'] }}
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-xs-6 text-right">
+                        <p class="h4"><?php echo $id?></p>
+                        <h5><?php echo $date?></h5>
+                    </div>
                 </div>
-                <div class="col-xs-6 text-right">
-                  <p class="h4"><?php echo $id?></p>
-                  <h5><?php echo $date?></h5>
-                </div>
-              </div>
-              <div class="well m-t">
+                <div class="well m-t">
                 <div class="row">
                   <div class="col-xs-6">
                     <strong>{{ __('TO')}}:</strong>
