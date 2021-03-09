@@ -2681,7 +2681,7 @@ class MedicineController extends BaseController
 		$type = $user_detail->user_type_id;
 		// Send Paid Mail
 		if ($type == UserType::CUSTOMER ()) {
-			$user = Customer::select ('mail' , 'first_name')->find ($user_detail->user_id);
+			$user = Customer::select ('mail' , 'first_name', 'token', 'apnstoken')->find ($user_detail->user_id);
 			$user_email = $user->mail;
 			$user_name = $user->first_name;
 		} elseif ($type == UserType::MEDICAL_PROFESSIONAL ()) {
