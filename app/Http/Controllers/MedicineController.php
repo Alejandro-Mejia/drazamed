@@ -2689,9 +2689,30 @@ class MedicineController extends BaseController
 			$user_email = $user->mail;
 			$user_name = $user->first_name;
 		}
-		Mail::send ('emails.paid' , array('name' => $user_name) , function ($message) use ($user_email) {
-			$message->to ($user_email)->subject ('Hemos recibido tu pago en  ' . Setting::param ('site' , 'app_name')['value']);
-		});
+
+        try {
+            Mail::send ('emails.paid' , array('name' => $user_name) , function ($message) use ($user_email) {
+                $message->to ($user_email)->subject ('Hemos recibido tu pago en  ' . Setting::param ('site' , 'app_name')['value']);
+            });
+        } catch (Exception $e) {
+            Log::info('Error enviando correo orden pagada : ' . $e);
+        }
+
+        if ($user["apnstoken"] != "") {
+            Log::info("Enviando mensaje de pago de orden");
+            $title = "Drazamed tiene un mensaje importante para ti";
+            $body = "Hola " . $user["first_name"] . " el pago de tu orden ha sido recibido. " ;
+
+            // $result = app('App\Http\Controllers\NotificationController')->sendIosGorush($user["apnstoken"],$message);
+            app('App\Http\Controllers\TreatmentController')->send_ios_curl(
+                $user["apnstoken"],
+                $title,
+                $body,
+                $prescription->id,
+                4 // Orden verificada
+            );
+        }
+
 
 		return Redirect::to ('/admin/load-active-prescription');
 	}
