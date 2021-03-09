@@ -14,7 +14,7 @@
             'status_id',
             'payment_status',
             'transaction_id',
-            
+
         ];
 
         /**
@@ -22,7 +22,7 @@
          */
         public function prescription()
         {
-            return $this->hasOne('App\Prescription', 'id', 'pres_id')->first();
+            return $this->hasOne('App\Prescription', 'id', 'pres_id');
         }
 
         /**
@@ -48,7 +48,7 @@
          */
         public function cartList()
         {
-            return $this->hasMany('App\ItemList', 'invoice_id', 'id')->where('is_removed','=',0)->get();
+            return $this->hasMany('App\ItemList', 'invoice_id', 'id')->where('is_removed','=',0);
         }
 
         /**

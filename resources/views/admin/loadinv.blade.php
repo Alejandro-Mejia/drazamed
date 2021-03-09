@@ -24,16 +24,16 @@
                 <div class="col-xs-6">
                    <div class="col-lg-12"><a href="{{ Setting::param('site','website')['value'] }}"> <img width='30%' style='float:left' src="{{'SYSTEM_IMAGE_URL'.Setting::param('site','logo')['value'] }}" ></a></div>
                   <div class="col-lg-12"><p><?php $text = Setting::param('site','address')['value'];
-                                                 $text_array = explode(" ", $text);
-                                                 $chunks = array_chunk($text_array, 3);
-                                                 foreach ($chunks as $chunk) {
-                                                     $line = implode(" ", $chunk);
-                                                     echo $line;
-                                                     echo "<br>";
-                                                 }
+                    $text_array = explode(" ", $text);
+                    $chunks = array_chunk($text_array, 3);
+                    foreach ($chunks as $chunk) {
+                        $line = implode(" ", $chunk);
+                        echo $line;
+                        echo "<br>";
+                    }
 
-                                                 ?>
-                                                 {{ Setting::param('site','mail')['value'] }}
+                    ?>
+                    {{ Setting::param('site','mail')['value'] }}
                   </p></div>
                 </div>
                 <div class="col-xs-6 text-right">
@@ -74,7 +74,14 @@
                   </tr>
                 </thead>
                 <tbody>
+                    <?php
 
+                        // foreach ($items as $item) {
+                        // $line = implode(" ", $chunk);
+                        // echo $line;
+                        // echo "<br>";
+                    // }
+                    ?>
 
 
 

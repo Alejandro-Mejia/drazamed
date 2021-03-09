@@ -639,13 +639,14 @@ class AdminController extends BaseController
 	{
 		$tbody = "";
 		$i = 1;
-		$invoice = Invoice::find ($id);
-		$items = $invoice->cartList ();
+		$invoice = Invoice::with('cartList')->find($id);
+		$items = $invoice->cartList()->get();
 		$total = 0;
 		if (empty($shipping))
 			$shipping = 0;
 		//$total += $shipping;
 		$discount = 0;
+        Log::info('Items', $items->toArray());
 		foreach ($items as $itemList) {
 
 			$medicine = Medicine::medicines($itemList->medicine);
