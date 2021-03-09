@@ -56,6 +56,22 @@
         }
 
         /**
+         * Paid User Status
+         */
+        public static function PAID()
+        {
+            return self::status('PAID');
+        }
+
+        /**
+         * Paid User Status
+         */
+        public static function SHIPPED()
+        {
+            return self::status('SHIPPED');
+        }
+
+        /**
          * Get  Status Name
          * @param $status_id
          * @return string
@@ -72,6 +88,12 @@
                     break;
                 case (self::REJECTED()):
                     return "Rejected";
+                    break;
+                case (self::PAID()):
+                    return "Paid";
+                    break;
+                case (self::SHIPPED()):
+                    return "Shiped";
                     break;
             }
         }

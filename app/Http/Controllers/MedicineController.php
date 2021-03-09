@@ -450,6 +450,13 @@ class MedicineController extends BaseController
 
 
         foreach($prescriptions as $prescription) {
+            Log::info('orden:', $prescription->toArray());
+            if ($prescription->status == 'paid') {
+                Log::info('pagada activa');
+            }
+            if ($prescription->status == 2) {
+                Log::info('orden verificada ');
+            }
             foreach($prescription['getCart'] as $cart) {
                 //dd($cart);
                 //dd( Medicine::medicines($cart->medicine));
@@ -2675,7 +2682,7 @@ class MedicineController extends BaseController
 		$invoice->payment_status = PayStatus::SUCCESS ();
 		$invoice->updated_at = date ('Y-m-d H:i:s');
 		$invoice->updated_by = Auth::user ()->id;
-        $invoice->prescription->status = InvoiceStatus::PAID ();
+        $invoice->prescription->status = PrescriptionStatus::PAID ();
 		$invoice->save ();
 
 
