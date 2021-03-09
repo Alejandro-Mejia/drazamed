@@ -2670,12 +2670,16 @@ class MedicineController extends BaseController
         // header ("Access-Control-Allow-Headers: *");
 
 		// Update Invoice
-		$invoice = Invoice::find ($invoice);
+		$invoice = Invoice::with('prescription')->find ($invoice);
 		$invoice->status_id = InvoiceStatus::PAID ();
 		$invoice->payment_status = PayStatus::SUCCESS ();
 		$invoice->updated_at = date ('Y-m-d H:i:s');
 		$invoice->updated_by = Auth::user ()->id;
+        $invoice->prescription->status = InvoiceStatus::PAID ();
 		$invoice->save ();
+
+
+
 		// User
 		$user_detail = $invoice->getUser;
 		$type = $user_detail->user_type_id;
