@@ -1020,8 +1020,23 @@ class AdminController extends BaseController
                 $user["apnstoken"],
                 $title,
                 $body,
-                $prescription->id,
+                $invoice->id,
                 4 // Orden verificada
+            );
+        }
+
+        if (($user["apnstoken"] = "") && ($user["token"] != "")) {
+            Log::info("Enviando mensaje de verificacion de orden a Android");
+            $title = "Drazamed tiene un mensaje importante para ti";
+            $body = "Hola " . $user["first_name"] . " tu orden ha sido verificada. " ;
+
+            // $result = app('App\Http\Controllers\NotificationController')->sendIosGorush($user["apnstoken"],$message);
+            app('App\Http\Controllers\TreatmentController')->send_fcm(
+                $user["token"],
+                $title,
+                $body,
+                $invoice->id,
+                4
             );
         }
 
