@@ -4,7 +4,7 @@
 
 INSERT INTO `settings` (`id`, `group`, `key`, `value`, `type`, `is_active`, `created_at`, `updated_at`) VALUES
 (1, 'site', 'app_name', 'DRAZAMED', 'TEXT', 1, NULL, NULL),
-(2, 'site', 'logo', '/assets/img/logo.png', 'IMAGE', 1, NULL, NULL),
+(2, 'site', 'logo', '/assets/images/logo.png', 'IMAGE', 1, NULL, NULL),
 (3, 'site', 'mail', 'info@drazamed.com', 'TEXT', 1, NULL, NULL),
 (4, 'site', 'website', 'drazamed.com', 'TEXT', 1, NULL, NULL),
 (5, 'site', 'address', 'Carrera 6 No. 1-20 Cajicá - Cundinamarca', 'TEXT', 1, NULL, NULL),
