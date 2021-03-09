@@ -443,7 +443,7 @@ class MedicineController extends BaseController
 		$user_id = User::where('email', "=", $email)->first()->id;
 		$path = 'URL' . '/public/images/prescription/' . $email . '/';
 		// $user_id = Auth::user ()->id;
-        $prescriptions  = Prescription::with('getCart')
+        $prescriptions  = Prescription::with('getCart')->with('getInvoice')
                           ->where ('user_id' , '=' , $user_id)
                           ->where ('is_delete', '=', 0)
                           ->get ();
