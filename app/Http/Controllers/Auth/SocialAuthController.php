@@ -31,6 +31,7 @@ class SocialAuthController extends Controller
                 'email' => $social_user->email,
                 'avatar' => $social_user->avatar,
             ]);
+            Log::info('Login facebook', $user);
             return $this->authAndRedirect($user); // Login y redirección
         }
     }
