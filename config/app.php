@@ -196,7 +196,7 @@ return [
         // Firebase-php
         Kreait\Laravel\Firebase\ServiceProvider::class,
         // App\Providers\FirebaseServiceProvider::class,
-
+        Laravel\Socialite\SocialiteServiceProvider::class,
         // LaravelFCM\FCMServiceProvider::class,
 
     ],
@@ -270,6 +270,7 @@ return [
         //'MP' => Patosmack\MercadoPago\Facades\MP::Class,
         'FCM'      => LaravelFCM\Facades\FCM::class,
         'FCMGroup' => LaravelFCM\Facades\FCMGroup::class, // Optional
+        'Socialite' => Laravel\Socialite\Facades\Socialite::class,
 
     ],
 

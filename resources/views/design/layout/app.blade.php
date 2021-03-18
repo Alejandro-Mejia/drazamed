@@ -15,6 +15,10 @@
         <script src="/dist/app.js"></script>
         <script src="/js/design.js"></script>
 
+        {{-- Cargar ingreso con fb
+        <div id="fb-root"></div>
+        <script async defer crossorigin="anonymous" src="https://connect.facebook.net/es_LA/sdk.js#xfbml=1&version=v10.0&appId=188133499419537&autoLogAppEvents=1" nonce="bGOrvz57"></script>
+--}}
         {{-- <!-- Money format for JS -->
         <script src="/js/simple.money.format.js"></script>
 

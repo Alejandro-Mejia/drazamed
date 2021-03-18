@@ -31,8 +31,13 @@ return [
     ],
     'facebook' => [
         'client_id' => '188133499419537',
-        'client_secret' => '243589c8ea3413764a121cbbdfe531a3',
+        'client_secret' => '74e6c84347450a922f36ff0b13330a82',
         'redirect' => 'https://drazamed.com/auth/facebook/callback'
+    ],
+    'google' => [
+        'client_id' => '977361429664-jq3lfpno9q4r9d57vddcvbri577gk1le.apps.googleusercontent.com',
+        'client_secret' => 'ab7ubCpjNIoB5axSn1WL6rYk',
+        'redirect' => 'https://drazmed.com/auth/google/callback'
     ]
 
 ];

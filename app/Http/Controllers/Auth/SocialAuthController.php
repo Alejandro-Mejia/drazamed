@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use Auth;
+use Illuminate\Support\Facades\Log;
 use App\User;
 use Socialite;
 use Illuminate\Http\Request;
@@ -13,15 +14,21 @@ class SocialAuthController extends Controller
     // Metodo encargado de la redireccion a Facebook
     public function redirectToProvider($provider)
     {
-        return Socialite::driver($provider)->redirect();
+        return Socialite::driver($provider)->stateless()->redirect();
     }
 
     // Metodo encargado de obtener la información del usuario
     public function handleProviderCallback($provider)
     {
         // Obtenemos los datos del usuario
-        $social_user = Socialite::driver($provider)->user();
-        Log::info('Social_User', $social_user);
+        Log::info('provider ' . $provider);
+        // $social_user = Socialite::driver($provider)->stateless()->user();
+        try {
+            $social_user = Socialite::driver('facebook')->stateless()->user();
+        } catch (\GuzzleHttp\Exception\ClientException $e) {
+            dd($e);
+        }
+        // Log::info('Social_User ' , $social_user.ToArray());
         // Comprobamos si el usuario ya existe
         if ($user = User::where('email', $social_user->email)->first()) {
             return $this->authAndRedirect($user); // Login y redirección
@@ -32,7 +39,7 @@ class SocialAuthController extends Controller
                 'email' => $social_user->email,
                 'avatar' => $social_user->avatar,
             ]);
-            Log::info('Login facebook', $user);
+            // Log::info('Login facebook', $user);
             return $this->authAndRedirect($user); // Login y redirección
         }
     }
