@@ -29,5 +29,10 @@ return [
         'secret' => env('BCV0B32dlwclfRaryJ+2gSUJ+356u72C40qm9JxHuVMC', 'BCV0B32dlwclfRaryJ+2gSUJ+356u72C40qm9JxHuVMC'),
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
+    'facebook' => [
+        'client_id' => '188133499419537',
+        'client_secret' => '243589c8ea3413764a121cbbdfe531a3',
+        'redirect' => 'https://drazamed.com/auth/facebook/callback'
+    ]
 
 ];
