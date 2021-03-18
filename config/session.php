@@ -153,7 +153,7 @@ return [
     |
     */
 
-    'domain' => env('SESSION_DOMAIN', 'drazamed.com'),
+    'domain' => 'drazamed.com',
 
     /*
     |--------------------------------------------------------------------------
