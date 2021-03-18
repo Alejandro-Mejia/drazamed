@@ -50,6 +50,12 @@
                                 Continuar con Facebook
                             </a>
                         </div>
+                        <div class="col-md-6">
+                            <a href="{{ route('social.auth', 'google') }}"  class="btn btn-success">
+                                <strong>Continuar con Google</strong>
+                              </a>
+                        </div>
+
                     </div>
                     <div class="form-group row">
                         <div class="col-md-6 ">

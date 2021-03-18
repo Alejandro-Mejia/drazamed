@@ -24,9 +24,9 @@ class SocialAuthController extends Controller
         Log::info('provider ' . $provider);
         // $social_user = Socialite::driver($provider)->stateless()->user();
         try {
-            $social_user = Socialite::driver('facebook')->stateless()->user();
+            $social_user = Socialite::driver($provider)->stateless()->user();
         } catch (\GuzzleHttp\Exception\ClientException $e) {
-            dd($e);
+            Log::info('error ' , $e);
         }
         // Log::info('Social_User ' , $social_user.ToArray());
         // Comprobamos si el usuario ya existe
