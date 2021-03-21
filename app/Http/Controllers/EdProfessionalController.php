@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class EdProfessional extends Controller
+class EdProfessionalController extends Controller
 {
     /**
      * Handle the incoming request.

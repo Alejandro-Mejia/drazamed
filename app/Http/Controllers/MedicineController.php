@@ -1612,8 +1612,17 @@ class MedicineController extends BaseController
 	{
         // header ("Access-Control-Allow-Origin: *");
         // header ("Access-Control-Allow-Headers: *");
+        session_start();
+        if (Session::get('user_id')) {
+            $email = Session::get ('user_id');
+        } else {
+            $email = $_SESSION['user']->email;
+            $user = User::Where('email', '=', $email)->first();
+            if($user) {
+                Auth::login($user);
+            }
+        }
 
-		$email = Session::get ('user_id');
 		$current_orders = DB::table ('sessions')->where ('user_id' , '=' , $email)->get ();
 
 		return View::make ('/users/my_cart' , array('current_orders' => $current_orders));
@@ -1647,8 +1656,17 @@ class MedicineController extends BaseController
 	{
         // header ("Access-Control-Allow-Origin: *");
         // header ("Access-Control-Allow-Headers: *");
+        session_start();
+        if (Session::get('user_id')) {
+            $email = Session::get ('user_id');
+        } else {
+            $email = $_SESSION['user']->email;
+            $user = User::Where('email', '=', $email)->first();
+            if($user) {
+                Auth::login($user);
+            }
+        }
 
-		$email = Session::get ('user_id');
 		$current_orders = DB::table ('sessions')->where ('user_id' , '=' , $email)->get ();
 
 		return View::make ('/design/cart' , array('current_orders' => $current_orders));
