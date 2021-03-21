@@ -71,36 +71,44 @@ use MercadoPago;
     /**
      * General Routes
      */
-    Route::get('/my-cart', 'MedicineController@getMyCart');
-    Route::get('/my-cart-app', 'MedicineController@getMyCartApp');
-    Route::get('/my-cart1', 'MedicineController@getMyCart1');
-    Route::get('/empty-cart', 'MedicineController@anyEmptyCart');
-    Route::get('/my-prescription/{option?}', 'MedicineController@getMyPrescription');
-    Route::get('/paid-prescription', 'MedicineController@getPaidPrescription');
-    Route::get('/my-order', 'MedicineController@getMyOrder');
-    Route::get('/my-orders', 'MedicineController@getMyOrders');
-    Route::get('/my-prescriptions', 'MedicineController@getMyPrescriptions');
-    Route::get('/medicine-detail/{item_code}', 'MedicineController@getMedicineDetail');
-    Route::get('/account-page', 'UserController@getAccountPage');
-    Route::get('/my-treatments', 'TreatmentController@getMyTreatments');
 
-    /**
-     * User routes
-     */
-    Route::get('/user/check-session', 'UserController@getCheckSession');
-    Route::any('/user/create-user/{is_web}', 'UserController@anyCreateUser');
-    Route::any('/user/check-user-name', 'UserController@anyCheckUserName');
-    Route::any('/user/user-login/{is_web}', 'UserController@anyUserLogin');
-    Route::any('/user/activate-account', 'UserController@anyActivateAccount');
-    Route::any('/user/contact-us', 'UserController@anyContactUs');
-    Route::any('/user/store-profile-pic', 'UserController@anyStoreProfilePic');
-    Route::any('/user/web-activate-account/{code}', 'UserController@anyWebActivateAccount');
-    Route::any('/user/pres-delete/{pres_id}', 'UserController@anyPresDelete');
-    Route::any('/user/reset-password', 'UserController@anyResetPassword');
-    Route::get('/user/is-actual-user/{user_js}', 'UserController@getIsActualUser');
-    Route::get('/user/get-user-data/{is_web}', 'UserController@getUserData');
-    Route::post('/user/post-user-data/{is_web}', 'UserController@postUpdateDetailsUser');
-    Route::any('/user/post-fcm-data/', 'UserController@postUpdateUserToken');
+    Route::middleware(['web'])->group(function () {
+        Route::get('/my-cart', 'MedicineController@getMyCart');
+        Route::get('/my-cart-app', 'MedicineController@getMyCartApp');
+        Route::get('/my-cart1', 'MedicineController@getMyCart1');
+        Route::get('/empty-cart', 'MedicineController@anyEmptyCart');
+        Route::get('/my-prescription/{option?}', 'MedicineController@getMyPrescription');
+        Route::get('/paid-prescription', 'MedicineController@getPaidPrescription');
+        Route::get('/my-order', 'MedicineController@getMyOrder');
+        Route::get('/my-orders', 'MedicineController@getMyOrders');
+        Route::get('/my-prescriptions', 'MedicineController@getMyPrescriptions');
+        Route::get('/medicine-detail/{item_code}', 'MedicineController@getMedicineDetail');
+        Route::get('/account-page', 'UserController@getAccountPage');
+        Route::get('/my-treatments', 'TreatmentController@getMyTreatments');
+
+        /**
+         * User routes
+         */
+        Route::get('/user/check-session', 'UserController@getCheckSession');
+        Route::any('/user/create-user/{is_web}', 'UserController@anyCreateUser');
+        Route::any('/user/check-user-name', 'UserController@anyCheckUserName');
+        Route::any('/user/user-login/{is_web}', 'UserController@anyUserLogin');
+        Route::any('/user/activate-account', 'UserController@anyActivateAccount');
+        Route::any('/user/contact-us', 'UserController@anyContactUs');
+        Route::any('/user/store-profile-pic', 'UserController@anyStoreProfilePic');
+        Route::any('/user/web-activate-account/{code}', 'UserController@anyWebActivateAccount');
+        Route::any('/user/pres-delete/{pres_id}', 'UserController@anyPresDelete');
+        Route::any('/user/reset-password', 'UserController@anyResetPassword');
+        Route::get('/user/is-actual-user/{user_js}', 'UserController@getIsActualUser');
+        Route::get('/user/get-user-data/{is_web}', 'UserController@getUserData');
+        Route::post('/user/post-user-data/{is_web}', 'UserController@postUpdateDetailsUser');
+        Route::any('/user/post-fcm-data/', 'UserController@postUpdateUserToken');
+
+    });
+
+
+
+
 
 
     /**
@@ -404,6 +412,7 @@ Route::get('/cache', function () {
 });
 // Logout
 Route::any('/logout', function () {
+    session_unset();
     Session::flush();
     Auth::logout();
     return Redirect::to('/');

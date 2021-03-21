@@ -8,7 +8,7 @@
             "name": "Listen for XDebug",
             "type": "php",
             "request": "launch",
-            "port": 63342,
+            "port": 9003,
             "ignore": [
                 "**/vendor/**/*.php"
             ]
@@ -20,7 +20,7 @@
             "request": "launch",
             "program": "${file}",
             "cwd": "${fileDirname}",
-            "port": 63342
+            "port": 9003
         }
     ]
 }
