@@ -109,7 +109,7 @@
                             <label for="txt-fname">Nombre</label>
                             <input
                                 type="text"
-                                value="{{ $user_data->customer->first_name }}"
+                                value="{{ $user_data->first_name }}"
                                 id="txt-fname"
                                 readonly
                             />
@@ -118,7 +118,7 @@
                             <label for="txt-lname">Apellidos</label>
                             <input
                                 type="text"
-                                value="{{ $user_data->customer->last_name }}"
+                                value="{{ $user_data->last_name }}"
                                 id="txt-lname"
                                 readonly
                             />
@@ -149,7 +149,7 @@
                             <label for="txt-address">Dirección</label>
                             <input
                                 type="text"
-                                value="{{ $user_data->customer->address ?? ''}}"
+                                value="{{ $user_data->address ?? ''}}"
                                 id="txt-address"
                                 readonly
                             />
