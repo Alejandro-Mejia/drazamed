@@ -729,7 +729,7 @@ class UserController extends BaseController
 	{
         // header ("Access-Control-Allow-Origin: *");
         // header ("Access-Control-Allow-Headers: *");
-
+        Log::info('User_id:' . Auth::user()->id);
 		$user_type = Auth::user ()->user_type_id;
 		$email = Session::get ('user_id');
 		$path = 'URL' . '/public/images/prescription/' . $email . '/';
