@@ -138,7 +138,7 @@
                             <label for="txt-email">Correo Electrónico</label>
                             <input
                                 type="email"
-                                value="{{ $user_data->email }}"
+                                value="{{ $user_data->mail }}"
                                 id="txt-email"
                                 readonly
                             />
