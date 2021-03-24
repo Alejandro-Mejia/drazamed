@@ -144,8 +144,8 @@ return [
     | your application but you are free to change this when necessary.
     |
     */
-
-    'path' => '/',
+    'path' => '/;SameSite=None; secure'
+    // 'path' => '/',
 
     /*
     |--------------------------------------------------------------------------
