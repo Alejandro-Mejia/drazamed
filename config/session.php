@@ -18,8 +18,8 @@ return [
     |
     */
 
-    // 'driver' => env('SESSION_DRIVER', 'file'),
-    'driver' => 'cookie',
+    'driver' => env('SESSION_DRIVER', 'file'),
+    // 'driver' => 'cookie',
     /*
     |--------------------------------------------------------------------------
     | Session Lifetime
@@ -158,7 +158,7 @@ return [
     |
     */
 
-    'domain' => 'drazamed.com',
+    'domain' => null,
 
     /*
     |--------------------------------------------------------------------------

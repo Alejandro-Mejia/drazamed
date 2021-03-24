@@ -207,7 +207,6 @@ class UserController extends BaseController
 	 */
 	public function postUpdateDetailsUser ($isWeb = 0)
 	{
-        session_start();
         // header ("Access-Control-Allow-Origin: *");
         // header ("Access-Control-Allow-Headers: *");
 //		if (!$this->isCsrfAccepted ()) {
@@ -216,10 +215,8 @@ class UserController extends BaseController
 //		}
 		try {
 			if ($isWeb) {
-				// $email = Auth::user ()->email;
-				// $user_type = Auth::user ()->user_type_id;
-                $email = $_SESSION['user']->email;
-                $user_type = $_SESSION['user']->user_type_id;
+				$email = Auth::user ()->email;
+				$user_type = Auth::user ()->user_type_id;
 				$first_name = Request::get ('first_name' , '');
                 $last_name = Request::get ('last_name');
                 $idn = Request::get ('idn' , '');
@@ -362,10 +359,9 @@ class UserController extends BaseController
 
         // header ("Access-Control-Allow-Origin: *");
         // header ("Access-Control-Allow-Headers: *");
-        session_start();
+
         Log::info('User id : ' . $user_js);
-        // $user = Auth::user();
-        $user = $_SESSION['user'];
+        $user = Auth::user();
         Log::info('User : ' . $user);
         if (isset($user)) {
             if ($user->id == $user_js) {
@@ -413,7 +409,6 @@ class UserController extends BaseController
         // header ("Access-Control-Allow-Headers: *");
 
         // $userIp = $this->server->get('REMOTE_ADDR');
-        session_start();
 
         $userIp = '';
         $userIp = $this->getUserIpAddr();
@@ -432,23 +427,17 @@ class UserController extends BaseController
 				}
 
 				$status = DB::table ('users')->select ('user_status as status')->where ('email' , '=' , $email)->first ();
-				$user = DB::table ('users')->where ('email' , '=' , $email)->first ();
 				if (!empty($status)) {
 					if ($status->status == UserStatus::PENDING ()) {
 						$result = array(array('result' => array('status' => 'pending')));
 
 						Session::put ('user_password' , $password);
 					} elseif ($status->status == UserStatus::ACTIVE ()) {
-						if (Auth::attempt (array('email' => $email , 'password' => $password), true)) {
+						if (Auth::attempt (array('email' => $email , 'password' => $password))) {
 							Session::put ('user_id' , $email);
-                            $_SESSION['user_id'] = $email;
-                            $_SESSION['user'] = $user;
-                            $_AUTH['user'] = $user;
-                            $emailSession = Session::get ('user_id');
 							if (Session::get ('medicine') != "") {
 								$result = array(array('result' => array('status' => 'success' , 'page' => 'yes')));
 							} else {
-                                Session::save();
 								$result = array(array('result' => array('status' => 'success' , 'page' => 'no')));
                             }
 
@@ -584,14 +573,11 @@ class UserController extends BaseController
 	{
         // header ("Access-Control-Allow-Origin: *");
         // header ("Access-Control-Allow-Headers: *");
-        session_start();
 
 		try {
 
-			// if (!Auth::check ())
-			// 	throw new Exception('you are not authorised' , 401);
-            if (!$_SESSION['user'])
-                throw new Exception('you are not authorised' , 401);
+			if (!Auth::check ())
+				throw new Exception('you are not authorised' , 401);
 
 			$email = Request::get ('email' , '');
 
@@ -599,11 +585,10 @@ class UserController extends BaseController
 			if (empty($email))
 				throw new Exception('Email field is empty' , 400);
 
-			$user = User::where ('email' , '=' , $_SESSION['user']->email)->first ();
+			$user = User::where ('email' , '=' , Auth::user ()->email)->first ();
 			if ($user != null) {
 				if ($user->user_type_id == UserType::CUSTOMER ()) {
-					// $customer = Customer::where ('mail' , '=' , Auth::user ()->email)->first ();
-					$customer = Customer::where ('mail' , '=' , $_SESSION['user']->email)->first ();
+					$customer = Customer::where ('mail' , '=' , Auth::user ()->email)->first ();
 					$Details = array('first_name' => $customer->first_name ,
 						'last_name' => $customer->last_name ,
 						'address' => $customer->address ,
@@ -742,32 +727,16 @@ class UserController extends BaseController
 	 */
 	public function getAccountPage ()
 	{
-        session_start();
         // header ("Access-Control-Allow-Origin: *");
         // header ("Access-Control-Allow-Headers: *");
-        // $email = Session::get ('user_id');
-		// $user_type = Auth::user ()->user_type_id;
-        $email = $_SESSION['user']->email;
 
-        $user = User::Where('email', '=', $email)->first();
-        if($user) {
-            Auth::login($user);
-        }
-
-
-
-        // Auth::attempt(['Name' => $name, 'Password' => $password]) )
-		$user_type = $_SESSION['user']->user_type_id;
-
-        if ($user_type == 3) {
-            $userData = User::With('customer')->Where('email', '=', $email)->first();
-        }
-
+		$user_type = Auth::user ()->user_type_id;
+		$email = Session::get ('user_id');
 		$path = 'URL' . '/public/images/prescription/' . $email . '/';
 		// $user_id = Auth::user ()->id;
 		// $invoices = Invoice::where ('user_id' , '=' , $user_id)->where ('shipping_status' , '=' , ShippingStatus::SHIPPED ())->get ();
 
-		$user_id = $_SESSION['user']->id;
+		$user_id = Auth::user ()->id;
 		$invoices = Invoice::where ('user_id' , '=' , $user_id)->get ();
 		$prescriptions = Prescription::select ('i.*' , 'prescription.status' , 'prescription.path' , 'prescription.id as pres_id' , 'prescription.created_at as date_added', 'prescription.is_delete as deleted')->where ('prescription.user_id' , '=' , $user_id)->where ('prescription.is_delete' , '=' , 0)
 			->join ('invoice as i' , 'i.pres_id' , '=' , DB::raw ("prescription.id AND i.payment_status IN (" . PayStatus::PENDING () . ",0) "));
@@ -869,7 +838,7 @@ class UserController extends BaseController
 				break;
 			case (UserType::CUSTOMER ()):  //for customers
 
-				return View::make ('design.profile' , array('user_data' => Auth::user(), 'user_type_name' => 'Cliente' , 'invoices' => $invoices, 'prescriptions' => $responses, 'payment_mode' => $payment_mode->value, 'default_img' => url ('/') . "/assets/images/no_pres_square.png"));
+				return View::make ('design.profile' , array('user_data' => Auth::user()->customer, 'user_type_name' => 'Cliente' , 'invoices' => $invoices, 'prescriptions' => $responses, 'payment_mode' => $payment_mode->value, 'default_img' => url ('/') . "/assets/images/no_pres_square.png"));
 				break;
 		}
 
@@ -889,10 +858,8 @@ class UserController extends BaseController
 		$new_password = Request::get ('new_password');
 		$re_password = Request::get ('re_password');
 		$pass = Hash::make ($new_password);
-		$current_password = $_SESSION['user']->password;
+		$current_password = Auth::user ()->password;
 		$name = Auth::user ()->customer->first_name;
-        $user = User::With('customer')->Where('email', '=', $_SESSION['user']->email);
-		$name = $user->customer->first_name;
 		if (Hash::check ($old_password , $current_password)) {
 			if ($new_password == $re_password) {
 				Auth::user ()->password = $pass;

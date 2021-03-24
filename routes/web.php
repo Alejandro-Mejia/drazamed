@@ -72,7 +72,26 @@ use MercadoPago;
      * General Routes
      */
 
+
+
+
+
+
     Route::middleware(['web'])->group(function () {
+
+
+        // // Rutas de prueba
+        Route::get('/1', function () {
+            session(["test" => "ok"]);
+            return view('welcome');
+        });
+
+        Route::get('/2', function () {
+            print "session = ".session('test');exit();
+        });
+
+
+
         Route::get('/my-cart', 'MedicineController@getMyCart');
         Route::get('/my-cart-app', 'MedicineController@getMyCartApp');
         Route::get('/my-cart1', 'MedicineController@getMyCart1');
