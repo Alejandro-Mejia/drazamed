@@ -814,7 +814,7 @@ class TreatmentController extends Controller
         curl_setopt($http2ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_2_0);
 
         // send push
-        $apple_cert = 'push_notification.p12';
+        $apple_cert = 'PushNotificationDrazamed.p12';
 
         // $contents = Storage::get('push_notification.p12');
         // Log::info("p12:" . $contents);
