@@ -364,7 +364,7 @@ class TreatmentController extends Controller
         // Calclo de Next_time
         // $localtime = new DateTime();
         $startTime = new Datetime($start_time);
-        $deltaT = strval($freq) . " minutes";
+        $deltaT = strval($freq) . " hours";
         $nextTake = date_add($startTime, date_interval_create_from_date_string($deltaT));
         $nextTake = $nextTake->format('Y-m-d H:i');
         // $treatment->next_time = $nextTake;
@@ -580,7 +580,7 @@ class TreatmentController extends Controller
             // $localtime = date();
             $localtime = new DateTime();
 
-            $deltaT = strval($treatment->frequency) . " minutes";
+            $deltaT = strval($treatment->frequency) . " hours";
             $nextTake = date_add($localtime, date_interval_create_from_date_string($deltaT));
             $nextTake = $nextTake->format('Y-m-d H:i');
             $treatment->next_time = $nextTake;
@@ -654,7 +654,7 @@ class TreatmentController extends Controller
         if ($treatment != null && ($treatment->taken < $treatment->total)) {
             // $localtime = date();
             $localtime = new DateTime();
-            $deltaT = strval($treatment->frequency) . " minutes";
+            $deltaT = strval($treatment->frequency) . " hours";
             $nextTake = date_add($localtime, date_interval_create_from_date_string($deltaT));
             $nextTake = $nextTake->format('Y-m-d H:i');
             $treatment->next_time = $nextTake;
