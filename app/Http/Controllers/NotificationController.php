@@ -76,7 +76,7 @@ class NotificationController extends Controller
         if($isDevel) {
             $apple_cert = '../push_notification_dev.p12';
         } else {
-            $apple_cert = '../push_notification.p12';
+            $apple_cert = '../PushNotificationDrazamed.p12';
         }
 
         $message = '{"aps":{"alert":{"title":"' . $title . '", "body": "' . $body . '"},"sound":"default"},"a_data":' . json_encode($data) . '}';
@@ -89,7 +89,7 @@ class NotificationController extends Controller
             $http2_server = 'https://api.push.apple.com';
         }
         // $http2_server = 'https://api.push.apple.com'; // or 'api.push.apple.com' if production
-        $app_bundle_id = 'com.draz.drazamed';
+        $app_bundle_id = 'com.drazamed.draz';
 
         // Send to devel environment (Se debe remover despues)
         $status = $this->sendHTTP2Push($http2ch, $http2_server, $apple_cert, $app_bundle_id, $message, $token);
