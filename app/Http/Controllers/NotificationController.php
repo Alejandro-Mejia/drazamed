@@ -333,7 +333,7 @@ class NotificationController extends Controller
                 $tokens
             ],
             "platform" => 1,
-            "topic" => "com.draz.drazamed",
+            "topic" => "com.drazamed.draz",
             "alert" => $message,
             "a_data" => $message
         ];
