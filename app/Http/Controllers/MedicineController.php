@@ -2701,7 +2701,8 @@ class MedicineController extends BaseController
 		$invoice->updated_at = date ('Y-m-d H:i:s');
 		$invoice->updated_by = Auth::user ()->id;
         $invoice->prescription->status = PrescriptionStatus::PAID ();
-		$invoice->save ();
+		$invoice->update();
+        $invoice->prescription->update();
 
 
 
