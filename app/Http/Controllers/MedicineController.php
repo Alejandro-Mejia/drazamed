@@ -1766,6 +1766,7 @@ class MedicineController extends BaseController
             $med_mrp = $this->anyCalculateMRP($item_id);
 
             $pres_required = (Session::get ('pres_required') == "") ? Request::get ('pres_required') : Session::get ('pres_required');
+            $is_reorden = (Session::get ('is_reorden') == "") ? Request::get ('is_reorden') : Session::get ('is_reorden');
 
             Session::put ('medicine' , $medicine);
             Session::put ('med_quantity' , $med_quantity);
@@ -1773,6 +1774,7 @@ class MedicineController extends BaseController
             Session::put ('item_code' , $item_code);
             Session::put ('item_id' , $item_id);
             Session::put ('pres_required' , $pres_required);
+            Session::put ('isReorden' , $pres_required);
             // $email = "";
             // $user_id=1;
         } else {
@@ -1783,6 +1785,7 @@ class MedicineController extends BaseController
             $med_mrp = $this->anyCalculateMRP($item_id);
             $pres_required = Request::get ('pres_required');
             $user_id = Request::get ('user_id');
+            $is_reorden = Request::get ('is_reorden');
 
             $data = [
                 'medicine' => $medicine,
@@ -1791,7 +1794,8 @@ class MedicineController extends BaseController
                 'item_id' => $item_id,
                 'mrp' => $med_mrp,
                 'pres_required' => $pres_required,
-                'user_id' => $user_id
+                'user_id' => $user_id,
+                'isReorden' => $is_reorden
             ];
 
             Log::info('Data:' . print_r($data, true));
@@ -1821,6 +1825,7 @@ class MedicineController extends BaseController
 						Session::forget ('med_mrp');
 						Session::forget ('item_code');
 						Session::forget ('item_id');
+						Session::forget ('is_reorden');
 
 						Session::forget ('pres_required');
 						if ($is_web == 1) {
@@ -1833,7 +1838,7 @@ class MedicineController extends BaseController
 
 				} else {
 
-					$insert = DB::table ('sessions')->insert (array('medicine_id' => $item_id , 'medicine_name' => $medicine , 'medicine_count' => $med_quantity , 'user_id' => $email , 'unit_price' => $med_mrp , 'item_code' => $item_code , 'is_pres_required' => $pres_required));
+					$insert = DB::table ('sessions')->insert (array('medicine_id' => $item_id , 'medicine_name' => $medicine , 'medicine_count' => $med_quantity , 'user_id' => $email , 'unit_price' => $med_mrp , 'item_code' => $item_code , 'is_pres_required' => $pres_required, 'isReorden' => $is_reorden));
 					if ($insert) {
 						//return "updated";
 						Session::forget ('medicine');
@@ -1841,7 +1846,7 @@ class MedicineController extends BaseController
 						Session::forget ('med_mrp');
 						Session::forget ('item_code');
 						Session::forget ('item_id');
-
+                        Session::forget ('is_reorden');
 						Session::forget ('pres_required');
 						if ($is_web == 1) {
                             //return Redirect::to ("medicine/my-cart");
