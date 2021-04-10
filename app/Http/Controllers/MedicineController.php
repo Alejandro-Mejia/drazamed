@@ -2177,16 +2177,18 @@ class MedicineController extends BaseController
 		// }
 
 		$items = array();
-		foreach ($invoice->cartList() as $cart) {
+        $productos = $invoice->cartList()->get()->toArray();
+
+		foreach ($productos as $cart) {
 
 			Log::info('Cart item : ' . print_r($cart, true));
 
-			$medicine = Medicine::where('id', $cart->medicine)->first()->toArray();
+			$medicine = Medicine::where('id', $cart["medicine"])->first()->toArray();
 			Log::info('Medicine item : ' . print_r($medicine, true));
 
 			$item_name .= $medicine['item_name'];
 			$item_name .= " ,";
-			$total += $cart->unit_price;
+			$total += $cart["unit_price"];
 
 
 
@@ -2197,9 +2199,9 @@ class MedicineController extends BaseController
 			// Crea un ítem en la preferencia
 			$item = new MercadoPago\Item();
 			$item->title = $medicine['item_name'];;
-			$item->quantity = $cart->quantity;
+			$item->quantity = $cart["quantity"];
 			$item->picture_url = 'https://drazamed.com/images/products/' . $medicine['item_code'] . '.jpg';
-			$item->unit_price = $cart->unit_price;
+			$item->unit_price = $cart["unit_price"];
 			$item->currency_id = 'COP';
 			$item->id = 1;
 
