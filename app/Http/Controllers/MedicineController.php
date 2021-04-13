@@ -1101,6 +1101,7 @@ class MedicineController extends BaseController
         // header ("Access-Control-Allow-Headers: *");
 
 		$medicine = Medicine::where ('item_code', $item_code)->get ();
+        
 		$i = 0;
 		$labRule=[];
 

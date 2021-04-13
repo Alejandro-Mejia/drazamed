@@ -143,6 +143,9 @@ class AdminController extends BaseController
 	{
 
 		$medicine = Medicine::where ('item_code', $item_code)->get ();
+        Log::info('Medicine (Price) ', $medicine->toArray());
+
+
 		$i = 0;
 		$labRule=[];
 
@@ -160,6 +163,7 @@ class AdminController extends BaseController
 		                default:
 		                    {
 		                        $labRule = Pricerule::where('laboratory','LIKE','%' . substr ($med['marketed_by'],0 ,15) . '%')->get()->toArray();
+                                Log::info("labRule : " , $labRule);
 
 		                        if(sizeof($labRule) > 0) {
 		                        	if ( $labRule[0]['isByProd'] == 1) {
@@ -201,6 +205,8 @@ class AdminController extends BaseController
 
 		        $sellprice = ceil($sellprice);
 		        $sellprice = round( $sellprice, -2, PHP_ROUND_HALF_UP);
+
+                Log::info("sellPrice : " , $sellprice);
 
 		        return $sellprice;
 		    }
