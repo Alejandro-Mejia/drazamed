@@ -1101,7 +1101,7 @@ class MedicineController extends BaseController
         // header ("Access-Control-Allow-Headers: *");
 
 		$medicine = Medicine::where ('item_code', $item_code)->get ();
-        
+
 		$i = 0;
 		$labRule=[];
 
@@ -1118,7 +1118,8 @@ class MedicineController extends BaseController
 		                    break;
 		                default:
 		                    {
-		                        $labRule = Pricerule::where('laboratory','LIKE','%' . substr ($med['marketed_by'],0,15) . '%')->get()->toArray();
+                                $laboratory = (strlen($med['manufacturer']) >= 15) ? substr ($med['manufacturer'],0,15) : $med['manufacturer'];
+		                        $labRule = Pricerule::where('laboratory','LIKE','%' . substr ($med['manufacturer'],0,15) . '%')->get()->toArray();
 		                        if(sizeof($labRule) > 0) {
 									if ($labRule[0]['isByProd'] == 1) {
 										// $labRule = Pricerule::with(["prodrule" => function($q) { $q->where('product', 'LIKE', substr ($med['item_name'],0,15);}])->where('laboratory','LIKE',substr ($med['marketed_by'],0,15) . '%')->get();
