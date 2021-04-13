@@ -236,17 +236,18 @@ class TreatmentController extends Controller
         if($isDel == 0) {
             $treatments = Treatment::where('customer_id', '=', $customer_id)->with('medicines')->get();
             // Log::info($treatments->toArray());
-            foreach ($treatments as $key => $treatment) {
-                Log::info($treatment);
-                foreach ($treatment->medicines as $key => $value) {
-                    $med = new Medicine();
-                    $mrp = app('App\Http\Controllers\MedicineController')->getSellingPrice($value['item_code']);
-                    $value->mrp = $mrp;
-                }
-            }
 
         } else {
             $treatments = Treatment::where('customer_id', '=', $customer_id)->with('medicines')->withTrashed()->get();
+        }
+
+        foreach ($treatments as $key => $treatment) {
+            Log::info($treatment);
+            foreach ($treatment->medicines as $key => $value) {
+                $med = new Medicine();
+                $mrp = app('App\Http\Controllers\MedicineController')->getSellingPrice($value['item_code']);
+                $value->mrp = $mrp;
+            }
         }
 
         // $treatments = $user->toArray();

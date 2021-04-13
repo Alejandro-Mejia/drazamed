@@ -1798,6 +1798,7 @@ class MedicineController extends BaseController
                 'isReorden' => $is_reorden
             ];
 
+            // Se adiciona la informacion de reorden
             Log::info('Data:' . print_r($data, true));
 
         }
