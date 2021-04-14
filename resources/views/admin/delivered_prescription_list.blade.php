@@ -49,7 +49,7 @@ $(function()
 	   <td>{{(isset($pageNumber)?$i+1+((Request::get('page')-1)*30):$i+1)}}</td>
 	   <td>{{$pres[$i]->email}}</td>
 	   <td>{{date('d-M-Y',strtotime($pres[$i]->date_created))}}</td>
-	   <td style="text-align: center">{{$paid}}</td>
+	   <td style="text-align: center">{!!$paid!!}</td>
 	   <td>{{ __(PrescriptionStatus::statusName($pres[$i]->status))}}</td>
 	   <td><a class='btn btn-s-md btn-info btn-rounded' href='{{url("/")}}/admin/pres-edit/{{$pres[$i]->pres_id}}/0' >{{ __('Details')}}</a>&nbsp;&nbsp;&nbsp;
 	   {{--<a class='btn btn-s-md btn-danger btn-rounded' href='{{url("/")}}/admin/pres-delete/{{$pres[$i]->pres_id}}/shipped' onclick="return confirm('Do you really want to delete this order?');">{{ __('Delete')}}</a></td>--}}

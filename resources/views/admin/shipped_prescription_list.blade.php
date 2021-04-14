@@ -49,13 +49,13 @@ $(function()
 	   <td>{{(isset($pageNumber)?$i+1+((Request::get('page')-1)*30):$i+1)}}</td>
 	   <td>{{$pres[$i]->email}}</td>
 	   <td>{{date('d-M-Y',strtotime($pres[$i]->date_created))}}</td>
-	   <td style="text-align: center">{{$paid}}</td>
+	   <td style="text-align: center">{!!$paid!!}</td>
 
 	   <td>
-      @if($pres[$i]->shipping_status != ShippingStatus::SHIPPED())
+      @if($pres[$i]->shipping_status != ShippingStatus::DELIVERED())
           <a class='btn btn-s-md btn-info btn-rounded' href='{{url("/")}}/admin/deliver-order/{{$pres[$i]->pres_id}}'  onclick="return confirm('Do you really want to make this order as delivered?');">{{ __('Delivery Order')}}</a>
         @else
-            {{ __('Delivered')}}
+            {{ __('Enviado')}}
         @endif
      </td>
 	   <td><a class='btn btn-s-md btn-info btn-rounded' href='{{url("/")}}/admin/pres-edit/{{$pres[$i]->pres_id}}/0' >{{ __('Details')}}</a>&nbsp;&nbsp;&nbsp;

@@ -1374,9 +1374,11 @@ class AdminController extends BaseController
 		$userDetails = $prescription->getUser;
 		// Save Invoice Details
 		$invoice->shipping_status = ShippingStatus::SHIPPED ();
+		$prescription->status = PrescriptionStatus::SHIPPED ();
 		$invoice->updated_at = date ('Y-m-d H:i:s');
 		$invoice->updated_by = Auth::user ()->id;
 		$invoice->save ();
+        $prescription->save();
 		// Send Mail
 		$type = $userDetails->user_type_id;
 		if ($type == UserType::CUSTOMER ()) {
@@ -1424,10 +1426,12 @@ class AdminController extends BaseController
 		$invoice = $prescription->getInvoice;
 		$userDetails = $prescription->getUser;
 		// Save Invoice Details
-		$invoice->shipping_status = ShippingStatus::DELIVERED ();
+		$invoice->shipping_status = ShippingStatus::RECEIVED ();
+		$prescription->status = PrescriptionStatus::DELIVERED ();
 		$invoice->updated_at = date ('Y-m-d H:i:s');
 		$invoice->updated_by = Auth::user ()->id;
 		$invoice->save ();
+		$prescription->save ();
 		// Send Mail
 		$type = $userDetails->user_type_id;
 		if ($type == UserType::CUSTOMER ()) {

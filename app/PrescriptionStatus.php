@@ -72,6 +72,14 @@
         }
 
         /**
+         * Delivered User Status
+         */
+        public static function DELIVERED()
+        {
+            return self::status('DELIVERED');
+        }
+
+        /**
          * Get  Status Name
          * @param $status_id
          * @return string
@@ -94,6 +102,9 @@
                     break;
                 case (self::SHIPPED()):
                     return "Shiped";
+                    break;
+                case (self::DELIVERED()):
+                    return "Delivered";
                     break;
             }
         }
