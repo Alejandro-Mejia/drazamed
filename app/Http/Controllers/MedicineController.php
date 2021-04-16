@@ -126,7 +126,7 @@ class MedicineController extends BaseController
 				// dd(Request::hasFile ('files'));
                 Log::info("hasFile: " . Request::hasFile('files'));
 
-
+                //
 				if (Request::hasFile ('files')) {
 					$file_name = time ();
 					$ext = Request::file ('files')[0]->getClientOriginalExtension ();
@@ -275,7 +275,7 @@ class MedicineController extends BaseController
 
 				// $email = Auth::user ()->email;
                 $email = Request::get ('email' , '');
-				$prescription = Request::get ('prescription' , '');
+				$prescription = Request::input ('prescription' , '');
                 $is_pres_required = Request::get ('is_pres_required' , 1);
 
                 Log::info('email:' . $email);
