@@ -293,7 +293,7 @@ class MedicineController extends BaseController
                 $path = base_path () . '/public/images/prescription/' . $email . '/';
 
                 if(!file_exists($path)) {
-                    Log::info("Directorio no existe, se crea");
+                    Log::info("Directorio no existe, se crea: " . $path);
                     mkdir($path, 0777, true);
                 }
 
