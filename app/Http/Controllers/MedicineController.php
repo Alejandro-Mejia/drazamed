@@ -279,7 +279,7 @@ class MedicineController extends BaseController
                 $is_pres_required = Request::get ('is_pres_required' , 1);
 
                 Log::info('email:' . $email);
-                Log::info('prescription:' . $prescription);
+                Log::info('prescription:' . substr($prescription,0,20));
                 Log::info('is_pres_required:' . $is_pres_required);
 
 
@@ -291,6 +291,12 @@ class MedicineController extends BaseController
 					throw new Exception('Se requiere formula médica para esta orden' , 412);
 
                 $path = base_path () . '/public/images/prescription/' . $email . '/';
+
+                if(!file_exists($path)) {
+                    Log::info("Directorio no existe, se crea");
+                    mkdir($path, 0777, true);
+                }
+
                 $date = new \DateTime();
 
                 $file_name = "";
