@@ -133,13 +133,22 @@ class MedicineController extends BaseController
 						//return Redirect::back ();
 					}
 					$fname = Request::file ('files')[0]->getClientOriginalName ();
+
+                    Log::info("fname:" . $fname);
+
 					$file_name = time ();
 					$file_name .= $file_name . $fname;
+
+                    Log::info("file_name:" . $fname);
+
+
 					Request::file ('files')[0]->move ($path , $file_name);
 					$newName = "thumb_" . $file_name . $fname;
 
 
 					$realpath = $path . "/" . $file_name;
+
+                    Log::info("ruta de la imagen: " . $realpath);
 					// open an image file
 					$img = Image::make ($realpath);
 					// now you are able to resize the instance
