@@ -279,7 +279,7 @@ class MedicineController extends BaseController
                 $is_pres_required = Request::get ('is_pres_required' , 1);
 
                 Log::info('email:' . $email);
-                Log::info('prescription:' . substr($prescription,0,20));
+                Log::info('prescription:' . substr($prescription,0,25));
                 Log::info('is_pres_required:' . $is_pres_required);
 
 
@@ -303,7 +303,7 @@ class MedicineController extends BaseController
 
 				if (!empty($prescription)) {
 					$file_name = $date->getTimestamp () . ".jpg";
-					$img = str_replace ('data:image/jpg;base64,' , '' , $prescription);
+					$img = str_replace ('data:image/jpeg;base64,' , '' , $prescription);
 					$file_store = file_put_contents ($path . $file_name , base64_decode ($img));
 					if (!$file_store)
 						throw new Exception('File Not saved !' , 403);
