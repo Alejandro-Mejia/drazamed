@@ -124,6 +124,9 @@ class MedicineController extends BaseController
 				$file_name = "";
 				// dd(Request::all());
 				// dd(Request::hasFile ('files'));
+                Log::info("hasFile: " . Request::hasFile('files'));
+
+                //
 				if (Request::hasFile ('files')) {
 					$file_name = time ();
 					$ext = Request::file ('files')[0]->getClientOriginalExtension ();
@@ -133,13 +136,22 @@ class MedicineController extends BaseController
 						//return Redirect::back ();
 					}
 					$fname = Request::file ('files')[0]->getClientOriginalName ();
+
+                    Log::info("fname:" . $fname);
+
 					$file_name = time ();
 					$file_name .= $file_name . $fname;
+
+                    Log::info("file_name:" . $fname);
+
+
 					Request::file ('files')[0]->move ($path , $file_name);
 					$newName = "thumb_" . $file_name . $fname;
 
 
 					$realpath = $path . "/" . $file_name;
+
+                    Log::info("ruta de la imagen: " . $realpath);
 					// open an image file
 					$img = Image::make ($realpath);
 					// now you are able to resize the instance
@@ -263,11 +275,11 @@ class MedicineController extends BaseController
 
 				// $email = Auth::user ()->email;
                 $email = Request::get ('email' , '');
-				$prescription = Request::get ('prescription' , '');
+				$prescription = Request::input ('prescription' , '');
                 $is_pres_required = Request::get ('is_pres_required' , 1);
 
                 Log::info('email:' . $email);
-                Log::info('prescription:' . $prescription);
+                Log::info('prescription:' . substr($prescription,0,20));
                 Log::info('is_pres_required:' . $is_pres_required);
 
 
@@ -279,6 +291,12 @@ class MedicineController extends BaseController
 					throw new Exception('Se requiere formula médica para esta orden' , 412);
 
                 $path = base_path () . '/public/images/prescription/' . $email . '/';
+
+                if(!file_exists($path)) {
+                    Log::info("Directorio no existe, se crea");
+                    mkdir($path, 0777, true);
+                }
+
                 $date = new \DateTime();
 
                 $file_name = "";
