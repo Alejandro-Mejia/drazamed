@@ -124,6 +124,9 @@ class MedicineController extends BaseController
 				$file_name = "";
 				// dd(Request::all());
 				// dd(Request::hasFile ('files'));
+                Log::info("hasFile: " . Request::hasFile('files'));
+
+
 				if (Request::hasFile ('files')) {
 					$file_name = time ();
 					$ext = Request::file ('files')[0]->getClientOriginalExtension ();
