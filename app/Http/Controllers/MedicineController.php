@@ -302,7 +302,7 @@ class MedicineController extends BaseController
                 $file_name = "";
 
 				if (!empty($prescription)) {
-					$file_name = $date->getTimestamp ();
+					$file_name = $date->getTimestamp () . ".jpg";
 					$img = str_replace ('data:image/png;base64,' , '' , $prescription);
 					$file_store = file_put_contents ($path . $file_name , base64_decode ($img));
 					if (!$file_store)
