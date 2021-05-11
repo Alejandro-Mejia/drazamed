@@ -44,7 +44,7 @@
                             </span>
                         @enderror
                     </div>
-                    <div class="form-group row">
+                    <!-- <div class="form-group row">
                         <div class="col-md-6">
                             <a class="btn btn-primary" href="{{ route('social.auth', 'facebook') }}">
                                 Continuar con Facebook
@@ -56,7 +56,7 @@
                               </a>
                         </div>
 
-                    </div>
+                    </div> -->
                     <div class="form-group row">
                         <div class="col-md-6 ">
                             <div class="form-check">
