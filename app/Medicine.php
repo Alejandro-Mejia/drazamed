@@ -2,6 +2,7 @@
 
 	namespace App;
     use Illuminate\Database\Eloquent\Model;
+    use Illuminate\Support\Str;
     use App\Traits\CacheClear;
 	use App\Medicine;
 	use Response;
@@ -57,7 +58,7 @@
 		public function getSellPriceAttribute()
 		{
 			// $this = Medicine::where('id',$this->id)->get()[0];
-			if($this->marked_price == 0) {
+			if($this->marked_price == 0  && !Str::contains($this->denomination,  '(P)' ) ) {
 				switch ($this->tax) {
 					case '19':
 						if($this['manufacturer'] != "ICOM") {
@@ -132,7 +133,15 @@
 						break;
 				}
 			} else {
-				$sellprice = $this->marked_price;
+				// $sellprice = $med->real_price;
+                if ($this->marked_price > 0) {
+                    $sellprice = $this->marked_price;
+                } else {
+                    $pattern = "/(?<=\(P\)).[0-9]+/";
+                    $subject = $this->denomination;
+                    preg_match($pattern, $subject, $match);
+                    $sellprice = intval($match[0]);
+                }
 			}
 
 			$sellprice = ceil( $sellprice / 100 ) * 100;
