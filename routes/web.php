@@ -78,7 +78,7 @@ use MercadoPago;
     });
 
 
-    Route::middleware(['web','auth'])->group(function () {
+    Route::middleware(['web'])->group(function () {
 
 
         // // Rutas de prueba
