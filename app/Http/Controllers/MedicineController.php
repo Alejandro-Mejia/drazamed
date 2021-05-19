@@ -5,6 +5,7 @@ use Illuminate\Routing\Controller as BaseController;
 use Intervention\Image\ImageManagerStatic as Image;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Str;
 
 use DateTime;
 use Exception;
@@ -48,6 +49,7 @@ use App\User;
 use Maatwebsite\Excel\Facades\Excel;
 use Maatwebsite\Excel\HeadingRowImport;
 use App\Imports\MedicinesImport;
+
 
 // Clase de MercadoPago
 use MercadoPago;
@@ -817,7 +819,7 @@ class MedicineController extends BaseController
         // header ("Access-Control-Allow-Headers: *");
 		$med = Medicine::where ('id' , '=' , $id)->first ();
 
-		if($med->marked_price == 0) {
+		if($med->marked_price == 0 && !Str::contains($med->denomination,  '(P)' )) {
 	        switch ($med->tax) {
 	            case '19':
 	            	if($med['manufacturer'] != "ICOM") {
@@ -876,7 +878,15 @@ class MedicineController extends BaseController
 									break;
 							}
 						} else {
-							$sellprice = $med->real_price;
+							// $sellprice = $med->real_price;
+                            if ($med->marked_price > 0) {
+                                $sellprice = $med->marked_price;
+                            } else {
+                                $pattern = "(?:(P)\/)\K\d+";
+                                $subject = $med->denomination;
+                                preg_match($pattern, $subject, $match);
+                                $sellprice = $match;
+                            }
 						}
 
 
@@ -885,7 +895,15 @@ class MedicineController extends BaseController
 	                break;
 	        }
 	    } else {
-	        $sellprice = $med->marked_price;
+	        // $sellprice = $med->marked_price;
+            if ($med->marked_price > 0) {
+                $sellprice = $med->marked_price;
+            } else {
+                $pattern = "/(?<=\(P\)).[0-9]+/";
+                $subject = $med->denomination;
+                preg_match($pattern, $subject, $match);
+                $sellprice = intval($match[0]);
+            }
 	    }
 
 
@@ -1126,7 +1144,7 @@ class MedicineController extends BaseController
 		if ($medicine->count () > 0) {
 			foreach ($medicine as $med) {
 
-				if($med->marked_price == 0) {
+				if($med->marked_price == 0  && !Str::contains($med->denomination,  '(P)' )) {
 		            switch ($med->tax) {
 		                case '19':
 		                    $sellprice = $med->real_price / 0.71;
@@ -1174,7 +1192,15 @@ class MedicineController extends BaseController
 		                    break;
 		            }
 		        } else {
-		            $sellprice = $med->marked_price;
+                    if ($med->marked_price > 0) {
+                        $sellprice = $med->marked_price;
+                    } else {
+                        $pattern = "(?:(P)\/)\K\d+";
+                        $subject = $med->denomination;
+                        preg_match($pattern, $subject, $match);
+                        $sellprice = $match;
+                    }
+
 		        }
 
 		        $sellprice = ceil($sellprice);

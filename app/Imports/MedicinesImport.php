@@ -113,6 +113,10 @@ class MedicinesImport implements ToModel, WithHeadingRow, WithBatchInserts , Wit
                     $onFailure('Producto controlado u obsequio. No se importa a la BD : ' . $value);
                 }
 
+                // if(Str::contains($value,  '(P)')) {
+                //     $onFailure('Producto con precio marcado : ' . $value);
+                // }
+
 
             },
             'proveedor' => function($attribute, $value, $onFailure) {

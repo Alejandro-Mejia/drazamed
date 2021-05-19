@@ -152,7 +152,7 @@ class AdminController extends BaseController
 		if ($medicine->count () > 0) {
 			foreach ($medicine as $med) {
 
-				if($med->marked_price == 0) {
+				if($med->marked_price == 0 ) {
 		            switch ($med->tax) {
 		                case '19':
 		                    $sellprice = $med->real_price / 0.71;
