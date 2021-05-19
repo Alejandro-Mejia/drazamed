@@ -882,10 +882,10 @@ class MedicineController extends BaseController
                             if ($med->marked_price > 0) {
                                 $sellprice = $med->marked_price;
                             } else {
-                                $pattern = "(?:(P)\/)\K\d+";
+                                $pattern = "/(?<=\(P\)).[0-9]+/";
                                 $subject = $med->denomination;
                                 preg_match($pattern, $subject, $match);
-                                $sellprice = $match;
+                                $sellprice = intval($match[0]);
                             }
 						}
 
@@ -1195,10 +1195,10 @@ class MedicineController extends BaseController
                     if ($med->marked_price > 0) {
                         $sellprice = $med->marked_price;
                     } else {
-                        $pattern = "(?:(P)\/)\K\d+";
+                        $pattern = "/(?<=\(P\)).[0-9]+/";
                         $subject = $med->denomination;
                         preg_match($pattern, $subject, $match);
-                        $sellprice = $match;
+                        $sellprice = intval($match[0]);
                     }
 
 		        }
