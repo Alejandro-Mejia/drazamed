@@ -18,10 +18,10 @@
             <h1 class="display-4 py-4 text-primary text-center">APP para Android y Apple</h1>
             <div class="row" id="appButtons">
                 <div class="col-md-6 col-sm-12 justify-content-center p-3" style="text-align: center">
-                    <button id="goPlayStore"><img src="images/GooglePlayLogo.png" alt="PlayStore"></button>
+                    <button class="goPlayStore"><img src="images/GooglePlayLogo.png" alt="PlayStore"></button>
                 </div>
                 <div class="col-md-6 col-sm-12 justify-content-center p-3" style="text-align: center">
-                    <button id="goAppStore"><img src="images/AppStoreLogo.png" alt="AppStore"></button>
+                    <button class="goAppStore"><img src="images/AppStoreLogo.png" alt="AppStore"></button>
                 </div>
             </div>
         </div>
@@ -662,10 +662,10 @@
             <!-- , hables directamente con el doctor --> y programes las próximas entregas de tus medicamentos. </p>
         <div class="row" id="appButtons">
             <div class="col-md-6 col-sm-12 justify-content-center p-3" style="text-align: center">
-                <button id="goPlayStore"><img src="images/GooglePlayLogo.png" alt="PlayStore"></button>
+                <button class="goPlayStore"><img src="images/GooglePlayLogo.png" alt="PlayStore"></button>
             </div>
             <div class="col-md-6 col-sm-12 justify-content-center p-3" style="text-align: center">
-                <button><img src="images/AppStoreLogo.png" alt="AppStore"></button>
+                <button class="goAppStore"><img src="images/AppStoreLogo.png" alt="AppStore"></button>
             </div>
         </div>
         <div class="row justify-content-center p-3">
@@ -688,12 +688,12 @@
 
 
 <script>
-    $("#goPlayStore").on('click', function(){
+    $(".goPlayStore").on('click', function(){
         // alert("goto playstore");
         window.open("https://play.google.com/store/apps/details?id=com.drazamed.draz");
     })
 
-    $("#goAppStore").on('click', function(){
+    $(".goAppStore").on('click', function(){
         // alert("goto playstore");
         window.open("https://apps.apple.com/co/app/drazamedapp/id1560510168");
     })
