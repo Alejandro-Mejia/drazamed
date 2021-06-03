@@ -15,13 +15,13 @@
             <p class= "text-left" style="font-size: 2rem"> Estamos a tu servicio para que ganes tiempo, simplifiques tu vida y te sientas más saludable. Ya no tienes que estar pensando en tus medicamentos porque nosotros nos encargamos.​</p>
         </div>
         <div class="py-4">
-            <h1 class="display-4 py-4 text-primary text-center">Próximamente APP para Android y Apple</h1>
+            <h1 class="display-4 py-4 text-primary text-center">APP para Android y Apple</h1>
             <div class="row" id="appButtons">
                 <div class="col-md-6 col-sm-12 justify-content-center p-3" style="text-align: center">
-                    <button><img src="images/GooglePlayLogo.png" alt="PlayStore"></button>
+                    <button id="goPlayStore"><img src="images/GooglePlayLogo.png" alt="PlayStore"></button>
                 </div>
                 <div class="col-md-6 col-sm-12 justify-content-center p-3" style="text-align: center">
-                    <button><img src="images/AppStoreLogo.png" alt="AppStore"></button>
+                    <button id="goAppStore"><img src="images/AppStoreLogo.png" alt="AppStore"></button>
                 </div>
             </div>
         </div>
@@ -658,11 +658,11 @@
     <div class="container justify-content-center" id="galeria p-2">
         <!--<h1 class="display-4 py-4 text-primary text-center">¡Descargala ahora!</h1> -->
         <h1 class="display-4 py-4 text-primary text-center">Nuestra App</h1>
-        <p class="text-center" style="font-size: 2rem"> <!-- <b>Nuestra App</b> --> Próximamente disponible en PlayStore y AppStore, lista para que personalices tu pastillero
+        <p class="text-center" style="font-size: 2rem"> <!-- <b>Nuestra App</b> --> Disponible en PlayStore y AppStore, lista para que personalices tu pastillero
             <!-- , hables directamente con el doctor --> y programes las próximas entregas de tus medicamentos. </p>
         <div class="row" id="appButtons">
             <div class="col-md-6 col-sm-12 justify-content-center p-3" style="text-align: center">
-                <button><img src="images/GooglePlayLogo.png" alt="PlayStore"></button>
+                <button id="goPlayStore"><img src="images/GooglePlayLogo.png" alt="PlayStore"></button>
             </div>
             <div class="col-md-6 col-sm-12 justify-content-center p-3" style="text-align: center">
                 <button><img src="images/AppStoreLogo.png" alt="AppStore"></button>
@@ -685,4 +685,18 @@
 
     </div>
 </div>
+
+
+<script>
+    $("#goPlayStore").on('click', function(){
+        // alert("goto playstore");
+        window.open("https://play.google.com/store/apps/details?id=com.drazamed.draz");
+    })
+
+    $("#goAppStore").on('click', function(){
+        // alert("goto playstore");
+        window.open("https://apps.apple.com/co/app/drazamedapp/id1560510168");
+    })
+</script>
+
 @endsection
