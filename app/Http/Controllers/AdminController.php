@@ -206,7 +206,7 @@ class AdminController extends BaseController
 		        $sellprice = ceil($sellprice);
 		        $sellprice = round( $sellprice, -2, PHP_ROUND_HALF_UP);
 
-                Log::info("sellPrice : " , $sellprice);
+                // Log::info("sellPrice : " , $sellprice);
 
 		        return $sellprice;
 		    }
