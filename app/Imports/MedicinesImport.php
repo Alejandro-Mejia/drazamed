@@ -46,7 +46,7 @@ class MedicinesImport implements ToModel, WithHeadingRow, WithBatchInserts , Wit
             // $exists->batch_no      = isset($row['lote']) ? $row['lote'] : "ND";
             // $exists->units         = isset($row['denominacion']) ? $this->setUnits($row['denominacion']) : "ND";
             // $exists->units_value   = isset($row['denominacion']) ? $this->setUnitVal($row['denominacion']) : 0;
-            // $exists->quantity      = isset($row['cantidad']) ? $row['cantidad'] : 0;
+            $exists->quantity      = isset($row['cantidad']) ? $row['cantidad'] : 0;
             // $exists->marked_price  = isset($row['marcado']) ? $row['marcado']*1000 : 0;
             // // 'bonification'  => $row['boni'],
             // $exists->catalog       = isset($row['catalogo']) ? $row['catalogo'] : "ND";
