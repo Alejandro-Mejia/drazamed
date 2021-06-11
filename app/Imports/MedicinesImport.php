@@ -40,40 +40,40 @@ class MedicinesImport implements ToModel, WithHeadingRow, WithBatchInserts , Wit
             //LOGIC HERE TO UPDATE
             Log::info('Producto existente en la DB :' . $exists['item_name']) ;
 
-            $exists->provider      = isset($row['proveedor']) ? $row['proveedor'] : "ND";
-            $exists->item_name     = isset($row['denominacion']) ?  $this->cleanDenomination($row['denominacion']) : "ND";
-            $exists->denomination  = isset($row['denominacion']) ? $row['denominacion'] : "ND";
-            $exists->batch_no      = isset($row['lote']) ? $row['lote'] : "ND";
-            $exists->units         = isset($row['denominacion']) ? $this->setUnits($row['denominacion']) : "ND";
-            $exists->units_value   = isset($row['denominacion']) ? $this->setUnitVal($row['denominacion']) : 0;
-            $exists->quantity      = isset($row['cantidad']) ? $row['cantidad'] : 0;
-            $exists->marked_price  = isset($row['marcado']) ? $row['marcado']*1000 : 0;
-            // 'bonification'  => $row['boni'],
-            $exists->catalog       = isset($row['catalogo']) ? $row['catalogo'] : "ND";
-            // 'rack_number'   => $row['rack'],
-            $exists->composition   = isset($row['subgrupo']) ? $row['subgrupo'] : "ND";
-            $exists->manufacturer  = isset($row['proveedor']) ? $this->cleanManufacturer($row['proveedor']) : "ND";
-            $exists->marketed_by   = isset($row['proveedor']) ? $row['proveedor'] : "ND";
-            $exists->show_priority = isset($row['proveedor']) ? $this->setPriority($row['proveedor']) : 0;
-            $exists->group         = isset($row['grupo']) ? $row['grupo'] : "ND";
-            $exists->is_pres_required = isset($row['grupo']) ? (($row['grupo'] == 'ANTIBIOTICOS') ? 1 : 0) : 0;
-            $exists->subgroup      = isset($row['subgrupo']) ? $row['subgrupo'] : "ND";
-            $exists->item_code     = isset($row['ean']) ?  $row['ean'] : "ND";
-            $exists->tax_type      = 'PERCENTAGE';
-            $exists->tax           = isset($row['impuesto']) ? $this->ivaImport($row['impuesto']) : 0;
-            $exists->purchase_price = isset($row['venta_real']) ? $row['venta_real'] : 0;
-            $exists->selling_price = 0;
-            $exists->cost_price    = isset($row['venta_real']) ? $row['venta_real'] : 0;
-            $exists->current_price = isset($row['venta_cte']) ? $row['venta_cte'] : 0;
-            $exists->real_price    = isset($row['venta_real']) ? $row['venta_real'] : 0;
-            $exists->discount      = 0;
-            $exists->created_by    = 1;
-            $exist->added_by      = 1;
-            $exists->created_at    = date("Y-m-d");
-            //return null
-            Log::info('Producto :');
-            Log::info($exists);
-            $exist->save();
+            // $exists->provider      = isset($row['proveedor']) ? $row['proveedor'] : "ND";
+            // $exists->item_name     = isset($row['denominacion']) ?  $this->cleanDenomination($row['denominacion']) : "ND";
+            // $exists->denomination  = isset($row['denominacion']) ? $row['denominacion'] : "ND";
+            // $exists->batch_no      = isset($row['lote']) ? $row['lote'] : "ND";
+            // $exists->units         = isset($row['denominacion']) ? $this->setUnits($row['denominacion']) : "ND";
+            // $exists->units_value   = isset($row['denominacion']) ? $this->setUnitVal($row['denominacion']) : 0;
+            // $exists->quantity      = isset($row['cantidad']) ? $row['cantidad'] : 0;
+            // $exists->marked_price  = isset($row['marcado']) ? $row['marcado']*1000 : 0;
+            // // 'bonification'  => $row['boni'],
+            // $exists->catalog       = isset($row['catalogo']) ? $row['catalogo'] : "ND";
+            // // 'rack_number'   => $row['rack'],
+            // $exists->composition   = isset($row['subgrupo']) ? $row['subgrupo'] : "ND";
+            // $exists->manufacturer  = isset($row['proveedor']) ? $this->cleanManufacturer($row['proveedor']) : "ND";
+            // $exists->marketed_by   = isset($row['proveedor']) ? $row['proveedor'] : "ND";
+            // $exists->show_priority = isset($row['proveedor']) ? $this->setPriority($row['proveedor']) : 0;
+            // $exists->group         = isset($row['grupo']) ? $row['grupo'] : "ND";
+            // $exists->is_pres_required = isset($row['grupo']) ? (($row['grupo'] == 'ANTIBIOTICOS') ? 1 : 0) : 0;
+            // $exists->subgroup      = isset($row['subgrupo']) ? $row['subgrupo'] : "ND";
+            // $exists->item_code     = isset($row['ean']) ?  $row['ean'] : "ND";
+            // $exists->tax_type      = 'PERCENTAGE';
+            // $exists->tax           = isset($row['impuesto']) ? $this->ivaImport($row['impuesto']) : 0;
+            // $exists->purchase_price = isset($row['venta_real']) ? $row['venta_real'] : 0;
+            // $exists->selling_price = 0;
+            // $exists->cost_price    = isset($row['venta_real']) ? $row['venta_real'] : 0;
+            // $exists->current_price = isset($row['venta_cte']) ? $row['venta_cte'] : 0;
+            // $exists->real_price    = isset($row['venta_real']) ? $row['venta_real'] : 0;
+            // $exists->discount      = 0;
+            // $exists->created_by    = 1;
+            // $exist->added_by      = 1;
+            // $exists->created_at    = date("Y-m-d");
+            // //return null
+            // Log::info('Producto :');
+            // Log::info($exists);
+            // $exist->save();
             return null;
         }
 
