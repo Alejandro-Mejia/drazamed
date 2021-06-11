@@ -12,6 +12,7 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Log;
+use Arisan;
 
 
 /** @brief Class for medicines
