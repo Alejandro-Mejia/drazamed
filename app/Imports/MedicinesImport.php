@@ -71,7 +71,8 @@ class MedicinesImport implements ToModel, WithHeadingRow, WithBatchInserts , Wit
             $exist->added_by      = 1;
             $exist->created_at    = date("Y-m-d");
             //return null
-            dd($exist);
+            Log::info('Producto :');
+            Log::info($exist);
             $exist->save();
             return null;
         }
