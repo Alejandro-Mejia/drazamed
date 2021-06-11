@@ -35,7 +35,9 @@ class MedicinesImport implements ToModel, WithHeadingRow, WithBatchInserts , Wit
     */
     public function model(array $row)
     {
-        $exists = Medicine::where('item_code',$row['ean'])->first();
+        $exists = new Medicine();
+
+        $exists = $exists->where('item_code',$row['ean'])->first();
 
         if ($exists) {
             //LOGIC HERE TO UPDATE
