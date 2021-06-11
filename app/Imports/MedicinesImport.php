@@ -73,6 +73,7 @@ class MedicinesImport implements ToModel, WithHeadingRow, WithBatchInserts , Wit
             //return null
 
             $exist->save();
+            return null;
         }
 
 

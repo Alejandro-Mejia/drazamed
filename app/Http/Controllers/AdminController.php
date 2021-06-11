@@ -72,8 +72,10 @@ class AdminController extends BaseController
 	public function anyLogin ()
 	{
 		// Validation Rules
-		$rules = ['captcha' => 'required|captcha'];
+		//$rules = ['captcha' => 'required|captcha'];
+        $rules = ['email' => 'required'];
 		$validator = Validator::make (Request::all () , $rules);
+        // dd($validator);
 		if ($validator->fails ()) {                  // Failure
 			Session::flash ('flash_message' , '<b>Sorry !</b> Captcha Mismatch');
 			Session::flash ('flash_type' , 'alert-danger');
