@@ -51,7 +51,7 @@ class MedicinesImport implements ToModel, WithHeadingRow, WithBatchInserts , Wit
             //     'real_price'    => isset($row['venta_real']) ? $row['venta_real'] : 0
             // ]);
 
-            return null;
+            return $exists;
         }
 
 
