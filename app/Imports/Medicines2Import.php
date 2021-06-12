@@ -109,7 +109,6 @@ class Medicines2Import implements ToCollection, WithHeadingRow, WithBatchInserts
                 $exists->purchase_price = isset($row['venta_real']) ? $row['venta_real'] : 0;
                 $exists->current_price = isset($row['venta_cte']) ? $row['venta_cte'] : 0;
                 $exists->real_price = isset($row['venta_real']) ? $row['venta_real'] : 0;
-                $exists->
 
                 $exists->save();
             } else {
