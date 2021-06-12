@@ -1,5 +1,6 @@
 <?php
 namespace App\Traits;
+use Artisan;
 
 trait CacheClear
 {

@@ -49,6 +49,7 @@ use App\User;
 use Maatwebsite\Excel\Facades\Excel;
 use Maatwebsite\Excel\HeadingRowImport;
 use App\Imports\MedicinesImport;
+use App\Imports\Medicines2Import;
 
 
 // Clase de MercadoPago
@@ -69,7 +70,7 @@ class MedicineController extends BaseController
 	// public function import()
 	// {
 
-	// 	$data = Excel::toArray(new MedicinesImport, request()->file('file'));
+	// $data = Excel::toArray(new Medicines2Import, request()->file('file'));
 
 
 	// 	collect(head($data))
@@ -2996,10 +2997,10 @@ class MedicineController extends BaseController
 				// Esto borra la tabla de Medicinas (Poner un mensaje de Esta Seguro?????)
 				// Medicine::query()->truncate();
 
-				// $import = (new MedicinesImport)->import($file);
+				$import = (new Medicines2Import)->import($file);
 
-				$import = Excel::toArray(new MedicinesImport, $file);
-                return response()->json(["rows"=>$import]);
+				// $import = Excel::toArray(new MedicinesImport, $file);
+                // return response()->json(["rows"=>$import]);
 				// collect(head($import))
 				// 	->each(function ($row, $key) {
 				// 		DB::table('medicine')
