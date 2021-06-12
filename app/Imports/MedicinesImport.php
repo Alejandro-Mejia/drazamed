@@ -43,13 +43,13 @@ class MedicinesImport implements ToModel, WithHeadingRow, WithBatchInserts , Wit
             //LOGIC HERE TO UPDATE
             Log::info('Producto existente en la DB :' . $exists['item_name']) ;
 
-            // $exists->update([
-            //     'quantity'      => isset($row['cantidad']) ? $row['cantidad'] : 0,
-            //     'marked_price'  => isset($row['marcado']) ? $row['marcado']*1000 : 0,
-            //     'purchase_price'=> isset($row['venta_real']) ? $row['venta_real'] : 0,
-            //     'current_price' => isset($row['venta_cte']) ? $row['venta_cte'] : 0,
-            //     'real_price'    => isset($row['venta_real']) ? $row['venta_real'] : 0
-            // ]);
+            $exists->update([
+                'quantity'      => isset($row['cantidad']) ? $row['cantidad'] : 0,
+                'marked_price'  => isset($row['marcado']) ? $row['marcado']*1000 : 0,
+                'purchase_price'=> isset($row['venta_real']) ? $row['venta_real'] : 0,
+                'current_price' => isset($row['venta_cte']) ? $row['venta_cte'] : 0,
+                'real_price'    => isset($row['venta_real']) ? $row['venta_real'] : 0
+            ]);
 
             return null;
         }
