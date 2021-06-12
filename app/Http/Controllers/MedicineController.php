@@ -2996,16 +2996,16 @@ class MedicineController extends BaseController
 				// Esto borra la tabla de Medicinas (Poner un mensaje de Esta Seguro?????)
 				// Medicine::query()->truncate();
 
-				$import = (new MedicinesImport)->import($file);
+				//$import = (new MedicinesImport)->import($file);
 
-				//$data = Excel::toArray(new MedicinesImport, request()->file('file'));
+				$import = Excel::toArray(new MedicinesImport, $file);
 
-				// collect(head($import))
-				// 	->each(function ($row, $key) {
-				// 		DB::table('medicine')
-				// 			->where('item_code', $row['item_code'])
-				// 			->update(array_except($row, ['item_code']));
-				// 	});
+				collect(head($import))
+					->each(function ($row, $key) {
+						DB::table('medicine')
+							->where('item_code', $row['item_code'])
+							->update(array_except($row, ['item_code']));
+					});
 
 			} catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
 			     $failures = $e->failures();
