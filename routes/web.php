@@ -65,9 +65,7 @@ use MercadoPago;
         return View::make('vue');
     });
 
-    Route::get('/admin-login', function () {
-        return View::make('admin.signin');
-    });
+
     /**
      * General Routes
      */
@@ -75,6 +73,9 @@ use MercadoPago;
 
     Route::middleware(['web'])->group(function () {
         Route::any('/user/user-login/{is_web}', 'UserController@anyUserLogin');
+        Route::get('/admin-login', function () {
+            return View::make('admin.signin');
+        });
     });
 
 
