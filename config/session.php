@@ -124,15 +124,17 @@ return [
     |
     */
 
+    'cookie' => env(
+        'SESSION_COOKIE',
+        Str::slug(env('APP_NAME', 'laravel'), '_').'_session'
+    ),
+
     // 'cookie' => env(
-    //     'SESSION_COOKIE',
+    //     'local_cookies',
     //     Str::slug(env('APP_NAME', 'laravel'), '_').'_session'
     // ),
 
-    'cookie' => env(
-        'local_cookies',
-        Str::slug(env('APP_NAME', 'laravel'), '_').'_session'
-    ),
+    // 'cookie' => 'laravel_session',
 
     /*
     |--------------------------------------------------------------------------
@@ -158,6 +160,8 @@ return [
     |
     */
 
+    // => env('SESSION_STORE', null),
+    // 'domain' => env('SESSION_DOMAIN', null),
     'domain' => null,
 
     /*
