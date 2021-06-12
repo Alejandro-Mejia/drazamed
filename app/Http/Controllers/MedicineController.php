@@ -2996,10 +2996,10 @@ class MedicineController extends BaseController
 				// Esto borra la tabla de Medicinas (Poner un mensaje de Esta Seguro?????)
 				// Medicine::query()->truncate();
 
-				$import = (new MedicinesImport)->import($file);
+				// $import = (new MedicinesImport)->import($file);
 
-				// $import = Excel::toArray(new MedicinesImport, $file);
-
+				$import = Excel::toArray(new MedicinesImport, $file);
+                return response()->json(["rows"=>$import]);
 				// collect(head($import))
 				// 	->each(function ($row, $key) {
 				// 		DB::table('medicine')
