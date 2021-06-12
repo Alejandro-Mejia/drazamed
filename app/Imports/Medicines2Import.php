@@ -98,16 +98,22 @@ class Medicines2Import implements ToCollection, WithHeadingRow, WithBatchInserts
         $i = 0;
         foreach ($rows as $row) {
             $i = $i + 1;
-            $exists = Medicine::where('item_code',$row['ean'])->first();
+            $exists = Medicine::where('item_code',$row['ean'])->where('batch_no',$row['lote'])->first();
             Log::info('Cargando .... ' . ( $i / $numrows) * 100 ) ;
 
             if($exists){
-                //$medicine = Medicine::find($row['item_code']);
+
                 Log::info('Producto existente en la DB :' . $exists['item_name']) ;
                 $exists->quantity = isset($row['cantidad']) ? $row['cantidad'] : 0;
+                $exists->marked_price = isset($row['marcado']) ? $row['marcado']*1000 : 0;
+                $exists->purchase_price = isset($row['venta_real']) ? $row['venta_real'] : 0;
+                $exists->current_price = isset($row['venta_cte']) ? $row['venta_cte'] : 0;
+                $exists->real_price = isset($row['venta_real']) ? $row['venta_real'] : 0;
+                $exists->
+
                 $exists->save();
             } else {
-
+                Log::info('Producto nuevo :' . $row['denominacion']) ;
                 $medicine = new Medicine([
                     'provider'      => isset($row['proveedor']) ? $row['proveedor'] : "ND",
                     'item_name'     => isset($row['denominacion']) ?  $this->cleanDenomination($row['denominacion']) : "ND",
