@@ -19,6 +19,7 @@ use App\Invoice;
 use App\ItemList;
 use App\Medicine;
 use App\PayStatus;
+use App\Professional;
 use App\Prescription;
 use App\ShippingStatus;
 use App\MedicalProfessional;
