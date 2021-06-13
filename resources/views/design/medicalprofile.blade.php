@@ -54,19 +54,19 @@
                             <li>
                                 <a href="#por_pagar"
                                     ><span class="mr-10 fas fa-credit-card"></span
-                                    >Ordenes Pendientes por Pagar</a
+                                    >Opcion 1</a
                                 >
                             </li>
                             <li>
                                 <a href="#pagadas_por_enviar"
                                     ><span class="mr-10 fas fa-shipping-fast"></span
-                                    >Ordenes en Proceso de Entrega</a
+                                    >Opcion 2</a
                                 >
                             </li>
                             <li>
                                 <a href="#enviadas"
                                     ><span class="mr-10 fa fa-check"></span
-                                    >Ordenes Finalizadas</a
+                                    >Opcion 3</a
                                 >
                             </li>
                             <li>
@@ -74,7 +74,7 @@
                                     ><span
                                         class="mr-10 fa fa-shopping-cart"
                                     ></span
-                                    >Carrito de Compras</a
+                                    >Opcion 4</a
                                 >
                             </li>
                             <li>
@@ -94,7 +94,7 @@
 
             <div class="col-lg-9 col-md-12" style="max-height: 90%; overflow: auto;">
                 <div class="panel profile-panel">
-                    <h2 class="panel-title">Mi Perfil</h2>
+                    <h2 class="panel-title">Mi Perfil Médico</h2>
                     <div hidden>
                         <div class="right-inner-addon">
                             <button type="button" class="btn btn-primary logout-btn ripple" data-color="#4BE7EC"
@@ -108,7 +108,7 @@
                             <label for="txt-fname">Nombre</label>
                             <input
                                 type="text"
-                                value="{{ $user_data->first_name }}"
+                                value="{{ $user_data->prof_first_name }}"
                                 id="txt-fname"
                                 readonly
                             />
@@ -117,7 +117,7 @@
                             <label for="txt-lname">Apellidos</label>
                             <input
                                 type="text"
-                                value="{{ $user_data->last_name }}"
+                                value="{{ $user_data->prof_last_name }}"
                                 id="txt-lname"
                                 readonly
                             />
@@ -128,7 +128,7 @@
                             <label for="txt-phone">Teléfono</label>
                             <input
                                 type="tel"
-                                value="{{ $user_data->phone }}"
+                                value="{{ $user_data->prof_phone }}"
                                 id="txt-phone"
                                 readonly
                             />
@@ -137,7 +137,7 @@
                             <label for="txt-email">Correo Electrónico</label>
                             <input
                                 type="email"
-                                value="{{ $user_data->mail }}"
+                                value="{{ $user_data->prof_mail }}"
                                 id="txt-email"
                                 readonly
                             />
@@ -148,7 +148,7 @@
                             <label for="txt-address">Dirección</label>
                             <input
                                 type="text"
-                                value="{{ $user_data->address ?? ''}}"
+                                value="{{ $user_data->prof_address ?? ''}}"
                                 id="txt-address"
                                 readonly
                             />
@@ -174,6 +174,38 @@
                     }
                 </style>
 
+                <br>
+                <!-- Ordenes completadas -->
+
+
+                <div class="panel profile-panel">
+                    <h2 class="panel-title">Mis Pacientes</h2>
+                    <div >
+                        <div class="right-inner-addon">
+                            <button type="button" class="btn btn-primary logout-btn ripple" data-color="#4BE7EC"
+                                    onclick="goto_pacient_page();">{{__('SEARCH')}}
+                            </button>
+                            <input type="text" id="tags" class="form-control search_medicine" placeholder="Busque su paciente por nombre o apellido"/>
+                        </div>
+                    </div>
+
+
+                </div>
+
+            </div>
+
+
+
+
+                <style>
+                    .anchor{
+                      display: block;
+
+                      margin-top: -300px; /*same height as header*/
+                      /*visibility: hidden;*/
+                    }
+                </style>
+
 
                 <!-- Ordenes completadas -->
 
@@ -181,6 +213,7 @@
 
 
             </div>
+
         </div>
     </div>
 </section>
@@ -270,6 +303,14 @@
         window.location = "{{URL::to('medicine-detail/')}}/" + current_item_code;
 
     }
+
+    function goto_pacient_page() {
+        $(".search_pacient").val("");
+        var serched_pacient = $(".search_pacient").val();
+        window.location = "{{URL::to('pacient-detail/')}}/" + search_pacient;
+    }
+
+
     function purchase(obj) {
         var invoice = $(obj).attr('invoice');
         window.location = "{{URL::to('medicine/make-mercado-pago-payment/')}}/" + invoice;

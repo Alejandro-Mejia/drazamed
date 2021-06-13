@@ -89,8 +89,11 @@ class UserController extends BaseController
 			$first_name = Request::get ('first_name' , '');
 			$full_name = $first_name . ' ' . $last_name;
 			$phone = Request::get ('phone' , '');
-			$address = Request::geT ('address' , '');
+			$address = Request::get ('address' , '');
 			$password = Request::get ('password' , '');
+            $especialidad = Request::get ('especialidad' , '');
+            $sub_especialidad = Request::get ('sub_especialidad' , '');
+            $tarjeta = Request::get ('tarjeta_profesional', '');
 			$confirm_password = Request::get ('confirm_password' , '');
 			$user_type = Request::get ('user_type' , '');
 
@@ -110,6 +113,9 @@ class UserController extends BaseController
 						$medProf->prof_phone = $phone;
 						$medProf->prof_address = $address;
 						$medProf->prof_first_name = $full_name;
+                        $medProf->prof_speciality = $especialidad;
+                        $medProf->prof_sub_speciality = $sub_especialidad;
+                        $medProf->prof_register = $tarjeta;
 						$medProf->prof_created_on = date ('Y-m-d H:i:s');
 						$medProf->prof_updated_on = date ('Y-m-d H:i:s');
 						$medProf->save ();
@@ -119,6 +125,7 @@ class UserController extends BaseController
 						$medProf->prof_mail = $email;
 						$medProf->prof_phone = $phone;
 						$medProf->prof_address = $address;
+
 						$medProf->prof_created_on = date ('Y-m-d H:i:s');
 						$medProf->prof_updated_on = date ('Y-m-d H:i:s');
 						$medProf->save ();
@@ -737,98 +744,135 @@ class UserController extends BaseController
 		// $invoices = Invoice::where ('user_id' , '=' , $user_id)->where ('shipping_status' , '=' , ShippingStatus::SHIPPED ())->get ();
 
 		$user_id = Auth::user ()->id;
-		$invoices = Invoice::where ('user_id' , '=' , $user_id)->get ();
-		$prescriptions = Prescription::select ('i.*' , 'prescription.status' , 'prescription.path' , 'prescription.id as pres_id' , 'prescription.created_at as date_added', 'prescription.is_delete as deleted')->where ('prescription.user_id' , '=' , $user_id)->where ('prescription.is_delete' , '=' , 0)
-			->join ('invoice as i' , 'i.pres_id' , '=' , DB::raw ("prescription.id AND i.payment_status IN (" . PayStatus::PENDING () . ",0) "));
-		$results = $prescriptions->get ();
-		// dd($results->toArray());
-		$responses = [];
 
-		foreach ($results as $result) {
-			$items = [];
-			// dd($result);
-
-			$invoice = Invoice::where ('pres_id' , '=' , $result->pres_id)->first()->toArray();
-
-			//dd($invoice);
-			$mp_data = app('App\Http\Controllers\MedicineController')->anyMakeMercadoPagoPayment($invoice["id"],0);
-			//$mp_data=[];
-
-			//$medicines = Medicine::medicines ();
-			if (!is_null ($result->id) || !empty($result->id)) {
-				$carts = ItemList::where ('invoice_id' , '=' , $result->id)->get ();
-
-				$taxTotal = 0;
-				$totalPrice = 0;
-				$items = [];
-				$i=0;
-
-
-				//var_dump($carts);
-
-				foreach ($carts as $cart) {
-					// var_dump($cart);
-					// dd($cart, $medicines, $results);
-					$medicines = Medicine::where('id', 'LIKE', $cart->medicine)->first()->toArray();
-					// dd($medicines);
-					$tax = $cart->unit_price - ceil(($cart->unit_price / (1+($medicines['tax']/100))));
-
-
-
-
-					$items[$i] = ['id' => $cart->id ,
-						'item_id' => $cart->medicine ,
-						'item_code' => $medicines['item_code'] ,
-						'item_name' => $medicines['item_name'] ,
-						'unit_price' => $cart->unit_price ,
-						'discount_percent' => $cart->discount_percentage ,
-						'discount' => $cart->discount ,
-						'tax' => $tax,
-						'quantity' => $cart->quantity ,
-						'total_price' => $cart->total_price
-					];
-
-
-
-					$taxTotal += $tax;
-					$totalPrice += $cart->total_price;
-					$i++;
-				}
-
-
-				$details = [
-					'id' => (is_null ($result->pres_id)) ? 0 : $result->pres_id ,
-					'invoice_id' => (is_null ($result->id)) ? 0 : $result->id ,
-					'invoice' => (is_null ($result->invoice)) ? 0 : $result->invoice ,
-					'sub_total' => (is_null ($result->sub_total)) ? 0 : $result->sub_total ,
-					'discount' => (is_null ($result->discount)) ? 0 : $result->discount ,
-					'tax' => (is_null ($taxTotal)) ? 0 : $taxTotal ,
-					'shipping' => (is_null ($result->shipping)) ? 0 : $result->shipping ,
-					'total' => (is_null ($result->total)) ? 0 : $result->total ,
-					'created_on' => (is_null ($result->date_added)) ? 0 : $result->date_added ,
-					'cart' => $items ,
-					'shipping_status' => (is_null ($result->shipping_status)) ? 0 : $result->shipping_status ,
-					'pres_status' => $result->status ,
-					'payment_status' => $result->payment_status,
-					'invoice_status' => is_null ($result->status_id) ? 0 : $result->status_id ,
-					'path' => $result->path,
-					'posted' => $mp_data["posted"],
-					'preference' => $mp_data["preference"],
-				];
-
-				// dd($result, $details);
-
-			}
-
-			$responses[] = $details;
-
-		}
 
 
 		// dd($responses);
 
-		$payment_mode = Setting::select ('value')->where ('group' , '=' , 'payment')->where ('key' , '=' , 'mode')->first ();
+
 		// return json_encode($invoices);
+
+		switch ($user_type) {
+            case (UserType::MEDICAL_PROFESSIONAL ()):  //for medical professionals
+                $user_data = Auth::user()->professional()->first();
+
+                $pacients = Professional::with('customers')->find(4)->get()->pluck('customers');
+                dd($pacients);
+                // dd($user_data->first()->toArray());
+				return View::make ('design.medicalprofile' , array('user_data' => $user_data, 'user_type_name' => 'Médico'));
+				break;
+			case (UserType::CUSTOMER ()):  //for customers
+
+                $payment_mode = Setting::select ('value')->where ('group' , '=' , 'payment')->where ('key' , '=' , 'mode')->first ();
+
+
+                $invoices = Invoice::where ('user_id' , '=' , $user_id)->get ();
+                $prescriptions = Prescription::select ('i.*' , 'prescription.status' , 'prescription.path' , 'prescription.id as pres_id' , 'prescription.created_at as date_added', 'prescription.is_delete as deleted')->where ('prescription.user_id' , '=' , $user_id)->where ('prescription.is_delete' , '=' , 0)
+                    ->join ('invoice as i' , 'i.pres_id' , '=' , DB::raw ("prescription.id AND i.payment_status IN (" . PayStatus::PENDING () . ",0) "));
+                $results = $prescriptions->get ();
+                // dd($results->toArray());
+                $responses = [];
+
+                foreach ($results as $result) {
+                    $items = [];
+                    // dd($result);
+
+                    $invoice = Invoice::where ('pres_id' , '=' , $result->pres_id)->first()->toArray();
+
+                    //dd($invoice);
+                    $mp_data = app('App\Http\Controllers\MedicineController')->anyMakeMercadoPagoPayment($invoice["id"],0);
+                    //$mp_data=[];
+
+                    //$medicines = Medicine::medicines ();
+                    if (!is_null ($result->id) || !empty($result->id)) {
+                        $carts = ItemList::where ('invoice_id' , '=' , $result->id)->get ();
+
+                        $taxTotal = 0;
+                        $totalPrice = 0;
+                        $items = [];
+                        $i=0;
+
+
+                        //var_dump($carts);
+
+                        foreach ($carts as $cart) {
+                            // var_dump($cart);
+                            // dd($cart, $medicines, $results);
+                            $medicines = Medicine::where('id', 'LIKE', $cart->medicine)->first()->toArray();
+                            // dd($medicines);
+                            $tax = $cart->unit_price - ceil(($cart->unit_price / (1+($medicines['tax']/100))));
+
+
+
+
+                            $items[$i] = ['id' => $cart->id ,
+                                'item_id' => $cart->medicine ,
+                                'item_code' => $medicines['item_code'] ,
+                                'item_name' => $medicines['item_name'] ,
+                                'unit_price' => $cart->unit_price ,
+                                'discount_percent' => $cart->discount_percentage ,
+                                'discount' => $cart->discount ,
+                                'tax' => $tax,
+                                'quantity' => $cart->quantity ,
+                                'total_price' => $cart->total_price
+                            ];
+
+
+
+                            $taxTotal += $tax;
+                            $totalPrice += $cart->total_price;
+                            $i++;
+                        }
+
+
+                        $details = [
+                            'id' => (is_null ($result->pres_id)) ? 0 : $result->pres_id ,
+                            'invoice_id' => (is_null ($result->id)) ? 0 : $result->id ,
+                            'invoice' => (is_null ($result->invoice)) ? 0 : $result->invoice ,
+                            'sub_total' => (is_null ($result->sub_total)) ? 0 : $result->sub_total ,
+                            'discount' => (is_null ($result->discount)) ? 0 : $result->discount ,
+                            'tax' => (is_null ($taxTotal)) ? 0 : $taxTotal ,
+                            'shipping' => (is_null ($result->shipping)) ? 0 : $result->shipping ,
+                            'total' => (is_null ($result->total)) ? 0 : $result->total ,
+                            'created_on' => (is_null ($result->date_added)) ? 0 : $result->date_added ,
+                            'cart' => $items ,
+                            'shipping_status' => (is_null ($result->shipping_status)) ? 0 : $result->shipping_status ,
+                            'pres_status' => $result->status ,
+                            'payment_status' => $result->payment_status,
+                            'invoice_status' => is_null ($result->status_id) ? 0 : $result->status_id ,
+                            'path' => $result->path,
+                            'posted' => $mp_data["posted"],
+                            'preference' => $mp_data["preference"],
+                        ];
+
+                        // dd($result, $details);
+
+                    }
+
+                    $responses[] = $details;
+
+                }
+				return View::make ('design.profile' , array('user_data' => Auth::user()->customer, 'user_type_name' => 'Cliente' , 'invoices' => $invoices, 'prescriptions' => $responses, 'payment_mode' => $payment_mode->value, 'default_img' => url ('/') . "/assets/images/no_pres_square.png"));
+				break;
+		}
+
+	}
+
+    /**
+	 * Account Page
+	 *
+	 * @return mixed
+	 */
+	public function getMedicalAccountPage ()
+	{
+        // header ("Access-Control-Allow-Origin: *");
+        // header ("Access-Control-Allow-Headers: *");
+        Log::info('User_id:' . Auth::user()->id);
+		$user_type = Auth::user ()->user_type_id;
+		$email = Session::get ('user_id');
+		$path = 'URL' . '/public/images/prescription/' . $email . '/';
+		// $user_id = Auth::user ()->id;
+		// $invoices = Invoice::where ('user_id' , '=' , $user_id)->where ('shipping_status' , '=' , ShippingStatus::SHIPPED ())->get ();
 
 		switch ($user_type) {
             case (UserType::MEDICAL_PROFESSIONAL ()):  //for medical professionals
@@ -843,6 +887,7 @@ class UserController extends BaseController
 		}
 
 	}
+
 
 	/**
 	 * Change Password

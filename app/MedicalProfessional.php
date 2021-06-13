@@ -15,4 +15,11 @@ class MedicalProfessional extends Model
     {
         return $this->hasOne('User', 'user_id', 'id')->where('user_type_id', '=', UserType::MEDICAL_PROFESSIONAL())->first();
     }
+
+
+    public function pacients()
+    {
+        return $this->belongsToMany(Customer::class);
+    }
+
 }

@@ -24,7 +24,7 @@ class Professional extends Model
 
     public function customers()
     {
-        return $this->belongsToMany('App\Customer', 'customer_professional');
+        return $this->belongsToMany('App\Customer')->using('App\CustomerProfessional');
     }
 
 
