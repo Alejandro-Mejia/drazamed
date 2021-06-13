@@ -97,7 +97,7 @@
                                         placeholder="Ingrese su especialidad"
                                     />
                                 </div>
-                                <p style="display: none;" id="especialidad_error"></p> 
+                                <p style="display: none;" id="especialidad_error"></p>
                                 <!-- @toDo crear el error de especialidad -->
                             </div>
                             <div class="col">
@@ -116,7 +116,7 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col">
+                            <!-- <div class="col">
                                 <div class="form-group">
                                     <label for="name-input">Dirección Consultorio</label>
                                     <input
@@ -127,9 +127,9 @@
                                         placeholder="Ingrese la dirección del consultorio"
                                     />
                                 </div>
-                                <p style="display: none;" id="office_adr_error"></p> 
-                                <!-- @toDo crear el error de dirección de consultorio -->
-                            </div>
+                                <p style="display: none;" id="office_adr_error"></p>
+
+                            </div> -->
                             <div class="col">
                                 <div class="form-group">
                                     <label for="lastname-input">Telefono Consultorio</label>
@@ -159,10 +159,10 @@
                         <!-- @toDo crear el error de sub_especialidad -->
                     </div>
                     <div id = "centMedSel" style="display: none">
-                       
+
                     </div>
                     <div class="form-group">
-                        <label for="address-input">Dirección</label>
+                        <label id="lblAddress" for="address-input">Dirección</label>
                         <input
                             type="text"
                             class="form-control input-modal"
@@ -243,7 +243,12 @@
 <script>
     function DivSelector(element){
         document.getElementById("medSel").style.display = element.value == 2 ? 'block' : 'none';
+        if(element.value == 2) {
+            document.getElementById("lblAddress").innerHTML = "Dirección Consultorio";
+        } else {
+            document.getElementById("lblAddress").innerHTML = "Dirección de entrega";
+        }
         document.getElementById("centMedSel").style.display = element.value == 4 ? 'block' : 'none';
-        
+
     }
 </script>
