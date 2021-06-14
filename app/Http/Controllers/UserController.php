@@ -757,10 +757,10 @@ class UserController extends BaseController
             case (UserType::MEDICAL_PROFESSIONAL ()):  //for medical professionals
                 $user_data = Auth::user()->professional()->first();
 
-                $pacients = Professional::with('customers')->find(4)->get()->pluck('customers');
-                dd($pacients);
+                $pacients = Professional::with('customers')->where ('id' , '=' , Auth::user ()->user_id)->get()->pluck('customers')->toArray();
+                // dd($pacients[0]);
                 // dd($user_data->first()->toArray());
-				return View::make ('design.medicalprofile' , array('user_data' => $user_data, 'user_type_name' => 'Médico'));
+				return View::make ('design.medicalprofile' , array('user_data' => $user_data, 'user_type_name' => 'Médico', 'pacients' => $pacients[0]));
 				break;
 			case (UserType::CUSTOMER ()):  //for customers
 

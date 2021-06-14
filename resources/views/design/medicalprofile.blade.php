@@ -53,8 +53,8 @@
                             </li>
                             <li>
                                 <a href="#por_pagar"
-                                    ><span class="mr-10 fas fa-credit-card"></span
-                                    >Opcion 1</a
+                                    ><span class="mr-10 fas fa-users"></span
+                                    >Pacientes Activos</a
                                 >
                             </li>
                             <li>
@@ -187,6 +187,35 @@
                             </button>
                             <input type="text" id="tags" class="form-control search_medicine" placeholder="Busque su paciente por nombre o apellido"/>
                         </div>
+                    </div>
+
+                    <div>
+                        @if(sizeof($pacients) > 0)
+                            <table class="table" id="ordenes_pendientes">
+                                <tbody>
+                                    <thead class="table-header" >
+                                        <th style="text-align:center">Paciente</th>
+                                        <th style="text-align:center">Celular</th>
+                                        <th style="text-align:center">email</th>
+                                        <th style="text-align:center">Acciones</th>
+                                    </thead>
+
+                            @foreach($pacients as $pacient)
+                                <tr>
+                                    <td> {{ ucfirst($pacient['first_name']) . ' ' . ucfirst($pacient['last_name']) }} </td>
+                                    <td> {{ $pacient['phone'] }}</td>
+                                    <td> {{ $pacient['mail'] }} </td>
+                                    <td class="actions" style="text-align:center">
+                                        <span class="viewPacient"><i class="fa fa-search fa-2x" rel="tooltip" data-placement="top" title="Ver información" style="color: #337ab7;"> </i></span>
+                                        <span class="sendEmail"><i class="fa fa-envelope fa-2x" rel="tooltip" data-placement="top" title="Enviar eMail" style="color: #337ab7;"> </i></span>
+                                        <span class="sendWA"><a class='enviaWA' data-placement='top' title='Enviar Whatsapp!' data-phone='" . $phone . "'> <span class='fa fa-whatsapp fa-2x'></span> </a></span>
+                                    </td>
+                                </tr>
+
+                            @endforeach
+                                </tbody>
+                            </table>
+                        @endif
                     </div>
 
 
