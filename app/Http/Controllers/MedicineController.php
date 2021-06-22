@@ -204,7 +204,8 @@ class MedicineController extends BaseController
 
 					foreach ($current_medicines as $medicine) {
 
-						$medicine_details = Medicine::medicines ($medicine['medicine_id']);
+						// $medicine_details = Medicine::medicines ($medicine['medicine_id']);
+                        $medicine_details = Medicine::medicineCode ($medicine['item_code']);
 						$medicine_details['mrp'] = $this->anyCalculateMRP($medicine['medicine_id']);
 						$base = $medicine_details['mrp'] / ((100+$medicine_details['tax'])/100);
 						$iva = $medicine_details['mrp'] - $base;
@@ -785,7 +786,7 @@ class MedicineController extends BaseController
 		$limitResutls = Request::get ('limit' , 10);
 
 		$medicines = Medicine::select('group')->where('group', 'LIKE', '%' . $term . '%')->distinct()->orderBy('group')->get();
-
+        Log::info('Categoria: ' . $term);
 		$i=0;
 
 		if ($isWeb) {
@@ -844,6 +845,8 @@ class MedicineController extends BaseController
 
 						$labRule = Pricerule::where('laboratory','LIKE','%' . $compareLab . '%')->first();
 						// dd($labRule)
+                        // Log::info("Regla de precio para laboratorio :" . $med['manufacturer']);
+                        // Log::info($labRule);
 
 
 						if (isset($labRule) && $labRule != null) {
@@ -875,20 +878,28 @@ class MedicineController extends BaseController
 									$sellprice = $sellprice + $labRule->rule;
 									break;
 								default:
-									# code...
+									$sellprice = 0;
 									break;
 							}
 						} else {
-							// $sellprice = $med->real_price;
-                            if ($med->marked_price > 0) {
-                                $sellprice = $med->marked_price;
-                            } else {
-                                $pattern = "/(?<=\(P\)).[0-9]+/";
-                                $subject = $med->denomination;
-                                preg_match($pattern, $subject, $match);
-                                $sellprice = intval($match[0]);
-                            }
-						}
+                            $sellprice = 0;
+                            Log::info('No se tiene regla de precio para este producto');
+                            Log::info($med['item_name'] . ' ' . $med['manufacturer']);
+                        }
+                        // else {
+						// 	// $sellprice = $med->real_price;
+                        //     if ($med->marked_price > 0) {
+                        //         $sellprice = $med->marked_price;
+                        //     } else {
+                        //         $pattern = "/(?<=\(P\)).[0-9]+/";
+                        //         $subject = $med->denomination;
+                        //         preg_match($pattern, $subject, $match);
+                        //         if (array_key_exists(0, $match)) {
+                        //             $sellprice = intval($match[0]);
+                        //         }
+
+                        //     }
+						// }
 
 
 
@@ -907,8 +918,10 @@ class MedicineController extends BaseController
             }
 	    }
 
+        if(isset($sellprice) && $sellprice > 0) {
+            $sellprice = ceil( $sellprice / 100 ) * 100;
+        }
 
-	    $sellprice = ceil( $sellprice / 100 ) * 100;
 	    // $sellprice = round( $sellprice, -2, PHP_ROUND_HALF_UP);
 
 	    return($sellprice);
@@ -957,6 +970,7 @@ class MedicineController extends BaseController
 		->where(function($query) use ($category){
 				if($category) {
 					$query->where('group' , 'LIKE' , '%' . $category . '%');
+                    Log::info('Categoria: ' . $category);
 				}
 			})
 		->where(function($query) use ($lab){
@@ -1227,6 +1241,7 @@ class MedicineController extends BaseController
 	{
 		// header ("Access-Control-Allow-Origin: *");
         // header ("Access-Control-Allow-Headers: *");
+
 
 		$cats = Medicine::select('group')->distinct()->orderBy('group')->get();
 

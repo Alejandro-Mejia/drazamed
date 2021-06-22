@@ -12,7 +12,8 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Log;
-use Arisan;
+use Validator;
+use Artisan;
 
 
 /** @brief Class for medicines
@@ -94,6 +95,70 @@ class Medicines2Import implements ToCollection, WithHeadingRow, WithBatchInserts
         //     'created_at'    => date("Y-m-d")
         // ]);
 
+        // Validator::make($rows->toArray(), [
+        //     'denominacion' => function($attribute, $value, $onFailure) {
+
+        //         if(Str::contains($value,  '(C)' )) {
+        //             Log::info('Producto controlado :' . $value) ;
+        //         }
+        //         if(Str::contains($value,  'OBS ' ) || Str::contains($value,  'OBS.' ) || Str::contains($value,  'OBSEQUIO' )) {
+        //             Log::info('Obsequio :' . $value) ;
+        //         }
+        //         if(Str::contains($value,  '(C)' ) || Str::contains($value,  'OBS ' ) || Str::contains($value,  'OBS.' ) || Str::contains($value,  'OBSEQUIO' )) {
+        //             $onFailure('Producto controlado u obsequio. No se importa a la BD : ' . $value);
+        //         }
+
+        //         // if(Str::contains($value,  '(P)')) {
+        //         //     $onFailure('Producto con precio marcado : ' . $value);
+        //         // }
+
+
+        //     },
+        //     'proveedor' => function($attribute, $value, $onFailure) {
+        //         if(Str::contains($value,  'COMERC.MUNDIAL DE DEPORTE' )) {
+        //             Log::info('Laboratorio no aplicable :' . $value) ;
+        //         }
+        //         if(Str::contains($value,  'FLEXO SPRING S.A.' )) {
+        //             Log::info('Laboratorio no aplicable :' . $value) ;
+        //         }
+        //         if(Str::contains($value,  'ICARO DISENO Y PRODUCCION' )) {
+        //             Log::info('Laboratorio no aplicable :' . $value) ;
+        //         }
+        //         if(Str::contains($value,  'MB TECH DE COLOMBIA S.A.S' )) {
+        //             Log::info('Laboratorio no aplicable :' . $value) ;
+        //         }
+        //         if(Str::contains($value,  'MULTIOPCIONES PROMOCIONAL' )) {
+        //             Log::info('Laboratorio no aplicable :' . $value) ;
+        //         }
+        //         if(Str::contains($value,  'SFAGARO S.A.S' )) {
+        //             Log::info('Laboratorio no aplicable :' . $value) ;
+        //         }
+        //         $onFailure('Laboratorio no aplicables. No se importa a la BD : ' . $value);
+        //     },
+        //     '*.proveedor' => 'required|string',
+        //     'ean' => 'required|string',
+        //     '*.ean' => 'required|string',
+        // ])->validate();
+
+
+        // Validator::make($rows->toArray(), [
+        //     '*.proveedor' => 'required|string',
+        //     'ean' => 'required|string',
+        //     '*.ean' => 'required|string',
+        //     '*.denominacion' => function($attribute, $value, $onFailure) {
+
+        //         if(Str::contains($value,  '(C)' )) {
+        //             Log::info('Producto controlado :' . $value) ;
+        //         }
+        //         if(Str::contains($value,  'OBS ' ) || Str::contains($value,  'OBS.' ) || Str::contains($value,  'OBSEQUIO' )) {
+        //             Log::info('Obsequio :' . $value) ;
+        //         }
+        //         if(Str::contains($value,  '(C)' ) || Str::contains($value,  'OBS ' ) || Str::contains($value,  'OBS.' ) || Str::contains($value,  'OBSEQUIO' )) {
+        //             $onFailure('Producto controlado u obsequio. No se importa a la BD : ' . $value);
+        //         }
+        //     }
+        // ])->validate();
+
         $numrows = $rows->count();
         $i = 0;
         foreach ($rows as $row) {
@@ -112,43 +177,61 @@ class Medicines2Import implements ToCollection, WithHeadingRow, WithBatchInserts
 
                 $exists->save();
             } else {
-                Log::info('Producto nuevo :' . $row['denominacion']) ;
-                $medicine = new Medicine([
-                    'provider'      => isset($row['proveedor']) ? $row['proveedor'] : "ND",
-                    'item_name'     => isset($row['denominacion']) ?  $this->cleanDenomination($row['denominacion']) : "ND",
-                    'denomination'  => isset($row['denominacion']) ? $row['denominacion'] : "ND",
-                    'batch_no'      => isset($row['lote']) ? $row['lote'] : "ND",
-                    'units'         => isset($row['denominacion']) ? $this->setUnits($row['denominacion']) : "ND",
-                    'units_value'   => isset($row['denominacion']) ? $this->setUnitVal($row['denominacion']) : 0,
-                    'quantity'      => isset($row['cantidad']) ? $row['cantidad'] : 0,
-                    'marked_price'  => isset($row['marcado']) ? $row['marcado']*1000 : 0,
-                    // 'bonification'  => $row['boni'],
+                if(Str::contains($row['denominacion'],  '(C)' ) || Str::contains($row['denominacion'],  'OBS ' ) || Str::contains($row['denominacion'],  'OBS.' ) || Str::contains($row['denominacion'],  'OBSEQUIO' )) {
+                    Log::info('Producto controlado u obsequio. No se importa a la BD : ' . $row['denominacion']);
+                } elseif(Str::contains($row['proveedor'],  'COMERC.MUNDIAL DE DEPORTE' )) {
+                    Log::info('Laboratorio no aplicable :' . $row['proveedor']) ;
+                } elseif(Str::contains($row['proveedor'],  'FLEXO SPRING S.A.' )) {
+                    Log::info('Laboratorio no aplicable :' . $row['proveedor']) ;
+                } elseif(Str::contains($row['proveedor'],  'ICARO DISENO Y PRODUCCION' )) {
+                    Log::info('Laboratorio no aplicable :' . $row['proveedor']) ;
+                } elseif(Str::contains($row['proveedor'],  'MB TECH DE COLOMBIA S.A.S' )) {
+                    Log::info('Laboratorio no aplicable :' . $row['proveedor']) ;
+                } elseif(Str::contains($row['proveedor'],  'MULTIOPCIONES PROMOCIONAL' )) {
+                    Log::info('Laboratorio no aplicable :' . $row['proveedor']) ;
+                } elseif(Str::contains($row['proveedor'],  'SFAGARO' )) {
+                    Log::info('Laboratorio no aplicable :' . $row['proveedor']) ;
+                } else {
+                    Log::info('Producto nuevo :' . $row['denominacion']) ;
+                    $medicine = new Medicine([
+                        'provider'      => isset($row['proveedor']) ? $row['proveedor'] : "ND",
+                        'item_name'     => isset($row['denominacion']) ?  $this->cleanDenomination($row['denominacion']) : "ND",
+                        'denomination'  => isset($row['denominacion']) ? $row['denominacion'] : "ND",
+                        'batch_no'      => isset($row['lote']) ? $row['lote'] : "ND",
+                        'units'         => isset($row['denominacion']) ? $this->setUnits($row['denominacion']) : "ND",
+                        'units_value'   => isset($row['denominacion']) ? $this->setUnitVal($row['denominacion']) : 0,
+                        'quantity'      => isset($row['cantidad']) ? $row['cantidad'] : 0,
+                        'marked_price'  => isset($row['marcado']) ? $row['marcado']*1000 : 0,
+                        // 'bonification'  => $row['boni'],
 
 
-                    'catalog'       => isset($row['catalogo']) ? $row['catalogo'] : "ND",
-                    // 'rack_number'   => $row['rack'],
-                    'composition'   => isset($row['subgrupo']) ? $row['subgrupo'] : "ND",
-                    'manufacturer'  => isset($row['proveedor']) ? $this->cleanManufacturer($row['proveedor']) : "ND",
-                    'marketed_by'   => isset($row['proveedor']) ? $row['proveedor'] : "ND",
-                    'show_priority' => isset($row['proveedor']) ? $this->setPriority($row['proveedor']) : 0,
-                    'group'         => isset($row['grupo']) ? $row['grupo'] : "ND",
-                    'is_pres_required' => isset($row['grupo']) ? (($row['grupo'] == 'ANTIBIOTICOS') ? 1 : 0) : 0,
-                    'subgroup'      => isset($row['subgrupo']) ? $row['subgrupo'] : "ND",
-                    'item_code'     => isset($row['ean']) ?  $row['ean'] : "ND",
-                    'tax_type'      => 'PERCENTAGE',
-                    'tax'           => isset($row['impuesto']) ? $this->ivaImport($row['impuesto']) : 0,
-                    'purchase_price'=> isset($row['venta_real']) ? $row['venta_real'] : 0,
-                    'selling_price' => 0,
-                    'cost_price'    => isset($row['venta_real']) ? $row['venta_real'] : 0,
-                    'current_price' => isset($row['venta_cte']) ? $row['venta_cte'] : 0,
-                    'real_price'    => isset($row['venta_real']) ? $row['venta_real'] : 0,
+                        'catalog'       => isset($row['catalogo']) ? $row['catalogo'] : "ND",
+                        // 'rack_number'   => $row['rack'],
+                        'composition'   => isset($row['subgrupo']) ? $row['subgrupo'] : "ND",
+                        'manufacturer'  => isset($row['proveedor']) ? $this->cleanManufacturer($row['proveedor']) : "ND",
+                        'marketed_by'   => isset($row['proveedor']) ? $row['proveedor'] : "ND",
+                        'show_priority' => isset($row['proveedor']) ? $this->setPriority($row['proveedor']) : 0,
+                        'group'         => isset($row['grupo']) ? $row['grupo'] : "ND",
+                        'is_pres_required' => isset($row['grupo']) ? (($row['grupo'] == 'ANTIBIOTICOS') ? 1 : 0) : 0,
+                        'subgroup'      => isset($row['subgrupo']) ? $row['subgrupo'] : "ND",
+                        'item_code'     => isset($row['ean']) ?  $row['ean'] : "ND",
+                        'tax_type'      => 'PERCENTAGE',
+                        'tax'           => isset($row['impuesto']) ? $this->ivaImport($row['impuesto']) : 0,
+                        'purchase_price'=> isset($row['venta_real']) ? $row['venta_real'] : 0,
+                        'selling_price' => 0,
+                        'cost_price'    => isset($row['venta_real']) ? $row['venta_real'] : 0,
+                        'current_price' => isset($row['venta_cte']) ? $row['venta_cte'] : 0,
+                        'real_price'    => isset($row['venta_real']) ? $row['venta_real'] : 0,
 
-                    'discount'      => 0,
-                    'created_by'    => 1,
-                    'added_by'      => 1,
-                    'created_at'    => date("Y-m-d")
-                ]);
-                $medicine->save();
+                        'discount'      => 0,
+                        'created_by'    => 1,
+                        'added_by'      => 1,
+                        'created_at'    => date("Y-m-d")
+                    ]);
+                    $medicine->save();
+                }
+
+
             }
         }
     }

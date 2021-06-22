@@ -657,7 +657,8 @@ class AdminController extends BaseController
         Log::info('Items', $items->toArray());
 		foreach ($items as $itemList) {
 
-			$medicine = Medicine::medicines($itemList->medicine);
+			//$medicine = Medicine::medicines($itemList->medicine);
+            $medicine = Medicine::medicineCode($itemList->item_code);
 			$tbody .= "<tr>
 				    <td>" . $i++ . "</td>
 				    <td>" . $medicine['item_name'] . "</td>
