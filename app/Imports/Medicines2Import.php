@@ -36,7 +36,7 @@ class Medicines2Import implements ToCollection, WithHeadingRow, WithBatchInserts
     */
     public function collection(Collection $rows)
     {
-    
+
 
         $numrows = $rows->count();
         $i = 0;
@@ -48,6 +48,7 @@ class Medicines2Import implements ToCollection, WithHeadingRow, WithBatchInserts
             if($exists){
 
                 Log::info('Producto existente en la DB :' . $exists['item_name']) ;
+                $exists->manufacturer = isset($row['manufacturer']) ? $this->cleanManufacturer($row['proveedor']) : "ND";
                 $exists->quantity = isset($row['cantidad']) ? $row['cantidad'] : 0;
                 $exists->marked_price = isset($row['marcado']) ? $row['marcado']*1000 : 0;
                 $exists->purchase_price = isset($row['venta_real']) ? $row['venta_real'] : 0;
@@ -643,6 +644,11 @@ class Medicines2Import implements ToCollection, WithHeadingRow, WithBatchInserts
         $value = Str::replaceLast(' C.I.', '', $value);
         $value = Str::replaceLast(' C.I', '', $value);
 
+        if (Str::contains('ABBOT')) $value = "ABBOT";
+        if (Str::contains('ALPINA')) $value = "ALPINA";
+        if (Str::contains('GRUNENTHAL')) $value = "GRUNENTHAL";
+        if (Str::contains('CORPORACION DE FOMENTO AS')) $value = "CORPAUL";
+        if (Str::contains('FRESHLY')) $value = "NATURAL FRESHLY";
 
         return $value;
 
