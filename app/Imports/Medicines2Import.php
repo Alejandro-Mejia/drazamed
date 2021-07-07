@@ -644,11 +644,11 @@ class Medicines2Import implements ToCollection, WithHeadingRow, WithBatchInserts
         $value = Str::replaceLast(' C.I.', '', $value);
         $value = Str::replaceLast(' C.I', '', $value);
 
-        if (Str::contains('ABBOT')) $value = "ABBOT";
-        if (Str::contains('ALPINA')) $value = "ALPINA";
-        if (Str::contains('GRUNENTHAL')) $value = "GRUNENTHAL";
-        if (Str::contains('CORPORACION DE FOMENTO AS')) $value = "CORPAUL";
-        if (Str::contains('FRESHLY')) $value = "NATURAL FRESHLY";
+        if (Str::contains($value, 'ABBOT')) $value = "ABBOT";
+        if (Str::contains($value, 'ALPINA')) $value = "ALPINA";
+        if (Str::contains($value, 'GRUNENTHAL')) $value = "GRUNENTHAL";
+        if (Str::contains($value, 'CORPORACION DE FOMENTO AS')) $value = "CORPAUL";
+        if (Str::contains($value, 'FRESHLY')) $value = "NATURAL FRESHLY";
 
         return $value;
 
