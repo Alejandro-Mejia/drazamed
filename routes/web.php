@@ -107,6 +107,8 @@ use MercadoPago;
         Route::get('/account-page', 'UserController@getAccountPage');
         Route::get('/medical-account-page', 'UserController@getMedicalAccountPage');
         Route::get('/my-treatments', 'TreatmentController@getMyTreatments');
+        Route::get('/fotos', 'MedicineController@getItemList');
+        Route::get('/fotostatus', 'MedicineController@getPhotoStatus');
 
         /**
          * User routes

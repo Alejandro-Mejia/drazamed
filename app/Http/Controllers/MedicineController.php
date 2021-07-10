@@ -6,13 +6,14 @@ use Intervention\Image\ImageManagerStatic as Image;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
+use Illuminate\Http\Request;
 
 use DateTime;
 use Exception;
 use Storage;
 use Session;
 use Redirect;
-use Request;
+//use Request;
 use Response;
 use Debugbar;
 use Config;
@@ -3043,6 +3044,111 @@ class MedicineController extends BaseController
 		}
 	}
 
+    public function getItemList(Request $request)
+    {
+        Log::info('Buscar productos con y sin imagen');
+        // Log::info($request);
+        // dd(json_decode($request->get('products'), true));
+        try {
+            $products = [];
+            $i = 0;
+            foreach($request->get('products') as $product){
+                $producto=Medicine::medicineCode($product);
+                Log::info($i, $producto);
+                if(sizeof($producto)>0){
+                    $result = [];
+                    $result["item_code"] = $producto["item_code"];
+                    $result["item_name"] = $producto["item_name"];
+
+                    $medImagen = $producto['item_code'].'.jpg';
+                    $medPath = "/images/products/" . $medImagen;
+                    $path = realpath(public_path('images'));
+                    $path .= '/products/' . $medImagen;
+
+                    // $medPath = (is_file($path)) ? $medPath : "/images/products/default.png";
+
+                    if (is_file($path)) {
+                        $result['imagen'] = 'SI';
+                        // echo $i. " El fichero $path existe";
+                    } else {
+                        $result['imagen'] = 'NO';
+                        // echo $i. " El fichero $path no existe";
+                    }
+
+                    $products[] = $result;
+                } else {
+                    $result = [];
+                    $result["item_code"] = $product;
+                    $result["item_name"] = "Producto no encontrado";
+                    $medImagen = $product . '.jpg';
+                    $medPath = "/images/products/" . $medImagen;
+
+                    $path = realpath(public_path('images'));
+                    $path .= '/products/' . $medImagen;
+
+                    // $medPath = (is_file($path)) ? $medPath : "/images/products/default.png";
+
+                    if (is_file($path)) {
+                        $result['imagen'] = 'SI';
+                        // echo $i. " El fichero $path existe";
+                    } else {
+                        $result['imagen'] = 'NO';
+                        // echo $i. " El fichero $path no existe";
+                    }
+                }
+
+
+            };
+            $i = $i + 1;
+            return Response::json($products);
+        } catch (Exception $e) {
+            return Response::json (['msg' => $e->getMessage ()] , $e->getCode ());
+        }
+    }
+
+	public function getPhotoStatus()
+    {
+        Log::info('Buscar productos total con y sin imagen');
+
+        $medicines = Medicine::pluck('item_code')->toArray();
+        // Log::info($request);
+        // dd(json_decode($request->get('products'), true));
+        try {
+            $products = [];
+            $i = 0;
+            foreach($medicines as $product){
+                $producto=Medicine::medicineCode($product);
+                Log::info($i, $producto);
+                if(sizeof($producto)>0){
+                    $result = [];
+                    $result["item_code"] = $producto["item_code"];
+                    $result["item_name"] = $producto["item_name"];
+
+                    $medImagen = $producto['item_code'].'.jpg';
+                    $medPath = "/images/products/" . $medImagen;
+                    $path = realpath(public_path('images'));
+                    $path .= '/products/' . $medImagen;
+
+                    // $medPath = (is_file($path)) ? $medPath : "/images/products/default.png";
+
+                    if (is_file($path)) {
+                        $result['imagen'] = 'SI';
+                        // echo $i. " El fichero $path existe";
+                    } else {
+                        $result['imagen'] = 'NO';
+                        // echo $i. " El fichero $path no existe";
+                    }
+
+                    $products[] = $result;
+                }
+                $i = $i + 1;
+            };
+
+            return Response::json($products);
+        } catch (Exception $e) {
+            return Response::json (['msg' => $e->getMessage ()] , $e->getCode ());
+        }
+    }
 
 	public function anyCreateOrder(PreOrder $preOrder, Request $request)
 	{
