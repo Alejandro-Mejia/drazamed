@@ -7,14 +7,14 @@ use Intervention\Image\ImageManagerStatic as Image;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
-use Illuminate\Http\Request;
+// use Illuminate\Http\Request;
 
 use DateTime;
 use Exception;
 use Storage;
 use Session;
 use Redirect;
-//use Request;
+use Request;
 use Response;
 use Debugbar;
 use Config;
