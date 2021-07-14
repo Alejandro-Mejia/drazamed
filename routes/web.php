@@ -109,6 +109,7 @@ use MercadoPago;
         Route::get('/my-treatments', 'TreatmentController@getMyTreatments');
         Route::get('/fotos', 'MedicineController@getItemList');
         Route::get('/fotostatus', 'MedicineController@getPhotoStatus');
+        Route::get('/eancodes', 'MedicineController@getEanCodes');
 
         /**
          * User routes

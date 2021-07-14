@@ -3,6 +3,7 @@
 namespace app\Http\Controllers;
 use Illuminate\Routing\Controller as BaseController;
 use Intervention\Image\ImageManagerStatic as Image;
+// use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
@@ -1171,30 +1172,32 @@ class MedicineController extends BaseController
 		                default:
 		                    {
                                 $laboratory = (strlen($med['manufacturer']) >= 15) ? substr ($med['manufacturer'],0,15) : $med['manufacturer'];
-		                        $labRule = Pricerule::where('laboratory','LIKE','%' . substr ($med['manufacturer'],0,15) . '%')->get()->toArray();
+		                        $labRule = Pricerule::where('laboratory','LIKE','%' . substr ($med['manufacturer'],0,15) . '%')->first()->toArray();
                                 Log::info("Regla de precio para laboratorio :" . $laboratory);
                                 Log::info($labRule);
 		                        if(sizeof($labRule) > 0) {
-									if ($labRule[0]['isByProd'] == 1) {
+									if ($labRule['isByProd'] == 1) {
 										// $labRule = Pricerule::with(["prodrule" => function($q) { $q->where('product', 'LIKE', substr ($med['item_name'],0,15);}])->where('laboratory','LIKE',substr ($med['marketed_by'],0,15) . '%')->get();
 										$prod = substr($med['item_name'],0,15);
-
-										$labRule = Pricerule::with(["prodrule"=> function($q) use($prod) {$q->where('product', 'LIKE' , '%' . $prod . '%');}])->where('laboratory','LIKE', '%' . $med['marketed_by'] . '%')->get()->toArray();
-										$labRule[0]['rule_type'] = $labRule[0]['prodrule'][0]['rule_type'];
-										$labRule[0]['rule'] = $labRule[0]['prodrule'][0]['rule'];
+                                        $ean = $med['item_code'];
+                                        $labRuleSql = Pricerule::with(["prodrule"=> function($q) use($ean) {$q->where('item_code', 'LIKE' , '%' . $ean . '%');}])->where('laboratory','LIKE', '%' . $med['marketed_by'] . '%')->toSql();
+										$prodRule = Prodrule::where('product', 'LIKE' , '%' . $prod . '%')->first()->toArray();
+                                        //$labRule = Prodrule::->where('item_code', 'LIKE' , '%' . $ean . '%')->get()->toArray();
+										$labRule['rule_type'] = $prodRule['rule_type'];
+										$labRule['rule'] = $prodRule['rule'];
 									}
 
-									$sellprice = ($med->real_price*$labRule[0]['isVtaReal'] + $med->current_price*$labRule[0]['isVtaCte']);
+									$sellprice = ($med->real_price*$labRule['isVtaReal'] + $med->current_price*$labRule['isVtaCte']);
 
-									switch ($labRule[0]['rule_type']) {
+									switch ($labRule['rule_type']) {
 										case '0':
 											# code...
 											break;
 										case '1':
-											$sellprice = $sellprice * (1+$labRule[0]['rule']);
+											$sellprice = $sellprice * (1+$labRule['rule']);
 											break;
 										case '2':
-											$sellprice = $sellprice + $labRule[0]['rule'];
+											$sellprice = $sellprice + $labRule['rule'];
 											break;
 										default:
 											# code...
@@ -2988,7 +2991,7 @@ class MedicineController extends BaseController
         // header ("Access-Control-Allow-Origin: *");
         // header ("Access-Control-Allow-Headers: *");
 
-		Log::info('Se esta subiendo el archivo' . Request::file('file'));
+		//Log::info('Se esta subiendo el archivo' . Request::file('file'));
 
 		try {
 			// dd(Request::file ('file'));
@@ -3148,6 +3151,15 @@ class MedicineController extends BaseController
         } catch (Exception $e) {
             return Response::json (['msg' => $e->getMessage ()] , $e->getCode ());
         }
+    }
+
+    public function getEanCodes()
+    {
+        Log::info('Buscar codigos de los productos total');
+
+        $medicines = Medicine::pluck('item_code')->toArray();
+
+        return Response::json($medicines);
     }
 
 	public function anyCreateOrder(PreOrder $preOrder, Request $request)
